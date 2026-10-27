@@ -1,7 +1,6 @@
 // Compétences reprises de Portfolio_2026 (data/skills.json), niveau d'autonomie sur 4.
 window.SKILLS = [
  {
-  "icon": "📟",
   "title": "Embarqué & Bas Niveau",
   "skills": [
    [
@@ -35,7 +34,6 @@ window.SKILLS = [
   ]
  },
  {
-  "icon": "🌐",
   "title": "Développement Logiciel & Web",
   "skills": [
    [
@@ -69,7 +67,6 @@ window.SKILLS = [
   ]
  },
  {
-  "icon": "🛠️",
   "title": "Outils",
   "skills": [
    [
@@ -99,7 +96,6 @@ window.SKILLS = [
   ]
  },
  {
-  "icon": "🎨",
   "title": "CAO & Conception 3D",
   "skills": [
    [
@@ -121,7 +117,6 @@ window.SKILLS = [
   ]
  },
  {
-  "icon": "📚",
   "title": "Bases de Données",
   "skills": [
    [
@@ -135,7 +130,6 @@ window.SKILLS = [
   ]
  },
  {
-  "icon": "💻",
   "title": "Infrastructure & DevOps",
   "skills": [
    [
@@ -157,7 +151,6 @@ window.SKILLS = [
   ]
  },
  {
-  "icon": "🔬",
   "title": "Instrumentation & Analyse",
   "skills": [
    [
@@ -179,7 +172,6 @@ window.SKILLS = [
   ]
  },
  {
-  "icon": "🎯",
   "title": "Autres compétences techniques",
   "skills": [
    [
@@ -209,7 +201,6 @@ window.SKILLS = [
   ]
  },
  {
-  "icon": "🌍",
   "title": "Communication",
   "skills": [
    [
@@ -233,7 +224,7 @@ window.SKILLS = [
   if (!el) return;
   el.innerHTML = window.SKILLS.map((c) => `
     <article class="card skill-cat reveal">
-      <h3><span aria-hidden="true">${c.icon}</span>${c.title}</h3>
+      <h3>${c.title}</h3>
       ${c.skills.map(([n, l]) => `<div class="skill"><span>${n}</span><span class="lvl" role="img" aria-label="${l} sur 4">${[1, 2, 3, 4].map((i) => `<i class="${i <= l ? "on" : ""}"></i>`).join("")}</span></div>`).join("")}
     </article>`).join("");
 })();

@@ -86,7 +86,7 @@
     const kinds = { pro: "Entreprise", school: "École", perso: "Perso" };
     grid.innerHTML = window.PROJECTS.map((p, i) => `
       <button class="card pcard" data-kind="${p.kind}" data-i="${i}" aria-haspopup="dialog">
-        <div class="top"><span class="kind">${kinds[p.kind]}</span><span class="ico" aria-hidden="true">${p.icon}</span></div>
+        <div class="top"><span class="kind">${kinds[p.kind]}</span><span class="num" aria-hidden="true">${String(i + 1).padStart(2, "0")}</span></div>
         <h3>${p.title}</h3>
         <div class="meta">${p.where} · ${p.when}</div>
         <div class="tags">${p.tags.slice(0, 4).map((t) => `<span class="tag">${t}</span>`).join("")}</div>
