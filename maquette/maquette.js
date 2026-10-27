@@ -78,6 +78,8 @@
   const dialog = document.getElementById("detail");
   if (groups && window.PROJECTS) {
     const kinds = { pro: "Entreprise", school: "École", perso: "Personnel" };
+    const prefix = { pro: "ENT", school: "ECO", perso: "PER" };
+    const code = (p) => `${prefix[p.kind]}-${String(window.PROJECTS.filter((q) => q.kind === p.kind).indexOf(p) + 1).padStart(2, "0")}`;
     groups.innerHTML = Object.entries(kinds).map(([kind, label]) => {
       const items = window.PROJECTS.map((p, i) => [p, i]).filter(([p]) => p.kind === kind);
       return `
@@ -85,7 +87,7 @@
         <h3 class="group-title">${label}<span>${String(items.length).padStart(2, "0")}</span></h3>
         <div class="grid">${items.map(([p, i], n) => `
           <button class="card pcard" data-i="${i}" aria-haspopup="dialog">
-            <div class="top"><span class="kind">${p.where.split(",")[0]}</span><span class="num" aria-hidden="true">${String(n + 1).padStart(2, "0")}</span></div>
+            <div class="top"><span class="kind">${p.where.split(",")[0]}</span><span class="num">${code(p)}</span></div>
             <h3>${p.title}</h3>
             <div class="meta">${p.where} · ${p.when}</div>
             <div class="tags">${p.tags.slice(0, 4).map((t) => `<span class="tag">${t}</span>`).join("")}</div>
@@ -105,9 +107,14 @@
     groups.addEventListener("click", (e) => {
       const c = e.target.closest(".pcard"); if (!c) return;
       const p = window.PROJECTS[+c.dataset.i];
-      dialog.querySelector(".kind").textContent = kinds[p.kind];
+      const live = /cours|2027|alternance/.test(p.when);
+      dialog.querySelectorAll(".code").forEach((el) => (el.textContent = `Mission ${code(p)} · ${kinds[p.kind]}`));
       dialog.querySelector("h3").textContent = p.title;
-      dialog.querySelector(".meta").textContent = `${p.where} · ${p.when}`;
+      dialog.querySelector(".base").textContent = p.where;
+      dialog.querySelector(".period").textContent = p.when;
+      const stamp = dialog.querySelector(".stamp");
+      stamp.textContent = live ? "En cours" : "Accomplie";
+      stamp.classList.toggle("ongoing", live);
       dialog.querySelector(".desc").textContent = p.desc;
       dialog.querySelector("tbody").innerHTML = p.missions.map((m) => `<tr><td>${m[0]}</td><td>${m[1]}</td></tr>`).join("");
       dialog.querySelector(".tags").innerHTML = p.tags.map((t) => `<span class="tag">${t}</span>`).join("");
@@ -118,6 +125,17 @@
     });
     dialog.addEventListener("click", (e) => { if (e.target === dialog) dialog.close(); });
     dialog.querySelector(".close").addEventListener("click", () => dialog.close());
+  }
+
+  // ---------- Écran vidéo : timecode ----------
+  const tc = document.querySelector(".timecode");
+  if (tc && !reduced) {
+    const t0 = performance.now();
+    setInterval(() => {
+      const t = (performance.now() - t0) / 1000;
+      const p = (n) => String(Math.floor(n)).padStart(2, "0");
+      tc.textContent = `${p(t / 3600)}:${p((t / 60) % 60)}:${p(t % 60)}:${p((t * 25) % 25)}`;
+    }, 40);
   }
 
   // ---------- Yeux des monstres (aperçu, sans physique) ----------

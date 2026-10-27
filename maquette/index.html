@@ -79,24 +79,71 @@
     <!-- 5. Parcours -->
     <section class="section" id="parcours">
       <span class="eyebrow reveal">Parcours</span>
-      <h2 class="h2 reveal">Diplômes et formations</h2>
-      <div class="timeline">
-        <article class="card tl-item now reveal">
-          <img src="assets/ensim.webp" alt="" width="56" height="56">
-          <div>
-            <h3>Diplôme d'ingénieure en informatique</h3>
-            <div class="meta">ENSIM, Le Mans · 2022 – 2027 · en alternance depuis 2024</div>
-            <p>Du système embarqué au web : C, Java, Python, TypeScript, Raspberry Pi, Arduino, STM32, mécatronique.</p>
+      <h2 class="h2 reveal">Itinéraire</h2>
+      <p class="lead reveal">Une étape par wagon, du lycée à l'alternance. Prochain arrêt : septembre 2027.</p>
+      <div class="train-track reveal" tabindex="0" aria-label="Parcours en train, défilement horizontal">
+        <div class="train">
+          <article class="wagon">
+            <div class="windows" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+            <div class="wagon-body">
+              <div class="wagon-no">Voiture 01 · 2019 – 2022</div>
+              <img src="assets/malraux.webp" alt="" width="44" height="44">
+              <h3>Baccalauréat général, mention</h3>
+              <div class="meta">Lycée André Malraux, Allonnes</div>
+              <p>Spécialités physique-chimie et mathématiques.</p>
+            </div>
+            <div class="wheels" aria-hidden="true"><i></i><i></i></div>
+          </article>
+          <span class="coupler" aria-hidden="true"></span>
+          <article class="wagon">
+            <div class="windows" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+            <div class="wagon-body">
+              <div class="wagon-no">Voiture 02 · 2022 – 2027</div>
+              <img src="assets/ensim.webp" alt="" width="44" height="44">
+              <h3>Diplôme d'ingénieure en informatique</h3>
+              <div class="meta">ENSIM, Le Mans</div>
+              <p>Du système embarqué au web : C, Java, Python, TypeScript, Arduino, STM32, mécatronique.</p>
+            </div>
+            <div class="wheels" aria-hidden="true"><i></i><i></i></div>
+          </article>
+          <span class="coupler" aria-hidden="true"></span>
+          <article class="wagon current">
+            <div class="windows" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+            <div class="wagon-body">
+              <div class="wagon-no">Voiture 03 · 2024 – 2027</div>
+              <img src="assets/sncf.webp" alt="" width="44" height="44">
+              <h3>Alternance en informatique embarquée et réseaux</h3>
+              <div class="meta">CIM, SNCF Voyageurs, Le Mans</div>
+              <p>Conformité ITxPT, sécurisation des communications à bord, tests d'équipements.</p>
+            </div>
+            <div class="wheels" aria-hidden="true"><i></i><i></i></div>
+          </article>
+          <span class="coupler" aria-hidden="true"></span>
+          <div class="loco" aria-hidden="true">
+            <svg viewBox="0 0 260 170">
+              <defs>
+                <linearGradient id="locoBody" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="var(--surface-solid)"/><stop offset="1" stop-color="var(--bg-1)"/></linearGradient>
+                <radialGradient id="headlight"><stop offset="0" stop-color="#fff"/><stop offset=".3" stop-color="var(--accent)" stop-opacity=".8"/><stop offset="1" stop-color="var(--accent)" stop-opacity="0"/></radialGradient>
+              </defs>
+              <path d="M6 30 H150 C205 30 245 70 252 112 C254 124 246 132 234 132 H6 Z" fill="url(#locoBody)" stroke="var(--accent)" stroke-opacity=".45" stroke-width="2"/>
+              <path d="M150 40 C190 42 222 70 232 100 H160 Z" fill="var(--accent)" opacity=".22"/>
+              <path d="M156 46 C186 50 212 72 222 96 H164 Z" fill="none" stroke="var(--accent)" stroke-opacity=".6" stroke-width="1.5"/>
+              <rect x="24" y="48" width="104" height="22" rx="8" fill="var(--accent)" opacity=".18"/>
+              <rect x="6" y="104" width="246" height="5" fill="var(--accent-2)" opacity=".8"/>
+              <rect x="6" y="113" width="230" height="2" fill="var(--accent)" opacity=".7"/>
+              <text x="30" y="92" font-family="Space Grotesk" font-weight="700" font-size="15" fill="var(--text)" letter-spacing="2">MJ · 2027</text>
+              <circle cx="246" cy="118" r="26" fill="url(#headlight)"/>
+              <circle cx="246" cy="118" r="3.5" fill="#fff"/>
+              <ellipse cx="128" cy="150" rx="118" ry="5" fill="var(--accent)" opacity=".35"/>
+            </svg>
           </div>
-        </article>
-        <article class="card tl-item reveal">
-          <img src="assets/malraux.webp" alt="" width="56" height="56">
-          <div>
-            <h3>Baccalauréat général avec mention</h3>
-            <div class="meta">Lycée André Malraux, Allonnes · 2019 – 2022</div>
-            <p>Spécialités physique-chimie et mathématiques.</p>
-          </div>
-        </article>
+        </div>
+        <div class="rail" aria-hidden="true"></div>
+        <div class="next-stop">
+          <span class="wagon-no">Prochain arrêt</span>
+          <strong>Ingénieure</strong>
+          <span>septembre 2027</span>
+        </div>
       </div>
     </section>
 
@@ -140,6 +187,8 @@
       <p class="lead reveal">Esquisse fixe : au sprint 4, les monstres pourront être attrapés et lancés, et retomberont avec la gravité de la planète. Leurs yeux suivent déjà ta souris.</p>
       <div class="planet-wrap">
         <figure class="planet-stage reveal" style="margin:0">
+          <div class="screen" data-theme="dark">
+            <div class="hud top"><span><b class="rec"></b>REC · CAM-02 · SURFACE MJ-1</span><span class="timecode">00:00:00:00</span></div>
           <svg viewBox="0 0 600 560" role="img" aria-label="Planète violette avec trois petits monstres et un drapeau">
             <defs>
               <radialGradient id="pg" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="var(--planet-b)"/><stop offset=".6" stop-color="var(--planet-a)"/><stop offset="1" stop-color="var(--planet-c)"/></radialGradient>
@@ -187,10 +236,14 @@
               <circle cx="-13" cy="-22" r="3" fill="#ff9cc8" opacity=".7"/><circle cx="13" cy="-22" r="3" fill="#ff9cc8" opacity=".7"/>
             </g>
           </svg>
-          <figcaption class="stage-label">La planète au repos</figcaption>
+            <div class="hud bottom"><span>SIGNAL <i class="bars"><i></i><i></i><i></i><i></i><i></i></i></span><span class="live">EN DIRECT</span></div>
+          </div>
+          <figcaption class="stage-label">Transmission en direct depuis la planète</figcaption>
         </figure>
 
         <figure class="planet-stage reveal" style="margin:0">
+          <div class="screen" data-theme="dark">
+            <div class="hud top"><span>SCAN · COUPE GÉOLOGIQUE</span><span>3 COUCHES</span></div>
           <svg viewBox="0 0 600 560" role="img" aria-label="Vue en coupe de la planète : trois couches avec des objets enfouis">
             <defs>
               <radialGradient id="pg2" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="var(--planet-b)"/><stop offset=".6" stop-color="var(--planet-a)"/><stop offset="1" stop-color="var(--planet-c)"/></radialGradient>
@@ -227,6 +280,8 @@
               <line x1="350" y1="330" x2="520" y2="420" stroke="var(--muted)"/><text x="524" y="424">Enfance</text>
             </g>
           </svg>
+            <div class="hud bottom"><span>PROFONDEUR 0 → 170 KM</span><span>ARCHIVE</span></div>
+          </div>
           <figcaption class="stage-label">Après avoir tiré le drapeau : la fouille</figcaption>
         </figure>
       </div>
@@ -281,20 +336,27 @@
     <div class="foot"><span>© 2027 Jade Barbier · fait avec Next.js, Tailwind et beaucoup d'étoiles</span><a href="#top">Revenir en haut ↑</a></div>
   </footer>
 
-  <dialog class="detail" id="detail" aria-labelledby="detail-title">
+  <dialog class="detail report" id="detail" aria-labelledby="detail-title">
     <div class="head">
-      <span class="kind"></span>
+      <div class="report-top"><span>Rapport de mission</span><span class="code"></span></div>
       <h3 id="detail-title"></h3>
-      <div class="meta" style="color:var(--muted);font-size:.9rem"></div>
+      <dl class="report-meta">
+        <div><dt>Base</dt><dd class="base"></dd></div>
+        <div><dt>Période</dt><dd class="period"></dd></div>
+        <div><dt>Statut</dt><dd><span class="stamp"></span></dd></div>
+      </dl>
       <button class="icon-btn close" aria-label="Fermer">✕</button>
     </div>
     <div class="body">
+      <h4><span>01</span>Objectif</h4>
       <p class="desc"></p>
-      <h4>Missions</h4>
-      <div class="table-wrap"><table class="missions"><thead><tr><th>Mission</th><th>Réalisation</th></tr></thead><tbody></tbody></table></div>
-      <h4>Technos et mots-clés</h4>
+      <h4><span>02</span>Journal de bord</h4>
+      <div class="table-wrap"><table class="missions"><thead><tr><th>Étape</th><th>Réalisation</th></tr></thead><tbody></tbody></table></div>
+      <h4><span>03</span>Équipement embarqué</h4>
       <div class="tags"></div>
+      <h4><span>04</span>Transmission</h4>
       <div class="links-row"></div>
+      <div class="report-foot"><span>Fin du rapport</span><span class="code"></span></div>
     </div>
   </dialog>
 
