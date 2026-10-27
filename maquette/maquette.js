@@ -16,7 +16,7 @@
   if (saved) root.dataset.theme = saved;
   document.querySelectorAll("[data-toggle-theme]").forEach((btn) =>
     btn.addEventListener("click", () => {
-      const next = root.dataset.theme === "light" ? "dark" : "light";
+      const next = root.dataset.theme === "dark" ? "light" : "dark";
       root.dataset.theme = next;
       store("theme", next);
     })
@@ -127,15 +127,30 @@
     dialog.querySelector(".close").addEventListener("click", () => dialog.close());
   }
 
-  // ---------- Tablette latérale (menu) ----------
+  // ---------- Tablette à droite : sommaire et résultats des tests ----------
   const tablet = document.getElementById("tablet");
   if (tablet) {
     const handle = tablet.querySelector(".tablet-handle");
+    let auto = false;
+    const setMode = (mode) => {
+      tablet.querySelectorAll("[data-mode]").forEach((b) => b.setAttribute("aria-selected", b.dataset.mode === mode));
+      tablet.querySelectorAll("[data-pane]").forEach((p) => (p.hidden = p.dataset.pane !== mode));
+      tablet.classList.toggle("testing", mode === "tests");
+    };
     const setOpen = (open) => { tablet.classList.toggle("open", open); handle.setAttribute("aria-expanded", open); };
-    handle.addEventListener("click", () => setOpen(!tablet.classList.contains("open")));
+    handle.addEventListener("click", () => { auto = false; setOpen(!tablet.classList.contains("open")); });
+    tablet.querySelectorAll("[data-mode]").forEach((b) => b.addEventListener("click", () => setMode(b.dataset.mode)));
     tablet.querySelectorAll(".t-nav a").forEach((a) => a.addEventListener("click", () => setOpen(false)));
     document.addEventListener("keydown", (e) => e.key === "Escape" && setOpen(false));
-    document.addEventListener("click", (e) => { if (!tablet.contains(e.target)) setOpen(false); });
+    document.addEventListener("click", (e) => { if (!tablet.contains(e.target)) { auto = false; setOpen(false); } });
+
+    // Elle se déplie toute seule sur la section compétences, en mode résultats de test
+    const skills = document.getElementById("competences");
+    if (skills) new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) { auto = true; setMode("tests"); setOpen(true); }
+      else if (auto) { auto = false; setOpen(false); setMode("menu"); }
+    }, { threshold: 0.35 }).observe(skills);
+
     const clock = tablet.querySelector(".t-clock"), start = Date.now();
     setInterval(() => {
       const t = Math.floor((Date.now() - start) / 1000), p = (n) => String(n).padStart(2, "0");

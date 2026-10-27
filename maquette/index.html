@@ -1,150 +1,98 @@
 <!doctype html>
-<html lang="fr" data-theme="dark">
+<html lang="fr">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Jade Barbier · Maquette</title>
-  <meta name="description" content="Maquette du portfolio 2027 de Jade Barbier (sprint 1)">
+  <title>Jade Barbier · Fiche de personnel</title>
+  <meta name="description" content="Maquette du portfolio 2027 de Jade Barbier (sprint 1) : fiche de personnel">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Caveat:wght@500;700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&family=Special+Elite&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="fiche.css">
   <script>try { var t = localStorage.getItem("theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}</script>
 </head>
-<body>
-  <div class="nebulae" aria-hidden="true"><div class="nebula n1"></div><div class="nebula n2"></div><div class="nebula n3"></div><div class="nebula n4"></div></div>
-  <canvas id="stars" aria-hidden="true"></canvas>
+<body class="fiche">
+  <main class="sheet" id="top">
+    <div class="holes" aria-hidden="true"><i></i><i></i><i></i></div>
 
-  <!-- Tablette latérale : c'est la barre de menu -->
-  <aside class="tablet" id="tablet" aria-label="Menu">
-    <div class="tablet-device">
-      <div class="tablet-screen" data-theme="dark">
-        <div class="t-bar"><span>MJ-PAD · v2027</span><span class="t-clock">T+00:00:00</span></div>
-        <div class="t-status"><span class="dot"></span><span><b>Disponible</b> à partir de sept. 2027</span></div>
-        <nav class="t-nav" aria-label="Sections du rapport">
-          <a href="#top"><i>00</i>Couverture</a>
-          <a href="#about"><i>01</i>Identification</a>
-          <a href="#parcours"><i>02</i>Trajectoire</a>
-          <a href="#projets"><i>03</i>Journal de missions</a>
-          <a href="#competences"><i>04</i>Équipement</a>
-          <a href="#hors-code"><i>05</i>Hors mission</a>
-          <a href="#planete"><i>06</i>Planète MJ-1</a>
-          <a href="#contact"><i>07</i>Transmission</a>
-          <a href="parcours-universitaire.html"><i>A</i>Annexe : semestres</a>
-        </nav>
-        <div class="t-tools">
-          <button class="t-btn lang" data-toggle-lang aria-label="Changer de langue"><span class="on">FR</span>&nbsp;/&nbsp;<span>EN</span></button>
-          <button class="t-btn" data-toggle-theme aria-label="Changer de thème">Sombre / clair</button>
-        </div>
-        <div class="t-foot"><span>Signal <i class="bars"><i></i><i></i><i></i><i></i><i></i></i></span><span>Batterie 87 %</span></div>
+    <!-- En-tête du formulaire -->
+    <header class="file-head reveal">
+      <div class="agency">
+        <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="21" fill="var(--accent-3)"/><ellipse cx="24" cy="25" rx="20" ry="7" fill="none" stroke="#fff" stroke-width="1.6" transform="rotate(-22 24 25)"/><path d="M6 33 C18 22 30 18 44 12" stroke="var(--accent-2)" stroke-width="3" fill="none" stroke-linecap="round"/><g fill="#fff"><circle cx="15" cy="15" r="1"/><circle cx="31" cy="34" r="1"/><circle cx="35" cy="20" r=".8"/></g></svg>
+        <div><b>Programme MJ</b><span>Service du personnel</span></div>
       </div>
-    </div>
-    <button class="tablet-handle" aria-expanded="false" aria-controls="tablet"><span class="grip" aria-hidden="true"></span><span>Menu</span></button>
-  </aside>
+      <div class="file-title">
+        <span class="form-no">Formulaire P-27 · rév. 2026</span>
+        <h1>Fiche de personnel</h1>
+      </div>
+      <div class="docno">
+        <span>Dossier n° <b class="typed">MJ-2027</b></span>
+        <span>Classification : <b class="typed">public</b></span>
+        <span>Mise à jour : <b class="typed">27/10/2026</b></span>
+        <svg class="barcode" viewBox="0 0 120 26" aria-hidden="true"><g fill="currentColor">
+          <rect x="0" width="2" height="26"/><rect x="4" width="1" height="26"/><rect x="7" width="3" height="26"/><rect x="12" width="1" height="26"/><rect x="15" width="2" height="26"/><rect x="19" width="1" height="26"/><rect x="22" width="3" height="26"/><rect x="27" width="2" height="26"/><rect x="31" width="1" height="26"/><rect x="34" width="1" height="26"/><rect x="37" width="3" height="26"/><rect x="42" width="2" height="26"/><rect x="46" width="1" height="26"/><rect x="49" width="2" height="26"/><rect x="53" width="3" height="26"/><rect x="58" width="1" height="26"/><rect x="61" width="2" height="26"/><rect x="65" width="1" height="26"/><rect x="68" width="3" height="26"/><rect x="73" width="1" height="26"/><rect x="76" width="2" height="26"/><rect x="80" width="1" height="26"/><rect x="83" width="3" height="26"/><rect x="88" width="2" height="26"/><rect x="92" width="1" height="26"/><rect x="95" width="2" height="26"/><rect x="99" width="3" height="26"/><rect x="104" width="1" height="26"/><rect x="107" width="2" height="26"/><rect x="111" width="1" height="26"/><rect x="114" width="3" height="26"/><rect x="119" width="1" height="26"/>
+        </g></svg>
+      </div>
+    </header>
 
-  <main id="top">
-    <!-- 1. Accueil -->
-    <section class="section hero cover">
-      <div class="cover-head reveal">
-        <div class="agency">
-          <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="21" fill="var(--accent-3)"/><ellipse cx="24" cy="25" rx="20" ry="7" fill="none" stroke="#fff" stroke-width="1.6" transform="rotate(-22 24 25)"/><path d="M6 33 C18 22 30 18 44 12" stroke="var(--accent-2)" stroke-width="3" fill="none" stroke-linecap="round"/><g fill="#fff"><circle cx="15" cy="15" r="1"/><circle cx="31" cy="34" r="1"/><circle cx="35" cy="20" r=".8"/></g></svg>
-          <div><b>Programme MJ</b><span>Rapport technique · Portfolio</span></div>
+    <!-- 1. Identification -->
+    <section class="block identity" id="identite">
+      <figure class="photo-print reveal">
+        <svg class="clip" viewBox="0 0 40 110" aria-hidden="true"><path d="M14 104 V20 a8 8 0 0 1 16 0 V90 a5 5 0 0 1 -10 0 V30" fill="none" stroke="#9a9ca3" stroke-width="3.2" stroke-linecap="round"/><path d="M14 104 V20 a8 8 0 0 1 16 0 V90 a5 5 0 0 1 -10 0 V30" fill="none" stroke="#e8e9ee" stroke-width="1.2" stroke-linecap="round" transform="translate(-.6 -.6)"/></svg>
+        <div class="print">
+          <img src="assets/jade.webp" alt="Photo d'identité de Jade Barbier" width="640" height="890">
         </div>
-        <div class="docno"><span>Doc. TR-MJ-2027-01</span><span>Classification : public</span></div>
+        <figcaption class="hand">J. Barbier, Le Mans</figcaption>
+      </figure>
+
+      <div class="fields reveal">
+        <h2 class="block-title"><span>1</span>Identification</h2>
+        <table class="form">
+          <tr><th>Nom</th><td class="typed">BARBIER</td></tr>
+          <tr><th>Prénom</th><td class="typed">Jade</td></tr>
+          <tr><th>Indicatif</th><td class="typed">MoggleJ</td></tr>
+          <tr><th>Fonction</th><td class="typed">Apprentie ingénieure, informatique embarquée et réseaux</td></tr>
+          <tr><th>Affectation</th><td class="typed">CIM, SNCF Voyageurs, Le Mans</td></tr>
+          <tr><th>Formation</th><td class="typed">ENSIM, cycle ingénieur 2022 – 2027</td></tr>
+          <tr><th>Langues</th><td class="typed">Français (natif), anglais (C1), espagnol (B2)</td></tr>
+          <tr><th>Disponibilité</th><td><span class="check on">Disponible à partir de sept. 2027</span><span class="check">En poste</span></td></tr>
+        </table>
+        <p class="hand note">Profil embarqué + réseaux, à recontacter pour sept. 2027 !</p>
       </div>
-      <span class="kicker reveal">Rapport de mission</span>
-      <h1 class="reveal">Jade Barbier</h1>
-      <p class="title reveal"><strong>Apprentie ingénieure</strong> en informatique embarquée et réseaux, entre l'ENSIM et SNCF Voyageurs.</p>
-      <dl class="form-grid reveal">
-        <div><dt>Indicatif</dt><dd>@MoggleJ</dd></div>
-        <div><dt>Base</dt><dd>Le Mans, France</dd></div>
-        <div><dt>Statut</dt><dd><span class="dot"></span> Disponible dès sept. 2027</dd></div>
-        <div><dt>Période couverte</dt><dd>2019 – 2027</dd></div>
-      </dl>
-      <div class="cta reveal">
-        <a class="btn primary" href="#contact">Prendre contact</a>
-        <a class="btn ghost" href="#projets">Voir les projets →</a>
-      </div>
-      <span class="stamp-big" aria-hidden="true">Approuvé<br>pour diffusion</span>
+      <div class="stamp" aria-hidden="true">Dossier<br>validé</div>
     </section>
 
-    <!-- 2. Accroche -->
-    <section class="section quote">
-      <blockquote class="reveal">Des systèmes embarqués fiables, <em>du capteur jusqu'au rail</em>, sécurisés de bout en bout.</blockquote>
-      <p class="lead reveal" style="margin: 1.5rem auto 0">Phrase provisoire <span class="todo">à fournir par Jade</span></p>
-    </section>
-
-    <!-- 3 + 4. À propos et introduction -->
-    <section class="section" id="about">
-      <div class="about">
-        <figure class="photo-fig reveal">
-          <div class="screen photo-screen" data-theme="dark">
-            <div class="hud top"><span><b class="rec"></b>CAM-01 · IDENTIFICATION</span><span>EXP. 1/125</span></div>
-          <div class="porthole">
-            <div class="ring"><span class="orb o1" aria-hidden="true"></span></div>
-            <div class="ring r2"><span class="orb o2" aria-hidden="true"></span><span class="orb o3" aria-hidden="true"></span></div>
-            <div class="ring r3"><span class="orb o4" aria-hidden="true"><svg viewBox="0 0 60 40"><ellipse cx="30" cy="20" rx="28" ry="7" fill="none" stroke="var(--accent)" stroke-opacity=".7" stroke-width="2" transform="rotate(-18 30 20)"/><circle cx="30" cy="20" r="12" fill="url(#orbg)"/><path d="M2 20 A28 7 0 0 0 58 20" fill="none" stroke="var(--accent)" stroke-width="2" transform="rotate(-18 30 20)"/></svg></span></div>
-            <svg width="0" height="0" style="position:absolute"><defs><radialGradient id="orbg" cx="35%" cy="30%"><stop offset="0" stop-color="#c9b8ff"/><stop offset="1" stop-color="#4b3aa8"/></radialGradient></defs></svg>
-            <div class="corona" aria-hidden="true"></div>
-            <img src="assets/jade.webp" alt="Portrait de Jade Barbier" width="640" height="890">
-            <span class="diamond" aria-hidden="true"></span>
-          </div>
-            <div class="hud bottom"><span>SUJET : J. BARBIER</span><span>LE MANS</span></div>
-          </div>
-          <figcaption class="stage-label">Fig. 01 · Portrait de l'ingénieure</figcaption>
-        </figure>
-        <div class="reveal">
-          <span class="eyebrow">Section 01 · Identification</span>
-          <h2>Jade Barbier</h2>
-          <div class="place">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>
-            Le Mans, France <span class="todo">ville à confirmer</span>
-          </div>
-          <p>Élève ingénieure à l'<strong>ENSIM</strong>, en alternance au <strong>CIM de SNCF Voyageurs</strong> : tests de conformité et sécurisation des équipements embarqués à bord des trains.</p>
-          <p>Un profil à la frontière du logiciel et du matériel : cartes Arduino et STM32, réseaux et cybersécurité, avec des incursions en IA et en développement web. De la console de jeu conçue de A à Z au client mTLS industriel.</p>
-          <div class="facts">
-            <span class="chip">ENSIM 2022 – 2027</span><span class="chip">SNCF Voyageurs</span><span class="chip">Anglais C1</span><span class="chip">Espagnol B2</span>
-          </div>
-        </div>
+    <!-- 2. Observations -->
+    <section class="block" id="observations">
+      <h2 class="block-title reveal"><span>2</span>Observations</h2>
+      <blockquote class="typed quote-typed reveal">« Des systèmes embarqués fiables, du capteur jusqu'au rail, sécurisés de bout en bout. » <span class="todo">accroche à fournir</span></blockquote>
+      <div class="obs reveal">
+        <p>Élève ingénieure à l'ENSIM, en alternance au CIM de SNCF Voyageurs : tests de conformité et sécurisation des équipements embarqués à bord des trains.</p>
+        <p>Profil à la frontière du logiciel et du matériel : cartes Arduino et STM32, réseaux et cybersécurité, avec des incursions en IA et en développement web. De la console de jeu conçue de A à Z au client mTLS industriel.</p>
       </div>
     </section>
 
-    <!-- 5. Parcours -->
-    <section class="section" id="parcours">
-      <span class="eyebrow reveal">Section 02 · Trajectoire</span>
-      <h2 class="h2 reveal">Parcours</h2>
-      <ol class="trajectory reveal">
-        <li>
-          <span class="t-year">2019</span>
-          <h3>Baccalauréat général, mention</h3>
-          <p>Lycée André Malraux, Allonnes. Spécialités physique-chimie et mathématiques.</p>
-        </li>
-        <li>
-          <span class="t-year">2022</span>
-          <h3>École d'ingénieurs ENSIM</h3>
-          <p>Le Mans. Informatique, du système embarqué au web, avec un fort volet mécatronique.</p>
-        </li>
-        <li class="now">
-          <span class="t-year">2024</span>
-          <h3>Alternance SNCF Voyageurs</h3>
-          <p>CIM, Le Mans. Conformité ITxPT et sécurisation des communications à bord.</p>
-        </li>
-        <li class="next">
-          <span class="t-year">2027</span>
-          <h3>Diplôme d'ingénieure</h3>
-          <p>Disponible pour un premier poste à partir de septembre.</p>
-        </li>
-      </ol>
+    <!-- 3. Parcours -->
+    <section class="block" id="parcours">
+      <h2 class="block-title reveal"><span>3</span>Parcours</h2>
+      <table class="ledger reveal">
+        <thead><tr><th>Période</th><th>Établissement</th><th>Intitulé</th><th>Lieu</th></tr></thead>
+        <tbody>
+          <tr><td class="typed">2024 – 2027</td><td>SNCF Voyageurs, CIM</td><td>Alternance, informatique embarquée et réseaux</td><td>Le Mans</td></tr>
+          <tr><td class="typed">2022 – 2027</td><td>ENSIM</td><td>Diplôme d'ingénieure en informatique</td><td>Le Mans</td></tr>
+          <tr><td class="typed">2019 – 2022</td><td>Lycée André Malraux</td><td>Baccalauréat général, mention</td><td>Allonnes</td></tr>
+        </tbody>
+      </table>
       <!-- Lien vers la page externe parcours-universitaire.html : supprimer ce bloc pour la retirer -->
-      <a class="text-link reveal" href="parcours-universitaire.html">Détail des semestres et des unités de formation <span aria-hidden="true">→</span></a>
+      <a class="annex-link reveal" href="parcours-universitaire.html"><span class="mono">Annexe A</span> Détail des semestres et des unités de formation →</a>
     </section>
 
-    <!-- 6. Expériences et projets -->
-    <section class="section" id="projets">
-      <span class="eyebrow reveal">Section 03 · Journal de missions</span>
-      <h2 class="h2 reveal">Projets et expériences</h2>
-      <p class="lead reveal">Classés par contexte. Chaque mission s'ouvre sur son rapport : objectif, journal de bord, technologies et liens.</p>
-      <nav class="filters reveal" aria-label="Catégories de projets">
+    <!-- 4. Journal de missions -->
+    <section class="block" id="projets">
+      <h2 class="block-title reveal"><span>4</span>Journal de missions</h2>
+      <p class="obs reveal">Classées par contexte. Chaque ligne ouvre le rapport de mission : objectif, journal de bord, équipement et liens.</p>
+      <nav class="filters reveal" aria-label="Catégories de missions">
         <a class="filter" href="#projets-pro">Entreprise</a>
         <a class="filter" href="#projets-school">École</a>
         <a class="filter" href="#projets-perso">Personnel</a>
@@ -152,33 +100,34 @@
       <div id="project-groups"></div>
     </section>
 
-    <!-- 7. Compétences -->
-    <section class="section" id="competences">
-      <span class="eyebrow reveal">Section 04 · Équipement</span>
-      <h2 class="h2 reveal">Compétences</h2>
-      <div class="skills" id="skills"></div>
-      <div class="legend"><span>● ○ ○ ○ bases</span><span>● ● ○ ○ intermédiaire</span><span>● ● ● ○ autonome</span><span>● ● ● ● avancé</span></div>
+    <!-- 5. Compétences : résultats sur la tablette -->
+    <section class="block" id="competences">
+      <h2 class="block-title reveal"><span>5</span>Évaluation des compétences</h2>
+      <div class="eval reveal">
+        <p class="obs">Batterie de tests passée sur terminal MJ-PAD. Les résultats détaillés s'affichent sur la tablette, à droite. Synthèse ci-dessous.</p>
+        <p class="hand note right">→ résultats sur la tablette</p>
+      </div>
+      <div id="skills" class="skills-paper reveal"></div>
     </section>
 
-    <!-- 8. En dehors du code -->
-    <section class="section" id="hors-code">
-      <span class="eyebrow reveal">Section 05 · Hors mission</span>
-      <h2 class="h2 reveal">Centres d'intérêt <span class="todo">textes à valider</span></h2>
-      <ol class="interests reveal">
-        <li><span class="i-num">01</span><h3>Lecture</h3><p>Romans et essais : une curiosité qui nourrit aussi la veille technique.</p></li>
-        <li><span class="i-num">02</span><h3>Manga et animation</h3><p>Des récits au long cours, de One Piece aux classiques de l'animation.</p></li>
-        <li><span class="i-num">03</span><h3>Voyages</h3><p>D'autres pays, d'autres langues, d'autres façons de travailler.</p></li>
-        <li><span class="i-num">04</span><h3>Électronique maker</h3><p>Consoles portables, petits robots et impression 3D, hors du cadre scolaire.</p></li>
-      </ol>
+    <!-- 6. Hors service -->
+    <section class="block" id="hors-code">
+      <h2 class="block-title reveal"><span>6</span>Hors service <span class="todo">textes à valider</span></h2>
+      <ul class="checklist reveal">
+        <li><span class="check on"></span><b>Lecture</b> Romans et essais : une curiosité qui nourrit aussi la veille technique.</li>
+        <li><span class="check on"></span><b>Manga et animation</b> Des récits au long cours, de One Piece aux classiques de l'animation.</li>
+        <li><span class="check on"></span><b>Voyages</b> D'autres pays, d'autres langues, d'autres façons de travailler.</li>
+        <li><span class="check on"></span><b>Électronique maker</b> Consoles portables, petits robots et impression 3D, hors du cadre scolaire.</li>
+      </ul>
     </section>
 
-    <!-- 10. Planète bonus (esquisse) -->
-    <section class="section" id="planete">
-      <span class="eyebrow reveal">Section 06 · Planète MJ-1</span>
-      <h2 class="h2 reveal">La petite planète</h2>
-      <p class="lead reveal">Esquisse fixe : au sprint 4, les monstres pourront être attrapés et lancés, et retomberont avec la gravité de la planète. Leurs yeux suivent déjà ta souris.</p>
-      <div class="planet-wrap">
-        <figure class="planet-stage reveal" style="margin:0">
+    <!-- 7. Pièces jointes : la planète -->
+    <section class="block" id="planete">
+      <h2 class="block-title reveal"><span>7</span>Pièces jointes</h2>
+      <p class="obs reveal">Enregistrements vidéo de la planète MJ-1. Esquisse fixe : au sprint 4, les habitants pourront être attrapés et lancés, et retomberont avec la gravité de la planète. Leurs yeux suivent déjà le pointeur.</p>
+      <div class="attachments">
+        <figure class="attachment reveal">
+          <i class="tape t1" aria-hidden="true"></i><i class="tape t2" aria-hidden="true"></i>
           <div class="screen" data-theme="dark">
             <div class="hud top"><span><b class="rec"></b>REC · CAM-02 · SURFACE MJ-1</span><span class="timecode">00:00:00:00</span></div>
           <svg viewBox="0 0 600 560" role="img" aria-label="Planète violette avec trois petits monstres et un drapeau">
@@ -230,10 +179,10 @@
           </svg>
             <div class="hud bottom"><span>SIGNAL <i class="bars"><i></i><i></i><i></i><i></i><i></i></i></span><span class="live">EN DIRECT</span></div>
           </div>
-          <figcaption class="stage-label">Fig. 02 · Transmission en direct depuis la planète</figcaption>
+          <figcaption class="typed">PJ 02 · Transmission depuis la surface</figcaption>
         </figure>
-
-        <figure class="planet-stage reveal" style="margin:0">
+        <figure class="attachment reveal">
+          <i class="tape t1" aria-hidden="true"></i><i class="tape t2" aria-hidden="true"></i>
           <div class="screen" data-theme="dark">
             <div class="hud top"><span>SCAN · COUPE GÉOLOGIQUE</span><span>3 COUCHES</span></div>
           <svg viewBox="0 0 600 560" role="img" aria-label="Vue en coupe de la planète : trois couches avec des objets enfouis">
@@ -274,40 +223,73 @@
           </svg>
             <div class="hud bottom"><span>PROFONDEUR 0 → 170 KM</span><span>ARCHIVE</span></div>
           </div>
-          <figcaption class="stage-label">Fig. 03 · Après avoir tiré le drapeau : la fouille</figcaption>
+          <figcaption class="typed">PJ 03 · Fouille après tirage du drapeau</figcaption>
         </figure>
       </div>
-      <div class="card notes reveal">
-        <strong>Dans la coupe, de haut en bas</strong>
-        <ul>
-          <li>Croûte, aujourd'hui : un livre, le chapeau de Ace, une épingle de voyage.</li>
-          <li>Manteau, l'adolescence : à définir avec toi.</li>
-          <li>Noyau, l'enfance : une allumette pour la Petite Fille aux allumettes, une télé pour les dessins animés.</li>
-          <li>Logo du drapeau provisoire (« MJ ») en attendant le tien.</li>
-        </ul>
+      <p class="hand note">Couches : aujourd'hui (livre, chapeau, voyages), ado (à définir), enfance (allumette, dessins animés).</p>
+    </section>
+
+    <!-- 8. Contact -->
+    <section class="block" id="contact">
+      <h2 class="block-title reveal"><span>8</span>Pour joindre le sujet</h2>
+      <p class="obs reveal">Disponible en septembre 2027 à l'issue de l'alternance, pour un poste d'ingénieure en systèmes embarqués, réseaux ou cybersécurité, avec trois ans d'expérience en milieu ferroviaire. <span class="todo">à confirmer</span></p>
+      <table class="form contact-form reveal">
+        <tr><th>E-mail</th><td><a class="typed" href="mailto:jade72210@gmail.com">jade72210@gmail.com</a></td></tr>
+        <tr><th>LinkedIn</th><td><a class="typed" href="https://www.linkedin.com/in/jade-barbier-b261b8266/" target="_blank" rel="noopener">linkedin.com/in/jade-barbier</a></td></tr>
+        <tr><th>GitHub</th><td><a class="typed" href="https://github.com/MoggleJ" target="_blank" rel="noopener">github.com/MoggleJ</a></td></tr>
+        <tr><th>CV</th><td><a class="typed" href="https://github.com/MoggleJ/Portfolio_2026/raw/main/cv/BARBIER_Jade_CV_Stage_EN.pdf" target="_blank" rel="noopener">Télécharger le CV (PDF)</a></td></tr>
+      </table>
+      <div class="signatures reveal">
+        <div><span class="sig hand">Jade Barbier</span><span class="line">Signature du sujet</span></div>
+        <div><span class="stamp small" aria-hidden="true">Visa<br>MJ</span><span class="line">Visa du service</span></div>
       </div>
     </section>
 
-    <!-- 9. Disponibilités et réseaux -->
-    <section class="section contact-cta" id="contact">
-      <span class="eyebrow reveal">Section 07 · Transmission</span>
-      <h2 class="cta-title reveal">Un poste à pourvoir<br>en systèmes embarqués,<br><em>réseaux ou cybersécurité ?</em></h2>
-      <p class="lead reveal">Disponible en septembre 2027 à l'issue de l'alternance, avec trois ans d'expérience en milieu ferroviaire. Échanges en français, en anglais ou en espagnol. <span class="todo">à confirmer</span></p>
-      <a class="big-mail reveal" href="mailto:jade72210@gmail.com">jade72210@gmail.com <span aria-hidden="true">↗</span></a>
-      <div class="link-row reveal">
-        <a href="https://www.linkedin.com/in/jade-barbier-b261b8266/" target="_blank" rel="noopener">LinkedIn</a>
-        <a href="https://github.com/MoggleJ" target="_blank" rel="noopener">GitHub</a>
-        <a href="https://github.com/MoggleJ/Portfolio_2026/raw/main/cv/BARBIER_Jade_CV_Stage_EN.pdf" target="_blank" rel="noopener">CV (PDF)</a>
-        <span class="status"><span class="dot"></span><b>Disponible</b><span>sept. 2027</span></span>
-      </div>
-    </section>
+    <footer class="file-foot">
+      <div class="bigname" aria-hidden="true">Jade Barbier</div>
+      <div class="foot-line"><span>Fin de fiche · Dossier MJ-2027</span><span>Page 1 / 1</span><a href="#top">Haut de page ↑</a></div>
+    </footer>
   </main>
 
-  <!-- 11. Pied de page -->
-  <footer>
-    <div class="bigname" aria-hidden="true">Jade Barbier</div>
-    <div class="foot"><span class="mono">Fin du rapport · Dossier MJ-2027</span><span>© 2027 Jade Barbier</span><a href="#top">Revenir en haut ↑</a></div>
-  </footer>
+  <!-- Tablette à droite : sommaire + résultats des tests de compétences -->
+  <aside class="tablet right" id="tablet" aria-label="Terminal MJ-PAD">
+    <button class="tablet-handle" aria-expanded="false" aria-controls="tablet"><span class="grip" aria-hidden="true"></span><span>MJ-PAD</span></button>
+    <div class="tablet-device">
+      <i class="screw s1"></i><i class="screw s2"></i><i class="screw s3"></i><i class="screw s4"></i>
+      <i class="led" aria-hidden="true"></i>
+      <div class="tablet-screen" data-theme="dark">
+        <div class="t-bar"><span>MJ-PAD · terminal d'évaluation</span><span class="t-clock">T+00:00:00</span></div>
+        <div class="t-tabs" role="tablist">
+          <button role="tab" data-mode="menu" aria-selected="true">Sommaire</button>
+          <button role="tab" data-mode="tests" aria-selected="false">Tests du sujet</button>
+        </div>
+        <div class="t-pane" data-pane="menu">
+          <div class="t-status"><span class="dot"></span><span><b>Disponible</b> à partir de sept. 2027</span></div>
+          <nav class="t-nav" aria-label="Sections de la fiche">
+            <a href="#identite"><i>1</i>Identification</a>
+            <a href="#observations"><i>2</i>Observations</a>
+            <a href="#parcours"><i>3</i>Parcours</a>
+            <a href="#projets"><i>4</i>Journal de missions</a>
+            <a href="#competences"><i>5</i>Compétences</a>
+            <a href="#hors-code"><i>6</i>Hors service</a>
+            <a href="#planete"><i>7</i>Pièces jointes</a>
+            <a href="#contact"><i>8</i>Contact</a>
+            <a href="parcours-universitaire.html"><i>A</i>Annexe : semestres</a>
+          </nav>
+          <div class="t-tools">
+            <button class="t-btn lang" data-toggle-lang aria-label="Changer de langue"><span class="on">FR</span>&nbsp;/&nbsp;<span>EN</span></button>
+            <button class="t-btn" data-toggle-theme aria-label="Changer de thème">Jour / nuit</button>
+          </div>
+        </div>
+        <div class="t-pane" data-pane="tests" hidden>
+          <div class="t-subject"><span>Sujet</span><b>BARBIER J. · MJ-2027</b><span class="t-count"></span></div>
+          <div id="tests"></div>
+          <div class="t-verdict"><span>Aptitude générale</span><b>Confirmée</b></div>
+        </div>
+        <div class="t-foot"><span>Signal <i class="bars"><i></i><i></i><i></i><i></i><i></i></i></span><span>Batterie 87 %</span></div>
+      </div>
+    </div>
+  </aside>
 
   <dialog class="detail report" data-theme="dark" id="detail" aria-labelledby="detail-title">
     <div class="head">

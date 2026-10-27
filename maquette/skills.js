@@ -220,11 +220,28 @@ window.SKILLS = [
 ];
 
 (function () {
-  const el = document.getElementById("skills");
-  if (!el) return;
-  el.innerHTML = window.SKILLS.map((c) => `
-    <div class="skill-row reveal">
-      <h3>${c.title}</h3>
-      <ul>${c.skills.map(([n, l]) => `<li><span>${n}</span><span class="lvl" role="img" aria-label="${["bases", "intermédiaire", "autonome", "avancé"][l - 1]}">${[1, 2, 3, 4].map((i) => `<i class="${i <= l ? "on" : ""}"></i>`).join("")}</span></li>`).join("")}</ul>
-    </div>`).join("");
+  const levels = ["bases", "intermédiaire", "autonome", "avancé"];
+  // Synthèse sur la fiche papier
+  const paper = document.getElementById("skills");
+  if (paper) {
+    paper.innerHTML = `<table class="ledger"><thead><tr><th>Module</th><th>Épreuves</th><th>Score</th></tr></thead><tbody>${window.SKILLS.map((c) => {
+      const score = Math.round((c.skills.reduce((s, [, l]) => s + l, 0) / (c.skills.length * 4)) * 100);
+      return `<tr><td>${c.title}</td><td>${c.skills.map(([n]) => n).join(", ")}</td><td class="score">${score} %</td></tr>`;
+    }).join("")}</tbody></table>`;
+  }
+  // Résultats détaillés sur la tablette
+  const tests = document.getElementById("tests");
+  if (tests) {
+    const total = window.SKILLS.reduce((s, c) => s + c.skills.length, 0);
+    document.querySelector(".t-count").textContent = `${window.SKILLS.length} modules · ${total} épreuves`;
+    tests.innerHTML = window.SKILLS.map((c, i) => {
+      const score = Math.round((c.skills.reduce((s, [, l]) => s + l, 0) / (c.skills.length * 4)) * 100);
+      return `
+      <div class="t-module">
+        <div class="t-mod-head"><span>M${String(i + 1).padStart(2, "0")} · ${c.title}</span><b>${score} %</b></div>
+        <div class="t-meter"><i style="--v:${score}%"></i></div>
+        <ul>${c.skills.map(([n, l]) => `<li><span>${n}</span><span class="t-lvl" data-l="${l}">${levels[l - 1]}</span></li>`).join("")}</ul>
+      </div>`;
+    }).join("");
+  }
 })();
