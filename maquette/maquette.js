@@ -73,34 +73,36 @@
     new MutationObserver(() => reduced && requestAnimationFrame(draw)).observe(root, { attributes: true });
   }
 
-  // ---------- Apparition au défilement ----------
-  const io = new IntersectionObserver((entries) => entries.forEach((e) => {
-    if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
-  }), { threshold: 0.12 });
-  document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
-
   // ---------- Cartes projets ----------
-  const grid = document.getElementById("project-grid");
+  const groups = document.getElementById("project-groups");
   const dialog = document.getElementById("detail");
-  if (grid && window.PROJECTS) {
-    const kinds = { pro: "Entreprise", school: "École", perso: "Perso" };
-    grid.innerHTML = window.PROJECTS.map((p, i) => `
-      <button class="card pcard" data-kind="${p.kind}" data-i="${i}" aria-haspopup="dialog">
-        <div class="top"><span class="kind">${kinds[p.kind]}</span><span class="num" aria-hidden="true">${String(i + 1).padStart(2, "0")}</span></div>
-        <h3>${p.title}</h3>
-        <div class="meta">${p.where} · ${p.when}</div>
-        <div class="tags">${p.tags.slice(0, 4).map((t) => `<span class="tag">${t}</span>`).join("")}</div>
-        <span class="more">Voir le détail →</span>
-      </button>`).join("");
+  if (groups && window.PROJECTS) {
+    const kinds = { pro: "Entreprise", school: "École", perso: "Personnel" };
+    groups.innerHTML = Object.entries(kinds).map(([kind, label]) => {
+      const items = window.PROJECTS.map((p, i) => [p, i]).filter(([p]) => p.kind === kind);
+      return `
+      <div class="group reveal" id="projets-${kind}">
+        <h3 class="group-title">${label}<span>${String(items.length).padStart(2, "0")}</span></h3>
+        <div class="grid">${items.map(([p, i], n) => `
+          <button class="card pcard" data-i="${i}" aria-haspopup="dialog">
+            <div class="top"><span class="kind">${p.where.split(",")[0]}</span><span class="num" aria-hidden="true">${String(n + 1).padStart(2, "0")}</span></div>
+            <h3>${p.title}</h3>
+            <div class="meta">${p.where} · ${p.when}</div>
+            <div class="tags">${p.tags.slice(0, 4).map((t) => `<span class="tag">${t}</span>`).join("")}</div>
+            <span class="more">Voir le détail →</span>
+          </button>`).join("")}
+        </div>
+      </div>`;
+    }).join("");
 
-    grid.addEventListener("pointermove", (e) => {
+    groups.addEventListener("pointermove", (e) => {
       const c = e.target.closest(".pcard"); if (!c) return;
       const r = c.getBoundingClientRect();
       c.style.setProperty("--mx", `${e.clientX - r.left}px`);
       c.style.setProperty("--my", `${e.clientY - r.top}px`);
     });
 
-    grid.addEventListener("click", (e) => {
+    groups.addEventListener("click", (e) => {
       const c = e.target.closest(".pcard"); if (!c) return;
       const p = window.PROJECTS[+c.dataset.i];
       dialog.querySelector(".kind").textContent = kinds[p.kind];
@@ -116,13 +118,6 @@
     });
     dialog.addEventListener("click", (e) => { if (e.target === dialog) dialog.close(); });
     dialog.querySelector(".close").addEventListener("click", () => dialog.close());
-
-    document.querySelectorAll(".filter").forEach((f) => f.addEventListener("click", () => {
-      document.querySelectorAll(".filter").forEach((x) => x.setAttribute("aria-pressed", x === f));
-      grid.querySelectorAll(".pcard").forEach((c) => {
-        c.hidden = f.dataset.filter !== "all" && c.dataset.kind !== f.dataset.filter;
-      });
-    }));
   }
 
   // ---------- Yeux des monstres (aperçu, sans physique) ----------
@@ -141,4 +136,10 @@
       });
     });
   }
+
+  // ---------- Apparition au défilement ----------
+  const io = new IntersectionObserver((entries) => entries.forEach((e) => {
+    if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+  }), { threshold: 0.12 });
+  document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
 })();

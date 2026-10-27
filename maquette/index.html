@@ -38,15 +38,15 @@
       <h1 class="reveal"><span class="grad">Jade Barbier</span></h1>
       <p class="title reveal"><strong>Apprentie ingénieure</strong> en informatique embarquée et réseaux, entre l'ENSIM et SNCF Voyageurs.</p>
       <div class="cta reveal">
-        <a class="btn primary" href="#contact">Me contacter</a>
-        <a class="btn ghost" href="#projets">Voir mes projets →</a>
+        <a class="btn primary" href="#contact">Prendre contact</a>
+        <a class="btn ghost" href="#projets">Voir les projets →</a>
       </div>
       <div class="scroll-hint"><i></i>Défiler pour explorer</div>
     </section>
 
     <!-- 2. Accroche -->
     <section class="section quote">
-      <blockquote class="reveal">Je fais dialoguer les machines, <em>du capteur jusqu'au rail</em>, en toute sécurité.</blockquote>
+      <blockquote class="reveal">Des systèmes embarqués fiables, <em>du capteur jusqu'au rail</em>, sécurisés de bout en bout.</blockquote>
       <p class="lead reveal" style="margin: 1.5rem auto 0">Phrase provisoire <span class="todo">à fournir par Jade</span></p>
     </section>
 
@@ -54,7 +54,10 @@
     <section class="section" id="about">
       <div class="about">
         <div class="porthole reveal">
-          <div class="ring"></div><div class="ring r2"></div>
+          <div class="ring"><span class="orb o1" aria-hidden="true"></span></div>
+          <div class="ring r2"><span class="orb o2" aria-hidden="true"></span><span class="orb o3" aria-hidden="true"></span></div>
+          <div class="ring r3"><span class="orb o4" aria-hidden="true"><svg viewBox="0 0 60 40"><ellipse cx="30" cy="20" rx="28" ry="7" fill="none" stroke="var(--accent)" stroke-opacity=".7" stroke-width="2" transform="rotate(-18 30 20)"/><circle cx="30" cy="20" r="12" fill="url(#orbg)"/><path d="M2 20 A28 7 0 0 0 58 20" fill="none" stroke="var(--accent)" stroke-width="2" transform="rotate(-18 30 20)"/></svg></span></div>
+          <svg width="0" height="0" style="position:absolute"><defs><radialGradient id="orbg" cx="35%" cy="30%"><stop offset="0" stop-color="#c9b8ff"/><stop offset="1" stop-color="#4b3aa8"/></radialGradient></defs></svg>
           <img src="assets/jade.webp" alt="Portrait de Jade Barbier" width="640" height="890">
         </div>
         <div class="reveal">
@@ -64,8 +67,8 @@
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>
             Le Mans, France <span class="todo">ville à confirmer</span>
           </div>
-          <p>Étudiante en dernière ligne droite à l'<strong>ENSIM</strong>, je suis en alternance au <strong>CIM de SNCF Voyageurs</strong>, où je teste et sécurise les équipements embarqués des trains.</p>
-          <p>J'aime les projets où le logiciel touche le matériel : cartes Arduino et STM32, réseaux, mais aussi IA et web. Curieuse, je passe volontiers d'une console de jeu faite main à un client mTLS.</p>
+          <p>Élève ingénieure à l'<strong>ENSIM</strong>, en alternance au <strong>CIM de SNCF Voyageurs</strong> : tests de conformité et sécurisation des équipements embarqués à bord des trains.</p>
+          <p>Un profil à la frontière du logiciel et du matériel : cartes Arduino et STM32, réseaux et cybersécurité, avec des incursions en IA et en développement web. De la console de jeu conçue de A à Z au client mTLS industriel.</p>
           <div class="facts">
             <span class="chip">ENSIM 2022 – 2027</span><span class="chip">SNCF Voyageurs</span><span class="chip">Anglais C1</span><span class="chip">Espagnol B2</span>
           </div>
@@ -100,15 +103,14 @@
     <!-- 6. Expériences et projets -->
     <section class="section" id="projets">
       <span class="eyebrow reveal">Expériences et projets</span>
-      <h2 class="h2 reveal">Ce que j'ai construit</h2>
-      <p class="lead reveal">Clique sur une carte pour ouvrir le détail.</p>
-      <div class="filters reveal" role="group" aria-label="Filtrer">
-        <button class="filter" data-filter="all" aria-pressed="true">Tout</button>
-        <button class="filter" data-filter="pro" aria-pressed="false">Entreprise</button>
-        <button class="filter" data-filter="school" aria-pressed="false">École</button>
-        <button class="filter" data-filter="perso" aria-pressed="false">Perso</button>
-      </div>
-      <div class="grid" id="project-grid"></div>
+      <h2 class="h2 reveal">Projets et expériences</h2>
+      <p class="lead reveal">Classés par contexte. Chaque carte s'ouvre sur le détail : missions, technologies et liens.</p>
+      <nav class="filters reveal" aria-label="Catégories de projets">
+        <a class="filter" href="#projets-pro">Entreprise</a>
+        <a class="filter" href="#projets-school">École</a>
+        <a class="filter" href="#projets-perso">Personnel</a>
+      </nav>
+      <div id="project-groups"></div>
     </section>
 
     <!-- 7. Compétences -->
@@ -116,25 +118,25 @@
       <span class="eyebrow reveal">Compétences</span>
       <h2 class="h2 reveal">Langages et outils</h2>
       <div class="skills" id="skills"></div>
-      <div class="legend"><span>● ○ ○ ○ notions</span><span>● ● ○ ○ guidée</span><span>● ● ● ○ autonome</span><span>● ● ● ● experte</span></div>
+      <div class="legend"><span>● ○ ○ ○ bases</span><span>● ● ○ ○ intermédiaire</span><span>● ● ● ○ autonome</span><span>● ● ● ● avancé</span></div>
     </section>
 
     <!-- 8. En dehors du code -->
     <section class="section" id="hors-code">
       <span class="eyebrow reveal">En dehors du code</span>
-      <h2 class="h2 reveal">Ce que j'aime <span class="todo">textes à fournir</span></h2>
+      <h2 class="h2 reveal">Centres d'intérêt <span class="todo">textes à valider</span></h2>
       <div class="hobbies">
-        <article class="card hobby reveal"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5V5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zm0 0A2 2 0 0 0 6 22h13"/></svg></div><h3>Lecture</h3><p>Les livres qui m'ont marquée, et ceux qui attendent sur la pile.</p></article>
-        <article class="card hobby reveal"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 15c3-1.5 15-1.5 18 0"/><path d="M7 14.5C7 8 9 5 12 5s5 3 5 9.5"/><path d="M7 11h10"/></svg></div><h3>One Piece</h3><p>Une aventure au long cours, et un faible pour Ace.</p></article>
-        <article class="card hobby reveal"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/></svg></div><h3>Voyages</h3><p>Les pays et villes visités, et la prochaine destination.</p></article>
-        <article class="card hobby reveal"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0 5 5L21 13l-8 8-3-3 8-8-1.3-1.3a4 4 0 0 1-5-5L13 2l2.7 2.7z" transform="scale(.9) translate(1 1)"/><path d="M3 21l6-6"/></svg></div><h3>Bricoler</h3><p>Consoles, petits robots et impressions 3D le week-end.</p></article>
+        <article class="card hobby reveal"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5V5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zm0 0A2 2 0 0 0 6 22h13"/></svg></div><h3>Lecture</h3><p>Romans et essais : une curiosité qui nourrit aussi la veille technique.</p></article>
+        <article class="card hobby reveal"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 15c3-1.5 15-1.5 18 0"/><path d="M7 14.5C7 8 9 5 12 5s5 3 5 9.5"/><path d="M7 11h10"/></svg></div><h3>Manga et animation</h3><p>Des récits au long cours, de One Piece aux classiques de l'animation.</p></article>
+        <article class="card hobby reveal"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/></svg></div><h3>Voyages</h3><p>D'autres pays, d'autres langues, d'autres façons de travailler.</p></article>
+        <article class="card hobby reveal"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0 5 5L21 13l-8 8-3-3 8-8-1.3-1.3a4 4 0 0 1-5-5L13 2l2.7 2.7z" transform="scale(.9) translate(1 1)"/><path d="M3 21l6-6"/></svg></div><h3>Électronique maker</h3><p>Consoles portables, petits robots et impression 3D, hors du cadre scolaire.</p></article>
       </div>
     </section>
 
     <!-- 10. Planète bonus (esquisse) -->
     <section class="section" id="planete">
       <span class="eyebrow reveal">Bonus</span>
-      <h2 class="h2 reveal">Ma petite planète</h2>
+      <h2 class="h2 reveal">La petite planète</h2>
       <p class="lead reveal">Esquisse fixe : au sprint 4, les monstres pourront être attrapés et lancés, et retomberont avec la gravité de la planète. Leurs yeux suivent déjà ta souris.</p>
       <div class="planet-wrap">
         <figure class="planet-stage reveal" style="margin:0">
@@ -242,14 +244,14 @@
     <!-- 9. Disponibilités et réseaux -->
     <section class="section" id="contact">
       <span class="eyebrow reveal">Contact</span>
-      <h2 class="h2 reveal">On travaille ensemble ?</h2>
+      <h2 class="h2 reveal">Un poste à pourvoir ?</h2>
       <div class="contact">
         <div class="card reveal">
           <div class="status" style="margin-bottom:1.2rem"><span class="dot"></span><b>Disponible</b> à partir de septembre 2027</div>
-          <h3>Ce que je cherche</h3>
-          <p>Un premier poste d'ingénieure en systèmes embarqués, réseaux ou cybersécurité, à la fin de mon alternance en septembre 2027. <span class="todo">à confirmer</span></p>
+          <h3>Profil</h3>
+          <p>Ingénieure en systèmes embarqués, réseaux ou cybersécurité, disponible en septembre 2027 à l'issue de l'alternance, avec trois ans d'expérience en milieu ferroviaire. <span class="todo">à confirmer</span></p>
           <p>Échanges possibles en français, en anglais ou en espagnol.</p>
-          <a class="btn primary" href="mailto:jade72210@gmail.com" style="margin-top:.6rem">Écrire un e-mail</a>
+          <a class="btn primary" href="mailto:jade72210@gmail.com" style="margin-top:.6rem">Envoyer un e-mail</a>
         </div>
         <div class="socials reveal">
           <a class="card social" href="mailto:jade72210@gmail.com">
@@ -289,7 +291,7 @@
     <div class="body">
       <p class="desc"></p>
       <h4>Missions</h4>
-      <div class="table-wrap"><table class="missions"><thead><tr><th>Mission</th><th>Ce que j'ai fait</th></tr></thead><tbody></tbody></table></div>
+      <div class="table-wrap"><table class="missions"><thead><tr><th>Mission</th><th>Réalisation</th></tr></thead><tbody></tbody></table></div>
       <h4>Technos et mots-clés</h4>
       <div class="tags"></div>
       <div class="links-row"></div>

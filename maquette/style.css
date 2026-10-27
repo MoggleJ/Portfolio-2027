@@ -4,7 +4,7 @@
 :root, [data-theme="dark"] {
   color-scheme: dark;
   --bg-0: #08070c;
-  --bg-1: #0f0c18;
+  --bg-1: #0b0c1d;
   --surface: rgba(255, 255, 255, 0.035);
   --surface-solid: #15131d;
   --border: rgba(255, 255, 255, 0.09);
@@ -15,9 +15,9 @@
   --ok: #7ee2a8;
   --warn: #ffc56e;
   --nebula-1: rgba(120, 80, 220, 0.30);
-  --nebula-2: rgba(70, 50, 150, 0.26);
+  --nebula-2: rgba(45, 85, 220, 0.24);
   --nebula-3: rgba(200, 80, 160, 0.16);
-  --nebula-4: rgba(255, 150, 190, 0.08);
+  --nebula-4: rgba(90, 150, 255, 0.12);
   --star: 242, 240, 245;
   --glow: 0 0 0 1px rgba(185, 162, 255, 0.35), 0 12px 40px -14px rgba(150, 110, 255, 0.45);
   --planet-a: #2f2457;
@@ -41,7 +41,7 @@
   --ok: #16703e;
   --warn: #8a4b00;
   --nebula-1: rgba(180, 160, 250, 0.30);
-  --nebula-2: rgba(210, 190, 240, 0.30);
+  --nebula-2: rgba(170, 195, 250, 0.34);
   --nebula-3: rgba(255, 190, 215, 0.24);
   --nebula-4: rgba(255, 215, 190, 0.20);
   --star: 90, 85, 110;
@@ -164,13 +164,21 @@ main { position: relative; }
 
 /* ---------- À propos ---------- */
 .about { display: grid; grid-template-columns: minmax(260px, 420px) 1fr; gap: clamp(2rem, 6vw, 5rem); align-items: center; }
-@media (max-width: 800px) { .about { grid-template-columns: 1fr; } .porthole { width: 86%; } }
+@media (max-width: 800px) { .about { grid-template-columns: 1fr; } .porthole { width: 74%; } }
 .porthole { position: relative; aspect-ratio: 1; max-width: 420px; width: 100%; margin: 0 auto; }
 .porthole .ring { position: absolute; inset: 0; border-radius: 50%; border: 1px solid var(--border); animation: spin 90s linear infinite; }
 .porthole .ring::before { content: ""; position: absolute; top: 12%; left: 4%; width: 12px; height: 12px; border-radius: 50%; background: var(--accent-2); box-shadow: 0 0 16px var(--accent-2); }
 .porthole .ring.r2 { inset: -6%; border-style: dashed; animation-duration: 140s; animation-direction: reverse; }
 .porthole .ring.r2::before { top: auto; bottom: 14%; left: auto; right: 6%; background: var(--accent); box-shadow: 0 0 16px var(--accent); width: 8px; height: 8px; }
 .porthole img { position: absolute; inset: 9%; width: 82%; height: 82%; object-fit: cover; object-position: 50% 25%; border-radius: 50%; box-shadow: 0 0 0 6px var(--surface-solid), 0 0 0 7px var(--border), 0 30px 80px -20px var(--accent); }
+.porthole .ring.r3 { inset: -14%; border-color: color-mix(in srgb, var(--border) 60%, transparent); animation-duration: 220s; }
+.porthole .ring.r3::before { display: none; }
+.orb { position: absolute; border-radius: 50%; }
+.orb.o1 { width: 22px; height: 22px; top: 80%; left: 12%; background: radial-gradient(circle at 35% 30%, #a9c4ff, #2f4fc4 70%); box-shadow: 0 0 18px rgba(80, 130, 255, .5); }
+.orb.o2 { width: 11px; height: 11px; top: 3%; left: 38%; background: radial-gradient(circle at 35% 30%, #f3f1f6, #8d8899); }
+.orb.o3 { width: 16px; height: 16px; top: 46%; right: -1.5%; background: radial-gradient(circle at 35% 30%, #ffd1e3, #c0477f 75%); box-shadow: 0 0 14px rgba(255, 140, 190, .45); }
+.orb.o4 { width: 58px; height: 40px; top: 4%; right: 10%; border-radius: 0; }
+.orb.o4 svg { width: 100%; height: 100%; overflow: visible; }
 @keyframes spin { to { transform: rotate(360deg); } }
 .about h2 { font-size: clamp(2.2rem, 5vw, 3.4rem); }
 .place { display: inline-flex; gap: .4rem; align-items: center; color: var(--muted); margin: .6rem 0 1.4rem; }
@@ -193,7 +201,11 @@ main { position: relative; }
 /* ---------- Projets ---------- */
 .filters { display: flex; flex-wrap: wrap; gap: .5rem; margin: 2rem 0 1.6rem; }
 .filter { font: 500 .88rem var(--font-text); padding: .45rem 1rem; border-radius: 999px; border: 1px solid var(--border); background: var(--surface); color: var(--muted); cursor: pointer; }
-.filter[aria-pressed="true"] { color: var(--text); border-color: var(--accent); background: color-mix(in srgb, var(--accent) 18%, transparent); }
+.filters a.filter { text-decoration: none; }
+.filter:hover { color: var(--text); border-color: var(--accent); }
+.group { margin-bottom: 3rem; scroll-margin-top: 80px; }
+.group-title { display: flex; align-items: baseline; gap: .7rem; font-size: 1.4rem; margin-bottom: 1.1rem; padding-bottom: .7rem; border-bottom: 1px solid var(--border); }
+.group-title span { font: 500 .8rem var(--font-title); color: var(--muted); letter-spacing: .08em; }
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); gap: 1.2rem; }
 .pcard {
   text-align: left; font: inherit; color: inherit; cursor: pointer; padding: 1.4rem; display: flex; flex-direction: column; gap: .7rem;
