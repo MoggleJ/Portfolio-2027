@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="fr" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Jade Barbier · Maquette</title>
+  <meta name="description" content="Maquette du portfolio 2027 de Jade Barbier (sprint 1)">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script>try { var t = localStorage.getItem("theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}</script>
+</head>
+<body>
+  <div class="nebulae" aria-hidden="true"><div class="nebula n1"></div><div class="nebula n2"></div><div class="nebula n3"></div><div class="nebula n4"></div></div>
+  <canvas id="stars" aria-hidden="true"></canvas>
+
+  <nav class="nav" aria-label="Navigation principale">
+    <a class="logo" href="#top">
+      <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="9" fill="none" stroke="var(--accent)" stroke-width="2"/><ellipse cx="14" cy="14" rx="13" ry="4" fill="none" stroke="var(--accent-2)" stroke-width="1.5" transform="rotate(-20 14 14)"/></svg>
+      MoggleJ
+    </a>
+    <div class="links">
+      <a href="#about">À propos</a><a href="#parcours">Parcours</a><a href="#projets">Projets</a><a href="#competences">Compétences</a><a href="#planete">Planète</a><a href="#contact">Contact</a>
+    </div>
+    <div class="tools">
+      <button class="icon-btn lang" data-toggle-lang aria-label="Changer de langue"><span class="on">FR</span>&nbsp;/&nbsp;<span>EN</span></button>
+      <button class="icon-btn" data-toggle-theme aria-label="Changer de thème">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <main id="top">
+    <!-- 1. Accueil -->
+    <section class="section hero">
+      <div class="status reveal"><span class="dot"></span><b>Disponible</b><span>dès sept. 2027</span><span aria-hidden="true">·</span><span>@MoggleJ</span></div>
+      <h1 class="reveal"><span class="grad">Jade Barbier</span></h1>
+      <p class="title reveal"><strong>Apprentie ingénieure</strong> en informatique embarquée et réseaux, entre l'ENSIM et SNCF Voyageurs.</p>
+      <div class="cta reveal">
+        <a class="btn primary" href="#contact">Me contacter</a>
+        <a class="btn ghost" href="#projets">Voir mes projets →</a>
+      </div>
+      <div class="scroll-hint"><i></i>Défiler pour explorer</div>
+    </section>
+
+    <!-- 2. Accroche -->
+    <section class="section quote">
+      <blockquote class="reveal">Je fais dialoguer les machines, <em>du capteur jusqu'au rail</em>, en toute sécurité.</blockquote>
+      <p class="lead reveal" style="margin: 1.5rem auto 0">Phrase provisoire <span class="todo">à fournir par Jade</span></p>
+    </section>
+
+    <!-- 3 + 4. À propos et introduction -->
+    <section class="section" id="about">
+      <div class="about">
+        <div class="porthole reveal">
+          <div class="ring"></div><div class="ring r2"></div>
+          <img src="assets/jade.webp" alt="Portrait de Jade Barbier" width="640" height="890">
+        </div>
+        <div class="reveal">
+          <span class="eyebrow">À propos</span>
+          <h2>Jade Barbier</h2>
+          <div class="place">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>
+            Le Mans, France <span class="todo">ville à confirmer</span>
+          </div>
+          <p>Étudiante en dernière ligne droite à l'<strong>ENSIM</strong>, je suis en alternance au <strong>CIM de SNCF Voyageurs</strong>, où je teste et sécurise les équipements embarqués des trains.</p>
+          <p>J'aime les projets où le logiciel touche le matériel : cartes Arduino et STM32, réseaux, mais aussi IA et web. Curieuse, je passe volontiers d'une console de jeu faite main à un client mTLS.</p>
+          <div class="facts">
+            <span class="chip">🎓 ENSIM 2022 – 2027</span><span class="chip">🚆 SNCF Voyageurs</span><span class="chip">🇬🇧 Anglais C1</span><span class="chip">🇪🇸 Espagnol B2</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Parcours -->
+    <section class="section" id="parcours">
+      <span class="eyebrow reveal">Parcours</span>
+      <h2 class="h2 reveal">Diplômes et formations</h2>
+      <div class="timeline">
+        <article class="card tl-item now reveal">
+          <img src="assets/ensim.webp" alt="" width="56" height="56">
+          <div>
+            <h3>Diplôme d'ingénieure en informatique</h3>
+            <div class="meta">ENSIM, Le Mans · 2022 – 2027 · en alternance depuis 2024</div>
+            <p>Du système embarqué au web : C, Java, Python, TypeScript, Raspberry Pi, Arduino, STM32, mécatronique.</p>
+          </div>
+        </article>
+        <article class="card tl-item reveal">
+          <img src="assets/malraux.webp" alt="" width="56" height="56">
+          <div>
+            <h3>Baccalauréat général avec mention</h3>
+            <div class="meta">Lycée André Malraux, Allonnes · 2019 – 2022</div>
+            <p>Spécialités physique-chimie et mathématiques.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- 6. Expériences et projets -->
+    <section class="section" id="projets">
+      <span class="eyebrow reveal">Expériences et projets</span>
+      <h2 class="h2 reveal">Ce que j'ai construit</h2>
+      <p class="lead reveal">Clique sur une carte pour ouvrir le détail.</p>
+      <div class="filters reveal" role="group" aria-label="Filtrer">
+        <button class="filter" data-filter="all" aria-pressed="true">Tout</button>
+        <button class="filter" data-filter="pro" aria-pressed="false">Entreprise</button>
+        <button class="filter" data-filter="school" aria-pressed="false">École</button>
+        <button class="filter" data-filter="perso" aria-pressed="false">Perso</button>
+      </div>
+      <div class="grid" id="project-grid"></div>
+    </section>
+
+    <!-- 7. Compétences -->
+    <section class="section" id="competences">
+      <span class="eyebrow reveal">Compétences</span>
+      <h2 class="h2 reveal">Langages et outils</h2>
+      <div class="skills" id="skills"></div>
+      <div class="legend"><span>● ○ ○ ○ notions</span><span>● ● ○ ○ guidée</span><span>● ● ● ○ autonome</span><span>● ● ● ● experte</span></div>
+    </section>
+
+    <!-- 8. En dehors du code -->
+    <section class="section" id="hors-code">
+      <span class="eyebrow reveal">En dehors du code</span>
+      <h2 class="h2 reveal">Ce que j'aime <span class="todo">textes à fournir</span></h2>
+      <div class="hobbies">
+        <article class="card hobby reveal"><div class="em">📚</div><h3>Lecture</h3><p>Les livres qui m'ont marquée, et ceux qui attendent sur la pile.</p></article>
+        <article class="card hobby reveal"><div class="em">🏴‍☠️</div><h3>One Piece</h3><p>Une aventure au long cours, et un faible pour Ace.</p></article>
+        <article class="card hobby reveal"><div class="em">🧭</div><h3>Voyages</h3><p>Les pays et villes visités, et la prochaine destination.</p></article>
+        <article class="card hobby reveal"><div class="em">🛠️</div><h3>Bricoler</h3><p>Consoles, petits robots et impressions 3D le week-end.</p></article>
+      </div>
+    </section>
+
+    <!-- 10. Planète bonus (esquisse) -->
+    <section class="section" id="planete">
+      <span class="eyebrow reveal">Bonus</span>
+      <h2 class="h2 reveal">Ma petite planète</h2>
+      <p class="lead reveal">Esquisse fixe : au sprint 4, les monstres pourront être attrapés et lancés, et retomberont avec la gravité de la planète. Leurs yeux suivent déjà ta souris.</p>
+      <div class="planet-wrap">
+        <figure class="planet-stage reveal" style="margin:0">
+          <svg viewBox="0 0 600 560" role="img" aria-label="Planète violette avec trois petits monstres et un drapeau">
+            <defs>
+              <radialGradient id="pg" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="var(--planet-b)"/><stop offset=".6" stop-color="var(--planet-a)"/><stop offset="1" stop-color="var(--planet-c)"/></radialGradient>
+              <radialGradient id="atmo" r=".5"><stop offset=".78" stop-color="var(--accent)" stop-opacity=".35"/><stop offset="1" stop-color="var(--accent)" stop-opacity="0"/></radialGradient>
+            </defs>
+            <circle cx="300" cy="340" r="215" fill="url(#atmo)"/>
+            <circle cx="300" cy="340" r="170" fill="url(#pg)"/>
+            <g fill="#000" opacity=".16"><circle cx="240" cy="300" r="26"/><circle cx="350" cy="410" r="18"/><circle cx="380" cy="300" r="10"/><circle cx="250" cy="420" r="12"/><circle cx="310" cy="360" r="7"/></g>
+            <path d="M160 300 Q300 270 440 300" stroke="#fff" stroke-opacity=".08" stroke-width="14" fill="none"/>
+
+            <!-- Drapeau au sommet -->
+            <g>
+              <line x1="300" y1="172" x2="300" y2="70" stroke="var(--text)" stroke-width="3" stroke-linecap="round"/>
+              <path d="M302 74 C330 66 345 86 372 78 L372 120 C345 128 330 108 302 116 Z" fill="var(--accent-2)"/>
+              <text x="337" y="103" text-anchor="middle" font-family="Space Grotesk" font-weight="700" font-size="17" fill="var(--bg-0)">MJ</text>
+              <text x="290" y="88" text-anchor="end" class="flag-hint">tire-moi →</text>
+            </g>
+
+            <!-- Monstre 1 : rond, deux yeux -->
+            <g transform="rotate(-40 300 340) translate(300 170) scale(1.45)">
+              <ellipse cx="0" cy="-2" rx="30" ry="6" fill="#000" opacity=".2"/>
+              <path d="M-30 0 C-34 -50 34 -50 30 0 Z" fill="#ff8fc7"/>
+              <rect x="-22" y="-4" width="10" height="8" rx="4" fill="#e66aa8"/><rect x="12" y="-4" width="10" height="8" rx="4" fill="#e66aa8"/>
+              <g><circle cx="-11" cy="-24" r="8" fill="#fff"/><circle cx="-11" cy="-24" r="4" fill="#111" data-pupil="3.5"/></g>
+              <g><circle cx="11" cy="-24" r="8" fill="#fff"/><circle cx="11" cy="-24" r="4" fill="#111" data-pupil="3.5"/></g>
+              <path d="M-6 -11 Q0 -6 6 -11" stroke="#7a2350" stroke-width="2" fill="none" stroke-linecap="round"/>
+            </g>
+
+            <!-- Monstre 2 : à antennes, un œil -->
+            <g transform="rotate(32 300 340) translate(300 170) scale(1.45)">
+              <ellipse cx="0" cy="-2" rx="26" ry="5" fill="#000" opacity=".2"/>
+              <path d="M-12 -52 L-20 -72 M12 -52 L20 -72" stroke="#3fc9dd" stroke-width="3" stroke-linecap="round"/>
+              <circle cx="-20" cy="-74" r="4.5" fill="#ffd36e"/><circle cx="20" cy="-74" r="4.5" fill="#ffd36e"/>
+              <rect x="-24" y="-56" width="48" height="56" rx="20" fill="#5fe0f0"/>
+              <g><circle cx="0" cy="-32" r="13" fill="#fff"/><circle cx="0" cy="-32" r="6.5" fill="#111" data-pupil="5.5"/></g>
+              <rect x="-8" y="-14" width="16" height="4" rx="2" fill="#1d7f8c"/>
+            </g>
+
+            <!-- Monstre 3 : petit fantôme vert -->
+            <g transform="rotate(72 300 340) translate(300 170) scale(1.45)">
+              <ellipse cx="0" cy="-2" rx="20" ry="4" fill="#000" opacity=".2"/>
+              <path d="M-20 0 L-20 -30 A20 20 0 0 1 20 -30 L20 0 L13 -6 L7 0 L0 -6 L-7 0 L-13 -6 Z" fill="#8ff0b2"/>
+              <g><circle cx="-7" cy="-32" r="5.5" fill="#fff"/><circle cx="-7" cy="-32" r="2.8" fill="#111" data-pupil="2.5"/></g>
+              <g><circle cx="7" cy="-32" r="5.5" fill="#fff"/><circle cx="7" cy="-32" r="2.8" fill="#111" data-pupil="2.5"/></g>
+              <circle cx="-13" cy="-22" r="3" fill="#ff9cc8" opacity=".7"/><circle cx="13" cy="-22" r="3" fill="#ff9cc8" opacity=".7"/>
+            </g>
+          </svg>
+          <figcaption class="stage-label">La planète au repos</figcaption>
+        </figure>
+
+        <figure class="planet-stage reveal" style="margin:0">
+          <svg viewBox="0 0 600 560" role="img" aria-label="Vue en coupe de la planète : trois couches avec des objets enfouis">
+            <defs>
+              <radialGradient id="pg2" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="var(--planet-b)"/><stop offset=".6" stop-color="var(--planet-a)"/><stop offset="1" stop-color="var(--planet-c)"/></radialGradient>
+              <radialGradient id="core" r=".5"><stop offset="0" stop-color="#fff2b0"/><stop offset="1" stop-color="#ffb347"/></radialGradient>
+            </defs>
+            <circle cx="300" cy="340" r="170" fill="url(#pg2)"/>
+            <!-- Part découpée : quart haut droit -->
+            <path d="M300 340 L300 170 A170 170 0 0 1 470 340 Z" fill="#8a5a3c"/>
+            <path d="M300 340 L300 215 A125 125 0 0 1 425 340 Z" fill="#c4683f"/>
+            <path d="M300 340 L300 270 A70 70 0 0 1 370 340 Z" fill="url(#core)"/>
+            <path d="M300 340 L300 170 A170 170 0 0 1 470 340 Z" fill="none" stroke="var(--text)" stroke-opacity=".5" stroke-width="2"/>
+            <!-- La part soulevée, en pointillés -->
+            <path d="M330 300 L330 130 A170 170 0 0 1 500 300 Z" fill="none" stroke="var(--accent-2)" stroke-dasharray="6 6" stroke-width="2" opacity=".7"/>
+            <!-- Drapeau tiré -->
+            <line x1="330" y1="130" x2="330" y2="40" stroke="var(--text)" stroke-width="3" stroke-linecap="round"/>
+            <path d="M332 44 C360 36 375 56 402 48 L402 90 C375 98 360 78 332 86 Z" fill="var(--accent-2)"/>
+            <text x="367" y="73" text-anchor="middle" font-family="Space Grotesk" font-weight="700" font-size="17" fill="var(--bg-0)">MJ</text>
+
+            <!-- Couche du dessus : aujourd'hui -->
+            <g transform="translate(352 205) rotate(-12) scale(1.4)"><rect x="-13" y="-9" width="26" height="18" rx="2" fill="#f4e6c8"/><path d="M0 -9 V9" stroke="#8a5a3c" stroke-width="1.5"/><rect x="-13" y="-9" width="26" height="18" rx="2" fill="none" stroke="#5b3a24" stroke-width="1.5"/></g>
+            <g transform="translate(408 245) rotate(18) scale(1.4)"><ellipse cx="0" cy="6" rx="20" ry="6" fill="#e8742a"/><path d="M-11 6 C-11 -12 11 -12 11 6 Z" fill="#f08a36"/><rect x="-11" y="-1" width="22" height="3" fill="#c23b22"/><circle cx="-5" cy="-5" r="2.2" fill="#ffd36e"/><circle cx="4" cy="-5" r="2.2" fill="#6ec3ff"/></g>
+            <g transform="translate(445 300) scale(1.3)"><path d="M0 -14 C-8 -14 -10 -6 -10 -4 C-10 4 0 12 0 12 C0 12 10 4 10 -4 C10 -6 8 -14 0 -14 Z" fill="#ff5d73"/><circle cx="0" cy="-4" r="3.5" fill="#fff"/></g>
+            <!-- Couche du milieu : adolescence (à définir) -->
+            <text x="356" y="262" font-family="Space Grotesk" font-weight="700" font-size="22" fill="#fff" opacity=".85">?</text>
+            <text x="392" y="300" font-family="Space Grotesk" font-weight="700" font-size="18" fill="#fff" opacity=".6">?</text>
+            <!-- Noyau : enfance -->
+            <g transform="translate(345 315) rotate(-35) scale(1.3)"><rect x="-1.5" y="-12" width="3" height="20" rx="1" fill="#f4e6c8"/><circle cx="0" cy="-13" r="3.5" fill="#c23b22"/><path d="M0 -24 C4 -19 3 -16 0 -16 C-3 -16 -4 -19 0 -24 Z" fill="#ff9a3c"/></g>
+            <g transform="translate(318 296) scale(1.3)"><rect x="-10" y="-7" width="20" height="14" rx="3" fill="#6b4fd8"/><rect x="-7" y="-4.5" width="14" height="9" rx="1.5" fill="#bfe9ff"/><path d="M-4 -7 L-8 -12 M4 -7 L8 -12" stroke="#6b4fd8" stroke-width="1.5"/></g>
+
+            <!-- Légendes -->
+            <g font-family="Inter" font-size="13" fill="var(--muted)">
+              <line x1="470" y1="210" x2="520" y2="190" stroke="var(--muted)"/><text x="524" y="186">Aujourd'hui</text>
+              <line x1="420" y1="300" x2="520" y2="330" stroke="var(--muted)"/><text x="524" y="334">Ado</text>
+              <line x1="350" y1="330" x2="520" y2="420" stroke="var(--muted)"/><text x="524" y="424">Enfance</text>
+            </g>
+          </svg>
+          <figcaption class="stage-label">Après avoir tiré le drapeau : la fouille</figcaption>
+        </figure>
+      </div>
+      <div class="card notes reveal">
+        <strong>Dans la coupe, de haut en bas</strong>
+        <ul>
+          <li>Croûte, aujourd'hui : un livre, le chapeau de Ace, une épingle de voyage.</li>
+          <li>Manteau, l'adolescence : à définir avec toi.</li>
+          <li>Noyau, l'enfance : une allumette pour la Petite Fille aux allumettes, une télé pour les dessins animés.</li>
+          <li>Logo du drapeau provisoire (« MJ ») en attendant le tien.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 9. Disponibilités et réseaux -->
+    <section class="section" id="contact">
+      <span class="eyebrow reveal">Contact</span>
+      <h2 class="h2 reveal">On travaille ensemble ?</h2>
+      <div class="contact">
+        <div class="card reveal">
+          <div class="status" style="margin-bottom:1.2rem"><span class="dot"></span><b>Disponible</b> à partir de septembre 2027</div>
+          <h3>Ce que je cherche</h3>
+          <p>Un premier poste d'ingénieure en systèmes embarqués, réseaux ou cybersécurité, à la fin de mon alternance en septembre 2027. <span class="todo">à confirmer</span></p>
+          <p>Échanges possibles en français, en anglais ou en espagnol.</p>
+          <a class="btn primary" href="mailto:jade72210@gmail.com" style="margin-top:.6rem">Écrire un e-mail</a>
+        </div>
+        <div class="socials reveal">
+          <a class="card social" href="mailto:jade72210@gmail.com">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+            <span>E-mail<small>jade72210@gmail.com</small></span><span class="arrow">↗</span>
+          </a>
+          <a class="card social" href="https://www.linkedin.com/in/jade-barbier-b261b8266/" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.5h4V21H3zM9.5 9.5h3.8v1.6h.1c.5-1 1.8-2 3.8-2 4 0 4.8 2.6 4.8 6V21h-4v-5.2c0-1.2 0-2.8-1.7-2.8s-2 1.3-2 2.7V21h-4z"/></svg>
+            <span>LinkedIn<small>jade-barbier</small></span><span class="arrow">↗</span>
+          </a>
+          <a class="card social" href="https://github.com/MoggleJ" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.3-3.4-1.3-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .8.1-.7.4-1.1.6-1.4-2.2-.2-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.8 1a9.6 9.6 0 0 1 5 0c1.9-1.3 2.8-1 2.8-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.3 4.7-4.6 5 .4.3.7.9.7 1.9V21c0 .3.2.6.7.5A10 10 0 0 0 12 2z"/></svg>
+            <span>GitHub<small>@MoggleJ</small></span><span class="arrow">↗</span>
+          </a>
+          <a class="card social" href="https://github.com/MoggleJ/Portfolio_2026/raw/main/cv/BARBIER_Jade_CV_Stage_EN.pdf" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M12 12v6m-3-3 3 3 3-3"/></svg>
+            <span>CV<small>PDF à télécharger</small></span><span class="arrow">↓</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 11. Pied de page -->
+  <footer>
+    <div class="bigname" aria-hidden="true">Jade Barbier</div>
+    <div class="foot"><span>© 2027 Jade Barbier · fait avec Next.js, Tailwind et beaucoup d'étoiles</span><a href="#top">Revenir en haut ↑</a></div>
+  </footer>
+
+  <dialog class="detail" id="detail" aria-labelledby="detail-title">
+    <div class="head">
+      <span class="kind"></span>
+      <h3 id="detail-title"></h3>
+      <div class="meta" style="color:var(--muted);font-size:.9rem"></div>
+      <button class="icon-btn close" aria-label="Fermer">✕</button>
+    </div>
+    <div class="body">
+      <p class="desc"></p>
+      <h4>Missions</h4>
+      <div class="table-wrap"><table class="missions"><thead><tr><th>Mission</th><th>Ce que j'ai fait</th></tr></thead><tbody></tbody></table></div>
+      <h4>Technos et mots-clés</h4>
+      <div class="tags"></div>
+      <div class="links-row"></div>
+    </div>
+  </dialog>
+
+  <div class="mock-banner">Maquette sprint 1 · <a href="styleguide.html">Planche de style</a></div>
+
+  <script src="data.js"></script>
+  <script src="skills.js"></script>
+  <script src="maquette.js"></script>
+</body>
+</html>

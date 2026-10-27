@@ -1,0 +1,107 @@
+// Contenu de démonstration, repris de Portfolio_2026 (data/experience.json et data/projects.json).
+// Au sprint 3, il sera migré dans content/ en FR et EN.
+window.PROJECTS = [
+  {
+    kind: "pro", icon: "🚆", title: "Alternance en informatique embarquée et réseaux",
+    where: "CIM, SNCF Voyageurs, Le Mans", when: "sept. 2024 – sept. 2027",
+    desc: "Alternance au centre d'ingénierie du matériel : tests de conformité des équipements embarqués et sécurisation des communications à bord des trains.",
+    missions: [
+      ["Conformité ITxPT", "Test des équipements selon leur consommation électrique et la compatibilité des services échangés"],
+      ["PoC sécurité", "Logiciel client utilisant les API EST pour sécuriser les communications embarquées"],
+      ["Systèmes embarqués", "Travail sur des systèmes embarqués dans le contexte du transport ferroviaire"],
+    ],
+    tags: ["Systèmes embarqués", "Réseaux", "ITxPT", "Tests", "Sécurité"],
+  },
+  {
+    kind: "pro", icon: "🔐", title: "Système de communication embarqué sécurisé",
+    where: "SNCF Voyageurs", when: "pendant l’alternance",
+    desc: "Preuve de concept pour sécuriser les communications des systèmes ferroviaires embarqués : chiffrement, protocoles cryptographiques et authentification mutuelle par certificats (mTLS).",
+    missions: [
+      ["Client EST", "Développement d'un client utilisant les API EST pour l'enrôlement des certificats"],
+      ["mTLS", "Mise en œuvre de l'authentification mutuelle entre équipements"],
+      ["Tests", "Environnement de test conteneurisé avec Docker"],
+    ],
+    tags: ["Sécurité", "API EST", "mTLS", "Python", "Docker", "Tests"],
+  },
+  {
+    kind: "pro", icon: "📡", title: "PoC outil de test de connexion SFTP",
+    where: "SNCF Voyageurs", when: "pendant l’alternance",
+    desc: "Outil qui analyse les caractéristiques d'une connexion SFTP, y compris son comportement en zone blanche quand la connexion est rompue.",
+    missions: [
+      ["Documentation", "Cahier des charges, document d'étude, Gantt, comptes rendus de réunion"],
+      ["Module de suivi", "Module SFTP compilé pour ARM depuis AMD64"],
+      ["Analyse", "Mesure des coupures et reprises de connexion"],
+    ],
+    tags: ["SFTP", "SSH", "ARM", "Python", "Documentation"],
+  },
+  {
+    kind: "pro", icon: "📜", title: "Étude Cyber Resilience Act",
+    where: "SNCF Voyageurs", when: "pendant l’alternance",
+    desc: "Étude du règlement européen sur la cyber-résilience et de son impact sur les équipements embarqués.",
+    missions: [["Veille", "Analyse du texte et des obligations"], ["Synthèse", "Document de conformité pour les équipes"]],
+    tags: ["Sécurité", "CRA", "Conformité", "Documentation"],
+  },
+  {
+    kind: "pro", icon: "🏭", title: "Opératrice de conditionnement",
+    where: "Colart International, Le Mans", when: "juin – août 2023",
+    desc: "Job d'été en production : assemblage, contrôle et conditionnement de produits semi-finis.",
+    missions: [
+      ["Production", "Assemblage, contrôle et conditionnement sur lignes de production"],
+      ["Qualité", "Procédures de contrôle qualité et normes de conformité"],
+      ["Sécurité", "Production fluide dans le respect des normes de sécurité et des délais"],
+    ],
+    tags: ["Industrie", "Qualité", "Rigueur"],
+  },
+  {
+    kind: "school", icon: "🕹️", title: "Pictionary connecté",
+    where: "ENSIM, projet mécatronique", when: "en équipe",
+    desc: "Jeu multijoueur temps réel : un bras motorisé dessine, l'image est analysée, les joueurs devinent. Contrôleurs Arduino reliés en Bluetooth.",
+    missions: [["Électronique", "Contrôleurs Arduino et liaison Bluetooth"], ["Logiciel", "Traitement d'images et logique de jeu temps réel"]],
+    tags: ["Mécatronique", "Bluetooth", "Temps réel", "Traitement d'images"],
+    link: "https://github.com/MoggleJ/pictionnary",
+  },
+  {
+    kind: "school", icon: "🧠", title: "Joueur d'Othello IA",
+    where: "ENSIM", when: "projet IA",
+    desc: "IA qui joue à Othello, choisie après l'entraînement et la comparaison de nombreux modèles (MLP, LSTM, CNN, CNN-LSTM, Transformer) et hyperparamètres.",
+    missions: [["Modèles", "MLP, LSTM, CNN, CNN-LSTM, Transformer"], ["Optimisation", "Recherche d'hyperparamètres et d'architectures"]],
+    tags: ["IA", "Deep learning", "Python", "Jeu"],
+    link: "https://github.com/MoggleJ/IA-Othello-Player",
+  },
+  {
+    kind: "school", icon: "🍬", title: "Cocobonbon, machine à bonbons",
+    where: "ENSIM", when: "projet d'équipe",
+    desc: "Conception d'une machine à bonbons automatisée, de la modélisation 3D à la gestion de projet.",
+    missions: [["Conception", "Modélisation SolidWorks"], ["Gestion de projet", "Planification et coordination de l'équipe"]],
+    tags: ["Mécatronique", "SolidWorks", "Gestion de projet"],
+  },
+  {
+    kind: "school", icon: "🎴", title: "Système d'affichage de cartes",
+    where: "ENSIM, projet mécatronique", when: "en équipe",
+    desc: "Système automatisé qui détecte une carte par NFC et l'affiche sur un écran LCD, dans un boîtier imprimé en 3D.",
+    missions: [["Détection", "Lecture NFC des cartes"], ["Affichage", "Retour visuel sur écran LCD"], ["Boîtier", "Impression 3D"]],
+    tags: ["Arduino", "NFC", "Impression 3D"],
+  },
+  {
+    kind: "school", icon: "📱", title: "Application mobile en Kotlin",
+    where: "ENSIM", when: "projet de cours",
+    desc: "Développement d'une application Android en Kotlin avec Android Studio.",
+    missions: [["Interface", "Écrans et navigation Android"], ["Logique", "Kotlin et architecture de l'application"]],
+    tags: ["Mobile", "Kotlin", "Android Studio"],
+  },
+  {
+    kind: "perso", icon: "🎮", title: "Console de jeu portable",
+    where: "Projet personnel", when: "en cours",
+    desc: "Console portable sur Arduino avec écran LCD, boutons, sortie son et plusieurs jeux, dont un Space Invaders. Prochaines étapes : boîtier imprimé en 3D et code bas niveau optimisé.",
+    missions: [["Matériel", "Écran LCD, boutons, son"], ["Jeux", "Plusieurs jeux jouables, dont Space Invaders"], ["À venir", "Boîtier 3D et optimisation"]],
+    tags: ["Embarqué", "C/C++", "Matériel", "Jeu"],
+    link: "https://github.com/MoggleJ/Console_SpaceInvidersVersion",
+  },
+  {
+    kind: "perso", icon: "🚗", title: "Véhicules autonomes",
+    where: "Projets personnels", when: "plusieurs versions",
+    desc: "Petits véhicules autonomes sur Arduino : capteurs de navigation, évitement d'obstacles, planification de trajectoire, contrôle à distance et pièces modélisées en 3D.",
+    missions: [["Capteurs", "Navigation et évitement d'obstacles"], ["Pilotage", "Autonome ou à distance"], ["Pièces", "Composants modélisés et imprimés en 3D"]],
+    tags: ["Arduino", "Robotique", "Modélisation 3D"],
+  },
+];

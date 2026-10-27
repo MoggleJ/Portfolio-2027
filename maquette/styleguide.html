@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="fr" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Planche de style · Maquette</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .themes { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2rem; }
+    @media (max-width: 900px) { .themes { grid-template-columns: 1fr; } }
+    .panel { position: relative; overflow: hidden; border-radius: 24px; border: 1px solid var(--border); padding: 1.6rem; color: var(--text); background: linear-gradient(160deg, var(--bg-0), var(--bg-1)); }
+    .panel::before { content: ""; position: absolute; width: 70%; height: 60%; right: -20%; top: -20%; background: radial-gradient(closest-side, var(--nebula-1), transparent); filter: blur(30px); }
+    .panel::after { content: ""; position: absolute; width: 60%; height: 50%; left: -20%; bottom: -15%; background: radial-gradient(closest-side, var(--nebula-2), transparent); filter: blur(30px); }
+    .panel > * { position: relative; z-index: 1; }
+    .panel h3 { font-size: 1.4rem; margin-bottom: 1rem; }
+    .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: .7rem; }
+    .sw { border-radius: 14px; border: 1px solid var(--border); overflow: hidden; background: var(--surface); font-size: .78rem; }
+    .sw i { display: block; height: 54px; }
+    .sw div { padding: .45rem .6rem; }
+    .sw b { display: block; font-weight: 600; }
+    .sw code { color: var(--muted); font-size: .72rem; }
+    table.contrast { width: 100%; border-collapse: collapse; font-size: .85rem; margin-top: 1.2rem; }
+    table.contrast td, table.contrast th { padding: .45rem .5rem; border-bottom: 1px solid var(--border); text-align: left; }
+    table.contrast th { color: var(--muted); font-weight: 600; font-size: .75rem; text-transform: uppercase; letter-spacing: .06em; }
+    .pass { color: var(--ok); font-weight: 600; } .fail { color: #ff6b7d; font-weight: 600; }
+    .sample { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1.2rem; align-items: center; }
+    .type-scale { display: grid; gap: 1.2rem; margin-top: 2rem; }
+    .type-row { display: grid; grid-template-columns: 170px 1fr; gap: 1rem; align-items: baseline; padding: 1rem 1.4rem; }
+    @media (max-width: 640px) { .type-row { grid-template-columns: 1fr; gap: .2rem; } }
+    .type-row small { color: var(--muted); font-size: .78rem; }
+    .motion { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr)); gap: 1rem; margin-top: 2rem; }
+    .motion .card { padding: 1.2rem; font-size: .9rem; color: var(--muted); }
+    .motion .card b { color: var(--text); display: block; margin-bottom: .3rem; font-family: var(--font-title); font-size: 1.05rem; }
+  </style>
+</head>
+<body>
+  <div class="nebulae" aria-hidden="true"><div class="nebula n1"></div><div class="nebula n2"></div><div class="nebula n3"></div></div>
+  <canvas id="stars" aria-hidden="true"></canvas>
+
+  <nav class="nav">
+    <a class="logo" href="index.html">← Maquette</a>
+    <div class="tools" style="margin-left:auto">
+      <button class="icon-btn" data-toggle-theme aria-label="Changer de thème"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+    </div>
+  </nav>
+
+  <main>
+    <section class="section" style="padding-top:7rem">
+      <span class="eyebrow">Sprint 1 · issue #2</span>
+      <h1 class="h2" style="font-size:clamp(2.4rem,6vw,4rem)">Planche de style</h1>
+      <p class="lead">Les couleurs et polices du portfolio. Chaque couleur a un rôle et une valeur par thème, ce qui permettra de changer tout le style depuis un seul fichier au sprint 2.</p>
+
+      <div class="themes">
+        <div class="panel" data-theme="dark"><h3>Thème sombre <span class="chip">par défaut</span></h3><div class="swatches"></div><table class="contrast"></table>
+          <div class="sample"><a class="btn primary" href="#">Me contacter</a><a class="btn ghost" href="#">Voir mes projets →</a><span class="status"><span class="dot"></span><b>Disponible</b></span></div></div>
+        <div class="panel" data-theme="light"><h3>Thème clair</h3><div class="swatches"></div><table class="contrast"></table>
+          <div class="sample"><a class="btn primary" href="#" style="color:#fff">Me contacter</a><a class="btn ghost" href="#">Voir mes projets →</a><span class="status"><span class="dot"></span><b>Disponible</b></span></div></div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <span class="eyebrow">Typographie</span>
+      <h2 class="h2">Space Grotesk et Inter</h2>
+      <p class="lead">Space Grotesk pour les titres, géométrique avec un petit air de tableau de bord spatial. Inter pour le texte, très lisible même petit. Les deux seront auto-hébergées avec next/font.</p>
+      <div class="type-scale">
+        <div class="card type-row"><small>Nom (accueil)<br>Space Grotesk 700 · 48 → 120 px</small><span style="font:700 clamp(2.6rem,8vw,5rem)/1 var(--font-title);letter-spacing:-.03em">Jade Barbier</span></div>
+        <div class="card type-row"><small>Titre de section<br>Space Grotesk 700 · 30 → 48 px</small><span style="font:700 clamp(1.9rem,4.5vw,3rem)/1.1 var(--font-title);letter-spacing:-.02em">Ce que j'ai construit</span></div>
+        <div class="card type-row"><small>Citation<br>Space Grotesk 500 · 28 → 52 px</small><span style="font:500 clamp(1.6rem,3.5vw,2.4rem)/1.2 var(--font-title)">Je fais dialoguer les machines.</span></div>
+        <div class="card type-row"><small>Titre de carte<br>Space Grotesk 700 · 19 px</small><span style="font:700 1.2rem var(--font-title)">Pictionary connecté</span></div>
+        <div class="card type-row"><small>Texte courant<br>Inter 400 · 16 px / 1.65</small><span>J'aime les projets où le logiciel touche le matériel : cartes Arduino et STM32, réseaux, mais aussi IA et web.</span></div>
+        <div class="card type-row"><small>Surtitre<br>Inter 600 · 12 px · capitales</small><span class="eyebrow" style="margin:0">Expériences et projets</span></div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <span class="eyebrow">Mouvement</span>
+      <h2 class="h2">Discret, toujours</h2>
+      <div class="motion">
+        <div class="card"><b>Étoiles</b>150 à 230 points, scintillement décalé de 2 à 6 s. Moins nombreuses et bleu-gris en clair.</div>
+        <div class="card"><b>Brumes</b>4 nébuleuses floues qui dérivent en 70 à 110 s.</div>
+        <div class="card"><b>Sections</b>Fondu et légère montée de 18 px à l'arrivée à l'écran.</div>
+        <div class="card"><b>Cartes</b>Lueur qui suit le pointeur et montée de 3 px au survol.</div>
+        <div class="card"><b>Thème</b>Transition de couleur de 300 ms.</div>
+        <div class="card"><b>Réduire les animations</b>Tout s'arrête : ciel fixe, sections visibles d'emblée.</div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Palette et contrastes calculés à partir des variables CSS réelles de chaque thème
+    const roles = [["--bg-0", "Fond"], ["--bg-1", "Fond bas"], ["--surface-solid", "Surface"], ["--text", "Texte"], ["--muted", "Texte secondaire"], ["--accent", "Accent violet"], ["--accent-2", "Accent cyan / bleu"], ["--ok", "Disponible"]];
+    function lum(hex) {
+      const c = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255).map((x) => (x <= 0.03928 ? x / 12.92 : ((x + 0.055) / 1.055) ** 2.4));
+      return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
+    }
+    const ratio = (a, b) => { const [x, y] = [lum(a), lum(b)].sort((m, n) => n - m); return (x + 0.05) / (y + 0.05); };
+    document.querySelectorAll(".panel").forEach((p) => {
+      const cs = getComputedStyle(p);
+      const v = (k) => cs.getPropertyValue(k).trim();
+      p.querySelector(".swatches").innerHTML = roles.map(([k, n]) => `<div class="sw"><i style="background:${v(k)}"></i><div><b>${n}</b><code>${v(k)}</code></div></div>`).join("") +
+        ["--nebula-1", "--nebula-2", "--nebula-3"].map((k, i) => `<div class="sw"><i style="background:radial-gradient(circle,${v(k)},transparent 70%),${v("--bg-0")}"></i><div><b>Brume ${i + 1}</b><code>${v(k).replace(/\s/g, "")}</code></div></div>`).join("");
+      const rows = [];
+      for (const bg of ["--bg-0", "--bg-1", "--surface-solid"]) for (const fg of ["--text", "--muted", "--accent", "--accent-2", "--ok"]) {
+        const r = ratio(v(fg), v(bg));
+        rows.push(`<tr><td><span style="color:${v(fg)};background:${v(bg)};padding:.15rem .5rem;border-radius:6px;border:1px solid var(--border)">Aa</span></td><td>${roles.find((x) => x[0] === fg)[1]} sur ${roles.find((x) => x[0] === bg)[1].toLowerCase()}</td><td>${r.toFixed(2)} : 1</td><td class="${r >= 4.5 ? "pass" : "fail"}">${r >= 4.5 ? "AA ✓" : "✗"}</td></tr>`);
+      }
+      p.querySelector(".contrast").innerHTML = `<thead><tr><th></th><th>Paire</th><th>Contraste</th><th>WCAG</th></tr></thead><tbody>${rows.join("")}</tbody>`;
+    });
+  </script>
+  <script src="maquette.js"></script>
+</body>
+</html>
