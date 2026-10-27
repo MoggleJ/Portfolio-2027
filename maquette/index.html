@@ -7,7 +7,7 @@
   <meta name="description" content="Maquette du portfolio 2027 de Jade Barbier (sprint 1)">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <script>try { var t = localStorage.getItem("theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}</script>
 </head>
@@ -15,34 +15,57 @@
   <div class="nebulae" aria-hidden="true"><div class="nebula n1"></div><div class="nebula n2"></div><div class="nebula n3"></div><div class="nebula n4"></div></div>
   <canvas id="stars" aria-hidden="true"></canvas>
 
-  <nav class="nav" aria-label="Navigation principale">
-    <a class="logo" href="#top">
-      <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="9" fill="none" stroke="var(--accent)" stroke-width="2"/><ellipse cx="14" cy="14" rx="13" ry="4" fill="none" stroke="var(--accent-2)" stroke-width="1.5" transform="rotate(-20 14 14)"/></svg>
-      MoggleJ
-    </a>
-    <div class="links">
-      <a href="#about">À propos</a><a href="#parcours">Parcours</a><a href="#projets">Projets</a><a href="#competences">Compétences</a><a href="#planete">Planète</a><a href="#contact">Contact</a>
+  <!-- Tablette latérale : c'est la barre de menu -->
+  <aside class="tablet" id="tablet" aria-label="Menu">
+    <div class="tablet-device">
+      <div class="tablet-screen" data-theme="dark">
+        <div class="t-bar"><span>MJ-PAD · v2027</span><span class="t-clock">T+00:00:00</span></div>
+        <div class="t-status"><span class="dot"></span><span><b>Disponible</b> à partir de sept. 2027</span></div>
+        <nav class="t-nav" aria-label="Sections du rapport">
+          <a href="#top"><i>00</i>Couverture</a>
+          <a href="#about"><i>01</i>Identification</a>
+          <a href="#parcours"><i>02</i>Trajectoire</a>
+          <a href="#projets"><i>03</i>Journal de missions</a>
+          <a href="#competences"><i>04</i>Équipement</a>
+          <a href="#hors-code"><i>05</i>Hors mission</a>
+          <a href="#planete"><i>06</i>Planète MJ-1</a>
+          <a href="#contact"><i>07</i>Transmission</a>
+          <a href="parcours-universitaire.html"><i>A</i>Annexe : semestres</a>
+        </nav>
+        <div class="t-tools">
+          <button class="t-btn lang" data-toggle-lang aria-label="Changer de langue"><span class="on">FR</span>&nbsp;/&nbsp;<span>EN</span></button>
+          <button class="t-btn" data-toggle-theme aria-label="Changer de thème">Sombre / clair</button>
+        </div>
+        <div class="t-foot"><span>Signal <i class="bars"><i></i><i></i><i></i><i></i><i></i></i></span><span>Batterie 87 %</span></div>
+      </div>
     </div>
-    <div class="tools">
-      <button class="icon-btn lang" data-toggle-lang aria-label="Changer de langue"><span class="on">FR</span>&nbsp;/&nbsp;<span>EN</span></button>
-      <button class="icon-btn" data-toggle-theme aria-label="Changer de thème">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
-      </button>
-    </div>
-  </nav>
+    <button class="tablet-handle" aria-expanded="false" aria-controls="tablet"><span class="grip" aria-hidden="true"></span><span>Menu</span></button>
+  </aside>
 
   <main id="top">
     <!-- 1. Accueil -->
-    <section class="section hero">
-      <div class="dossier reveal"><span>Dossier MJ-2027</span><span>Rapport de mission</span><span>Édition 2026 – 2027</span></div>
-      <div class="status reveal"><span class="dot"></span><b>Disponible</b><span>dès sept. 2027</span><span aria-hidden="true">·</span><span>@MoggleJ</span></div>
-      <h1 class="reveal"><span class="grad">Jade Barbier</span></h1>
+    <section class="section hero cover">
+      <div class="cover-head reveal">
+        <div class="agency">
+          <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="21" fill="var(--accent-3)"/><ellipse cx="24" cy="25" rx="20" ry="7" fill="none" stroke="#fff" stroke-width="1.6" transform="rotate(-22 24 25)"/><path d="M6 33 C18 22 30 18 44 12" stroke="var(--accent-2)" stroke-width="3" fill="none" stroke-linecap="round"/><g fill="#fff"><circle cx="15" cy="15" r="1"/><circle cx="31" cy="34" r="1"/><circle cx="35" cy="20" r=".8"/></g></svg>
+          <div><b>Programme MJ</b><span>Rapport technique · Portfolio</span></div>
+        </div>
+        <div class="docno"><span>Doc. TR-MJ-2027-01</span><span>Classification : public</span></div>
+      </div>
+      <span class="kicker reveal">Rapport de mission</span>
+      <h1 class="reveal">Jade Barbier</h1>
       <p class="title reveal"><strong>Apprentie ingénieure</strong> en informatique embarquée et réseaux, entre l'ENSIM et SNCF Voyageurs.</p>
+      <dl class="form-grid reveal">
+        <div><dt>Indicatif</dt><dd>@MoggleJ</dd></div>
+        <div><dt>Base</dt><dd>Le Mans, France</dd></div>
+        <div><dt>Statut</dt><dd><span class="dot"></span> Disponible dès sept. 2027</dd></div>
+        <div><dt>Période couverte</dt><dd>2019 – 2027</dd></div>
+      </dl>
       <div class="cta reveal">
         <a class="btn primary" href="#contact">Prendre contact</a>
         <a class="btn ghost" href="#projets">Voir les projets →</a>
       </div>
-      <div class="scroll-hint"><i></i>Défiler pour explorer</div>
+      <span class="stamp-big" aria-hidden="true">Approuvé<br>pour diffusion</span>
     </section>
 
     <!-- 2. Accroche -->
@@ -54,18 +77,24 @@
     <!-- 3 + 4. À propos et introduction -->
     <section class="section" id="about">
       <div class="about">
-        <div class="porthole reveal">
-          <div class="ring"><span class="orb o1" aria-hidden="true"></span></div>
-          <div class="ring r2"><span class="orb o2" aria-hidden="true"></span><span class="orb o3" aria-hidden="true"></span></div>
-          <div class="ring r3"><span class="orb o4" aria-hidden="true"><svg viewBox="0 0 60 40"><ellipse cx="30" cy="20" rx="28" ry="7" fill="none" stroke="var(--accent)" stroke-opacity=".7" stroke-width="2" transform="rotate(-18 30 20)"/><circle cx="30" cy="20" r="12" fill="url(#orbg)"/><path d="M2 20 A28 7 0 0 0 58 20" fill="none" stroke="var(--accent)" stroke-width="2" transform="rotate(-18 30 20)"/></svg></span></div>
-          <svg width="0" height="0" style="position:absolute"><defs><radialGradient id="orbg" cx="35%" cy="30%"><stop offset="0" stop-color="#c9b8ff"/><stop offset="1" stop-color="#4b3aa8"/></radialGradient></defs></svg>
-          <div class="corona" aria-hidden="true"></div>
-          <img src="assets/jade.webp" alt="Portrait de Jade Barbier" width="640" height="890">
-          <span class="diamond" aria-hidden="true"></span>
-          <span class="fig-cap">Fig. 01 · Portrait</span>
-        </div>
+        <figure class="photo-fig reveal">
+          <div class="screen photo-screen" data-theme="dark">
+            <div class="hud top"><span><b class="rec"></b>CAM-01 · IDENTIFICATION</span><span>EXP. 1/125</span></div>
+          <div class="porthole">
+            <div class="ring"><span class="orb o1" aria-hidden="true"></span></div>
+            <div class="ring r2"><span class="orb o2" aria-hidden="true"></span><span class="orb o3" aria-hidden="true"></span></div>
+            <div class="ring r3"><span class="orb o4" aria-hidden="true"><svg viewBox="0 0 60 40"><ellipse cx="30" cy="20" rx="28" ry="7" fill="none" stroke="var(--accent)" stroke-opacity=".7" stroke-width="2" transform="rotate(-18 30 20)"/><circle cx="30" cy="20" r="12" fill="url(#orbg)"/><path d="M2 20 A28 7 0 0 0 58 20" fill="none" stroke="var(--accent)" stroke-width="2" transform="rotate(-18 30 20)"/></svg></span></div>
+            <svg width="0" height="0" style="position:absolute"><defs><radialGradient id="orbg" cx="35%" cy="30%"><stop offset="0" stop-color="#c9b8ff"/><stop offset="1" stop-color="#4b3aa8"/></radialGradient></defs></svg>
+            <div class="corona" aria-hidden="true"></div>
+            <img src="assets/jade.webp" alt="Portrait de Jade Barbier" width="640" height="890">
+            <span class="diamond" aria-hidden="true"></span>
+          </div>
+            <div class="hud bottom"><span>SUJET : J. BARBIER</span><span>LE MANS</span></div>
+          </div>
+          <figcaption class="stage-label">Fig. 01 · Portrait de l'ingénieure</figcaption>
+        </figure>
         <div class="reveal">
-          <span class="eyebrow">01 · Identification</span>
+          <span class="eyebrow">Section 01 · Identification</span>
           <h2>Jade Barbier</h2>
           <div class="place">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>
@@ -82,7 +111,7 @@
 
     <!-- 5. Parcours -->
     <section class="section" id="parcours">
-      <span class="eyebrow reveal">02 · Trajectoire</span>
+      <span class="eyebrow reveal">Section 02 · Trajectoire</span>
       <h2 class="h2 reveal">Parcours</h2>
       <ol class="trajectory reveal">
         <li>
@@ -112,7 +141,7 @@
 
     <!-- 6. Expériences et projets -->
     <section class="section" id="projets">
-      <span class="eyebrow reveal">03 · Journal de missions</span>
+      <span class="eyebrow reveal">Section 03 · Journal de missions</span>
       <h2 class="h2 reveal">Projets et expériences</h2>
       <p class="lead reveal">Classés par contexte. Chaque mission s'ouvre sur son rapport : objectif, journal de bord, technologies et liens.</p>
       <nav class="filters reveal" aria-label="Catégories de projets">
@@ -125,7 +154,7 @@
 
     <!-- 7. Compétences -->
     <section class="section" id="competences">
-      <span class="eyebrow reveal">04 · Équipement</span>
+      <span class="eyebrow reveal">Section 04 · Équipement</span>
       <h2 class="h2 reveal">Compétences</h2>
       <div class="skills" id="skills"></div>
       <div class="legend"><span>● ○ ○ ○ bases</span><span>● ● ○ ○ intermédiaire</span><span>● ● ● ○ autonome</span><span>● ● ● ● avancé</span></div>
@@ -133,7 +162,7 @@
 
     <!-- 8. En dehors du code -->
     <section class="section" id="hors-code">
-      <span class="eyebrow reveal">05 · Hors mission</span>
+      <span class="eyebrow reveal">Section 05 · Hors mission</span>
       <h2 class="h2 reveal">Centres d'intérêt <span class="todo">textes à valider</span></h2>
       <ol class="interests reveal">
         <li><span class="i-num">01</span><h3>Lecture</h3><p>Romans et essais : une curiosité qui nourrit aussi la veille technique.</p></li>
@@ -145,7 +174,7 @@
 
     <!-- 10. Planète bonus (esquisse) -->
     <section class="section" id="planete">
-      <span class="eyebrow reveal">06 · Annexe, planète MJ-1</span>
+      <span class="eyebrow reveal">Section 06 · Planète MJ-1</span>
       <h2 class="h2 reveal">La petite planète</h2>
       <p class="lead reveal">Esquisse fixe : au sprint 4, les monstres pourront être attrapés et lancés, et retomberont avec la gravité de la planète. Leurs yeux suivent déjà ta souris.</p>
       <div class="planet-wrap">
@@ -166,7 +195,7 @@
             <g>
               <line x1="300" y1="172" x2="300" y2="70" stroke="var(--text)" stroke-width="3" stroke-linecap="round"/>
               <path d="M302 74 C330 66 345 86 372 78 L372 120 C345 128 330 108 302 116 Z" fill="var(--accent-2)"/>
-              <text x="337" y="103" text-anchor="middle" font-family="Space Grotesk" font-weight="700" font-size="17" fill="var(--bg-0)">MJ</text>
+              <text x="337" y="103" text-anchor="middle" font-family="Barlow Condensed" font-weight="700" font-size="17" fill="var(--bg-0)">MJ</text>
               <text x="290" y="88" text-anchor="end" class="flag-hint">tire-moi →</text>
             </g>
 
@@ -223,15 +252,15 @@
             <!-- Drapeau tiré -->
             <line x1="330" y1="130" x2="330" y2="40" stroke="var(--text)" stroke-width="3" stroke-linecap="round"/>
             <path d="M332 44 C360 36 375 56 402 48 L402 90 C375 98 360 78 332 86 Z" fill="var(--accent-2)"/>
-            <text x="367" y="73" text-anchor="middle" font-family="Space Grotesk" font-weight="700" font-size="17" fill="var(--bg-0)">MJ</text>
+            <text x="367" y="73" text-anchor="middle" font-family="Barlow Condensed" font-weight="700" font-size="17" fill="var(--bg-0)">MJ</text>
 
             <!-- Couche du dessus : aujourd'hui -->
             <g transform="translate(352 205) rotate(-12) scale(1.4)"><rect x="-13" y="-9" width="26" height="18" rx="2" fill="#f4e6c8"/><path d="M0 -9 V9" stroke="#8a5a3c" stroke-width="1.5"/><rect x="-13" y="-9" width="26" height="18" rx="2" fill="none" stroke="#5b3a24" stroke-width="1.5"/></g>
             <g transform="translate(408 245) rotate(18) scale(1.4)"><ellipse cx="0" cy="6" rx="20" ry="6" fill="#e8742a"/><path d="M-11 6 C-11 -12 11 -12 11 6 Z" fill="#f08a36"/><rect x="-11" y="-1" width="22" height="3" fill="#c23b22"/><circle cx="-5" cy="-5" r="2.2" fill="#ffd36e"/><circle cx="4" cy="-5" r="2.2" fill="#6ec3ff"/></g>
             <g transform="translate(445 300) scale(1.3)"><path d="M0 -14 C-8 -14 -10 -6 -10 -4 C-10 4 0 12 0 12 C0 12 10 4 10 -4 C10 -6 8 -14 0 -14 Z" fill="#ff5d73"/><circle cx="0" cy="-4" r="3.5" fill="#fff"/></g>
             <!-- Couche du milieu : adolescence (à définir) -->
-            <text x="356" y="262" font-family="Space Grotesk" font-weight="700" font-size="22" fill="#fff" opacity=".85">?</text>
-            <text x="392" y="300" font-family="Space Grotesk" font-weight="700" font-size="18" fill="#fff" opacity=".6">?</text>
+            <text x="356" y="262" font-family="Barlow Condensed" font-weight="700" font-size="22" fill="#fff" opacity=".85">?</text>
+            <text x="392" y="300" font-family="Barlow Condensed" font-weight="700" font-size="18" fill="#fff" opacity=".6">?</text>
             <!-- Noyau : enfance -->
             <g transform="translate(345 315) rotate(-35) scale(1.3)"><rect x="-1.5" y="-12" width="3" height="20" rx="1" fill="#f4e6c8"/><circle cx="0" cy="-13" r="3.5" fill="#c23b22"/><path d="M0 -24 C4 -19 3 -16 0 -16 C-3 -16 -4 -19 0 -24 Z" fill="#ff9a3c"/></g>
             <g transform="translate(318 296) scale(1.3)"><rect x="-10" y="-7" width="20" height="14" rx="3" fill="#6b4fd8"/><rect x="-7" y="-4.5" width="14" height="9" rx="1.5" fill="#bfe9ff"/><path d="M-4 -7 L-8 -12 M4 -7 L8 -12" stroke="#6b4fd8" stroke-width="1.5"/></g>
@@ -261,7 +290,7 @@
 
     <!-- 9. Disponibilités et réseaux -->
     <section class="section contact-cta" id="contact">
-      <span class="eyebrow reveal">07 · Transmission</span>
+      <span class="eyebrow reveal">Section 07 · Transmission</span>
       <h2 class="cta-title reveal">Un poste à pourvoir<br>en systèmes embarqués,<br><em>réseaux ou cybersécurité ?</em></h2>
       <p class="lead reveal">Disponible en septembre 2027 à l'issue de l'alternance, avec trois ans d'expérience en milieu ferroviaire. Échanges en français, en anglais ou en espagnol. <span class="todo">à confirmer</span></p>
       <a class="big-mail reveal" href="mailto:jade72210@gmail.com">jade72210@gmail.com <span aria-hidden="true">↗</span></a>
@@ -280,7 +309,7 @@
     <div class="foot"><span class="mono">Fin du rapport · Dossier MJ-2027</span><span>© 2027 Jade Barbier</span><a href="#top">Revenir en haut ↑</a></div>
   </footer>
 
-  <dialog class="detail report" id="detail" aria-labelledby="detail-title">
+  <dialog class="detail report" data-theme="dark" id="detail" aria-labelledby="detail-title">
     <div class="head">
       <div class="report-top"><span>Rapport de mission</span><span class="code"></span></div>
       <h3 id="detail-title"></h3>

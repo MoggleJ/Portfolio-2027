@@ -6,7 +6,7 @@
   <title>Planche de style · Maquette</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <style>
     .themes { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2rem; }
@@ -63,13 +63,13 @@
 
     <section class="section" style="padding-top:0">
       <span class="eyebrow">Typographie</span>
-      <h2 class="h2">Space Grotesk et Inter</h2>
-      <p class="lead">Space Grotesk pour les titres, géométrique avec un petit air de tableau de bord spatial. Inter pour le texte, très lisible même petit. Les deux seront auto-hébergées avec next/font.</p>
+      <h2 class="h2">Barlow Condensed, IBM Plex Mono et Inter</h2>
+      <p class="lead">Barlow Condensed en capitales pour les titres, comme les rapports techniques des années 60. IBM Plex Mono pour les étiquettes, numéros de documents et écrans, façon machine à écrire. Inter pour le texte courant, très lisible même petit. Les trois seront auto-hébergées avec next/font.</p>
       <div class="type-scale">
-        <div class="card type-row"><small>Nom (accueil)<br>Space Grotesk 700 · 48 → 120 px</small><span style="font:700 clamp(2.6rem,8vw,5rem)/1 var(--font-title);letter-spacing:-.03em">Jade Barbier</span></div>
-        <div class="card type-row"><small>Titre de section<br>Space Grotesk 700 · 30 → 48 px</small><span style="font:700 clamp(1.9rem,4.5vw,3rem)/1.1 var(--font-title);letter-spacing:-.02em">Projets et expériences</span></div>
-        <div class="card type-row"><small>Citation<br>Space Grotesk 500 · 28 → 52 px</small><span style="font:500 clamp(1.6rem,3.5vw,2.4rem)/1.2 var(--font-title)">Du capteur jusqu'au rail.</span></div>
-        <div class="card type-row"><small>Titre de carte<br>Space Grotesk 700 · 19 px</small><span style="font:700 1.2rem var(--font-title)">Pictionary connecté</span></div>
+        <div class="card type-row"><small>Nom (couverture)<br>Barlow Condensed 700 · capitales</small><span style="font:700 clamp(2.6rem,8vw,5rem)/1 var(--font-title);text-transform:uppercase">Jade Barbier</span></div>
+        <div class="card type-row"><small>Titre de section<br>Barlow Condensed 700 · capitales</small><span style="font:700 clamp(1.9rem,4.5vw,3rem)/1.1 var(--font-title);text-transform:uppercase">Projets et expériences</span></div>
+        <div class="card type-row"><small>Citation<br>Barlow Condensed 500</small><span style="font:500 clamp(1.6rem,3.5vw,2.4rem)/1.2 var(--font-title)">Du capteur jusqu'au rail.</span></div>
+        <div class="card type-row"><small>Étiquette<br>IBM Plex Mono 500 · 12 px</small><span style="font:500 .8rem var(--font-mono);letter-spacing:.12em;text-transform:uppercase">Doc. TR-MJ-2027-01 · Mission ENT-01</span></div>
         <div class="card type-row"><small>Texte courant<br>Inter 400 · 16 px / 1.65</small><span>Un profil à la frontière du logiciel et du matériel : cartes Arduino et STM32, réseaux et cybersécurité.</span></div>
         <div class="card type-row"><small>Surtitre<br>Inter 600 · 12 px · capitales</small><span class="eyebrow" style="margin:0">Expériences et projets</span></div>
       </div>
@@ -91,7 +91,7 @@
 
   <script>
     // Palette et contrastes calculés à partir des variables CSS réelles de chaque thème
-    const roles = [["--bg-0", "Fond"], ["--bg-1", "Fond bas"], ["--surface-solid", "Surface"], ["--text", "Texte"], ["--muted", "Texte secondaire"], ["--accent", "Accent violet"], ["--accent-2", "Accent rose"], ["--ok", "Disponible"]];
+    const roles = [["--bg-0", "Fond"], ["--bg-1", "Fond bas"], ["--surface-solid", "Surface"], ["--text", "Texte"], ["--muted", "Texte secondaire"], ["--accent", "Accent violet"], ["--accent-2", "Accent rouge mission"], ["--ok", "Disponible"]];
     function lum(hex) {
       const c = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255).map((x) => (x <= 0.03928 ? x / 12.92 : ((x + 0.055) / 1.055) ** 2.4));
       return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];

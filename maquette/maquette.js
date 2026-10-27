@@ -127,6 +127,22 @@
     dialog.querySelector(".close").addEventListener("click", () => dialog.close());
   }
 
+  // ---------- Tablette latérale (menu) ----------
+  const tablet = document.getElementById("tablet");
+  if (tablet) {
+    const handle = tablet.querySelector(".tablet-handle");
+    const setOpen = (open) => { tablet.classList.toggle("open", open); handle.setAttribute("aria-expanded", open); };
+    handle.addEventListener("click", () => setOpen(!tablet.classList.contains("open")));
+    tablet.querySelectorAll(".t-nav a").forEach((a) => a.addEventListener("click", () => setOpen(false)));
+    document.addEventListener("keydown", (e) => e.key === "Escape" && setOpen(false));
+    document.addEventListener("click", (e) => { if (!tablet.contains(e.target)) setOpen(false); });
+    const clock = tablet.querySelector(".t-clock"), start = Date.now();
+    setInterval(() => {
+      const t = Math.floor((Date.now() - start) / 1000), p = (n) => String(n).padStart(2, "0");
+      clock.textContent = `T+${p(Math.floor(t / 3600))}:${p(Math.floor(t / 60) % 60)}:${p(t % 60)}`;
+    }, 1000);
+  }
+
   // ---------- Écran vidéo : timecode ----------
   const tc = document.querySelector(".timecode");
   if (tc && !reduced) {
