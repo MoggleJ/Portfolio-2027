@@ -34,6 +34,7 @@
   <main id="top">
     <!-- 1. Accueil -->
     <section class="section hero">
+      <div class="dossier reveal"><span>Dossier MJ-2027</span><span>Rapport de mission</span><span>Édition 2026 – 2027</span></div>
       <div class="status reveal"><span class="dot"></span><b>Disponible</b><span>dès sept. 2027</span><span aria-hidden="true">·</span><span>@MoggleJ</span></div>
       <h1 class="reveal"><span class="grad">Jade Barbier</span></h1>
       <p class="title reveal"><strong>Apprentie ingénieure</strong> en informatique embarquée et réseaux, entre l'ENSIM et SNCF Voyageurs.</p>
@@ -58,10 +59,13 @@
           <div class="ring r2"><span class="orb o2" aria-hidden="true"></span><span class="orb o3" aria-hidden="true"></span></div>
           <div class="ring r3"><span class="orb o4" aria-hidden="true"><svg viewBox="0 0 60 40"><ellipse cx="30" cy="20" rx="28" ry="7" fill="none" stroke="var(--accent)" stroke-opacity=".7" stroke-width="2" transform="rotate(-18 30 20)"/><circle cx="30" cy="20" r="12" fill="url(#orbg)"/><path d="M2 20 A28 7 0 0 0 58 20" fill="none" stroke="var(--accent)" stroke-width="2" transform="rotate(-18 30 20)"/></svg></span></div>
           <svg width="0" height="0" style="position:absolute"><defs><radialGradient id="orbg" cx="35%" cy="30%"><stop offset="0" stop-color="#c9b8ff"/><stop offset="1" stop-color="#4b3aa8"/></radialGradient></defs></svg>
+          <div class="corona" aria-hidden="true"></div>
           <img src="assets/jade.webp" alt="Portrait de Jade Barbier" width="640" height="890">
+          <span class="diamond" aria-hidden="true"></span>
+          <span class="fig-cap">Fig. 01 · Portrait</span>
         </div>
         <div class="reveal">
-          <span class="eyebrow">À propos</span>
+          <span class="eyebrow">01 · Identification</span>
           <h2>Jade Barbier</h2>
           <div class="place">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>
@@ -78,80 +82,39 @@
 
     <!-- 5. Parcours -->
     <section class="section" id="parcours">
-      <span class="eyebrow reveal">Parcours</span>
-      <h2 class="h2 reveal">Itinéraire</h2>
-      <p class="lead reveal">Une étape par wagon, du lycée à l'alternance. Prochain arrêt : septembre 2027.</p>
-      <div class="train-track reveal" tabindex="0" aria-label="Parcours en train, défilement horizontal">
-        <div class="train">
-          <article class="wagon">
-            <div class="windows" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
-            <div class="wagon-body">
-              <div class="wagon-no">Voiture 01 · 2019 – 2022</div>
-              <img src="assets/malraux.webp" alt="" width="44" height="44">
-              <h3>Baccalauréat général, mention</h3>
-              <div class="meta">Lycée André Malraux, Allonnes</div>
-              <p>Spécialités physique-chimie et mathématiques.</p>
-            </div>
-            <div class="wheels" aria-hidden="true"><i></i><i></i></div>
-          </article>
-          <span class="coupler" aria-hidden="true"></span>
-          <article class="wagon">
-            <div class="windows" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
-            <div class="wagon-body">
-              <div class="wagon-no">Voiture 02 · 2022 – 2027</div>
-              <img src="assets/ensim.webp" alt="" width="44" height="44">
-              <h3>Diplôme d'ingénieure en informatique</h3>
-              <div class="meta">ENSIM, Le Mans</div>
-              <p>Du système embarqué au web : C, Java, Python, TypeScript, Arduino, STM32, mécatronique.</p>
-            </div>
-            <div class="wheels" aria-hidden="true"><i></i><i></i></div>
-          </article>
-          <span class="coupler" aria-hidden="true"></span>
-          <article class="wagon current">
-            <div class="windows" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
-            <div class="wagon-body">
-              <div class="wagon-no">Voiture 03 · 2024 – 2027</div>
-              <img src="assets/sncf.webp" alt="" width="44" height="44">
-              <h3>Alternance en informatique embarquée et réseaux</h3>
-              <div class="meta">CIM, SNCF Voyageurs, Le Mans</div>
-              <p>Conformité ITxPT, sécurisation des communications à bord, tests d'équipements.</p>
-            </div>
-            <div class="wheels" aria-hidden="true"><i></i><i></i></div>
-          </article>
-          <span class="coupler" aria-hidden="true"></span>
-          <div class="loco" aria-hidden="true">
-            <svg viewBox="0 0 260 170">
-              <defs>
-                <linearGradient id="locoBody" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="var(--surface-solid)"/><stop offset="1" stop-color="var(--bg-1)"/></linearGradient>
-                <radialGradient id="headlight"><stop offset="0" stop-color="#fff"/><stop offset=".3" stop-color="var(--accent)" stop-opacity=".8"/><stop offset="1" stop-color="var(--accent)" stop-opacity="0"/></radialGradient>
-              </defs>
-              <path d="M6 30 H150 C205 30 245 70 252 112 C254 124 246 132 234 132 H6 Z" fill="url(#locoBody)" stroke="var(--accent)" stroke-opacity=".45" stroke-width="2"/>
-              <path d="M150 40 C190 42 222 70 232 100 H160 Z" fill="var(--accent)" opacity=".22"/>
-              <path d="M156 46 C186 50 212 72 222 96 H164 Z" fill="none" stroke="var(--accent)" stroke-opacity=".6" stroke-width="1.5"/>
-              <rect x="24" y="48" width="104" height="22" rx="8" fill="var(--accent)" opacity=".18"/>
-              <rect x="6" y="104" width="246" height="5" fill="var(--accent-2)" opacity=".8"/>
-              <rect x="6" y="113" width="230" height="2" fill="var(--accent)" opacity=".7"/>
-              <text x="30" y="92" font-family="Space Grotesk" font-weight="700" font-size="15" fill="var(--text)" letter-spacing="2">MJ · 2027</text>
-              <circle cx="246" cy="118" r="26" fill="url(#headlight)"/>
-              <circle cx="246" cy="118" r="3.5" fill="#fff"/>
-              <ellipse cx="128" cy="150" rx="118" ry="5" fill="var(--accent)" opacity=".35"/>
-            </svg>
-          </div>
-        </div>
-        <div class="rail" aria-hidden="true"></div>
-        <div class="next-stop">
-          <span class="wagon-no">Prochain arrêt</span>
-          <strong>Ingénieure</strong>
-          <span>septembre 2027</span>
-        </div>
-      </div>
+      <span class="eyebrow reveal">02 · Trajectoire</span>
+      <h2 class="h2 reveal">Parcours</h2>
+      <ol class="trajectory reveal">
+        <li>
+          <span class="t-year">2019</span>
+          <h3>Baccalauréat général, mention</h3>
+          <p>Lycée André Malraux, Allonnes. Spécialités physique-chimie et mathématiques.</p>
+        </li>
+        <li>
+          <span class="t-year">2022</span>
+          <h3>École d'ingénieurs ENSIM</h3>
+          <p>Le Mans. Informatique, du système embarqué au web, avec un fort volet mécatronique.</p>
+        </li>
+        <li class="now">
+          <span class="t-year">2024</span>
+          <h3>Alternance SNCF Voyageurs</h3>
+          <p>CIM, Le Mans. Conformité ITxPT et sécurisation des communications à bord.</p>
+        </li>
+        <li class="next">
+          <span class="t-year">2027</span>
+          <h3>Diplôme d'ingénieure</h3>
+          <p>Disponible pour un premier poste à partir de septembre.</p>
+        </li>
+      </ol>
+      <!-- Lien vers la page externe parcours-universitaire.html : supprimer ce bloc pour la retirer -->
+      <a class="text-link reveal" href="parcours-universitaire.html">Détail des semestres et des unités de formation <span aria-hidden="true">→</span></a>
     </section>
 
     <!-- 6. Expériences et projets -->
     <section class="section" id="projets">
-      <span class="eyebrow reveal">Expériences et projets</span>
+      <span class="eyebrow reveal">03 · Journal de missions</span>
       <h2 class="h2 reveal">Projets et expériences</h2>
-      <p class="lead reveal">Classés par contexte. Chaque carte s'ouvre sur le détail : missions, technologies et liens.</p>
+      <p class="lead reveal">Classés par contexte. Chaque mission s'ouvre sur son rapport : objectif, journal de bord, technologies et liens.</p>
       <nav class="filters reveal" aria-label="Catégories de projets">
         <a class="filter" href="#projets-pro">Entreprise</a>
         <a class="filter" href="#projets-school">École</a>
@@ -162,27 +125,27 @@
 
     <!-- 7. Compétences -->
     <section class="section" id="competences">
-      <span class="eyebrow reveal">Compétences</span>
-      <h2 class="h2 reveal">Langages et outils</h2>
+      <span class="eyebrow reveal">04 · Équipement</span>
+      <h2 class="h2 reveal">Compétences</h2>
       <div class="skills" id="skills"></div>
       <div class="legend"><span>● ○ ○ ○ bases</span><span>● ● ○ ○ intermédiaire</span><span>● ● ● ○ autonome</span><span>● ● ● ● avancé</span></div>
     </section>
 
     <!-- 8. En dehors du code -->
     <section class="section" id="hors-code">
-      <span class="eyebrow reveal">En dehors du code</span>
+      <span class="eyebrow reveal">05 · Hors mission</span>
       <h2 class="h2 reveal">Centres d'intérêt <span class="todo">textes à valider</span></h2>
-      <div class="hobbies">
-        <article class="card hobby reveal"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5V5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zm0 0A2 2 0 0 0 6 22h13"/></svg></div><h3>Lecture</h3><p>Romans et essais : une curiosité qui nourrit aussi la veille technique.</p></article>
-        <article class="card hobby reveal"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 15c3-1.5 15-1.5 18 0"/><path d="M7 14.5C7 8 9 5 12 5s5 3 5 9.5"/><path d="M7 11h10"/></svg></div><h3>Manga et animation</h3><p>Des récits au long cours, de One Piece aux classiques de l'animation.</p></article>
-        <article class="card hobby reveal"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/></svg></div><h3>Voyages</h3><p>D'autres pays, d'autres langues, d'autres façons de travailler.</p></article>
-        <article class="card hobby reveal"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0 5 5L21 13l-8 8-3-3 8-8-1.3-1.3a4 4 0 0 1-5-5L13 2l2.7 2.7z" transform="scale(.9) translate(1 1)"/><path d="M3 21l6-6"/></svg></div><h3>Électronique maker</h3><p>Consoles portables, petits robots et impression 3D, hors du cadre scolaire.</p></article>
-      </div>
+      <ol class="interests reveal">
+        <li><span class="i-num">01</span><h3>Lecture</h3><p>Romans et essais : une curiosité qui nourrit aussi la veille technique.</p></li>
+        <li><span class="i-num">02</span><h3>Manga et animation</h3><p>Des récits au long cours, de One Piece aux classiques de l'animation.</p></li>
+        <li><span class="i-num">03</span><h3>Voyages</h3><p>D'autres pays, d'autres langues, d'autres façons de travailler.</p></li>
+        <li><span class="i-num">04</span><h3>Électronique maker</h3><p>Consoles portables, petits robots et impression 3D, hors du cadre scolaire.</p></li>
+      </ol>
     </section>
 
     <!-- 10. Planète bonus (esquisse) -->
     <section class="section" id="planete">
-      <span class="eyebrow reveal">Bonus</span>
+      <span class="eyebrow reveal">06 · Annexe, planète MJ-1</span>
       <h2 class="h2 reveal">La petite planète</h2>
       <p class="lead reveal">Esquisse fixe : au sprint 4, les monstres pourront être attrapés et lancés, et retomberont avec la gravité de la planète. Leurs yeux suivent déjà ta souris.</p>
       <div class="planet-wrap">
@@ -238,7 +201,7 @@
           </svg>
             <div class="hud bottom"><span>SIGNAL <i class="bars"><i></i><i></i><i></i><i></i><i></i></i></span><span class="live">EN DIRECT</span></div>
           </div>
-          <figcaption class="stage-label">Transmission en direct depuis la planète</figcaption>
+          <figcaption class="stage-label">Fig. 02 · Transmission en direct depuis la planète</figcaption>
         </figure>
 
         <figure class="planet-stage reveal" style="margin:0">
@@ -282,7 +245,7 @@
           </svg>
             <div class="hud bottom"><span>PROFONDEUR 0 → 170 KM</span><span>ARCHIVE</span></div>
           </div>
-          <figcaption class="stage-label">Après avoir tiré le drapeau : la fouille</figcaption>
+          <figcaption class="stage-label">Fig. 03 · Après avoir tiré le drapeau : la fouille</figcaption>
         </figure>
       </div>
       <div class="card notes reveal">
@@ -297,35 +260,16 @@
     </section>
 
     <!-- 9. Disponibilités et réseaux -->
-    <section class="section" id="contact">
-      <span class="eyebrow reveal">Contact</span>
-      <h2 class="h2 reveal">Un poste à pourvoir ?</h2>
-      <div class="contact">
-        <div class="card reveal">
-          <div class="status" style="margin-bottom:1.2rem"><span class="dot"></span><b>Disponible</b> à partir de septembre 2027</div>
-          <h3>Profil</h3>
-          <p>Ingénieure en systèmes embarqués, réseaux ou cybersécurité, disponible en septembre 2027 à l'issue de l'alternance, avec trois ans d'expérience en milieu ferroviaire. <span class="todo">à confirmer</span></p>
-          <p>Échanges possibles en français, en anglais ou en espagnol.</p>
-          <a class="btn primary" href="mailto:jade72210@gmail.com" style="margin-top:.6rem">Envoyer un e-mail</a>
-        </div>
-        <div class="socials reveal">
-          <a class="card social" href="mailto:jade72210@gmail.com">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
-            <span>E-mail<small>jade72210@gmail.com</small></span><span class="arrow">↗</span>
-          </a>
-          <a class="card social" href="https://www.linkedin.com/in/jade-barbier-b261b8266/" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.5h4V21H3zM9.5 9.5h3.8v1.6h.1c.5-1 1.8-2 3.8-2 4 0 4.8 2.6 4.8 6V21h-4v-5.2c0-1.2 0-2.8-1.7-2.8s-2 1.3-2 2.7V21h-4z"/></svg>
-            <span>LinkedIn<small>jade-barbier</small></span><span class="arrow">↗</span>
-          </a>
-          <a class="card social" href="https://github.com/MoggleJ" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.3-3.4-1.3-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .8.1-.7.4-1.1.6-1.4-2.2-.2-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.8 1a9.6 9.6 0 0 1 5 0c1.9-1.3 2.8-1 2.8-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.3 4.7-4.6 5 .4.3.7.9.7 1.9V21c0 .3.2.6.7.5A10 10 0 0 0 12 2z"/></svg>
-            <span>GitHub<small>@MoggleJ</small></span><span class="arrow">↗</span>
-          </a>
-          <a class="card social" href="https://github.com/MoggleJ/Portfolio_2026/raw/main/cv/BARBIER_Jade_CV_Stage_EN.pdf" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M12 12v6m-3-3 3 3 3-3"/></svg>
-            <span>CV<small>PDF à télécharger</small></span><span class="arrow">↓</span>
-          </a>
-        </div>
+    <section class="section contact-cta" id="contact">
+      <span class="eyebrow reveal">07 · Transmission</span>
+      <h2 class="cta-title reveal">Un poste à pourvoir<br>en systèmes embarqués,<br><em>réseaux ou cybersécurité ?</em></h2>
+      <p class="lead reveal">Disponible en septembre 2027 à l'issue de l'alternance, avec trois ans d'expérience en milieu ferroviaire. Échanges en français, en anglais ou en espagnol. <span class="todo">à confirmer</span></p>
+      <a class="big-mail reveal" href="mailto:jade72210@gmail.com">jade72210@gmail.com <span aria-hidden="true">↗</span></a>
+      <div class="link-row reveal">
+        <a href="https://www.linkedin.com/in/jade-barbier-b261b8266/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://github.com/MoggleJ" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://github.com/MoggleJ/Portfolio_2026/raw/main/cv/BARBIER_Jade_CV_Stage_EN.pdf" target="_blank" rel="noopener">CV (PDF)</a>
+        <span class="status"><span class="dot"></span><b>Disponible</b><span>sept. 2027</span></span>
       </div>
     </section>
   </main>
@@ -333,7 +277,7 @@
   <!-- 11. Pied de page -->
   <footer>
     <div class="bigname" aria-hidden="true">Jade Barbier</div>
-    <div class="foot"><span>© 2027 Jade Barbier · fait avec Next.js, Tailwind et beaucoup d'étoiles</span><a href="#top">Revenir en haut ↑</a></div>
+    <div class="foot"><span class="mono">Fin du rapport · Dossier MJ-2027</span><span>© 2027 Jade Barbier</span><a href="#top">Revenir en haut ↑</a></div>
   </footer>
 
   <dialog class="detail report" id="detail" aria-labelledby="detail-title">

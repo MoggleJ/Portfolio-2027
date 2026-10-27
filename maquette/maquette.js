@@ -85,27 +85,27 @@
       return `
       <div class="group reveal" id="projets-${kind}">
         <h3 class="group-title">${label}<span>${String(items.length).padStart(2, "0")}</span></h3>
-        <div class="grid">${items.map(([p, i], n) => `
-          <button class="card pcard" data-i="${i}" aria-haspopup="dialog">
-            <div class="top"><span class="kind">${p.where.split(",")[0]}</span><span class="num">${code(p)}</span></div>
-            <h3>${p.title}</h3>
-            <div class="meta">${p.where} · ${p.when}</div>
-            <div class="tags">${p.tags.slice(0, 4).map((t) => `<span class="tag">${t}</span>`).join("")}</div>
-            <span class="more">Voir le détail →</span>
+        <div class="log">${items.map(([p, i]) => `
+          <button class="mission-row" data-i="${i}" aria-haspopup="dialog">
+            <span class="m-code">${code(p)}</span>
+            <span class="m-main"><strong>${p.title}</strong><span>${p.where}</span></span>
+            <span class="m-when">${p.when}</span>
+            <span class="m-tags">${p.tags.slice(0, 3).join(" · ")}</span>
+            <span class="m-go" aria-hidden="true">→</span>
           </button>`).join("")}
         </div>
       </div>`;
     }).join("");
 
     groups.addEventListener("pointermove", (e) => {
-      const c = e.target.closest(".pcard"); if (!c) return;
+      const c = e.target.closest(".mission-row"); if (!c) return;
       const r = c.getBoundingClientRect();
       c.style.setProperty("--mx", `${e.clientX - r.left}px`);
       c.style.setProperty("--my", `${e.clientY - r.top}px`);
     });
 
     groups.addEventListener("click", (e) => {
-      const c = e.target.closest(".pcard"); if (!c) return;
+      const c = e.target.closest(".mission-row"); if (!c) return;
       const p = window.PROJECTS[+c.dataset.i];
       const live = /cours|2027|alternance/.test(p.when);
       dialog.querySelectorAll(".code").forEach((el) => (el.textContent = `Mission ${code(p)} · ${kinds[p.kind]}`));

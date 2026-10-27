@@ -223,8 +223,8 @@ window.SKILLS = [
   const el = document.getElementById("skills");
   if (!el) return;
   el.innerHTML = window.SKILLS.map((c) => `
-    <article class="card skill-cat reveal">
+    <div class="skill-row reveal">
       <h3>${c.title}</h3>
-      ${c.skills.map(([n, l]) => `<div class="skill"><span>${n}</span><span class="lvl" role="img" aria-label="${l} sur 4">${[1, 2, 3, 4].map((i) => `<i class="${i <= l ? "on" : ""}"></i>`).join("")}</span></div>`).join("")}
-    </article>`).join("");
+      <ul>${c.skills.map(([n, l]) => `<li><span>${n}</span><span class="lvl" role="img" aria-label="${["bases", "intermédiaire", "autonome", "avancé"][l - 1]}">${[1, 2, 3, 4].map((i) => `<i class="${i <= l ? "on" : ""}"></i>`).join("")}</span></li>`).join("")}</ul>
+    </div>`).join("");
 })();
