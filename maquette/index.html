@@ -3,153 +3,160 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Jade Barbier · Fiche de personnel</title>
-  <meta name="description" content="Maquette du portfolio 2027 de Jade Barbier (sprint 1) : fiche de personnel">
+  <title>Jade Barbier · Plongée</title>
+  <meta name="description" content="Maquette du portfolio 2027 de Jade Barbier (sprint 1) : une plongée, de la surface aux abysses">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Caveat:wght@500;700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&family=Special+Elite&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="fiche.css">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Caveat:wght@600&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="ocean.css">
 </head>
-<body class="fiche">
-  <main class="sheet" id="top">
-    <div class="holes" aria-hidden="true"><i></i><i></i><i></i></div>
+<body>
+  <!-- Ambiance : rayons de lumière en surface, bulles et neige marine dessinées sur le canvas -->
+  <div class="rays" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+  <canvas id="sea" aria-hidden="true"></canvas>
 
-    <!-- En-tête du formulaire -->
-    <header class="file-head slim reveal">
-      <span>Fiche de personnel</span>
-      <span>Dossier MJ-2027</span>
-    </header>
-    <nav class="toc reveal" aria-label="Sommaire">
-      <a href="#identite">1 Identification</a><a href="#observations">2 Profil</a><a href="#projets">3 Pièces</a><a href="#experience">4 Service</a><a href="#formation">5 Formation</a><a href="#competences">6 Tests</a><a href="#hors-service">7 Hors service</a><a href="#planete">8 Pièce jointe</a><a href="#contact">9 Contact</a>
-      <button class="lang" data-toggle-lang aria-label="Changer de langue"><span class="on">FR</span>&nbsp;/&nbsp;<span>EN</span></button>
-    </nav>
+  <nav class="topbar" aria-label="Navigation">
+    <a class="mark" href="#surface">JB</a>
+    <div class="links"><a href="#projets">Projets</a><a href="#experience">Expérience</a><a href="#competences">Compétences</a><a href="#contact">Contact</a></div>
+    <button class="lang" data-toggle-lang aria-label="Changer de langue"><span class="on">FR</span> / <span>EN</span></button>
+  </nav>
 
-    <!-- 1. Identification -->
-    <section class="block identity" id="identite">
-      <figure class="photo-print reveal">
-        <svg class="clip" viewBox="0 0 40 110" aria-hidden="true"><path d="M14 104 V20 a8 8 0 0 1 16 0 V90 a5 5 0 0 1 -10 0 V30" fill="none" stroke="#9a9ca3" stroke-width="3.2" stroke-linecap="round"/><path d="M14 104 V20 a8 8 0 0 1 16 0 V90 a5 5 0 0 1 -10 0 V30" fill="none" stroke="#e8e9ee" stroke-width="1.2" stroke-linecap="round" transform="translate(-.6 -.6)"/></svg>
-        <div class="print">
-          <img src="assets/jade.webp" alt="Photo d'identité de Jade Barbier" width="640" height="890">
+  <!-- Jauge de profondeur, fixe sur le côté -->
+  <aside class="gauge" aria-hidden="true">
+    <div class="g-scale"><i class="g-mark"></i></div>
+    <div class="g-read"><b class="g-m">0</b><span>m</span></div>
+    <div class="g-zone mono">Surface</div>
+  </aside>
+
+  <main id="dive">
+    <!-- Surface -->
+    <section class="station surface" id="surface" data-depth="0">
+      <svg class="waves" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
+        <path class="w1" d="M0 60 C240 20 480 100 720 60 C960 20 1200 100 1440 60 L1440 0 L0 0 Z"/>
+        <path class="w2" d="M0 50 C200 90 520 10 720 50 C920 90 1240 10 1440 50 L1440 0 L0 0 Z"/>
+      </svg>
+      <div class="hero">
+        <div class="hero-text">
+          <span class="avail" data-anim><i></i>Disponible à partir de sept. 2027</span>
+          <h1 data-anim style="--d:1">Jade<br>Barbier</h1>
+          <p class="role" data-anim style="--d:2">Ingénieure, informatique embarquée et réseaux</p>
+          <div class="hero-cta" data-anim style="--d:3"><a class="btn" href="#projets">Plonger dans les projets ↓</a><a class="btn ghost" href="#contact">Contact</a></div>
         </div>
-        <figcaption class="hand">J. Barbier</figcaption>
-      </figure>
-
-      <div class="fields reveal">
-        <h1 class="name">Jade Barbier</h1>
-        <table class="form">
-          <tr><th>Nom</th><td class="typed">BARBIER</td></tr>
-          <tr><th>Fonction</th><td class="typed">Ingénieure, informatique embarquée et réseaux</td></tr>
-          <tr><th>Disponibilité</th><td><span class="check on">Disponible à partir de sept. 2027</span><span class="check">En poste</span></td></tr>
-        </table>
+        <figure class="porthole" data-anim style="--d:2">
+          <div class="glass"><img src="assets/jade.webp" alt="Portrait de Jade Barbier" width="640" height="890"></div>
+          <span class="bolts" aria-hidden="true"><i style="--a:0deg"></i><i style="--a:45deg"></i><i style="--a:90deg"></i><i style="--a:135deg"></i><i style="--a:180deg"></i><i style="--a:225deg"></i><i style="--a:270deg"></i><i style="--a:315deg"></i></span>
+        </figure>
       </div>
     </section>
 
-    <!-- 2. Profil -->
-    <section class="block" id="observations">
-      <h2 class="block-title reveal"><span>2</span>Profil</h2>
-      <blockquote class="typed quote-typed reveal">« Des systèmes embarqués fiables, du capteur jusqu'au rail, sécurisés de bout en bout. » <span class="todo">accroche à fournir</span></blockquote>
-      <div class="obs reveal">
+    <section class="station" id="profil" data-depth="20">
+      <header class="st-head" data-anim>
+        <span class="st-depth mono">−20 m · Zone éclairée</span>
+        <h2>Profil</h2>
+      </header>
+      <blockquote class="hook" data-anim>« Des systèmes embarqués fiables, du capteur jusqu'au rail, sécurisés de bout en bout. » <span class="todo">accroche à fournir</span></blockquote>
+      <div class="prose" data-anim style="--d:1">
         <p>Élève ingénieure à l'ENSIM, en alternance au CIM de SNCF Voyageurs : tests de conformité et sécurisation des équipements embarqués à bord des trains.</p>
         <p>Profil à la frontière du logiciel et du matériel : cartes Arduino et STM32, réseaux et cybersécurité, avec des incursions en IA et en développement web. De la console de jeu conçue de A à Z au client mTLS industriel.</p>
       </div>
+      <dl class="readings">
+        <div data-anim style="--d:2"><dt>Années d'alternance</dt><dd data-count="3">0</dd></div>
+        <div data-anim style="--d:3"><dt>Projets</dt><dd data-count="10">0</dd></div>
+        <div data-anim style="--d:4"><dt>Compétences</dt><dd data-count="43">0</dd></div>
+      </dl>
     </section>
 
-    <!-- Relevé : chiffres clés, comptés à l'arrivée -->
-    <dl class="tally" data-anim>
-      <div><dt>Années d'alternance</dt><dd class="typed" data-count="3">0</dd></div>
-      <div><dt>Projets versés au dossier</dt><dd class="typed" data-count="10">0</dd></div>
-      <div><dt>Compétences évaluées</dt><dd class="typed" data-count="43">0</dd></div>
-      <div><dt>Disponible</dt><dd class="typed">09/2027</dd></div>
-    </dl>
-
-    <section class="block" id="projets">
-      <h2 class="block-title reveal"><span>3</span>Pièces à conviction</h2>
-      <p class="obs reveal">Chaque projet est versé au dossier comme une pièce numérotée. Une ligne s'ouvre sur son rapport.</p>
-      <div id="evidence"></div>
+    <section class="station" id="projets" data-depth="200">
+      <header class="st-head" data-anim>
+        <span class="st-depth mono">−200 m · Carnet de plongée</span>
+        <h2>Projets</h2>
+      </header>
+      <p class="lead" data-anim>Chaque projet est une plongée consignée au carnet. Ouvrir une entrée pour lire le rapport.</p>
+      <div id="logbook"></div>
     </section>
 
-    <section class="block" id="experience">
-      <h2 class="block-title reveal"><span>4</span>États de service</h2>
-      <ol class="ink-line">
-        <i class="ink-rule" aria-hidden="true"><i></i></i>
-        <li class="ink-item" data-anim style="--d:0">
-          <span class="ink-dot" aria-hidden="true"></span>
-          <div class="ink-when typed">sept. 2024 <span class="to">– sept. 2027</span></div>
-          <div class="ink-body">
-            <h3>Alternance en informatique embarquée et réseaux</h3>
-            <div class="ink-where">CIM, SNCF Voyageurs · Le Mans</div>
+    <section class="station" id="experience" data-depth="1000">
+      <header class="st-head" data-anim>
+        <span class="st-depth mono">−1000 m · Câble d'ancrage</span>
+        <h2>Expérience</h2>
+      </header>
+      <ol class="cable">
+        <i class="cable-line" aria-hidden="true"><i></i></i>
+        <li class="beacon current" data-anim style="--d:0">
+          <span class="buoy" aria-hidden="true"></span>
+          <div class="beacon-card">
+            <div class="beacon-head"><img src="assets/sncf.webp" alt="SNCF Voyageurs" width="48" height="48"><div><span class="mono when">Sept. 2024 – sept. 2027 · en cours</span><h3>Alternance en informatique embarquée et réseaux</h3><span class="where">CIM, SNCF Voyageurs · Le Mans</span></div></div>
             <ul><li style="--d:0">Tests de conformité des équipements embarqués aux spécifications ITxPT : consommation électrique, services échangés.</li><li style="--d:1">Client EST pour une preuve de concept de sécurisation des communications à bord (mTLS).</li><li style="--d:2">Outil de test de connexion SFTP et étude d'impact du Cyber Resilience Act.</li></ul>
           </div>
-          <span class="stamp mini">En cours</span>
         </li>
-        <li class="ink-item" data-anim style="--d:1">
-          <span class="ink-dot" aria-hidden="true"></span>
-          <div class="ink-when typed">juin 2023 <span class="to">– août 2023</span></div>
-          <div class="ink-body">
-            <h3>Opératrice de conditionnement</h3>
-            <div class="ink-where">Colart International · Le Mans</div>
+        <li class="beacon" data-anim style="--d:1">
+          <span class="buoy" aria-hidden="true"></span>
+          <div class="beacon-card">
+            <div class="beacon-head"><img src="assets/colart.webp" alt="Colart" width="48" height="48"><div><span class="mono when">Juin – août 2023</span><h3>Opératrice de conditionnement</h3><span class="where">Colart International · Le Mans</span></div></div>
             <ul><li style="--d:0">Assemblage, contrôle et conditionnement sur lignes de production, dans le respect des normes qualité et sécurité.</li></ul>
           </div>
-          
         </li>
       </ol>
     </section>
 
-    <section class="block" id="formation">
-      <h2 class="block-title reveal"><span>5</span>Formation</h2>
-      <ol class="ink-line">
-        <i class="ink-rule" aria-hidden="true"><i></i></i>
-        <li class="ink-item" data-anim style="--d:0">
-          <span class="ink-dot" aria-hidden="true"></span>
-          <div class="ink-when typed">2022 <span class="to">– 2027</span></div>
-          <div class="ink-body">
-            <h3>Diplôme d'ingénieure en informatique</h3>
-            <div class="ink-where">ENSIM · Le Mans</div>
+    <section class="station" id="formation" data-depth="1500">
+      <header class="st-head" data-anim>
+        <span class="st-depth mono">−1500 m · Câble d'ancrage</span>
+        <h2>Formation</h2>
+      </header>
+      <ol class="cable">
+        <i class="cable-line" aria-hidden="true"><i></i></i>
+        <li class="beacon current" data-anim style="--d:0">
+          <span class="buoy" aria-hidden="true"></span>
+          <div class="beacon-card">
+            <div class="beacon-head"><img src="assets/ensim.webp" alt="ENSIM" width="48" height="48"><div><span class="mono when">2022 – 2027</span><h3>Diplôme d'ingénieure en informatique</h3><span class="where">ENSIM · Le Mans</span></div></div>
             <ul><li style="--d:0">Cycle ingénieur en alternance au CIM de SNCF Voyageurs depuis 2024.</li><li style="--d:1">Systèmes embarqués, réseaux, cybersécurité.</li></ul>
           </div>
-          <span class="stamp mini">En cours</span>
         </li>
-        <li class="ink-item" data-anim style="--d:1">
-          <span class="ink-dot" aria-hidden="true"></span>
-          <div class="ink-when typed">2019 <span class="to">– 2022</span></div>
-          <div class="ink-body">
-            <h3>Baccalauréat général</h3>
-            <div class="ink-where">Lycée André Malraux · Allonnes</div>
+        <li class="beacon" data-anim style="--d:1">
+          <span class="buoy" aria-hidden="true"></span>
+          <div class="beacon-card">
+            <div class="beacon-head"><img src="assets/malraux.webp" alt="Lycée André Malraux" width="48" height="48"><div><span class="mono when">2019 – 2022</span><h3>Baccalauréat général</h3><span class="where">Lycée André Malraux · Allonnes</span></div></div>
             
           </div>
-          
         </li>
       </ol>
       <!-- Lien vers la page externe parcours-universitaire.html : supprimer cette ligne pour la retirer -->
-      <a class="annex-link reveal" href="parcours-universitaire.html"><span class="mono">Annexe</span> Détail des semestres →</a>
+      <a class="more" href="parcours-universitaire.html" data-anim>Détail des semestres →</a>
     </section>
 
-    <section class="block" id="competences">
-      <h2 class="block-title reveal"><span>6</span>Résultats des tests</h2>
-      <p class="obs reveal t-count"></p>
-      <div id="tests" class="exams"></div>
-      <div class="verdict" data-anim><span class="mono">Aptitude générale</span><span class="stamp land">Confirmée</span></div>
+    <section class="station" id="competences" data-depth="2000">
+      <header class="st-head" data-anim>
+        <span class="st-depth mono">−2000 m · Instruments de bord</span>
+        <h2>Compétences</h2>
+      </header>
+      <p class="lead" data-anim id="skills-lead"></p>
+      <div id="dials" class="dials"></div>
     </section>
 
-    <section class="block" id="hors-service">
-      <h2 class="block-title reveal"><span>7</span>Hors service <span class="todo">textes à valider</span></h2>
-      <ul class="checklist ticks">
-        <li data-anim style="--d:0"><span class="check on"></span><svg class="draw" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h6a3 3 0 0 1 3 3v12a2 2 0 0 0-2-2H4z"/><path d="M20 5h-6a3 3 0 0 0-3 3v12a2 2 0 0 1 2-2h7z"/></svg><b>Lecture</b><span>Romans et essais : une curiosité qui nourrit aussi la veille technique.</span></li>
-        <li data-anim style="--d:1"><span class="check on"></span><svg class="draw" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="13" rx="2"/><path d="M10 9l5 2.5-5 2.5z"/><path d="M8 21h8"/></svg><b>Manga et animation</b><span>Des récits au long cours, de One Piece aux classiques de l'animation.</span></li>
-        <li data-anim style="--d:2"><span class="check on"></span><svg class="draw" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/></svg><b>Voyages</b><span>D'autres pays, d'autres langues, d'autres façons de travailler.</span></li>
-        <li data-anim style="--d:3"><span class="check on"></span><svg class="draw" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M10 3v4M14 3v4M10 17v4M14 17v4M3 10h4M3 14h4M17 10h4M17 14h4"/></svg><b>Électronique maker</b><span>Consoles portables, petits robots et impression 3D, hors du cadre scolaire.</span></li>
+    <section class="station" id="hors-service" data-depth="3000">
+      <header class="st-head" data-anim>
+        <span class="st-depth mono">−3000 m · Bioluminescence</span>
+        <h2>Hors service</h2>
+      </header>
+      <ul class="glow-list">
+        <li data-anim style="--d:0;--h:175"><svg class="jelly" viewBox="0 0 60 80" aria-hidden="true"><path class="bell" d="M6 34 C6 12 54 12 54 34 C48 32 44 37 40 34 C36 31 33 37 30 34 C27 31 24 37 20 34 C16 31 12 37 6 34 Z"/><path class="tent" d="M14 36 C10 48 18 56 13 70 M24 37 C22 50 28 58 24 76 M36 37 C38 50 32 58 36 74 M46 36 C50 48 42 56 47 68"/></svg><b>Lecture</b><span>Romans et essais : une curiosité qui nourrit aussi la veille technique.</span></li>
+        <li data-anim style="--d:1;--h:195"><svg class="jelly" viewBox="0 0 60 80" aria-hidden="true"><path class="bell" d="M6 34 C6 12 54 12 54 34 C48 32 44 37 40 34 C36 31 33 37 30 34 C27 31 24 37 20 34 C16 31 12 37 6 34 Z"/><path class="tent" d="M14 36 C10 48 18 56 13 70 M24 37 C22 50 28 58 24 76 M36 37 C38 50 32 58 36 74 M46 36 C50 48 42 56 47 68"/></svg><b>Manga et animation</b><span>Des récits au long cours, de One Piece aux classiques de l'animation.</span></li>
+        <li data-anim style="--d:2;--h:160"><svg class="jelly" viewBox="0 0 60 80" aria-hidden="true"><path class="bell" d="M6 34 C6 12 54 12 54 34 C48 32 44 37 40 34 C36 31 33 37 30 34 C27 31 24 37 20 34 C16 31 12 37 6 34 Z"/><path class="tent" d="M14 36 C10 48 18 56 13 70 M24 37 C22 50 28 58 24 76 M36 37 C38 50 32 58 36 74 M46 36 C50 48 42 56 47 68"/></svg><b>Voyages</b><span>D'autres pays, d'autres langues, d'autres façons de travailler.</span></li>
+        <li data-anim style="--d:3;--h:210"><svg class="jelly" viewBox="0 0 60 80" aria-hidden="true"><path class="bell" d="M6 34 C6 12 54 12 54 34 C48 32 44 37 40 34 C36 31 33 37 30 34 C27 31 24 37 20 34 C16 31 12 37 6 34 Z"/><path class="tent" d="M14 36 C10 48 18 56 13 70 M24 37 C22 50 28 58 24 76 M36 37 C38 50 32 58 36 74 M46 36 C50 48 42 56 47 68"/></svg><b>Électronique maker</b><span>Consoles portables, petits robots et impression 3D, hors du cadre scolaire.</span></li>
       </ul>
+      <span class="todo">textes à valider</span>
     </section>
 
-    <section class="block" id="planete">
-      <h2 class="block-title reveal"><span>8</span>Pièce jointe</h2>
-      <p class="obs reveal">Enregistrement vidéo, planète MJ-1. Les habitants vous ont repéré.</p>
-      <figure class="attachment solo reveal">
-        <i class="tape t1" aria-hidden="true"></i><i class="tape t2" aria-hidden="true"></i>
-        <div class="screen planet-screen" data-theme="dark" id="planet">
-                <div class="hud top"><span><b class="rec"></b><span class="hud-l">REC · CAM-02 · SURFACE MJ-1</span></span><span class="timecode">00:00:00:00</span></div>
-                <svg viewBox="0 0 600 560" role="img" aria-label="Planète violette avec trois petits habitants et un drapeau">
+    <section class="station abyss" id="abysses" data-depth="4000">
+      <header class="st-head" data-anim>
+        <span class="st-depth mono">−4000 m · Abysses</span>
+        <h2>Au fond</h2>
+      </header>
+      <p class="lead" data-anim>Quelque chose repose au fond. Ses habitants vous ont repéré.</p>
+      <figure class="deep-port" id="planet" data-anim>
+        <div class="glass">
+          <svg viewBox="0 0 600 560" role="img" aria-label="Une petite planète violette posée au fond, trois habitants et un drapeau">
                   <defs>
                     <radialGradient id="pg" gradientUnits="userSpaceOnUse" cx="259" cy="279" r="255"><stop offset="0" stop-color="var(--planet-b)"/><stop offset=".6" stop-color="var(--planet-a)"/><stop offset="1" stop-color="var(--planet-c)"/></radialGradient>
                     <radialGradient id="atmo" r=".5"><stop offset=".78" stop-color="var(--accent)" stop-opacity=".35"/><stop offset="1" stop-color="var(--accent)" stop-opacity="0"/></radialGradient>
@@ -226,37 +233,33 @@
               <circle cx="-13" cy="-22" r="3" fill="#ff9cc8" opacity=".7"/><circle cx="13" cy="-22" r="3" fill="#ff9cc8" opacity=".7"/>
             </g>
                 </svg>
-                <div class="hud bottom"><span>SIGNAL <i class="bars"><i></i><i></i><i></i><i></i><i></i></i></span><span class="live">EN DIRECT</span></div>
-                <button class="hud-close" hidden>Refermer</button>
-              </div>
-        <figcaption class="typed">PJ 01 · Surface, caméra 02</figcaption>
+        </div>
+        <span class="bolts" aria-hidden="true"><i style="--a:0deg"></i><i style="--a:30deg"></i><i style="--a:60deg"></i><i style="--a:90deg"></i><i style="--a:120deg"></i><i style="--a:150deg"></i><i style="--a:180deg"></i><i style="--a:210deg"></i><i style="--a:240deg"></i><i style="--a:270deg"></i><i style="--a:300deg"></i><i style="--a:330deg"></i></span>
+        <button class="port-close" hidden>Refermer</button>
       </figure>
     </section>
 
-    <!-- Contact : réseaux et signature -->
-    <section class="block" id="contact">
-      <h2 class="block-title reveal"><span>9</span>Contact</h2>
-      <p class="obs reveal">Disponible en septembre 2027 à l'issue de l'alternance, pour un poste d'ingénieure en systèmes embarqués, réseaux ou cybersécurité, avec trois ans d'expérience en milieu ferroviaire. <span class="todo">à confirmer</span></p>
-      <table class="form contact-form reveal">
-        <tr><th>E-mail</th><td><a class="typed" href="mailto:jade72210@gmail.com">jade72210@gmail.com</a></td></tr>
-        <tr><th>LinkedIn</th><td><a class="typed" href="https://www.linkedin.com/in/jade-barbier-b261b8266/" target="_blank" rel="noopener">linkedin.com/in/jade-barbier</a></td></tr>
-        <tr><th>GitHub</th><td><a class="typed" href="https://github.com/MoggleJ" target="_blank" rel="noopener">github.com/MoggleJ</a></td></tr>
-        <tr><th>CV</th><td><a class="typed" href="https://github.com/MoggleJ/Portfolio_2026/raw/main/cv/BARBIER_Jade_CV_Stage_EN.pdf" target="_blank" rel="noopener">Télécharger le CV (PDF)</a></td></tr>
-      </table>
-      <div class="signatures reveal">
-        <div><span class="sig hand">Jade Barbier</span><span class="line">Signature</span></div>
-      </div>
+    <section class="station seabed" id="contact" data-depth="4000">
+      <header class="st-head" data-anim>
+        <span class="st-depth mono">−4000 m · Signal de remontée</span>
+        <h2>Contact</h2>
+      </header>
+      <p class="lead" data-anim>Disponible en septembre 2027 à l'issue de l'alternance, pour un poste d'ingénieure en systèmes embarqués, réseaux ou cybersécurité, avec trois ans d'expérience en milieu ferroviaire. <span class="todo">à confirmer</span></p>
+      <ul class="signals">
+        <li data-anim style="--d:0"><span class="mono">E-mail</span><a href="mailto:jade72210@gmail.com">jade72210@gmail.com</a></li>
+        <li data-anim style="--d:1"><span class="mono">LinkedIn</span><a href="https://www.linkedin.com/in/jade-barbier-b261b8266/" target="_blank" rel="noopener">linkedin.com/in/jade-barbier</a></li>
+        <li data-anim style="--d:2"><span class="mono">GitHub</span><a href="https://github.com/MoggleJ" target="_blank" rel="noopener">github.com/MoggleJ</a></li>
+        <li data-anim style="--d:3"><span class="mono">CV</span><a href="https://github.com/MoggleJ/Portfolio_2026/raw/main/cv/BARBIER_Jade_CV_Stage_EN.pdf" target="_blank" rel="noopener">Télécharger le CV (PDF)</a></li>
+      </ul>
+      <div class="sign" data-anim><span class="hand">Jade Barbier</span><a class="btn ghost" href="#surface" id="ascend">Remonter à la surface ↑</a></div>
     </section>
 
-    <footer class="file-foot">
-      <div class="foot-line"><span>Dossier MJ-2027</span><a href="#top">Haut de page ↑</a></div>
-    </footer>
   </main>
 
   <div class="mock-banner">Maquette sprint 1 · <a href="styleguide.html">Planche de style</a></div>
 
   <script src="data.js"></script>
   <script src="skills.js"></script>
-  <script src="maquette.js"></script>
+  <script src="ocean.js"></script>
 </body>
 </html>
