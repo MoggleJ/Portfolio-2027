@@ -36,7 +36,6 @@
         <h1 class="name">Jade Barbier</h1>
         <table class="form">
           <tr><th>Nom</th><td class="typed">BARBIER</td></tr>
-          <tr><th>Prénom</th><td class="typed">Jade</td></tr>
           <tr><th>Fonction</th><td class="typed">Ingénieure, informatique embarquée et réseaux</td></tr>
           <tr><th>Disponibilité</th><td><span class="check on">Disponible à partir de sept. 2027</span><span class="check">En poste</span></td></tr>
         </table>
@@ -55,14 +54,14 @@
 
     <!-- 3. Projets : consultés sur la tablette après scan du code-barres -->
     <section class="block" id="projets">
-      <h2 class="block-title reveal"><span>3</span>Projets</h2>
+      <h2 class="block-title reveal"><span>3</span>Journal de mission</h2>
       <div class="scan-slip reveal">
         <div class="slip-text">
-          <span class="mono">Journal de missions · <span class="js-count">10</span> projets</span>
-          <b class="typed">Entreprise, école et personnel</b>
-          <span class="hand">→ à scanner avec la tablette</span>
+          <span class="mono">Dossier MJ-2027 · pièce n° 3</span>
+          <b class="typed">Projets, expérience, formation, compétences</b>
+          <span class="hand">→ lecture sur la tablette</span>
         </div>
-        <button class="barcode-btn" id="scan-btn" aria-label="Scanner le code-barres pour ouvrir le journal de missions sur la tablette">
+        <button class="barcode-btn" id="scan-btn" aria-label="Scanner le code-barres pour ouvrir le dossier sur la tablette">
           <svg class="bars-code" viewBox="0 0 120 40" preserveAspectRatio="none" aria-hidden="true"><g fill="currentColor"><rect x="0" width="2" height="40"/><rect x="4" width="1" height="40"/><rect x="7" width="3" height="40"/><rect x="12" width="1" height="40"/><rect x="15" width="2" height="40"/><rect x="19" width="1" height="40"/><rect x="22" width="3" height="40"/><rect x="27" width="2" height="40"/><rect x="31" width="1" height="40"/><rect x="34" width="1" height="40"/><rect x="37" width="3" height="40"/><rect x="42" width="2" height="40"/><rect x="46" width="1" height="40"/><rect x="49" width="2" height="40"/><rect x="53" width="3" height="40"/><rect x="58" width="1" height="40"/><rect x="61" width="2" height="40"/><rect x="65" width="1" height="40"/><rect x="68" width="3" height="40"/><rect x="73" width="1" height="40"/><rect x="76" width="2" height="40"/><rect x="80" width="1" height="40"/><rect x="83" width="3" height="40"/><rect x="88" width="2" height="40"/><rect x="92" width="1" height="40"/><rect x="95" width="2" height="40"/><rect x="99" width="3" height="40"/><rect x="104" width="1" height="40"/><rect x="107" width="2" height="40"/><rect x="111" width="1" height="40"/><rect x="114" width="3" height="40"/><rect x="119" width="1" height="40"/></g></svg>
           <span class="code-label">MJ-2027 · PRJ</span>
           <i class="laser" aria-hidden="true"></i>
@@ -70,13 +69,83 @@
       </div>
     </section>
 
-    <!-- 4. Expérience -->
-    <section class="block" id="experience">
-      <h2 class="block-title reveal"><span>4</span>Expérience</h2>
-      <div class="xp reveal">
+    <!-- Contact : réseaux et signature -->
+    <section class="block" id="contact">
+      <h2 class="block-title reveal"><span>4</span>Contact</h2>
+      <p class="obs reveal">Disponible en septembre 2027 à l'issue de l'alternance, pour un poste d'ingénieure en systèmes embarqués, réseaux ou cybersécurité, avec trois ans d'expérience en milieu ferroviaire. <span class="todo">à confirmer</span></p>
+      <table class="form contact-form reveal">
+        <tr><th>E-mail</th><td><a class="typed" href="mailto:jade72210@gmail.com">jade72210@gmail.com</a></td></tr>
+        <tr><th>LinkedIn</th><td><a class="typed" href="https://www.linkedin.com/in/jade-barbier-b261b8266/" target="_blank" rel="noopener">linkedin.com/in/jade-barbier</a></td></tr>
+        <tr><th>GitHub</th><td><a class="typed" href="https://github.com/MoggleJ" target="_blank" rel="noopener">github.com/MoggleJ</a></td></tr>
+        <tr><th>CV</th><td><a class="typed" href="https://github.com/MoggleJ/Portfolio_2026/raw/main/cv/BARBIER_Jade_CV_Stage_EN.pdf" target="_blank" rel="noopener">Télécharger le CV (PDF)</a></td></tr>
+      </table>
+      <div class="signatures reveal">
+        <div><span class="sig hand">Jade Barbier</span><span class="line">Signature</span></div>
+      </div>
+    </section>
+
+    <footer class="file-foot">
+      <div class="foot-line"><span>Dossier MJ-2027</span><a href="#top">Haut de page ↑</a></div>
+    </footer>
+  </main>
+
+  <!-- Tablette à droite : tout le dossier, déverrouillé par le scan du code-barres -->
+  <aside class="tablet right locked" id="tablet" aria-label="Terminal MJ-PAD">
+    <button class="tablet-handle" aria-expanded="false" aria-controls="tablet"><span class="grip" aria-hidden="true"></span><span>MJ-PAD</span></button>
+    <div class="tablet-device">
+      <i class="screw s1"></i><i class="screw s2"></i><i class="screw s3"></i><i class="screw s4"></i>
+      <i class="led" aria-hidden="true"></i>
+      <div class="tablet-screen" data-theme="dark">
+        <div class="t-bar"><span>MJ-PAD</span><span class="t-clock">T+00:00:00</span></div>
+        <div class="t-tabs six" role="tablist" aria-label="Dossier">
+          <button role="tab" data-mode="projects" aria-selected="false">Projets</button>
+          <button role="tab" data-mode="experience" aria-selected="false">Expérience</button>
+          <button role="tab" data-mode="formation" aria-selected="false">Formation</button>
+          <button role="tab" data-mode="tests" aria-selected="false">Compétences</button>
+          <button role="tab" data-mode="hobbies" aria-selected="false">Hors service</button>
+          <button role="tab" data-mode="game" aria-selected="false">Planète</button>
+        </div>
+        <div class="t-pane" data-pane="standby">
+          <div class="viewfinder idle"><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="c4"></i><span>Aucun dossier</span></div>
+          <div class="scan-status">En attente du code-barres du dossier</div>
+          <button class="t-btn wide-btn" data-scan>Scanner le dossier</button>
+        </div>
+        <div class="t-pane" data-pane="scan" hidden>
+          <div class="viewfinder"><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="c4"></i>
+            <svg class="bars-code" viewBox="0 0 120 40" preserveAspectRatio="none" aria-hidden="true"><g fill="currentColor"><rect x="0" width="2" height="40"/><rect x="4" width="1" height="40"/><rect x="7" width="3" height="40"/><rect x="12" width="1" height="40"/><rect x="15" width="2" height="40"/><rect x="19" width="1" height="40"/><rect x="22" width="3" height="40"/><rect x="27" width="2" height="40"/><rect x="31" width="1" height="40"/><rect x="34" width="1" height="40"/><rect x="37" width="3" height="40"/><rect x="42" width="2" height="40"/><rect x="46" width="1" height="40"/><rect x="49" width="2" height="40"/><rect x="53" width="3" height="40"/><rect x="58" width="1" height="40"/><rect x="61" width="2" height="40"/><rect x="65" width="1" height="40"/><rect x="68" width="3" height="40"/><rect x="73" width="1" height="40"/><rect x="76" width="2" height="40"/><rect x="80" width="1" height="40"/><rect x="83" width="3" height="40"/><rect x="88" width="2" height="40"/><rect x="92" width="1" height="40"/><rect x="95" width="2" height="40"/><rect x="99" width="3" height="40"/><rect x="104" width="1" height="40"/><rect x="107" width="2" height="40"/><rect x="111" width="1" height="40"/><rect x="114" width="3" height="40"/><rect x="119" width="1" height="40"/></g></svg>
+            <i class="v-laser"></i>
+          </div>
+          <div class="scan-status"><span class="blink">●</span> <span class="scan-msg">Lecture du code-barres…</span></div>
+        </div>
+        <div class="t-pane" data-pane="projects" hidden>
+          <div class="t-subject"><span>Journal de missions</span><b>BARBIER J. · <span class="js-count">10</span> projets</b><span>Toucher une mission pour ouvrir le rapport</span></div>
+          <div id="t-projects"></div>
+        </div>
+        <div class="t-pane" data-pane="mission" hidden>
+          <button class="t-back" data-mode="projects">← Journal</button>
+          <div class="t-report">
+            <div class="r-visual"></div>
+            <div class="t-rep-top"><span>Rapport de mission</span><span class="code"></span></div>
+            <h3 class="r-title"></h3>
+            <dl class="t-rep-meta"><div><dt>Base</dt><dd class="base"></dd></div><div><dt>Période</dt><dd class="period"></dd></div><div><dt>Statut</dt><dd><span class="stamp-s"></span></dd></div></dl>
+            <h4>Objectif</h4><p class="desc"></p>
+            <h4>Journal de bord</h4><ul class="log-list"></ul>
+            <h4>Équipement</h4><div class="tags"></div>
+            <div class="links-row"></div>
+          </div>
+        </div>
+        <div class="t-pane" data-pane="tests" hidden>
+          <div class="t-subject"><span>Résultats des tests</span><b>BARBIER J. · MJ-2027</b><span class="t-count"></span></div>
+          <div id="tests"></div>
+          <div class="t-verdict"><span>Aptitude générale</span><b>Confirmée</b></div>
+        </div>
+        <div class="t-pane" data-pane="experience" hidden>
+          <div class="t-subject"><span>Expérience</span><b>2 affectations</b><span>Milieu ferroviaire et industriel</span></div>
+<div class="xp t-xp">
         <article class="xp-item">
-          <div class="xp-when typed">sept. 2024<br>sept. 2027</div>
+          <img class="xp-logo" src="assets/sncf.webp" alt="SNCF Voyageurs" width="48" height="48">
           <div>
+            <div class="xp-when">sept. 2024 – sept. 2027</div>
             <h3>Alternance en informatique embarquée et réseaux</h3>
             <div class="xp-where">CIM, SNCF Voyageurs · Le Mans</div>
             <ul>
@@ -87,8 +156,9 @@
           </div>
         </article>
         <article class="xp-item">
-          <div class="xp-when typed">juin 2023<br>août 2023</div>
+          <img class="xp-logo" src="assets/colart.webp" alt="Colart" width="48" height="48">
           <div>
+            <div class="xp-when">juin – août 2023</div>
             <h3>Opératrice de conditionnement</h3>
             <div class="xp-where">Colart International · Le Mans</div>
             <ul>
@@ -97,51 +167,30 @@
           </div>
         </article>
       </div>
-    </section>
-
-    <!-- 5. Formation -->
-    <section class="block" id="formation">
-      <h2 class="block-title reveal"><span>5</span>Formation</h2>
-      <table class="ledger reveal">
-        <thead><tr><th>Période</th><th>Établissement</th><th>Diplôme</th></tr></thead>
-        <tbody>
-          <tr><td class="typed">2022 – 2027</td><td>ENSIM, Le Mans</td><td>Diplôme d'ingénieure en informatique, en alternance depuis 2024</td></tr>
-          <tr><td class="typed">2019 – 2022</td><td>Lycée André Malraux, Allonnes</td><td>Baccalauréat général, mention</td></tr>
-        </tbody>
-      </table>
-      <!-- Lien vers la page externe parcours-universitaire.html : supprimer ce bloc pour la retirer -->
-      <a class="annex-link reveal" href="parcours-universitaire.html"><span class="mono">Annexe</span> Détail des semestres →</a>
-    </section>
-
-    <!-- 5. Compétences : résultats sur la tablette -->
-    <section class="block" id="competences">
-      <h2 class="block-title reveal"><span>6</span>Compétences</h2>
-      <div class="eval reveal">
-        <p class="obs">Résultats détaillés sur la tablette, à droite. Synthèse ci-dessous.</p>
-        <p class="hand note right">→ résultats sur la tablette</p>
-      </div>
-      <div id="skills" class="skills-paper reveal"></div>
-    </section>
-
-    <!-- 6. Hors service -->
-    <section class="block" id="hors-code">
-      <h2 class="block-title reveal"><span>7</span>Hors service <span class="todo">textes à valider</span></h2>
-      <ul class="checklist reveal">
-        <li><span class="check on"></span><b>Lecture</b> Romans et essais : une curiosité qui nourrit aussi la veille technique.</li>
-        <li><span class="check on"></span><b>Manga et animation</b> Des récits au long cours, de One Piece aux classiques de l'animation.</li>
-        <li><span class="check on"></span><b>Voyages</b> D'autres pays, d'autres langues, d'autres façons de travailler.</li>
-        <li><span class="check on"></span><b>Électronique maker</b> Consoles portables, petits robots et impression 3D, hors du cadre scolaire.</li>
-      </ul>
-    </section>
-
-    <!-- 7. Pièces jointes : la planète -->
-    <section class="block" id="planete">
-      <h2 class="block-title reveal"><span>8</span>Pièces jointes</h2>
-      <p class="obs reveal">Enregistrements vidéo de la planète MJ-1. Esquisse fixe : au sprint 4, les habitants pourront être attrapés et lancés, et retomberont avec la gravité de la planète. Leurs yeux suivent déjà le pointeur.</p>
-      <div class="attachments">
-        <figure class="attachment reveal">
-          <i class="tape t1" aria-hidden="true"></i><i class="tape t2" aria-hidden="true"></i>
-          <div class="screen" data-theme="dark">
+        </div>
+        <div class="t-pane" data-pane="formation" hidden>
+          <div class="t-subject"><span>Formation</span><b>Ingénieure ENSIM · 2027</b><span>Cycle ingénieur en alternance</span></div>
+          <div class="xp t-xp">
+            <article class="xp-item"><img class="xp-logo" src="assets/ensim.webp" alt="ENSIM" width="48" height="48"><div><div class="xp-when">2022 – 2027</div><h3>Diplôme d'ingénieure en informatique</h3><div class="xp-where">ENSIM · Le Mans</div><ul><li>Alternance au CIM de SNCF Voyageurs depuis 2024.</li><li>Systèmes embarqués, réseaux, cybersécurité.</li></ul></div></article>
+            <article class="xp-item"><img class="xp-logo" src="assets/malraux.webp" alt="Lycée André Malraux" width="48" height="48"><div><div class="xp-when">2019 – 2022</div><h3>Baccalauréat général</h3><div class="xp-where">Lycée André Malraux · Allonnes</div></div></article>
+          </div>
+          <!-- Lien vers la page externe parcours-universitaire.html : supprimer cette ligne pour la retirer -->
+          <a class="t-btn wide-btn" href="parcours-universitaire.html">Détail des semestres →</a>
+        </div>
+        <div class="t-pane" data-pane="hobbies" hidden>
+          <div class="t-subject"><span>Hors service</span><b>Centres d'intérêt</b><span>Textes à valider</span></div>
+          <ul class="t-list">
+            <li><b>Lecture</b>Romans et essais : une curiosité qui nourrit aussi la veille technique.</li>
+            <li><b>Manga et animation</b>Des récits au long cours, de One Piece aux classiques de l'animation.</li>
+            <li><b>Voyages</b>D'autres pays, d'autres langues, d'autres façons de travailler.</li>
+            <li><b>Électronique maker</b>Consoles portables, petits robots et impression 3D, hors du cadre scolaire.</li>
+          </ul>
+        </div>
+        <div class="t-pane" data-pane="game" hidden>
+          <div class="t-subject"><span>Planète MJ-1</span><b>Flux vidéo</b><span>Les yeux suivent le pointeur. Physique au sprint 4.</span></div>
+          <div class="t-switch" role="group" aria-label="Vue"><button class="on" data-view="0">Surface</button><button data-view="1">Sous le drapeau</button></div>
+          <div class="game-views">
+            <div class="screen" data-theme="dark">
             <div class="hud top"><span><b class="rec"></b>REC · CAM-02 · SURFACE MJ-1</span><span class="timecode">00:00:00:00</span></div>
           <svg viewBox="0 0 600 560" role="img" aria-label="Planète violette avec trois petits monstres et un drapeau">
             <defs>
@@ -192,11 +241,7 @@
           </svg>
             <div class="hud bottom"><span>SIGNAL <i class="bars"><i></i><i></i><i></i><i></i><i></i></i></span><span class="live">EN DIRECT</span></div>
           </div>
-          <figcaption class="typed">PJ 02 · Transmission depuis la surface</figcaption>
-        </figure>
-        <figure class="attachment reveal">
-          <i class="tape t1" aria-hidden="true"></i><i class="tape t2" aria-hidden="true"></i>
-          <div class="screen" data-theme="dark">
+            <div class="screen" hidden data-theme="dark">
             <div class="hud top"><span>SCAN · COUPE GÉOLOGIQUE</span><span>3 COUCHES</span></div>
           <svg viewBox="0 0 600 560" role="img" aria-label="Vue en coupe de la planète : trois couches avec des objets enfouis">
             <defs>
@@ -236,94 +281,9 @@
           </svg>
             <div class="hud bottom"><span>PROFONDEUR 0 → 170 KM</span><span>ARCHIVE</span></div>
           </div>
-          <figcaption class="typed">PJ 03 · Fouille après tirage du drapeau</figcaption>
-        </figure>
-      </div>
-      <p class="hand note">Couches : aujourd'hui (livre, chapeau, voyages), ado (à définir), enfance (allumette, dessins animés).</p>
-    </section>
-
-    <!-- 9. Contact -->
-    <section class="block" id="contact">
-      <h2 class="block-title reveal"><span>9</span>Contact</h2>
-      <p class="obs reveal">Disponible en septembre 2027 à l'issue de l'alternance, pour un poste d'ingénieure en systèmes embarqués, réseaux ou cybersécurité, avec trois ans d'expérience en milieu ferroviaire. <span class="todo">à confirmer</span></p>
-      <table class="form contact-form reveal">
-        <tr><th>E-mail</th><td><a class="typed" href="mailto:jade72210@gmail.com">jade72210@gmail.com</a></td></tr>
-        <tr><th>LinkedIn</th><td><a class="typed" href="https://www.linkedin.com/in/jade-barbier-b261b8266/" target="_blank" rel="noopener">linkedin.com/in/jade-barbier</a></td></tr>
-        <tr><th>GitHub</th><td><a class="typed" href="https://github.com/MoggleJ" target="_blank" rel="noopener">github.com/MoggleJ</a></td></tr>
-        <tr><th>CV</th><td><a class="typed" href="https://github.com/MoggleJ/Portfolio_2026/raw/main/cv/BARBIER_Jade_CV_Stage_EN.pdf" target="_blank" rel="noopener">Télécharger le CV (PDF)</a></td></tr>
-      </table>
-      <div class="signatures reveal">
-        <div><span class="sig hand">Jade Barbier</span><span class="line">Signature</span></div>
-      </div>
-    </section>
-
-    <footer class="file-foot">
-      <div class="bigname" aria-hidden="true">Jade Barbier</div>
-      <div class="foot-line"><span>Dossier MJ-2027</span><a href="#top">Haut de page ↑</a></div>
-    </footer>
-  </main>
-
-  <!-- Tablette à droite : sommaire + résultats des tests de compétences -->
-  <aside class="tablet right" id="tablet" aria-label="Terminal MJ-PAD">
-    <button class="tablet-handle" aria-expanded="false" aria-controls="tablet"><span class="grip" aria-hidden="true"></span><span>MJ-PAD</span></button>
-    <div class="tablet-device">
-      <i class="screw s1"></i><i class="screw s2"></i><i class="screw s3"></i><i class="screw s4"></i>
-      <i class="led" aria-hidden="true"></i>
-      <div class="tablet-screen" data-theme="dark">
-        <div class="t-bar"><span>MJ-PAD</span><span class="t-clock">T+00:00:00</span></div>
-        <div class="t-tabs three" role="tablist">
-          <button role="tab" data-mode="menu" aria-selected="true">Sommaire</button>
-          <button role="tab" data-mode="projects" aria-selected="false">Projets</button>
-          <button role="tab" data-mode="tests" aria-selected="false">Tests</button>
-        </div>
-        <div class="t-pane" data-pane="menu">
-          <div class="t-status"><span class="dot"></span><span><b>Disponible</b> à partir de sept. 2027</span></div>
-          <nav class="t-nav" aria-label="Sections de la fiche">
-            <a href="#identite"><i>1</i>Identification</a>
-            <a href="#observations"><i>2</i>Profil</a>
-            <a href="#projets" data-scan><i>3</i>Projets</a>
-            <a href="#experience"><i>4</i>Expérience</a>
-            <a href="#formation"><i>5</i>Formation</a>
-            <a href="#competences"><i>6</i>Compétences</a>
-            <a href="#hors-code"><i>7</i>Hors service</a>
-            <a href="#planete"><i>8</i>Pièces jointes</a>
-            <a href="#contact"><i>9</i>Contact</a>
-            <a href="parcours-universitaire.html"><i>A</i>Annexe : semestres</a>
-          </nav>
-          <div class="t-tools">
-            <button class="t-btn lang" data-toggle-lang aria-label="Changer de langue"><span class="on">FR</span>&nbsp;/&nbsp;<span>EN</span></button>
-            <button class="t-btn" data-toggle-theme aria-label="Changer de thème">Jour / nuit</button>
           </div>
         </div>
-        <div class="t-pane" data-pane="scan" hidden>
-          <div class="viewfinder"><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="c4"></i>
-            <svg class="bars-code" viewBox="0 0 120 40" preserveAspectRatio="none" aria-hidden="true"><g fill="currentColor"><rect x="0" width="2" height="40"/><rect x="4" width="1" height="40"/><rect x="7" width="3" height="40"/><rect x="12" width="1" height="40"/><rect x="15" width="2" height="40"/><rect x="19" width="1" height="40"/><rect x="22" width="3" height="40"/><rect x="27" width="2" height="40"/><rect x="31" width="1" height="40"/><rect x="34" width="1" height="40"/><rect x="37" width="3" height="40"/><rect x="42" width="2" height="40"/><rect x="46" width="1" height="40"/><rect x="49" width="2" height="40"/><rect x="53" width="3" height="40"/><rect x="58" width="1" height="40"/><rect x="61" width="2" height="40"/><rect x="65" width="1" height="40"/><rect x="68" width="3" height="40"/><rect x="73" width="1" height="40"/><rect x="76" width="2" height="40"/><rect x="80" width="1" height="40"/><rect x="83" width="3" height="40"/><rect x="88" width="2" height="40"/><rect x="92" width="1" height="40"/><rect x="95" width="2" height="40"/><rect x="99" width="3" height="40"/><rect x="104" width="1" height="40"/><rect x="107" width="2" height="40"/><rect x="111" width="1" height="40"/><rect x="114" width="3" height="40"/><rect x="119" width="1" height="40"/></g></svg>
-            <i class="v-laser"></i>
-          </div>
-          <div class="scan-status"><span class="blink">●</span> <span class="scan-msg">Lecture du code-barres…</span></div>
-        </div>
-        <div class="t-pane" data-pane="projects" hidden>
-          <div class="t-subject"><span>Journal de missions</span><b>BARBIER J. · <span class="js-count">10</span> projets</b><span>Toucher une mission pour ouvrir le rapport</span></div>
-          <div id="t-projects"></div>
-        </div>
-        <div class="t-pane" data-pane="mission" hidden>
-          <button class="t-back" data-mode="projects">← Journal</button>
-          <div class="t-report">
-            <div class="t-rep-top"><span>Rapport de mission</span><span class="code"></span></div>
-            <h3 class="r-title"></h3>
-            <dl class="t-rep-meta"><div><dt>Base</dt><dd class="base"></dd></div><div><dt>Période</dt><dd class="period"></dd></div><div><dt>Statut</dt><dd><span class="stamp-s"></span></dd></div></dl>
-            <h4>Objectif</h4><p class="desc"></p>
-            <h4>Journal de bord</h4><ul class="log-list"></ul>
-            <h4>Équipement</h4><div class="tags"></div>
-            <div class="links-row"></div>
-          </div>
-        </div>
-        <div class="t-pane" data-pane="tests" hidden>
-          <div class="t-subject"><span>Sujet</span><b>BARBIER J. · MJ-2027</b><span class="t-count"></span></div>
-          <div id="tests"></div>
-          <div class="t-verdict"><span>Aptitude générale</span><b>Confirmée</b></div>
-        </div>
-        <div class="t-foot"><span>Signal <i class="bars"><i></i><i></i><i></i><i></i><i></i></i></span><span>Batterie 87 %</span></div>
+        <div class="t-foot"><span>Signal <i class="bars"><i></i><i></i><i></i><i></i><i></i></i></span><span class="t-tools"><button class="t-btn lang" data-toggle-lang aria-label="Changer de langue"><span class="on">FR</span>&nbsp;/&nbsp;<span>EN</span></button><button class="t-btn" data-toggle-theme aria-label="Changer de thème">Jour / nuit</button></span><span>Batterie 87 %</span></div>
       </div>
     </div>
   </aside>

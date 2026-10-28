@@ -1,5 +1,6 @@
 // Contenu de démonstration, repris de Portfolio_2026 (data/experience.json et data/projects.json).
 // Au sprint 3, il sera migré dans content/ en FR et EN. Les expériences (alternance, job d'été) sont dans la section 4 de la fiche.
+// img : visuel du projet ; sans img, la tablette affiche une mire "visuel à fournir"
 window.PROJECTS = [
   {
     kind: "pro", title: "Système de communication embarqué sécurisé",
@@ -31,7 +32,7 @@ window.PROJECTS = [
     tags: ["Sécurité", "CRA", "Conformité", "Documentation"],
   },
   {
-    kind: "school", title: "Pictionary connecté",
+    kind: "school", title: "Pictionary connecté", img: "assets/projets/pictionary.webp",
     where: "ENSIM, projet mécatronique", when: "en équipe",
     desc: "Jeu multijoueur temps réel : un bras motorisé dessine, l'image est analysée, les joueurs devinent. Contrôleurs Arduino reliés en Bluetooth.",
     missions: [["Électronique", "Contrôleurs Arduino et liaison Bluetooth"], ["Logiciel", "Traitement d'images et logique de jeu temps réel"]],
@@ -39,7 +40,7 @@ window.PROJECTS = [
     link: "https://github.com/MoggleJ/pictionnary",
   },
   {
-    kind: "school", title: "Joueur d'Othello IA",
+    kind: "school", title: "Joueur d'Othello IA", img: "assets/projets/othello.gif",
     where: "ENSIM", when: "projet IA",
     desc: "IA qui joue à Othello, choisie après l'entraînement et la comparaison de nombreux modèles (MLP, LSTM, CNN, CNN-LSTM, Transformer) et hyperparamètres.",
     missions: [["Modèles", "MLP, LSTM, CNN, CNN-LSTM, Transformer"], ["Optimisation", "Recherche d'hyperparamètres et d'architectures"]],
@@ -54,7 +55,7 @@ window.PROJECTS = [
     tags: ["Mécatronique", "SolidWorks", "Gestion de projet"],
   },
   {
-    kind: "school", title: "Système d'affichage de cartes",
+    kind: "school", title: "Système d'affichage de cartes", img: "assets/projets/cartes.webp",
     where: "ENSIM, projet mécatronique", when: "en équipe",
     desc: "Système automatisé qui détecte une carte par NFC et l'affiche sur un écran LCD, dans un boîtier imprimé en 3D.",
     missions: [["Détection", "Lecture NFC des cartes"], ["Affichage", "Retour visuel sur écran LCD"], ["Boîtier", "Impression 3D"]],

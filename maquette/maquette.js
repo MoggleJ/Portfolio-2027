@@ -73,43 +73,56 @@
     new MutationObserver(() => reduced && requestAnimationFrame(draw)).observe(root, { attributes: true });
   }
 
-  // ---------- Tablette à droite : sommaire, journal de missions (après scan) et tests ----------
+  // ---------- Tablette à droite : tout le dossier, déverrouillé par le scan du code-barres ----------
   const tablet = document.getElementById("tablet");
   if (tablet) {
     const handle = tablet.querySelector(".tablet-handle");
-    let auto = false, scanTimer = 0;
+    const screen = tablet.querySelector(".tablet-screen");
+    const wideScreen = window.matchMedia("(min-width: 1100px)");
+    let scanTimer = 0, scanned = false;
     const setMode = (mode) => {
-      tablet.querySelectorAll(".t-tabs [data-mode]").forEach((b) => b.setAttribute("aria-selected", b.dataset.mode === mode || (mode === "mission" && b.dataset.mode === "projects")));
+      const tab = mode === "mission" ? "projects" : mode;
+      tablet.querySelectorAll(".t-tabs [data-mode]").forEach((b) => b.setAttribute("aria-selected", b.dataset.mode === tab));
       tablet.querySelectorAll("[data-pane]").forEach((p) => (p.hidden = p.dataset.pane !== mode));
       tablet.classList.toggle("testing", mode === "tests");
-      tablet.classList.toggle("wide", ["projects", "mission", "scan"].includes(mode));
-      tablet.querySelector(".tablet-screen").scrollTop = 0;
+      screen.scrollTop = 0;
     };
-    const setOpen = (open) => { tablet.classList.toggle("open", open); handle.setAttribute("aria-expanded", open); };
-    handle.addEventListener("click", () => { auto = false; setOpen(!tablet.classList.contains("open")); });
+    // Sur grand écran, la fiche glisse à gauche pour laisser la tablette à côté
+    const setOpen = (open) => {
+      tablet.classList.toggle("open", open);
+      handle.setAttribute("aria-expanded", open);
+      document.body.classList.toggle("docked", open);
+    };
+    handle.addEventListener("click", () => setOpen(!tablet.classList.contains("open")));
     tablet.querySelectorAll("[data-mode]").forEach((b) => b.addEventListener("click", () => setMode(b.dataset.mode)));
-    tablet.querySelectorAll(".t-nav a:not([data-scan])").forEach((a) => a.addEventListener("click", () => setOpen(false)));
     document.addEventListener("keydown", (e) => e.key === "Escape" && setOpen(false));
-    document.addEventListener("click", (e) => { if (!tablet.contains(e.target) && !e.target.closest("#scan-btn")) { auto = false; setOpen(false); } });
+    document.addEventListener("click", (e) => {
+      if (!wideScreen.matches && !tablet.contains(e.target) && !e.target.closest("#scan-btn")) setOpen(false);
+    });
 
-    // Journal de missions : rendu dans la tablette
+    // Journal de missions
     const list = document.getElementById("t-projects");
     const kinds = { pro: "Entreprise", school: "École", perso: "Personnel" };
     const prefix = { pro: "ENT", school: "ECO", perso: "PER" };
     const P = window.PROJECTS || [];
     const code = (p) => `${prefix[p.kind]}-${String(P.filter((q) => q.kind === p.kind).indexOf(p) + 1).padStart(2, "0")}`;
+    // Sans visuel : mire de test avec le code du projet
+    const visual = (p, cls) => p.img
+      ? `<img class="${cls}" src="${p.img}" alt="${p.title}" loading="lazy">`
+      : `<span class="${cls} no-img" aria-hidden="true"><b>${code(p)}</b><i>Visuel à fournir</i></span>`;
     document.querySelectorAll(".js-count").forEach((el) => (el.textContent = P.length));
     if (list) {
       list.innerHTML = Object.entries(kinds).map(([kind, label]) => {
         const items = P.map((p, i) => [p, i]).filter(([p]) => p.kind === kind);
         return `<div class="t-group"><h4>${label}<span>${String(items.length).padStart(2, "0")}</span></h4>${items.map(([p, i]) => `
-          <button class="t-mission" data-i="${i}"><span class="m-code">${code(p)}</span><span class="m-main"><b>${p.title}</b><span>${p.where} · ${p.when}</span></span><span aria-hidden="true">›</span></button>`).join("")}</div>`;
+          <button class="t-mission" data-i="${i}">${visual(p, "m-thumb")}<span class="m-main"><b>${p.title}</b><span>${code(p)} · ${p.where}</span></span><span aria-hidden="true">›</span></button>`).join("")}</div>`;
       }).join("");
       const rep = tablet.querySelector(".t-report");
       list.addEventListener("click", (e) => {
         const c = e.target.closest(".t-mission"); if (!c) return;
         const p = P[+c.dataset.i];
         const live = /cours|2027|alternance/.test(p.when);
+        rep.querySelector(".r-visual").innerHTML = visual(p, "r-img");
         rep.querySelector(".code").textContent = `${code(p)} · ${kinds[p.kind]}`;
         rep.querySelector(".r-title").textContent = p.title;
         rep.querySelector(".base").textContent = p.where;
@@ -126,32 +139,39 @@
       });
     }
 
-    // Code-barres de la section 3 : la tablette sort, le scanne, puis affiche le journal
+    // Scan : la tablette sort, lit le code-barres, puis déverrouille le dossier
     const slip = document.getElementById("scan-btn");
     const msg = tablet.querySelector(".scan-msg");
     const scan = () => {
       clearTimeout(scanTimer);
-      auto = false;
       slip && slip.classList.add("scanning");
       tablet.classList.remove("scanned");
       msg.textContent = "Lecture du code-barres…";
       setMode("scan"); setOpen(true);
       scanTimer = setTimeout(() => {
-        msg.textContent = "MJ-2027 · PRJ reconnu · journal chargé";
+        msg.textContent = "MJ-2027 · dossier reconnu";
         tablet.classList.add("scanned");
         slip && slip.classList.remove("scanning");
-        scanTimer = setTimeout(() => setMode("projects"), reduced ? 300 : 700);
+        slip && slip.classList.add("done");
+        scanTimer = setTimeout(() => { scanned = true; tablet.classList.remove("locked"); setMode("projects"); }, reduced ? 300 : 700);
       }, reduced ? 300 : 1500);
     };
     slip && slip.addEventListener("click", scan);
-    tablet.querySelector(".t-nav [data-scan]").addEventListener("click", () => setTimeout(scan, 400));
+    tablet.querySelectorAll("[data-scan]").forEach((b) => b.addEventListener("click", () => {
+      document.getElementById("projets").scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "center" });
+      scan();
+    }));
+    // Déclenché automatiquement quand le code-barres arrive à l'écran
+    if (slip) new IntersectionObserver(([e], obs) => {
+      if (e.isIntersecting && !scanned) { obs.disconnect(); scan(); }
+    }, { threshold: 0.9 }).observe(slip);
 
-    // Elle se déplie toute seule sur la section compétences, en mode résultats de test
-    const skills = document.getElementById("competences");
-    if (skills) new IntersectionObserver(([e]) => {
-      if (e.isIntersecting) { auto = true; setMode("tests"); setOpen(true); }
-      else if (auto) { auto = false; setOpen(false); setMode("menu"); }
-    }, { threshold: 0.35 }).observe(skills);
+    // Planète : vue surface ou couches sous le drapeau
+    const views = tablet.querySelectorAll(".game-views .screen");
+    tablet.querySelectorAll(".t-switch button").forEach((b) => b.addEventListener("click", () => {
+      tablet.querySelectorAll(".t-switch button").forEach((x) => x.classList.toggle("on", x === b));
+      views.forEach((v, i) => (v.hidden = i !== +b.dataset.view));
+    }));
 
     const clock = tablet.querySelector(".t-clock"), start = Date.now();
     setInterval(() => {

@@ -186,7 +186,6 @@ table.ledger td { padding: .7rem .8rem .7rem 0; border-bottom: 1px dotted var(--
 @media (max-width: 560px) { .xp-item { grid-template-columns: 1fr; gap: .4rem; } .xp-when br { display: none; } }
 
 /* ---------- Tablette : scan, journal, rapport ---------- */
-.tablet.right.wide { width: min(460px, 94vw); }
 .t-tabs.three { grid-template-columns: repeat(3, 1fr); }
 .viewfinder { position: relative; display: grid; place-items: center; height: 230px; margin-top: .4rem; border-radius: 10px; overflow: hidden;
   background: radial-gradient(ellipse at center, #2b2f36, #0b0c0f 75%); }
@@ -208,7 +207,7 @@ table.ledger td { padding: .7rem .8rem .7rem 0; border-bottom: 1px dotted var(--
 
 .t-group { display: grid; gap: .3rem; margin-bottom: .9rem; }
 .t-group h4 { display: flex; justify-content: space-between; font: 500 .68rem var(--font-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--accent); padding-bottom: .3rem; border-bottom: 1px solid var(--border); }
-.t-mission { display: grid; grid-template-columns: 56px 1fr auto; gap: .7rem; align-items: center; text-align: left; padding: .6rem .6rem; border: 1px solid transparent; border-radius: 8px; background: rgba(255, 255, 255, .03); color: var(--text); cursor: pointer; font: inherit; }
+.t-mission { display: grid; grid-template-columns: 64px 1fr auto; gap: .7rem; align-items: center; text-align: left; padding: .6rem .6rem; border: 1px solid transparent; border-radius: 8px; background: rgba(255, 255, 255, .03); color: var(--text); cursor: pointer; font: inherit; }
 .t-mission:hover, .t-mission:focus-visible { border-color: var(--accent); background: rgba(169, 184, 255, .08); outline: none; }
 .t-mission .m-code { font: 500 .7rem var(--font-mono); color: var(--muted); }
 .t-mission .m-main { display: grid; gap: .1rem; }
@@ -230,5 +229,58 @@ table.ledger td { padding: .7rem .8rem .7rem 0; border-bottom: 1px dotted var(--
 .t-report .tags { display: flex; flex-wrap: wrap; gap: .35rem; }
 .t-note { font: 500 .66rem var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
 .links-row { margin-top: .4rem; }
-@media (max-width: 480px) { .t-rep-meta { grid-template-columns: 1fr 1fr; } .t-mission { grid-template-columns: 1fr auto; } .t-mission .m-code { display: none; } }
+@media (max-width: 480px) { .t-rep-meta { grid-template-columns: 1fr 1fr; } }
 @media (prefers-reduced-motion: reduce) { .v-laser, .barcode-btn.scanning .laser { animation: none; top: 50%; } }
+
+/* ---------- v9 : la tablette porte tout le dossier ---------- */
+.tablet.right:not(.locked) { width: min(480px, 94vw); }
+.tablet.right:not(.locked) .tablet-screen { height: calc(100vh - 120px); max-height: 860px; }
+.tablet.locked .t-tabs { display: none; }
+.t-tabs.six { grid-template-columns: repeat(3, 1fr); }
+.t-tabs.six button { padding: .5rem .3rem; font-size: .64rem; }
+@media (min-width: 1100px) {
+  body.fiche .sheet { transition: margin .6s cubic-bezier(.2, .8, .2, 1); }
+  body.docked .sheet { margin-right: 520px; margin-left: max(0px, calc((100vw - 520px - 1060px) / 2)); }
+}
+
+.viewfinder.idle { height: 180px; }
+.viewfinder.idle span { font: 500 .7rem var(--font-mono); letter-spacing: .14em; text-transform: uppercase; color: rgba(242, 240, 245, .4); }
+.viewfinder.idle > i { border-color: rgba(242, 240, 245, .35) !important; }
+.wide-btn { display: block; width: 100%; text-align: center; text-decoration: none; flex: none; }
+
+.barcode-btn.done::after { content: "Lu"; position: absolute; right: 6px; top: 6px; font: 700 .7rem var(--font-title); letter-spacing: .14em; text-transform: uppercase; color: var(--ok); border: 1.5px solid var(--ok); border-radius: 3px; padding: 0 .3rem; transform: rotate(8deg); background: #fff; }
+
+/* Visuels des projets */
+.m-thumb { width: 64px; height: 48px; border-radius: 6px; object-fit: cover; background: #0b0c0f; border: 1px solid var(--border); }
+.r-img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: contain; border-radius: 10px; background: #f4f3ef; border: 1px solid var(--border); }
+.no-img { display: grid; place-content: center; justify-items: center; gap: .15rem; background-color: #0e1420;
+  background-image: linear-gradient(rgba(143, 160, 255, .12) 1px, transparent 1px), linear-gradient(90deg, rgba(143, 160, 255, .12) 1px, transparent 1px); background-size: 12px 12px; }
+.no-img b { font: 500 .62rem var(--font-mono); color: var(--accent); letter-spacing: .08em; }
+.no-img i { display: none; font: 500 .62rem var(--font-mono); font-style: normal; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.r-img.no-img { background-color: #0e1420; background-size: 20px 20px; }
+.r-img.no-img b { font-size: 1.1rem; }
+.r-img.no-img i { display: block; }
+
+/* Expérience, formation, hors service dans la tablette */
+.t-xp .xp-item { grid-template-columns: 48px 1fr; gap: .9rem; padding: .9rem 0; border-top: 1px solid var(--border); }
+.t-xp .xp-item:first-child { border-top: 0; padding-top: 0; }
+.xp-logo { width: 48px; height: 48px; border-radius: 10px; object-fit: contain; background: #fff; padding: 4px; }
+.t-xp .xp-when { font: 500 .66rem var(--font-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.t-xp h3 { font-size: 1.12rem; margin-top: .15rem; }
+.t-xp .xp-where { margin: .2rem 0 .4rem; }
+.t-xp ul { font-size: .84rem; }
+.t-list { list-style: none; margin: 0; padding: 0; display: grid; gap: .6rem; }
+.t-list li { display: grid; gap: .15rem; padding: .7rem .8rem; border-radius: 8px; background: rgba(255, 255, 255, .03); border-left: 2px solid var(--accent); font-size: .84rem; color: var(--muted); }
+.t-list b { color: var(--text); font-weight: 600; font-size: .9rem; }
+
+/* Planète dans la tablette */
+.t-switch { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 3px; border: 1px solid var(--border); border-radius: 8px; }
+.t-switch button { padding: .4rem; border: 0; border-radius: 6px; background: transparent; color: var(--muted); font: 500 .66rem var(--font-mono); letter-spacing: .08em; text-transform: uppercase; cursor: pointer; }
+.t-switch button.on { background: rgba(255, 255, 255, .08); color: var(--text); }
+.game-views .screen { border-radius: 12px; box-shadow: none; }
+.game-views .screen[hidden] { display: none; }
+.game-views .screen svg { padding: 2rem .4rem 1.8rem; width: 100%; height: auto; }
+
+.t-foot .t-tools { gap: .35rem; }
+.t-foot .t-btn { flex: none; padding: .3rem .5rem; font-size: .62rem; }
+@media (max-width: 760px) { .tablet.right:not(.locked) .tablet-screen { height: calc(100vh - 240px); } .t-foot > span:last-child { display: none; } }
