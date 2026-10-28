@@ -73,34 +73,42 @@
     new MutationObserver(() => reduced && requestAnimationFrame(draw)).observe(root, { attributes: true });
   }
 
-  // ---------- Tablette à droite : tout le dossier, déverrouillé par le scan du code-barres ----------
-  const tablet = document.getElementById("tablet");
-  if (tablet) {
-    const handle = tablet.querySelector(".tablet-handle");
-    const screen = tablet.querySelector(".tablet-screen");
-    const wideScreen = window.matchMedia("(min-width: 1100px)");
-    let scanTimer = 0, scanned = false;
-    const setMode = (mode) => {
-      const tab = mode === "mission" ? "projects" : mode;
-      tablet.querySelectorAll(".t-tabs [data-mode]").forEach((b) => b.setAttribute("aria-selected", b.dataset.mode === tab));
-      tablet.querySelectorAll("[data-pane]").forEach((p) => (p.hidden = p.dataset.pane !== mode));
-      tablet.classList.toggle("testing", mode === "tests");
-      screen.scrollTop = 0;
-    };
-    // Sur grand écran, la fiche glisse à gauche pour laisser la tablette à côté
-    const setOpen = (open) => {
-      tablet.classList.toggle("open", open);
-      handle.setAttribute("aria-expanded", open);
-      document.body.classList.toggle("docked", open);
-    };
-    handle.addEventListener("click", () => setOpen(!tablet.classList.contains("open")));
-    tablet.querySelectorAll("[data-mode]").forEach((b) => b.addEventListener("click", () => setMode(b.dataset.mode)));
-    document.addEventListener("keydown", (e) => e.key === "Escape" && setOpen(false));
-    document.addEventListener("click", (e) => {
-      if (!wideScreen.matches && !tablet.contains(e.target) && !e.target.closest("#scan-btn")) setOpen(false);
-    });
+  // ---------- Le dossier dans la tablette : on y entre en défilant ----------
+  const pad = document.getElementById("dossier");
+  if (pad) {
+    const device = pad.querySelector(".pad-device");
 
-    // Journal de missions
+    // Entrée : la tablette grandit jusqu'à remplir l'écran, et le bureau s'assombrit autour
+    const onScroll = () => {
+      const r = pad.getBoundingClientRect(), vh = innerHeight;
+      const p = Math.min(1, Math.max(0, (vh - r.top) / (vh * 0.8)));
+      device.style.setProperty("--p", reduced ? 1 : p.toFixed(3));
+      document.body.classList.toggle("in-pad", r.top < vh * 0.3 && r.bottom > vh * 0.6);
+    };
+    addEventListener("scroll", onScroll, { passive: true });
+    addEventListener("resize", onScroll);
+    onScroll();
+
+    // Scan du code-barres : déclenché quand il arrive à l'écran, clic possible
+    const slip = document.getElementById("scan-btn");
+    const msg = pad.querySelector(".scan-msg");
+    let scanned = false;
+    const scan = () => {
+      if (scanned) return;
+      scanned = true;
+      slip.classList.add("scanning");
+      setTimeout(() => {
+        slip.classList.remove("scanning"); slip.classList.add("done");
+        pad.classList.add("scanned");
+        msg.textContent = "MJ-2027 · dossier reconnu";
+      }, reduced ? 200 : 1300);
+    };
+    if (slip) {
+      slip.addEventListener("click", () => { scan(); pad.scrollIntoView({ behavior: reduced ? "auto" : "smooth" }); });
+      new IntersectionObserver(([e], obs) => { if (e.isIntersecting) { obs.disconnect(); scan(); } }, { threshold: 0.9 }).observe(slip);
+    }
+
+    // Journal de missions : chaque ligne déplie son rapport sur place
     const list = document.getElementById("t-projects");
     const kinds = { pro: "Entreprise", school: "École", perso: "Personnel" };
     const prefix = { pro: "ENT", school: "ECO", perso: "PER" };
@@ -110,70 +118,49 @@
     const visual = (p, cls) => p.img
       ? `<img class="${cls}" src="${p.img}" alt="${p.title}" loading="lazy">`
       : `<span class="${cls} no-img" aria-hidden="true"><b>${code(p)}</b><i>Visuel à fournir</i></span>`;
+    const report = (p) => {
+      const live = /cours|2027|alternance/.test(p.when);
+      return `<div class="m-report" hidden>
+        ${visual(p, "r-img")}
+        <div class="t-report">
+          <dl class="t-rep-meta"><div><dt>Base</dt><dd>${p.where}</dd></div><div><dt>Période</dt><dd>${p.when}</dd></div><div><dt>Statut</dt><dd><span class="stamp-s${live ? " ongoing" : ""}">${live ? "En cours" : "Accomplie"}</span></dd></div></dl>
+          <h4>Objectif</h4><p>${p.desc}</p>
+          <h4>Journal de bord</h4><ul class="log-list">${p.missions.map((m) => `<li><b>${m[0]}</b>${m[1]}</li>`).join("")}</ul>
+          <h4>Équipement</h4><div class="tags">${p.tags.map((t) => `<span class="tag">${t}</span>`).join("")}</div>
+          <div class="links-row">${p.link ? `<a class="t-btn" href="${p.link}" target="_blank" rel="noopener">Voir le code sur GitHub ↗</a>` : `<span class="t-note">Projet confidentiel ou sans dépôt public</span>`}</div>
+        </div>
+      </div>`;
+    };
     document.querySelectorAll(".js-count").forEach((el) => (el.textContent = P.length));
     if (list) {
       list.innerHTML = Object.entries(kinds).map(([kind, label]) => {
-        const items = P.map((p, i) => [p, i]).filter(([p]) => p.kind === kind);
-        return `<div class="t-group"><h4>${label}<span>${String(items.length).padStart(2, "0")}</span></h4>${items.map(([p, i]) => `
-          <button class="t-mission" data-i="${i}">${visual(p, "m-thumb")}<span class="m-main"><b>${p.title}</b><span>${code(p)} · ${p.where}</span></span><span aria-hidden="true">›</span></button>`).join("")}</div>`;
+        const items = P.filter((p) => p.kind === kind);
+        return `<div class="t-group"><h4>${label}<span>${String(items.length).padStart(2, "0")}</span></h4>${items.map((p) => `
+          <div class="m-item">
+            <button class="t-mission" aria-expanded="false">${visual(p, "m-thumb")}<span class="m-main"><b>${p.title}</b><span>${code(p)} · ${p.where} · ${p.when}</span></span><span class="m-go" aria-hidden="true">+</span></button>
+            ${report(p)}
+          </div>`).join("")}</div>`;
       }).join("");
-      const rep = tablet.querySelector(".t-report");
       list.addEventListener("click", (e) => {
-        const c = e.target.closest(".t-mission"); if (!c) return;
-        const p = P[+c.dataset.i];
-        const live = /cours|2027|alternance/.test(p.when);
-        rep.querySelector(".r-visual").innerHTML = visual(p, "r-img");
-        rep.querySelector(".code").textContent = `${code(p)} · ${kinds[p.kind]}`;
-        rep.querySelector(".r-title").textContent = p.title;
-        rep.querySelector(".base").textContent = p.where;
-        rep.querySelector(".period").textContent = p.when;
-        const st = rep.querySelector(".stamp-s");
-        st.textContent = live ? "En cours" : "Accomplie"; st.classList.toggle("ongoing", live);
-        rep.querySelector(".desc").textContent = p.desc;
-        rep.querySelector(".log-list").innerHTML = p.missions.map((m) => `<li><b>${m[0]}</b>${m[1]}</li>`).join("");
-        rep.querySelector(".tags").innerHTML = p.tags.map((t) => `<span class="tag">${t}</span>`).join("");
-        rep.querySelector(".links-row").innerHTML = p.link
-          ? `<a class="t-btn" href="${p.link}" target="_blank" rel="noopener">Voir le code sur GitHub ↗</a>`
-          : `<span class="t-note">Projet confidentiel ou sans dépôt public</span>`;
-        setMode("mission");
+        const b = e.target.closest(".t-mission"); if (!b) return;
+        const open = b.getAttribute("aria-expanded") !== "true";
+        b.setAttribute("aria-expanded", open);
+        b.nextElementSibling.hidden = !open;
       });
     }
 
-    // Scan : la tablette sort, lit le code-barres, puis déverrouille le dossier
-    const slip = document.getElementById("scan-btn");
-    const msg = tablet.querySelector(".scan-msg");
-    const scan = () => {
-      clearTimeout(scanTimer);
-      slip && slip.classList.add("scanning");
-      tablet.classList.remove("scanned");
-      msg.textContent = "Lecture du code-barres…";
-      setMode("scan"); setOpen(true);
-      scanTimer = setTimeout(() => {
-        msg.textContent = "MJ-2027 · dossier reconnu";
-        tablet.classList.add("scanned");
-        slip && slip.classList.remove("scanning");
-        slip && slip.classList.add("done");
-        scanTimer = setTimeout(() => { scanned = true; tablet.classList.remove("locked"); setMode("projects"); }, reduced ? 300 : 700);
-      }, reduced ? 300 : 1500);
-    };
-    slip && slip.addEventListener("click", scan);
-    tablet.querySelectorAll("[data-scan]").forEach((b) => b.addEventListener("click", () => {
-      document.getElementById("projets").scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "center" });
-      scan();
-    }));
-    // Déclenché automatiquement quand le code-barres arrive à l'écran
-    if (slip) new IntersectionObserver(([e], obs) => {
-      if (e.isIntersecting && !scanned) { obs.disconnect(); scan(); }
-    }, { threshold: 0.9 }).observe(slip);
+    // Partie en cours : barre d'état et rail latéral ; les jauges de tests se remplissent à l'arrivée
+    const where = pad.querySelector(".pad-where");
+    const links = pad.querySelectorAll(".pad-rail a");
+    const spy = new IntersectionObserver((entries) => entries.forEach((e) => {
+      if (!e.isIntersecting) return;
+      where.textContent = e.target.dataset.label;
+      links.forEach((a) => a.classList.toggle("on", a.getAttribute("href") === `#${e.target.id}`));
+      if (e.target.id === "competences") e.target.classList.add("run");
+    }), { rootMargin: "-45% 0px -50% 0px" });
+    pad.querySelectorAll(".pad-sec").forEach((sec) => spy.observe(sec));
 
-    // Planète : vue surface ou couches sous le drapeau
-    const views = tablet.querySelectorAll(".game-views .screen");
-    tablet.querySelectorAll(".t-switch button").forEach((b) => b.addEventListener("click", () => {
-      tablet.querySelectorAll(".t-switch button").forEach((x) => x.classList.toggle("on", x === b));
-      views.forEach((v, i) => (v.hidden = i !== +b.dataset.view));
-    }));
-
-    const clock = tablet.querySelector(".t-clock"), start = Date.now();
+    const clock = pad.querySelector(".t-clock"), start = Date.now();
     setInterval(() => {
       const t = Math.floor((Date.now() - start) / 1000), p = (n) => String(n).padStart(2, "0");
       clock.textContent = `T+${p(Math.floor(t / 3600))}:${p(Math.floor(t / 60) % 60)}:${p(t % 60)}`;
