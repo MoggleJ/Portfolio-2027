@@ -229,18 +229,25 @@ window.SKILLS = [
       return `<tr><td>${c.title}</td><td>${c.skills.map(([n]) => n).join(", ")}</td><td class="score">${score} %</td></tr>`;
     }).join("")}</tbody></table>`;
   }
-  // Résultats détaillés sur la tablette
+  // Feuille de résultats : une épreuve par module, la case du niveau est cochée au stylo
   const tests = document.getElementById("tests");
   if (tests) {
     const total = window.SKILLS.reduce((s, c) => s + c.skills.length, 0);
-    document.querySelector(".t-count").textContent = `${window.SKILLS.length} modules · ${total} épreuves`;
+    document.querySelector(".t-count").textContent = `${window.SKILLS.length} épreuves, ${total} compétences notées sur quatre niveaux.`;
+    const x = '<svg class="pen-x" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 4 L16 16"/><path d="M16 4 L4 16"/></svg>';
     tests.innerHTML = window.SKILLS.map((c, i) => {
       const score = Math.round((c.skills.reduce((s, [, l]) => s + l, 0) / (c.skills.length * 4)) * 100);
       return `
-      <div class="t-module" style="--d:${i % 2}">
-        <div class="t-mod-head"><span><i>M${String(i + 1).padStart(2, "0")}</i>${c.title}</span><b>${score} %</b></div>
-        <div class="t-meter"><i style="--v:${score}%"></i></div>
-        <ul>${c.skills.map(([n, l]) => `<li><span>${n}</span><span class="t-lvl" data-l="${l}" title="${levels[l - 1]}"><span class="dots">${"<i></i>".repeat(4)}</span>${levels[l - 1]}</span></li>`).join("")}</ul>
+      <div class="exam" data-anim>
+        <div class="exam-head">
+          <span class="mono">Épreuve M${String(i + 1).padStart(2, "0")}</span>
+          <h3>${c.title}</h3>
+          <span class="exam-score"><b class="typed" data-count="${score}" data-suffix=" %">0 %</b><svg class="pen-circle" viewBox="0 0 120 60" aria-hidden="true"><path d="M8 32 C10 10 100 4 112 26 C120 46 40 58 14 46 C4 40 8 24 30 16"/></svg></span>
+        </div>
+        <table class="exam-grid">
+          <thead><tr><th>Compétence</th>${["Bases", "Interm.", "Autonome", "Avancé"].map((l, j) => `<th title="${levels[j]}">${l}</th>`).join("")}</tr></thead>
+          <tbody>${c.skills.map(([n, l], r) => `<tr style="--r:${r}"><td>${n}</td>${levels.map((_, j) => `<td class="box">${j + 1 === l ? x : ""}</td>`).join("")}</tr>`).join("")}</tbody>
+        </table>
       </div>`;
     }).join("");
   }
