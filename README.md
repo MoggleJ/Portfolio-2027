@@ -6,7 +6,7 @@ Un portfolio qui retrace qui je suis, mes compétences et mes projets.
 
 Le dossier [`maquette/`](maquette/) contient la maquette statique du design (HTML, CSS et un peu de JavaScript, sans dépendance) :
 
-- `index.html` + `ocean.css` + `ocean.js` : la plongée (surface, carnet de plongée des projets, câble d'ancrage pour l'expérience, instruments pour les compétences, planète au fond avec l'easter egg du drapeau) ;
+- `index.html` + `ship.css` + `ship.js` : la visite du vaisseau (passerelle, soute des projets, journal de bord, salle des machines pour les compétences, hublot d'observation avec la planète et l'easter egg du drapeau) ;
 - `styleguide.html` : la planche de style (palettes des deux thèmes, contrastes WCAG, typographies, mouvement) ;
 - `parcours-universitaire.html` + `parcours-data.js` : page annexe avec le détail des semestres. Pour la retirer, supprimer ces deux fichiers et le lien « Détail des semestres » dans `index.html`.
 
