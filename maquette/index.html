@@ -3,84 +3,95 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Jade Barbier · Plongée</title>
-  <meta name="description" content="Maquette du portfolio 2027 de Jade Barbier (sprint 1) : une plongée, de la surface aux abysses">
+  <title>Jade Barbier · À bord</title>
+  <meta name="description" content="Maquette du portfolio 2027 de Jade Barbier (sprint 1) : une visite du vaisseau, de la passerelle au hublot d'observation">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Caveat:wght@600&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="ocean.css">
+  <link rel="stylesheet" href="ship.css">
 </head>
 <body>
-  <!-- Ambiance : rayons de lumière en surface, bulles et neige marine dessinées sur le canvas -->
-  <div class="rays" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
-  <canvas id="sea" aria-hidden="true"></canvas>
+  <!-- L'espace est derrière la coque : on ne le voit qu'à travers les hublots (zones transparentes) -->
+  <canvas id="space" aria-hidden="true"></canvas>
 
   <nav class="topbar" aria-label="Navigation">
-    <a class="mark" href="#surface">JB</a>
-    <div class="links"><a href="#projets">Projets</a><a href="#experience">Expérience</a><a href="#competences">Compétences</a><a href="#contact">Contact</a></div>
+    <a class="mark" href="#passerelle">JB</a>
+    <div class="links"><a href="#soute">Projets</a><a href="#journal">Expérience</a><a href="#machines">Compétences</a><a href="#comms">Contact</a></div>
     <button class="lang" data-toggle-lang aria-label="Changer de langue"><span class="on">FR</span> / <span>EN</span></button>
   </nav>
 
-  <!-- Jauge de profondeur, fixe sur le côté -->
-  <aside class="gauge" aria-hidden="true">
-    <div class="g-scale"><i class="g-mark"></i></div>
-    <div class="g-read"><b class="g-m">0</b><span>m</span></div>
-    <div class="g-zone mono">Surface</div>
-  </aside>
+  <!-- Plan du vaisseau : le compartiment en cours s'allume -->
+  <nav class="deckmap" aria-label="Plan du vaisseau">
+    <span class="dm-title">MJ-2027 · plan</span>
+    <a href="#passerelle" data-for="passerelle"><i>01</i><span>Passerelle</span></a><a href="#quartiers" data-for="quartiers"><i>02</i><span>Quartiers</span></a><a href="#soute" data-for="soute"><i>03</i><span>Soute</span></a><a href="#journal" data-for="journal"><i>04</i><span>Journal de bord</span></a><a href="#archives" data-for="archives"><i>05</i><span>Archives</span></a><a href="#machines" data-for="machines"><i>06</i><span>Salle des machines</span></a><a href="#repos" data-for="repos"><i>07</i><span>Repos</span></a><a href="#observation" data-for="observation"><i>08</i><span>Observation</span></a><a href="#comms" data-for="comms"><i>09</i><span>Communications</span></a>
+  </nav>
 
-  <main id="dive">
-    <!-- Surface -->
-    <section class="station surface" id="surface" data-depth="0">
-      <svg class="waves" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
-        <path class="w1" d="M0 60 C240 20 480 100 720 60 C960 20 1200 100 1440 60 L1440 0 L0 0 Z"/>
-        <path class="w2" d="M0 50 C200 90 520 10 720 50 C920 90 1240 10 1440 50 L1440 0 L0 0 Z"/>
-      </svg>
-      <div class="hero">
-        <div class="hero-text">
-          <span class="avail" data-anim><i></i>Disponible à partir de sept. 2027</span>
-          <h1 data-anim style="--d:1">Jade<br>Barbier</h1>
-          <p class="role" data-anim style="--d:2">Ingénieure, informatique embarquée et réseaux</p>
-          <div class="hero-cta" data-anim style="--d:3"><a class="btn" href="#projets">Plonger dans les projets ↓</a><a class="btn ghost" href="#contact">Contact</a></div>
+  <main>
+
+    <section class="deck bridge-deck" id="passerelle" data-deck="01" data-name="Passerelle">
+      <div class="deck-in">
+        <div class="bridge">
+          <div class="windshield" aria-hidden="true"><i class="frame"></i><span class="hud-l">CAP 027 · VITESSE DE CROISIÈRE</span><span class="hud-r">EXT. −270 °C</span></div>
+          <div class="bridge-row">
+            <div class="bridge-text">
+              <span class="status" data-anim><i></i>Statut : disponible à partir de sept. 2027</span>
+              <h1 data-anim style="--d:1">Jade<br>Barbier</h1>
+              <p class="role" data-anim style="--d:2">Ingénieure, informatique embarquée et réseaux</p>
+              <div class="cta" data-anim style="--d:3"><a class="btn" href="#soute">Visiter la soute ↓</a><a class="btn ghost" href="#comms">Contact</a></div>
+            </div>
+            <figure class="badge" data-anim style="--d:2">
+              <div class="badge-top"><span>Équipage</span><span>MJ-2027</span></div>
+              <img src="assets/jade.webp" alt="Portrait de Jade Barbier" width="640" height="890">
+              <figcaption><b>BARBIER J.</b><span>Ingénieure de bord</span></figcaption>
+              <i class="holo" aria-hidden="true"></i>
+            </figure>
+          </div>
         </div>
-        <figure class="porthole" data-anim style="--d:2">
-          <div class="glass"><img src="assets/jade.webp" alt="Portrait de Jade Barbier" width="640" height="890"></div>
-          <span class="bolts" aria-hidden="true"><i style="--a:0deg"></i><i style="--a:45deg"></i><i style="--a:90deg"></i><i style="--a:135deg"></i><i style="--a:180deg"></i><i style="--a:225deg"></i><i style="--a:270deg"></i><i style="--a:315deg"></i></span>
-        </figure>
       </div>
     </section>
 
-    <section class="station" id="profil" data-depth="20">
-      <header class="st-head" data-anim>
-        <span class="st-depth mono">−20 m · Zone éclairée</span>
-        <h2>Profil</h2>
-      </header>
-      <blockquote class="hook" data-anim>« Des systèmes embarqués fiables, du capteur jusqu'au rail, sécurisés de bout en bout. » <span class="todo">accroche à fournir</span></blockquote>
-      <div class="prose" data-anim style="--d:1">
-        <p>Élève ingénieure à l'ENSIM, en alternance au CIM de SNCF Voyageurs : tests de conformité et sécurisation des équipements embarqués à bord des trains.</p>
-        <p>Profil à la frontière du logiciel et du matériel : cartes Arduino et STM32, réseaux et cybersécurité, avec des incursions en IA et en développement web. De la console de jeu conçue de A à Z au client mTLS industriel.</p>
+    <section class="deck" id="quartiers" data-deck="02" data-name="Quartiers">
+      <div class="door" aria-hidden="true"><i class="leaf l"></i><i class="leaf r"></i><span class="plate">SAS 02 · Quartiers</span></div>
+      <div class="deck-in">
+        <header class="dk-head" data-anim>
+          <span class="dk-tag">Pont 02 · Quartiers</span>
+          <h2>Profil</h2>
+          
+        </header>
+        <blockquote class="hook" data-anim>« Des systèmes embarqués fiables, du capteur jusqu'au rail, sécurisés de bout en bout. » <span class="todo">accroche à fournir</span></blockquote>
+        <div class="prose" data-anim style="--d:1">
+          <p>Élève ingénieure à l'ENSIM, en alternance au CIM de SNCF Voyageurs : tests de conformité et sécurisation des équipements embarqués à bord des trains.</p>
+          <p>Profil à la frontière du logiciel et du matériel : cartes Arduino et STM32, réseaux et cybersécurité, avec des incursions en IA et en développement web. De la console de jeu conçue de A à Z au client mTLS industriel.</p>
+        </div>
+        <dl class="readouts">
+          <div data-anim style="--d:2"><dt>Années d'alternance</dt><dd data-count="3">0</dd></div>
+          <div data-anim style="--d:3"><dt>Projets en soute</dt><dd data-count="10">0</dd></div>
+          <div data-anim style="--d:4"><dt>Compétences</dt><dd data-count="43">0</dd></div>
+        </dl>
       </div>
-      <dl class="readings">
-        <div data-anim style="--d:2"><dt>Années d'alternance</dt><dd data-count="3">0</dd></div>
-        <div data-anim style="--d:3"><dt>Projets</dt><dd data-count="10">0</dd></div>
-        <div data-anim style="--d:4"><dt>Compétences</dt><dd data-count="43">0</dd></div>
-      </dl>
     </section>
 
-    <section class="station" id="projets" data-depth="200">
-      <header class="st-head" data-anim>
-        <span class="st-depth mono">−200 m · Carnet de plongée</span>
-        <h2>Projets</h2>
-      </header>
-      <p class="lead" data-anim>Chaque projet est une plongée consignée au carnet. Ouvrir une entrée pour lire le rapport.</p>
-      <div id="logbook"></div>
+    <section class="deck" id="soute" data-deck="03" data-name="Soute">
+      <div class="door" aria-hidden="true"><i class="leaf l"></i><i class="leaf r"></i><span class="plate">SAS 03 · Soute</span></div>
+      <div class="deck-in">
+        <header class="dk-head" data-anim>
+          <span class="dk-tag">Pont 03 · Soute</span>
+          <h2>Projets</h2>
+          <p class="lead">Le manifeste de la soute : chaque projet est un conteneur scellé. Ouvrir un conteneur pour lire son rapport.</p>
+        </header>
+        <div id="logbook"></div>
+      </div>
     </section>
 
-    <section class="station" id="experience" data-depth="1000">
-      <header class="st-head" data-anim>
-        <span class="st-depth mono">−1000 m · Câble d'ancrage</span>
-        <h2>Expérience</h2>
-      </header>
-      <ol class="cable">
+    <section class="deck" id="journal" data-deck="04" data-name="Journal de bord">
+      <div class="door" aria-hidden="true"><i class="leaf l"></i><i class="leaf r"></i><span class="plate">SAS 04 · Journal de bord</span></div>
+      <div class="deck-in">
+        <header class="dk-head" data-anim>
+          <span class="dk-tag">Pont 04 · Journal de bord</span>
+          <h2>Expérience</h2>
+          
+        </header>
+        <ol class="cable">
         <i class="cable-line" aria-hidden="true"><i></i></i>
         <li class="beacon current" data-anim style="--d:0">
           <span class="buoy" aria-hidden="true"></span>
@@ -97,14 +108,18 @@
           </div>
         </li>
       </ol>
+      </div>
     </section>
 
-    <section class="station" id="formation" data-depth="1500">
-      <header class="st-head" data-anim>
-        <span class="st-depth mono">−1500 m · Câble d'ancrage</span>
-        <h2>Formation</h2>
-      </header>
-      <ol class="cable">
+    <section class="deck" id="archives" data-deck="05" data-name="Archives">
+      <div class="door" aria-hidden="true"><i class="leaf l"></i><i class="leaf r"></i><span class="plate">SAS 05 · Archives</span></div>
+      <div class="deck-in">
+        <header class="dk-head" data-anim>
+          <span class="dk-tag">Pont 05 · Archives</span>
+          <h2>Formation</h2>
+          
+        </header>
+        <ol class="cable">
         <i class="cable-line" aria-hidden="true"><i></i></i>
         <li class="beacon current" data-anim style="--d:0">
           <span class="buoy" aria-hidden="true"></span>
@@ -121,42 +136,51 @@
           </div>
         </li>
       </ol>
-      <!-- Lien vers la page externe parcours-universitaire.html : supprimer cette ligne pour la retirer -->
-      <a class="more" href="parcours-universitaire.html" data-anim>Détail des semestres →</a>
+        <!-- Lien vers la page externe parcours-universitaire.html : supprimer cette ligne pour la retirer -->
+        <a class="more" href="parcours-universitaire.html" data-anim>Détail des semestres →</a>
+      </div>
     </section>
 
-    <section class="station" id="competences" data-depth="2000">
-      <header class="st-head" data-anim>
-        <span class="st-depth mono">−2000 m · Instruments de bord</span>
-        <h2>Compétences</h2>
-      </header>
-      <p class="lead" data-anim id="skills-lead"></p>
-      <div id="dials" class="dials"></div>
+    <section class="deck" id="machines" data-deck="06" data-name="Salle des machines">
+      <div class="door" aria-hidden="true"><i class="leaf l"></i><i class="leaf r"></i><span class="plate">SAS 06 · Salle des machines</span></div>
+      <div class="deck-in">
+        <header class="dk-head" data-anim>
+          <span class="dk-tag">Pont 06 · Salle des machines</span>
+          <h2>Compétences</h2>
+          <p class="lead"><span id="skills-lead"></span></p>
+        </header>
+        <div id="dials" class="dials"></div>
+      </div>
     </section>
 
-    <section class="station" id="hors-service" data-depth="3000">
-      <header class="st-head" data-anim>
-        <span class="st-depth mono">−3000 m · Bioluminescence</span>
-        <h2>Hors service</h2>
-      </header>
-      <ul class="glow-list">
-        <li data-anim style="--d:0;--h:175"><svg class="jelly" viewBox="0 0 60 80" aria-hidden="true"><path class="bell" d="M6 34 C6 12 54 12 54 34 C48 32 44 37 40 34 C36 31 33 37 30 34 C27 31 24 37 20 34 C16 31 12 37 6 34 Z"/><path class="tent" d="M14 36 C10 48 18 56 13 70 M24 37 C22 50 28 58 24 76 M36 37 C38 50 32 58 36 74 M46 36 C50 48 42 56 47 68"/></svg><b>Lecture</b><span>Romans et essais : une curiosité qui nourrit aussi la veille technique.</span></li>
-        <li data-anim style="--d:1;--h:195"><svg class="jelly" viewBox="0 0 60 80" aria-hidden="true"><path class="bell" d="M6 34 C6 12 54 12 54 34 C48 32 44 37 40 34 C36 31 33 37 30 34 C27 31 24 37 20 34 C16 31 12 37 6 34 Z"/><path class="tent" d="M14 36 C10 48 18 56 13 70 M24 37 C22 50 28 58 24 76 M36 37 C38 50 32 58 36 74 M46 36 C50 48 42 56 47 68"/></svg><b>Manga et animation</b><span>Des récits au long cours, de One Piece aux classiques de l'animation.</span></li>
-        <li data-anim style="--d:2;--h:160"><svg class="jelly" viewBox="0 0 60 80" aria-hidden="true"><path class="bell" d="M6 34 C6 12 54 12 54 34 C48 32 44 37 40 34 C36 31 33 37 30 34 C27 31 24 37 20 34 C16 31 12 37 6 34 Z"/><path class="tent" d="M14 36 C10 48 18 56 13 70 M24 37 C22 50 28 58 24 76 M36 37 C38 50 32 58 36 74 M46 36 C50 48 42 56 47 68"/></svg><b>Voyages</b><span>D'autres pays, d'autres langues, d'autres façons de travailler.</span></li>
-        <li data-anim style="--d:3;--h:210"><svg class="jelly" viewBox="0 0 60 80" aria-hidden="true"><path class="bell" d="M6 34 C6 12 54 12 54 34 C48 32 44 37 40 34 C36 31 33 37 30 34 C27 31 24 37 20 34 C16 31 12 37 6 34 Z"/><path class="tent" d="M14 36 C10 48 18 56 13 70 M24 37 C22 50 28 58 24 76 M36 37 C38 50 32 58 36 74 M46 36 C50 48 42 56 47 68"/></svg><b>Électronique maker</b><span>Consoles portables, petits robots et impression 3D, hors du cadre scolaire.</span></li>
+    <section class="deck" id="repos" data-deck="07" data-name="Repos">
+      <div class="door" aria-hidden="true"><i class="leaf l"></i><i class="leaf r"></i><span class="plate">SAS 07 · Repos</span></div>
+      <div class="deck-in">
+        <header class="dk-head" data-anim>
+          <span class="dk-tag">Pont 07 · Repos</span>
+          <h2>Hors service</h2>
+          <p class="lead">Ce que contiennent les casiers de l’équipage. <span class="todo">textes à valider</span></p>
+        </header>
+      <ul class="lockers">
+        <li data-anim style="--d:0"><span class="lk-no">Casier 01</span><svg class="draw" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h6a3 3 0 0 1 3 3v12a2 2 0 0 0-2-2H4z"/><path d="M20 5h-6a3 3 0 0 0-3 3v12a2 2 0 0 1 2-2h7z"/></svg><b>Lecture</b><span>Romans et essais : une curiosité qui nourrit aussi la veille technique.</span></li>
+        <li data-anim style="--d:1"><span class="lk-no">Casier 02</span><svg class="draw" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="13" rx="2"/><path d="M10 9l5 2.5-5 2.5z"/><path d="M8 21h8"/></svg><b>Manga et animation</b><span>Des récits au long cours, de One Piece aux classiques de l'animation.</span></li>
+        <li data-anim style="--d:2"><span class="lk-no">Casier 03</span><svg class="draw" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/></svg><b>Voyages</b><span>D'autres pays, d'autres langues, d'autres façons de travailler.</span></li>
+        <li data-anim style="--d:3"><span class="lk-no">Casier 04</span><svg class="draw" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M10 3v4M14 3v4M10 17v4M14 17v4M3 10h4M3 14h4M17 10h4M17 14h4"/></svg><b>Électronique maker</b><span>Consoles portables, petits robots et impression 3D, hors du cadre scolaire.</span></li>
       </ul>
-      <span class="todo">textes à valider</span>
+      </div>
     </section>
 
-    <section class="station abyss" id="abysses" data-depth="4000">
-      <header class="st-head" data-anim>
-        <span class="st-depth mono">−4000 m · Abysses</span>
-        <h2>Au fond</h2>
-      </header>
-      <p class="lead" data-anim>Quelque chose repose au fond. Ses habitants vous ont repéré.</p>
-      <figure class="deep-port" id="planet" data-anim>
-        <div class="glass">
-          <svg viewBox="0 0 600 560" role="img" aria-label="Une petite planète violette posée au fond, trois habitants et un drapeau">
+    <section class="deck obs-deck" id="observation" data-deck="08" data-name="Observation">
+      <div class="door" aria-hidden="true"><i class="leaf l"></i><i class="leaf r"></i><span class="plate">SAS 08 · Observation</span></div>
+      <div class="deck-in">
+        <header class="dk-head" data-anim>
+          <span class="dk-tag">Pont 08 · Observation</span>
+          <h2>Hublot d’observation</h2>
+          <p class="lead">Une planète en vue. Ses habitants ont repéré le vaisseau.</p>
+        </header>
+        <figure class="viewport" id="planet" data-anim>
+          <i class="frame" aria-hidden="true"></i>
+          <svg viewBox="0 0 600 560" role="img" aria-label="Une petite planète violette vue par le hublot, trois habitants et un drapeau">
                   <defs>
                     <radialGradient id="pg" gradientUnits="userSpaceOnUse" cx="259" cy="279" r="255"><stop offset="0" stop-color="var(--planet-b)"/><stop offset=".6" stop-color="var(--planet-a)"/><stop offset="1" stop-color="var(--planet-c)"/></radialGradient>
                     <radialGradient id="atmo" r=".5"><stop offset=".78" stop-color="var(--accent)" stop-opacity=".35"/><stop offset="1" stop-color="var(--accent)" stop-opacity="0"/></radialGradient>
@@ -233,25 +257,28 @@
               <circle cx="-13" cy="-22" r="3" fill="#ff9cc8" opacity=".7"/><circle cx="13" cy="-22" r="3" fill="#ff9cc8" opacity=".7"/>
             </g>
                 </svg>
-        </div>
-        <span class="bolts" aria-hidden="true"><i style="--a:0deg"></i><i style="--a:30deg"></i><i style="--a:60deg"></i><i style="--a:90deg"></i><i style="--a:120deg"></i><i style="--a:150deg"></i><i style="--a:180deg"></i><i style="--a:210deg"></i><i style="--a:240deg"></i><i style="--a:270deg"></i><i style="--a:300deg"></i><i style="--a:330deg"></i></span>
-        <button class="port-close" hidden>Refermer</button>
-      </figure>
+          <span class="vp-hud mono">OBJET NON RÉPERTORIÉ · DISTANCE 4,2 UA</span>
+          <button class="port-close" hidden>Refermer</button>
+        </figure>
+      </div>
     </section>
 
-    <section class="station seabed" id="contact" data-depth="4000">
-      <header class="st-head" data-anim>
-        <span class="st-depth mono">−4000 m · Signal de remontée</span>
-        <h2>Contact</h2>
-      </header>
-      <p class="lead" data-anim>Disponible en septembre 2027 à l'issue de l'alternance, pour un poste d'ingénieure en systèmes embarqués, réseaux ou cybersécurité, avec trois ans d'expérience en milieu ferroviaire. <span class="todo">à confirmer</span></p>
-      <ul class="signals">
-        <li data-anim style="--d:0"><span class="mono">E-mail</span><a href="mailto:jade72210@gmail.com">jade72210@gmail.com</a></li>
-        <li data-anim style="--d:1"><span class="mono">LinkedIn</span><a href="https://www.linkedin.com/in/jade-barbier-b261b8266/" target="_blank" rel="noopener">linkedin.com/in/jade-barbier</a></li>
-        <li data-anim style="--d:2"><span class="mono">GitHub</span><a href="https://github.com/MoggleJ" target="_blank" rel="noopener">github.com/MoggleJ</a></li>
-        <li data-anim style="--d:3"><span class="mono">CV</span><a href="https://github.com/MoggleJ/Portfolio_2026/raw/main/cv/BARBIER_Jade_CV_Stage_EN.pdf" target="_blank" rel="noopener">Télécharger le CV (PDF)</a></li>
-      </ul>
-      <div class="sign" data-anim><span class="hand">Jade Barbier</span><a class="btn ghost" href="#surface" id="ascend">Remonter à la surface ↑</a></div>
+    <section class="deck" id="comms" data-deck="09" data-name="Communications">
+      <div class="door" aria-hidden="true"><i class="leaf l"></i><i class="leaf r"></i><span class="plate">SAS 09 · Communications</span></div>
+      <div class="deck-in">
+        <header class="dk-head" data-anim>
+          <span class="dk-tag">Pont 09 · Communications</span>
+          <h2>Contact</h2>
+          <p class="lead">Disponible en septembre 2027 à l’issue de l’alternance, pour un poste d’ingénieure en systèmes embarqués, réseaux ou cybersécurité, avec trois ans d’expérience en milieu ferroviaire. <span class="todo">à confirmer</span></p>
+        </header>
+        <ul class="signals">
+          <li data-anim style="--d:0"><span class="mono">Canal 1 · E-mail</span><a href="mailto:jade72210@gmail.com">jade72210@gmail.com</a></li>
+          <li data-anim style="--d:1"><span class="mono">Canal 2 · LinkedIn</span><a href="https://www.linkedin.com/in/jade-barbier-b261b8266/" target="_blank" rel="noopener">linkedin.com/in/jade-barbier</a></li>
+          <li data-anim style="--d:2"><span class="mono">Canal 3 · GitHub</span><a href="https://github.com/MoggleJ" target="_blank" rel="noopener">github.com/MoggleJ</a></li>
+          <li data-anim style="--d:3"><span class="mono">Canal 4 · CV</span><a href="https://github.com/MoggleJ/Portfolio_2026/raw/main/cv/BARBIER_Jade_CV_Stage_EN.pdf" target="_blank" rel="noopener">Télécharger le CV (PDF)</a></li>
+        </ul>
+        <div class="sign" data-anim><span class="hand">Jade Barbier</span><a class="btn ghost" href="#passerelle">Retour à la passerelle ↑</a></div>
+      </div>
     </section>
 
   </main>
@@ -260,6 +287,6 @@
 
   <script src="data.js"></script>
   <script src="skills.js"></script>
-  <script src="ocean.js"></script>
+  <script src="ship.js"></script>
 </body>
 </html>

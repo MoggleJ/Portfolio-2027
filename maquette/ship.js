@@ -1,4 +1,4 @@
-// Maquette sprint 1, thème sous-marin : profondeur, ambiance, carnet de plongée, instruments et planète.
+// Maquette sprint 1, thème vaisseau spatial : plan du vaisseau, sas, étoiles, soute, salle des machines et planète.
 // Code de démonstration : tout sera réécrit en composants Next.js au sprint 2.
 
 (function () {
@@ -10,85 +10,59 @@
     btn.addEventListener("click", () => btn.querySelectorAll("span").forEach((s) => s.classList.toggle("on")))
   );
 
-  // ---------- Profondeur : jauge, zone et lumière de surface ----------
-  const stations = [...document.querySelectorAll(".station")];
-  const gauge = document.querySelector(".gauge");
-  const gM = gauge.querySelector(".g-m"), gZone = gauge.querySelector(".g-zone");
-  const MAX = 4000;
-  let depthNow = 0;
-  const depthAt = () => {
-    const y = scrollY + innerHeight * 0.4;
-    let i = 0;
-    while (i < stations.length - 1 && stations[i + 1].offsetTop <= y) i++;
-    const a = stations[i], b = stations[i + 1];
-    const d0 = +a.dataset.depth;
-    if (!b) return [d0, a];
-    const k = Math.min(1, Math.max(0, (y - a.offsetTop) / (b.offsetTop - a.offsetTop)));
-    return [d0 + (+b.dataset.depth - d0) * k, a];
-  };
-  const onScroll = () => {
-    const [d, st] = depthAt();
-    depthNow = d;
-    gauge.classList.toggle("hide", d < 12);
-    gM.textContent = Math.round(d).toLocaleString("fr-FR");
-    gauge.style.setProperty("--g", Math.sqrt(d / MAX).toFixed(4));
-    const z = st.querySelector(".st-depth");
-    gZone.textContent = z ? z.textContent.split("·")[1].trim() : "Surface";
-    root.style.setProperty("--surf", Math.max(0, 1 - scrollY / (innerHeight * 1.3)).toFixed(3));
-  };
-  addEventListener("scroll", onScroll, { passive: true });
-  addEventListener("resize", onScroll);
-  onScroll();
+  // ---------- Plan du vaisseau : compartiment en cours ----------
+  const decks = [...document.querySelectorAll(".deck")];
+  const map = document.querySelectorAll(".deckmap a");
+  const spy = new IntersectionObserver((entries) => entries.forEach((e) => {
+    if (!e.isIntersecting) return;
+    map.forEach((a) => {
+      const on = a.dataset.for === e.target.id;
+      a.classList.toggle("on", on);
+      if (on) a.classList.add("seen");
+    });
+  }), { rootMargin: "-45% 0px -50% 0px" });
+  decks.forEach((d) => spy.observe(d));
 
-  // ---------- Bulles qui remontent et neige marine, plus dense en profondeur ----------
-  const canvas = document.getElementById("sea");
+  // Les sas s'ouvrent quand on arrive devant
+  const doors = new IntersectionObserver((entries) => entries.forEach((e) => {
+    if (e.isIntersecting) { e.target.classList.add("open"); doors.unobserve(e.target); }
+  }), { threshold: 0.9 });
+  document.querySelectorAll(".door").forEach((d) => (reduced ? d.classList.add("open") : doors.observe(d)));
+
+  // ---------- L'espace derrière la coque : étoiles qui défilent, plus vite quand on fait défiler la page ----------
+  const canvas = document.getElementById("space");
   if (canvas) {
     const ctx = canvas.getContext("2d");
-    let w, h, dpr, bubbles = [], snow = [];
-    const bubble = (x, y, r) => ({ x, y, r: r || 1 + Math.random() * 3.5, v: .3 + Math.random() * .8, ph: Math.random() * 6.28 });
+    let w, h, dpr, stars = [], speed = 0, lastY = scrollY;
     const resize = () => {
       dpr = Math.min(devicePixelRatio || 1, 2);
       w = innerWidth; h = innerHeight;
       canvas.width = w * dpr; canvas.height = h * dpr;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      bubbles = Array.from({ length: Math.round(w / 40) }, () => bubble(Math.random() * w, Math.random() * h));
-      snow = Array.from({ length: Math.round(w / 14) }, () => ({ x: Math.random() * w, y: Math.random() * h, r: .5 + Math.random() * 1.2, v: .1 + Math.random() * .25 }));
+      stars = Array.from({ length: Math.round((w * h) / 4500) }, () => ({ x: Math.random() * w, y: Math.random() * h, z: .2 + Math.random() * .8 }));
     };
-    // Le pointeur laisse échapper quelques bulles
-    let last = 0;
-    addEventListener("pointermove", (e) => {
-      if (reduced || e.timeStamp - last < 90) return;
-      last = e.timeStamp;
-      bubbles.push(bubble(e.clientX + (Math.random() - .5) * 10, e.clientY, 1 + Math.random() * 2.5));
-      if (bubbles.length > 120) bubbles.splice(0, bubbles.length - 120);
-    });
-    const draw = (t) => {
-      ctx.clearRect(0, 0, w, h);
-      const deep = Math.min(1, depthNow / 2500);
-      for (const s of snow) {
-        s.y += s.v; s.x += Math.sin((t / 2000) + s.y / 50) * .1;
-        if (s.y > h) { s.y = -5; s.x = Math.random() * w; }
-        ctx.fillStyle = `rgba(220, 240, 245, ${.12 + .35 * deep})`;
-        ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, 6.28); ctx.fill();
-      }
-      ctx.lineWidth = 1;
-      for (const b of bubbles) {
-        b.y -= b.v * (1 + b.r / 3); b.x += Math.sin(t / 600 + b.ph) * .35;
-        if (b.y < -10) { b.y = h + 10; b.x = Math.random() * w; }
-        ctx.strokeStyle = `rgba(234, 246, 249, ${.35 - .15 * deep})`;
-        ctx.beginPath(); ctx.arc(b.x, b.y, b.r, 0, 6.28); ctx.stroke();
-        ctx.fillStyle = "rgba(255, 255, 255, .35)";
-        ctx.beginPath(); ctx.arc(b.x - b.r * .35, b.y - b.r * .35, b.r * .25, 0, 6.28); ctx.fill();
+    addEventListener("scroll", () => { speed = Math.min(40, speed + Math.abs(scrollY - lastY) * .08); lastY = scrollY; }, { passive: true });
+    const draw = () => {
+      ctx.fillStyle = "#020306"; ctx.fillRect(0, 0, w, h);
+      const v = reduced ? 0 : .25 + speed;
+      speed *= .92;
+      for (const s of stars) {
+        s.x -= v * s.z;
+        if (s.x < -20) { s.x = w + 10; s.y = Math.random() * h; }
+        const len = Math.max(1, v * s.z * 3);
+        ctx.strokeStyle = `rgba(230, 236, 255, ${.25 + .6 * s.z})`;
+        ctx.lineWidth = s.z * 1.6;
+        ctx.beginPath(); ctx.moveTo(s.x, s.y); ctx.lineTo(s.x + len, s.y); ctx.stroke();
       }
       if (!reduced && !document.hidden) requestAnimationFrame(draw);
     };
     resize();
-    addEventListener("resize", resize);
+    addEventListener("resize", () => { resize(); if (reduced) draw(); });
     document.addEventListener("visibilitychange", () => { if (!document.hidden && !reduced) requestAnimationFrame(draw); });
     requestAnimationFrame(draw);
   }
 
-  // ---------- Carnet de plongée : projets groupés, rapport déplié sur place ----------
+  // ---------- Soute : projets groupés en conteneurs, rapport déplié sur place ----------
   const P = window.PROJECTS || [];
   const kinds = { pro: "Entreprise", school: "École", perso: "Personnel" };
   const prefix = { pro: "ENT", school: "ECO", perso: "PER" };
@@ -97,7 +71,7 @@
   if (log) {
     log.innerHTML = Object.entries(kinds).map(([kind, label]) => {
       const items = P.filter((p) => p.kind === kind);
-      return `<div class="log-group"><h3 data-anim>${label}<span>${items.length} plongée${items.length > 1 ? "s" : ""}</span></h3>${items.map((p, k) => {
+      return `<div class="log-group"><h3 data-anim>${label}<span>${items.length} conteneur${items.length > 1 ? "s" : ""}</span></h3>${items.map((p, k) => {
         const live = /cours|2027|alternance/.test(p.when);
         return `<div class="entry" data-anim style="--d:${k}">
           <button class="entry-row" aria-expanded="false">
@@ -108,7 +82,7 @@
             <span class="e-go" aria-hidden="true">+</span>
           </button>
           <div class="e-report" hidden>
-            <div class="e-port"><div class="glass">${p.img ? `<img src="${p.img}" alt="${p.title}" loading="lazy">` : `<span class="empty">Image<br>à fournir</span>`}</div></div>
+            <div class="e-port"><div class="glass">${p.img ? `<img src="${p.img}" alt="${p.title}" loading="lazy">` : `<span class="empty">Visuel<br>à fournir</span>`}</div></div>
             <div class="e-text">
               <div class="e-meta"><span>Base <b>${p.where}</b></span><span>Période <b>${p.when}</b></span><span class="e-status${live ? " now" : ""}">${live ? "En cours" : "Terminée"}</span></div>
               <h4>Objectif</h4><p>${p.desc}</p>
@@ -129,12 +103,12 @@
     });
   }
 
-  // ---------- Instruments de bord : un cadran par domaine de compétences ----------
+  // ---------- Salle des machines : un cadran par domaine de compétences ----------
   const dials = document.getElementById("dials");
   if (dials && window.SKILLS) {
     const levels = ["bases", "intermédiaire", "autonome", "avancé"];
     const total = window.SKILLS.reduce((s, c) => s + c.skills.length, 0);
-    document.getElementById("skills-lead").textContent = `${window.SKILLS.length} instruments, ${total} compétences relevées sur quatre niveaux : ${levels.join(", ")}.`;
+    document.getElementById("skills-lead").textContent = `${window.SKILLS.length} systèmes, ${total} compétences mesurées sur quatre niveaux : ${levels.join(", ")}.`;
     // Arc de 180° centré en (100,100), rayon 80 : longueur ≈ 251
     const ticks = Array.from({ length: 11 }, (_, i) => {
       const a = Math.PI * (1 - i / 10), c = Math.cos(a), s = Math.sin(a);
@@ -160,7 +134,7 @@
     d.querySelector(".needle").style.transform = `rotate(${-90 + 1.8 * s}deg)`;
   };
 
-  // ---------- Apparitions, compteurs et câble d'ancrage ----------
+  // ---------- Apparitions, compteurs et conduit lumineux ----------
   function count(el) {
     const end = +el.dataset.count, t0 = performance.now(), dur = reduced ? 0 : 1400;
     const step = (t) => {
@@ -207,7 +181,7 @@
     });
   }
 
-  // ---------- Planète au fond : tirer le drapeau vers le haut révèle les couches (easter egg) ----------
+  // ---------- Planète par le hublot : tirer le drapeau vers le haut révèle les couches (easter egg) ----------
   const planet = document.getElementById("planet");
   if (planet) {
     const svg = planet.querySelector("svg"), flag = planet.querySelector(".flag"), close = planet.querySelector(".port-close");
