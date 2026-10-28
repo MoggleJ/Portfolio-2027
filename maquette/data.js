@@ -1,17 +1,6 @@
 // Contenu de démonstration, repris de Portfolio_2026 (data/experience.json et data/projects.json).
-// Au sprint 3, il sera migré dans content/ en FR et EN.
+// Au sprint 3, il sera migré dans content/ en FR et EN. Les expériences (alternance, job d'été) sont dans la section 4 de la fiche.
 window.PROJECTS = [
-  {
-    kind: "pro", title: "Alternance en informatique embarquée et réseaux",
-    where: "CIM, SNCF Voyageurs, Le Mans", when: "sept. 2024 – sept. 2027",
-    desc: "Alternance au centre d'ingénierie du matériel : tests de conformité des équipements embarqués et sécurisation des communications à bord des trains.",
-    missions: [
-      ["Conformité ITxPT", "Test des équipements selon leur consommation électrique et la compatibilité des services échangés"],
-      ["PoC sécurité", "Logiciel client utilisant les API EST pour sécuriser les communications embarquées"],
-      ["Systèmes embarqués", "Travail sur des systèmes embarqués dans le contexte du transport ferroviaire"],
-    ],
-    tags: ["Systèmes embarqués", "Réseaux", "ITxPT", "Tests", "Sécurité"],
-  },
   {
     kind: "pro", title: "Système de communication embarqué sécurisé",
     where: "SNCF Voyageurs", when: "pendant l’alternance",
@@ -40,17 +29,6 @@ window.PROJECTS = [
     desc: "Étude du règlement européen sur la cyber-résilience et de son impact sur les équipements embarqués.",
     missions: [["Veille", "Analyse du texte et des obligations"], ["Synthèse", "Document de conformité pour les équipes"]],
     tags: ["Sécurité", "CRA", "Conformité", "Documentation"],
-  },
-  {
-    kind: "pro", title: "Opératrice de conditionnement",
-    where: "Colart International, Le Mans", when: "juin – août 2023",
-    desc: "Job d'été en production : assemblage, contrôle et conditionnement de produits semi-finis.",
-    missions: [
-      ["Production", "Assemblage, contrôle et conditionnement sur lignes de production"],
-      ["Qualité", "Procédures de contrôle qualité et normes de conformité"],
-      ["Sécurité", "Production fluide dans le respect des normes de sécurité et des délais"],
-    ],
-    tags: ["Industrie", "Qualité", "Rigueur"],
   },
   {
     kind: "school", title: "Pictionary connecté",
