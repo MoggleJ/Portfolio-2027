@@ -237,10 +237,10 @@ window.SKILLS = [
     tests.innerHTML = window.SKILLS.map((c, i) => {
       const score = Math.round((c.skills.reduce((s, [, l]) => s + l, 0) / (c.skills.length * 4)) * 100);
       return `
-      <div class="t-module">
-        <div class="t-mod-head"><span>M${String(i + 1).padStart(2, "0")} · ${c.title}</span><b>${score} %</b></div>
+      <div class="t-module" style="--d:${i % 2}">
+        <div class="t-mod-head"><span><i>M${String(i + 1).padStart(2, "0")}</i>${c.title}</span><b>${score} %</b></div>
         <div class="t-meter"><i style="--v:${score}%"></i></div>
-        <ul>${c.skills.map(([n, l]) => `<li><span>${n}</span><span class="t-lvl" data-l="${l}">${levels[l - 1]}</span></li>`).join("")}</ul>
+        <ul>${c.skills.map(([n, l]) => `<li><span>${n}</span><span class="t-lvl" data-l="${l}" title="${levels[l - 1]}"><span class="dots">${"<i></i>".repeat(4)}</span>${levels[l - 1]}</span></li>`).join("")}</ul>
       </div>`;
     }).join("");
   }

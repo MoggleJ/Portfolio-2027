@@ -5,22 +5,8 @@
   const root = document.documentElement;
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  // ---------- Thème ----------
-  function store(key, value) {
-    try {
-      if (value === undefined) return localStorage.getItem(key);
-      localStorage.setItem(key, value);
-    } catch (e) { return null; }
-  }
-  const saved = store("theme");
-  if (saved) root.dataset.theme = saved;
-  document.querySelectorAll("[data-toggle-theme]").forEach((btn) =>
-    btn.addEventListener("click", () => {
-      const next = root.dataset.theme === "dark" ? "light" : "dark";
-      root.dataset.theme = next;
-      store("theme", next);
-    })
-  );
+  // Thème unique : fiche claire, tablette sombre (plus de bascule jour / nuit)
+  try { localStorage.removeItem("theme"); } catch (e) {}
 
   // Sélecteur de langue : visuel seulement pour la maquette
   document.querySelectorAll("[data-toggle-lang]").forEach((btn) =>
@@ -89,25 +75,6 @@
     addEventListener("resize", onScroll);
     onScroll();
 
-    // Scan du code-barres : déclenché quand il arrive à l'écran, clic possible
-    const slip = document.getElementById("scan-btn");
-    const msg = pad.querySelector(".scan-msg");
-    let scanned = false;
-    const scan = () => {
-      if (scanned) return;
-      scanned = true;
-      slip.classList.add("scanning");
-      setTimeout(() => {
-        slip.classList.remove("scanning"); slip.classList.add("done");
-        pad.classList.add("scanned");
-        msg.textContent = "MJ-2027 · dossier reconnu";
-      }, reduced ? 200 : 1300);
-    };
-    if (slip) {
-      slip.addEventListener("click", () => { scan(); pad.scrollIntoView({ behavior: reduced ? "auto" : "smooth" }); });
-      new IntersectionObserver(([e], obs) => { if (e.isIntersecting) { obs.disconnect(); scan(); } }, { threshold: 0.9 }).observe(slip);
-    }
-
     // Journal de missions : chaque ligne déplie son rapport sur place
     const list = document.getElementById("t-projects");
     const kinds = { pro: "Entreprise", school: "École", perso: "Personnel" };
@@ -136,7 +103,7 @@
       list.innerHTML = Object.entries(kinds).map(([kind, label]) => {
         const items = P.filter((p) => p.kind === kind);
         return `<div class="t-group"><h4>${label}<span>${String(items.length).padStart(2, "0")}</span></h4>${items.map((p) => `
-          <div class="m-item">
+          <div class="m-item" data-anim>
             <button class="t-mission" aria-expanded="false">${visual(p, "m-thumb")}<span class="m-main"><b>${p.title}</b><span>${code(p)} · ${p.where} · ${p.when}</span></span><span class="m-go" aria-hidden="true">+</span></button>
             ${report(p)}
           </div>`).join("")}</div>`;
@@ -149,16 +116,82 @@
       });
     }
 
-    // Partie en cours : barre d'état et rail latéral ; les jauges de tests se remplissent à l'arrivée
+    // Partie en cours : barre d'état et rail latéral
     const where = pad.querySelector(".pad-where");
     const links = pad.querySelectorAll(".pad-rail a");
     const spy = new IntersectionObserver((entries) => entries.forEach((e) => {
       if (!e.isIntersecting) return;
       where.textContent = e.target.dataset.label;
       links.forEach((a) => a.classList.toggle("on", a.getAttribute("href") === `#${e.target.id}`));
-      if (e.target.id === "competences") e.target.classList.add("run");
     }), { rootMargin: "-45% 0px -50% 0px" });
     pad.querySelectorAll(".pad-sec").forEach((sec) => spy.observe(sec));
+
+    // Apparitions dans la tablette, en cascade (--d) ; les jauges de tests se remplissent au passage
+    const anim = new IntersectionObserver((entries) => entries.forEach((e) => {
+      if (!e.isIntersecting) return;
+      e.target.classList.add("in");
+      anim.unobserve(e.target);
+      e.target.querySelectorAll("[data-count]").forEach(count);
+    }), { threshold: 0.2, rootMargin: "0px 0px -8% 0px" });
+    pad.querySelectorAll("[data-anim], .t-module").forEach((el) => anim.observe(el));
+
+    // Compteurs de l'en-tête
+    function count(el) {
+      const end = +el.dataset.count, t0 = performance.now(), dur = reduced ? 0 : 1200;
+      const step = (t) => {
+        const k = dur ? Math.min(1, (t - t0) / dur) : 1;
+        el.textContent = Math.round(end * (1 - Math.pow(1 - k, 3)));
+        if (k < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    }
+
+    // Frises : la ligne se trace au fil du défilement et allume chaque étape
+    const lines = pad.querySelectorAll(".xline");
+    const trace = () => lines.forEach((tl) => {
+      const r = tl.getBoundingClientRect(), mid = innerHeight * 0.6;
+      const k = Math.min(1, Math.max(0, (mid - r.top) / r.height));
+      tl.style.setProperty("--k", reduced ? 1 : k.toFixed(3));
+      tl.querySelectorAll(".xl-item").forEach((it) => it.classList.toggle("lit", it.getBoundingClientRect().top < mid));
+    });
+    addEventListener("scroll", trace, { passive: true });
+    trace();
+
+    // Planète : tirer le drapeau vers le haut soulève une part et révèle les couches (easter egg)
+    const planet = document.getElementById("planet");
+    if (planet) {
+      const svg = planet.querySelector("svg"), flag = planet.querySelector(".flag");
+      const hud = planet.querySelector(".hud-l"), close = planet.querySelector(".hud-close");
+      let y0 = null, pull = 0;
+      const unit = () => 560 / svg.getBoundingClientRect().height;
+      const setPull = (v) => { pull = v; planet.style.setProperty("--pull", `${-v}px`); };
+      const open = () => {
+        planet.classList.add("opened"); planet.style.removeProperty("--pull");
+        hud.textContent = "SCAN · COUPE GÉOLOGIQUE · 3 COUCHES"; close.hidden = false;
+      };
+      flag.addEventListener("pointerdown", (e) => {
+        if (planet.classList.contains("opened")) return;
+        y0 = e.clientY; flag.setPointerCapture(e.pointerId); planet.classList.add("pulling");
+      });
+      flag.addEventListener("pointermove", (e) => {
+        if (y0 === null) return;
+        const d = Math.max(0, (y0 - e.clientY) * unit());
+        setPull(Math.min(70, d * 0.6)); // résistance : la part tient bon
+      });
+      const release = () => {
+        if (y0 === null) return;
+        y0 = null; planet.classList.remove("pulling");
+        if (pull > 34) open();
+        else { setPull(0); if (pull === 0) { planet.classList.remove("wiggle"); void planet.offsetWidth; planet.classList.add("wiggle"); } }
+      };
+      flag.addEventListener("pointerup", release);
+      flag.addEventListener("pointercancel", release);
+      flag.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); } });
+      close.addEventListener("click", () => {
+        planet.classList.remove("opened"); setPull(0);
+        hud.textContent = "REC · CAM-02 · SURFACE MJ-1"; close.hidden = true;
+      });
+    }
 
     const clock = pad.querySelector(".t-clock"), start = Date.now();
     setInterval(() => {
