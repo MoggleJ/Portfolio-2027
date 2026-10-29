@@ -1,0 +1,509 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jade Barbier · Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07070d; --panel:#11111c; --line:#ffffff14; --ink:#f1eff8; --mute:#a6a3b8; --dim:#66637a;
+  --vio:#9b7bff; --rose:#f5a3c7; --blue:#7aa8ff; --ok:#5ef0a0;
+  --lane:clamp(230px,27vw,360px);
+  /* couleurs reprises par la planète des habitants */
+  --planet-a:#3a2d8f; --planet-b:#6b4fd8; --planet-c:#1d2a6b; --accent:#9b7bff; --accent-2:#f5a3c7; --text:#f1eff8; --muted:#a6a3b8; --bg-0:#07070d;
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font:400 1rem/1.65 Inter,system-ui,sans-serif;overflow-x:clip}
+img{display:block;max-width:100%}
+a{color:inherit}
+button{font:inherit;color:inherit}
+h1,h2,h3{font-family:Sora,sans-serif}
+
+/* ciel */
+.sky{position:fixed;inset:0;z-index:-2;background:
+  radial-gradient(40% 32% at 82% 18%,#3b2a7a40,transparent 70%),
+  radial-gradient(36% 30% at 10% 60%,#1d3c7a30,transparent 70%),
+  radial-gradient(30% 24% at 60% 95%,#7a2a5c26,transparent 70%),var(--bg)}
+#stars{position:fixed;inset:0;z-index:-1;width:100%;height:100%;pointer-events:none}
+
+/* barre du haut */
+.top{position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px clamp(16px,4vw,48px);background:linear-gradient(#07070dee,#07070d00)}
+.mark{font:700 1.05rem Sora;letter-spacing:.02em;text-decoration:none}
+.mark span{color:var(--vio)}
+.top nav{display:flex;gap:4px;padding:5px;border:1px solid var(--line);border-radius:999px;background:#ffffff06;backdrop-filter:blur(10px)}
+.top nav a{text-decoration:none;font-size:.88rem;color:var(--mute);padding:.4rem .85rem;border-radius:999px;transition:background .2s,color .2s}
+.top nav a:hover,.top nav a.on{background:#ffffff12;color:var(--ink)}
+.lang{border:1px solid var(--line);background:none;border-radius:999px;padding:.4rem .8rem;font-size:.82rem;cursor:pointer}
+
+/* page : colonne de contenu + couloir de la fusée à droite */
+.page{position:relative;max-width:1320px;margin:0 auto;padding:0 clamp(16px,4vw,48px)}
+#route{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none;z-index:1}
+#route .trail{fill:none;stroke:#ffc98a;stroke-width:2.5;stroke-linecap:round;opacity:.55;filter:drop-shadow(0 0 6px #ffb26b)}
+#rocket .flame{transform-box:fill-box;transform-origin:100% 50%;animation:flick .12s infinite alternate}
+@keyframes flick{to{transform:scaleX(.8) scaleY(.9)}}
+#rocket.landed .flame{opacity:0;animation:none}
+.row{position:relative;display:grid;grid-template-columns:minmax(0,1fr) var(--lane)}
+.row > .main{position:relative;z-index:2;min-width:0}
+.lane{position:relative;z-index:1}
+.orb{position:absolute;width:var(--s);height:var(--s);transform:translate(-50%,-50%)}
+.orb svg{position:absolute;inset:-43.75%;width:187.5%;height:187.5%;overflow:visible}
+.orb .float{animation:float 9s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-8px)}}
+
+/* titres de section */
+.sec{padding:110px 0 30px}
+.sec-h{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 16px;margin-bottom:34px}
+.sec-h span{font:600 .8rem Sora;color:var(--vio);letter-spacing:.12em}
+.sec-h h2{font-size:clamp(2rem,4.2vw,3rem);line-height:1.05;margin:0;letter-spacing:-.02em}
+.sec-h p{margin:0;color:var(--mute)}
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .8s,transform .8s;transition-delay:var(--d,0s)}
+.reveal.in{opacity:1;transform:none}
+
+/* profil */
+.hero{min-height:calc(100vh - 70px);display:grid;grid-template-columns:1.2fr .8fr;gap:clamp(20px,4vw,56px);align-items:center;padding:30px 0 60px}
+.pill{display:inline-flex;align-items:center;gap:8px;font-size:.85rem;color:var(--mute);border:1px solid var(--line);border-radius:999px;padding:.35rem .8rem}
+.pill::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 10px var(--ok)}
+.hero h1{font-size:clamp(3rem,7.4vw,6.2rem);line-height:.95;letter-spacing:-.04em;margin:22px 0 18px}
+.hero h1 span{background:linear-gradient(90deg,var(--vio),var(--rose));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .lead{font-size:1.12rem;color:var(--mute);max-width:46ch;margin:0}
+.hero .lead b{color:var(--ink);font-weight:500}
+.ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.btn{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:500;padding:.8rem 1.25rem;border-radius:999px;background:var(--ink);color:var(--bg);transition:transform .2s}
+.btn.o{background:none;color:var(--ink);box-shadow:inset 0 0 0 1px #ffffff2e}
+.btn:hover{transform:translateY(-2px)}
+.photo{position:relative;justify-self:center;width:min(100%,330px)}
+.photo img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:28px;box-shadow:0 30px 60px #0009,0 0 0 1px #ffffff1a}
+.photo::before{content:"";position:absolute;inset:-14px;border-radius:38px;border:1px dashed #ffffff24}
+.photo small{position:absolute;left:16px;bottom:16px;font-size:.8rem;padding:.35rem .7rem;border-radius:999px;background:#07070dcc;backdrop-filter:blur(6px)}
+
+/* cartes */
+.card{background:linear-gradient(160deg,#15152299,#0d0d16cc);border:1px solid var(--line);border-radius:20px;padding:clamp(20px,3vw,30px);backdrop-filter:blur(6px)}
+.xp{display:grid;gap:20px}
+.xp .card{display:grid;grid-template-columns:56px 1fr;gap:18px}
+.xp img{width:56px;height:56px;border-radius:14px;object-fit:contain;background:#fff;padding:6px}
+.xp .when{font-size:.85rem;color:var(--vio);font-weight:500}
+.xp h3{font-size:1.25rem;margin:4px 0 2px}
+.xp .where{color:var(--mute);font-size:.95rem}
+.xp ul{margin:12px 0 0;padding:0;list-style:none;display:grid;gap:8px;color:#c9c6d8}
+.xp li{position:relative;padding-left:18px}
+.xp li::before{content:"";position:absolute;left:0;top:.65em;width:8px;height:8px;border-radius:50%;border:2px solid var(--vio)}
+.more{display:inline-block;margin-top:18px;color:var(--mute);font-size:.95rem}
+
+.group{margin-bottom:46px}
+.group h3{display:flex;align-items:center;gap:12px;font-size:1.05rem;margin:0 0 16px;color:var(--mute);font-weight:600}
+.group h3 b{color:var(--ink)}
+.group h3::after{content:"";flex:1;height:1px;background:var(--line)}
+.projects{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px}
+.proj{padding:0;overflow:hidden;transition:transform .3s,border-color .3s}
+.proj:hover{transform:translateY(-4px);border-color:#9b7bff66}
+.proj .pic{aspect-ratio:16/10;background:linear-gradient(135deg,#1b1830,#101020);display:grid;place-items:center;overflow:hidden}
+.proj .pic img{width:100%;height:100%;object-fit:cover}
+.proj .pic span{font-size:.82rem;color:var(--dim)}
+.proj .txt{padding:16px 18px 20px}
+.proj .txt small{color:var(--vio);font-weight:500}
+.proj h4{font:600 1.08rem/1.3 Sora;margin:4px 0 8px}
+.proj p{margin:0;color:#bdbacd;font-size:.92rem;line-height:1.55}
+.proj .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.proj .tags span{font-size:.75rem;padding:.2rem .55rem;border-radius:999px;border:1px solid var(--line);color:var(--mute)}
+
+.skills{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px}
+.skills h3{font-size:1rem;margin:0 0 12px}
+.skills ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
+.skills li{display:grid;grid-template-columns:1fr auto;gap:4px 10px;font-size:.92rem}
+.skills li em{font-style:normal;color:var(--dim);font-size:.8rem}
+.lv{grid-column:1/-1;height:4px;border-radius:2px;background:#ffffff10;overflow:hidden}
+.lv i{display:block;height:100%;width:0;border-radius:2px;background:linear-gradient(90deg,var(--vio),var(--rose));transition:width 1.2s cubic-bezier(.2,.7,.2,1)}
+.card.in .lv i{width:var(--w)}
+
+.contact{text-align:center;padding:120px 0 30px}
+.contact h2{font-size:clamp(2.2rem,5vw,3.6rem);letter-spacing:-.03em;margin:0}
+.contact p{color:var(--mute);max-width:48ch;margin:14px auto 28px}
+.contact .ctas{justify-content:center}
+
+/* atterrissage */
+.landing{position:relative;z-index:0;padding:40px 0 30px}
+.stage{position:relative;width:min(100%,760px);margin:0 auto;aspect-ratio:600/560;touch-action:pan-y}
+.stage > svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.stage .flag{cursor:grab;outline:none}
+.stage.pulling .flag{cursor:grabbing}
+.stage .lid,.stage .flag{transform-box:view-box;transform-origin:300px 340px;transition:transform .7s cubic-bezier(.3,1.5,.5,1),opacity .6s}
+.stage .flag{transform:translateY(var(--pull,0px))}
+.stage .lid{transform:translateY(calc(var(--pull,0px) * .3))}
+.stage.pulling .lid,.stage.pulling .flag{transition:none}
+.stage.opened .flag{transform:translate(56px,-58px) rotate(10deg)}
+.stage.opened .lid{transform:translate(56px,-58px) rotate(10deg);opacity:0}
+.stage .interior{opacity:0;transition:opacity .5s .15s}
+.stage.opened .interior{opacity:1}
+.stage .relic,.stage .legend{opacity:0;transition:opacity .5s}
+.stage.opened .relic{opacity:1;transition-delay:.6s}
+.stage.opened .legend{opacity:1;transition-delay:1.2s}
+.stage .legend text{fill:#d6dcff}
+.stage.wiggle .cloth{transform-box:fill-box;transform-origin:0 50%;animation:flap .6s ease}
+@keyframes flap{25%{transform:skewY(-8deg) scaleX(.92)}60%{transform:skewY(5deg)}}
+.mon{position:absolute;left:0;top:0;width:var(--mw);height:calc(var(--mw) * 1.05);transform-origin:50% 100%;cursor:grab;touch-action:none;z-index:3;user-select:none;-webkit-user-select:none}
+.mon svg{width:100%;height:100%;overflow:visible;pointer-events:none}
+.mon.held{cursor:grabbing;z-index:4}
+.hint{text-align:center;color:var(--dim);font-size:.9rem;margin:6px 0 0}
+.close{display:block;margin:10px auto 0;border:1px solid var(--line);background:none;border-radius:999px;padding:.4rem .9rem;font-size:.85rem;color:var(--mute);cursor:pointer}
+.close[hidden]{display:none}
+.foot{text-align:center;color:var(--dim);font-size:.85rem;padding:40px 0 50px}
+
+@media (max-width:900px){
+  .top nav{display:none}
+  .row{grid-template-columns:1fr}
+  .lane{display:none}
+  .hero{grid-template-columns:1fr;min-height:0;padding-top:20px}
+  .photo{width:min(70%,280px);order:-1;justify-self:start}
+  .xp .card{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .reveal{opacity:1;transform:none;transition:none}
+  .orb .float,#rocket .flame{animation:none}
+}
+</style>
+</head>
+<body>
+<div class="sky"></div>
+<canvas id="stars" aria-hidden="true"></canvas>
+
+<header class="top">
+  <a class="mark" href="#profil">Jade<span>.</span>B</a>
+  <nav><a href="#experience">Expérience</a><a href="#formation">Formation</a><a href="#projets">Projets</a><a href="#competences">Compétences</a><a href="#contact">Contact</a></nav>
+  <button class="lang" type="button">FR / EN</button>
+</header>
+
+<div class="page" id="page">
+  <svg id="route" aria-hidden="true">
+    <defs>
+      <linearGradient id="trailg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ffb26b" stop-opacity="0"/><stop offset="1" stop-color="#ffd9a0"/></linearGradient>
+      <linearGradient id="fl" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#fff6d8"/><stop offset=".35" stop-color="#ffc35a"/><stop offset="1" stop-color="#ff5a2a" stop-opacity="0"/></linearGradient>
+    </defs>
+    <path class="trail" id="trail"/>
+    <g id="rocket">
+      <g class="flame"><path d="M-25,-5.5 Q-52,0 -25,5.5 Z" fill="url(#fl)"/><path d="M-25,-2.8 Q-36,0 -25,2.8 Z" fill="#fff"/></g>
+      <path d="M-17,-6.5 L-29,-17 L-23,-6 Z M-17,6.5 L-29,17 L-23,6 Z" fill="#ff5d73" stroke="#1a1730" stroke-width="1.1" stroke-linejoin="round"/>
+      <path d="M-25,-7 L9,-7 Q23,-5 29,0 Q23,5 9,7 L-25,7 Z" fill="#f4f2fa" stroke="#1a1730" stroke-width="1.2" stroke-linejoin="round"/>
+      <path d="M14,-6.3 Q23,-5 29,0 Q23,5 14,6.3 Z" fill="#ff5d73"/>
+      <path d="M-19,-7 V7" stroke="#1a1730" stroke-width="1" opacity=".4"/>
+      <circle cx="2" cy="0" r="3.6" fill="#8fd8ff" stroke="#1a1730" stroke-width="1.2"/>
+      <path d="M-20,0 L-31,0" stroke="#c43c56" stroke-width="3" stroke-linecap="round"/>
+    </g>
+  </svg>
+
+  <!-- profil -->
+  <div class="row" id="profil">
+    <section class="main hero">
+      <div>
+        <span class="pill reveal">Disponible à partir de septembre 2027</span>
+        <h1 class="reveal" style="--d:.08s">Jade<br><span>Barbier</span></h1>
+        <p class="lead reveal" style="--d:.16s">Élève ingénieure à l'ENSIM, en alternance chez <b>SNCF Voyageurs</b>. À la frontière du logiciel et du matériel : <b>systèmes embarqués, réseaux et cybersécurité</b>.</p>
+        <div class="ctas reveal" style="--d:.24s"><a class="btn" href="#projets">Voir les projets</a><a class="btn o" href="#contact">Me contacter</a></div>
+      </div>
+      <figure class="photo reveal" style="--d:.2s;margin:0"><img src="assets/jade.webp" alt="Portrait de Jade Barbier"><small>Le Mans</small></figure>
+    </section>
+    <div class="lane"><div class="orb" data-planet="moon" style="--s:110px;left:62%;top:30%"></div></div>
+  </div>
+
+  <!-- expérience -->
+  <div class="row" id="experience">
+    <section class="main sec">
+      <div class="sec-h reveal"><span>01</span><h2>Expérience</h2></div>
+      <div class="xp">
+        <article class="card reveal"><img src="assets/sncf.webp" alt=""><div><span class="when">Sept. 2024 — sept. 2027 · en cours</span><h3>Alternance en informatique embarquée et réseaux</h3><span class="where">SNCF Voyageurs, CIM du Mans</span>
+          <ul><li>Tests de conformité des équipements embarqués aux spécifications ITxPT : consommation électrique, services échangés.</li><li>Client EST pour une preuve de concept de sécurisation des communications à bord (mTLS).</li><li>Outil de test de connexion SFTP et étude d'impact du Cyber Resilience Act.</li></ul></div></article>
+        <article class="card reveal"><img src="assets/colart.webp" alt=""><div><span class="when">Juin — août 2023</span><h3>Opératrice de conditionnement</h3><span class="where">Colart International, Le Mans</span>
+          <ul><li>Assemblage, contrôle et conditionnement sur lignes de production, dans le respect des normes qualité et sécurité.</li></ul></div></article>
+      </div>
+    </section>
+    <div class="lane"><div class="orb" data-planet="sncf" style="--s:210px;left:40%;top:38%"></div><div class="orb" data-planet="colart" style="--s:96px;left:72%;top:80%"></div></div>
+  </div>
+
+  <!-- formation -->
+  <div class="row" id="formation">
+    <section class="main sec">
+      <div class="sec-h reveal"><span>02</span><h2>Formation</h2></div>
+      <div class="xp">
+        <article class="card reveal"><img src="assets/ensim.webp" alt=""><div><span class="when">2024 — 2027</span><h3>Cycle ingénieur en alternance</h3><span class="where">ENSIM, Le Mans</span>
+          <ul><li>Systèmes embarqués, réseaux, cybersécurité.</li><li>Projets d'équipe : mécatronique, IA, application mobile.</li></ul></div></article>
+        <article class="card reveal"><img src="assets/malraux.webp" alt=""><div><span class="when">2019 — 2022</span><h3>Baccalauréat général</h3><span class="where">Lycée André Malraux, Allonnes</span></div></article>
+      </div>
+      <a class="more reveal" href="parcours-universitaire.html">Détail des semestres →</a>
+    </section>
+    <div class="lane"><div class="orb" data-planet="ensim" style="--s:170px;left:66%;top:42%"></div></div>
+  </div>
+
+  <!-- projets -->
+  <div class="row" id="projets">
+    <section class="main sec">
+      <div class="sec-h reveal"><span>03</span><h2>Projets</h2></div>
+      <div id="groups"></div>
+    </section>
+    <div class="lane"><div class="orb" data-planet="red" style="--s:120px;left:34%;top:14%"></div><div class="orb" data-planet="green" style="--s:150px;left:66%;top:50%"></div><div class="orb" data-planet="gold" style="--s:104px;left:36%;top:86%"></div></div>
+  </div>
+
+  <!-- compétences -->
+  <div class="row" id="competences">
+    <section class="main sec">
+      <div class="sec-h reveal"><span>04</span><h2>Compétences</h2><p>bases · intermédiaire · autonome · avancé</p></div>
+      <div class="skills" id="skills"></div>
+    </section>
+    <div class="lane"><div class="orb" data-planet="ice" style="--s:140px;left:62%;top:45%"></div></div>
+  </div>
+
+  <!-- contact -->
+  <div class="row" id="contact">
+    <section class="main contact">
+      <h2 class="reveal">Travaillons ensemble</h2>
+      <p class="reveal" style="--d:.08s">Disponible en septembre 2027 pour un poste d'ingénieure en systèmes embarqués, réseaux ou cybersécurité.</p>
+      <div class="ctas reveal" style="--d:.16s">
+        <a class="btn" href="mailto:jade72210@gmail.com">jade72210@gmail.com</a>
+        <a class="btn o" href="https://www.linkedin.com/in/jade-barbier-b261b8266" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn o" href="https://github.com/MoggleJ" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn o" href="#">CV (PDF)</a>
+      </div>
+    </section>
+    <div class="lane"></div>
+  </div>
+
+  <!-- atterrissage -->
+  <section class="landing" id="atterrissage">
+    <div class="stage" id="stage">
+      <svg viewBox="0 0 600 560" role="img" aria-label="Une petite planète habitée et un drapeau MJ"><defs>
+                    <radialGradient id="pg" gradientUnits="userSpaceOnUse" cx="259" cy="279" r="255"><stop offset="0" stop-color="var(--planet-b)"/><stop offset=".6" stop-color="var(--planet-a)"/><stop offset="1" stop-color="var(--planet-c)"/></radialGradient>
+                    <radialGradient id="atmo" r=".5"><stop offset=".78" stop-color="var(--accent)" stop-opacity=".35"/><stop offset="1" stop-color="var(--accent)" stop-opacity="0"/></radialGradient>
+                    <radialGradient id="core" r=".5"><stop offset="0" stop-color="#fff2b0"/><stop offset="1" stop-color="#ffb347"/></radialGradient>
+                  </defs>
+                  <circle cx="300" cy="340" r="215" fill="url(#atmo)"/>
+                  <circle cx="300" cy="340" r="170" fill="url(#pg)"/>
+                  <g fill="#000" opacity=".16"><circle cx="240" cy="300" r="26"/><circle cx="350" cy="410" r="18"/><circle cx="250" cy="420" r="12"/></g>
+                  <path d="M160 300 Q300 270 440 300" stroke="#fff" stroke-opacity=".08" stroke-width="14" fill="none"/>
+
+                  <!-- Intérieur : caché sous la part, visible seulement une fois le drapeau tiré -->
+                  <g class="interior">
+                    <path d="M300 340 L300 170 A170 170 0 0 1 470 340 Z" fill="#8a5a3c"/>
+                    <path d="M300 340 L300 215 A125 125 0 0 1 425 340 Z" fill="#c4683f"/>
+                    <path d="M300 340 L300 270 A70 70 0 0 1 370 340 Z" fill="url(#core)"/>
+                    <path d="M300 340 L300 170 A170 170 0 0 1 470 340 Z" fill="none" stroke="var(--text)" stroke-opacity=".5" stroke-width="2"/>
+                    <!-- Couche du dessus : aujourd'hui -->
+            <g class="relic" transform="translate(352 205) rotate(-12) scale(1.4)"><rect x="-13" y="-9" width="26" height="18" rx="2" fill="#f4e6c8"/><path d="M0 -9 V9" stroke="#8a5a3c" stroke-width="1.5"/><rect x="-13" y="-9" width="26" height="18" rx="2" fill="none" stroke="#5b3a24" stroke-width="1.5"/></g>
+            <g class="relic" transform="translate(408 245) rotate(18) scale(1.4)"><ellipse cx="0" cy="6" rx="20" ry="6" fill="#e8742a"/><path d="M-11 6 C-11 -12 11 -12 11 6 Z" fill="#f08a36"/><rect x="-11" y="-1" width="22" height="3" fill="#c23b22"/><circle cx="-5" cy="-5" r="2.2" fill="#ffd36e"/><circle cx="4" cy="-5" r="2.2" fill="#6ec3ff"/></g>
+            <g class="relic" transform="translate(445 300) scale(1.3)"><path d="M0 -14 C-8 -14 -10 -6 -10 -4 C-10 4 0 12 0 12 C0 12 10 4 10 -4 C10 -6 8 -14 0 -14 Z" fill="#ff5d73"/><circle cx="0" cy="-4" r="3.5" fill="#fff"/></g>
+            <!-- Couche du milieu : adolescence (à définir) -->
+            <text class="relic" x="356" y="262" font-family="Sora" font-weight="700" font-size="22" fill="#fff" opacity=".85">?</text>
+            <text class="relic" x="392" y="300" font-family="Sora" font-weight="700" font-size="18" fill="#fff" opacity=".6">?</text>
+            <!-- Noyau : enfance -->
+            <g class="relic" transform="translate(345 315) rotate(-35) scale(1.3)"><rect x="-1.5" y="-12" width="3" height="20" rx="1" fill="#f4e6c8"/><circle cx="0" cy="-13" r="3.5" fill="#c23b22"/><path d="M0 -24 C4 -19 3 -16 0 -16 C-3 -16 -4 -19 0 -24 Z" fill="#ff9a3c"/></g>
+            <g class="relic" transform="translate(318 296) scale(1.3)"><rect x="-10" y="-7" width="20" height="14" rx="3" fill="#6b4fd8"/><rect x="-7" y="-4.5" width="14" height="9" rx="1.5" fill="#bfe9ff"/><path d="M-4 -7 L-8 -12 M4 -7 L8 -12" stroke="#6b4fd8" stroke-width="1.5"/></g>
+                    <!-- Légendes -->
+            <g class="legend" font-family="Inter" font-size="13" fill="var(--muted)">
+              <line x1="470" y1="210" x2="520" y2="190" stroke="var(--muted)"/><text x="524" y="186">Aujourd'hui</text>
+              <line x1="420" y1="300" x2="520" y2="330" stroke="var(--muted)"/><text x="524" y="334">Ado</text>
+              <line x1="350" y1="330" x2="520" y2="420" stroke="var(--muted)"/><text x="524" y="424">Enfance</text>
+            </g>
+                  </g>
+
+                  <!-- La part de planète et le drapeau : on tire le drapeau vers le haut pour la soulever -->
+                  <g class="lid">
+                    <path d="M300 340 L300 170 A170 170 0 0 1 470 340 Z" fill="url(#pg)"/>
+                    <circle cx="380" cy="300" r="10" fill="#000" opacity=".16"/>
+                    <path d="M300 286 Q380 280 440 300" stroke="#fff" stroke-opacity=".08" stroke-width="14" fill="none"/>
+                  </g>
+                  <g class="flag" tabindex="0" role="button" aria-label="Drapeau MJ">
+                    <rect x="280" y="60" width="110" height="120" fill="transparent"/>
+                    <line x1="300" y1="172" x2="300" y2="70" stroke="var(--text)" stroke-width="3" stroke-linecap="round"/>
+                    <path class="cloth" d="M302 74 C330 66 345 86 372 78 L372 120 C345 128 330 108 302 116 Z" fill="var(--accent-2)"/>
+                    <text x="337" y="103" text-anchor="middle" font-family="Sora" font-weight="700" font-size="17" fill="var(--bg-0)">MJ</text>
+                  </g></svg>
+    </div>
+    <p class="hint">Les habitants sont joueurs : attrapez-les et lancez-les.</p>
+    <button class="close" id="closeLid" type="button" hidden>Refermer</button>
+  </section>
+  <p class="foot">Conçu et développé par Jade Barbier · 2027</p>
+</div>
+
+<script src="data.js"></script>
+<script src="skills.js"></script>
+<script>
+// ---------- projets ----------
+const kinds=[['pro','Entreprise'],['school','École'],['perso','Personnel']];
+document.getElementById('groups').innerHTML=kinds.map(([k,l])=>{const items=(window.PROJECTS||[]).filter(p=>p.kind===k);
+  return `<div class="group"><h3><b>${l}</b> · ${items.length}</h3><div class="projects">${items.map((p,i)=>`<article class="card proj reveal" style="--d:${(i%3)*.08}s"><div class="pic">${p.img?`<img src="${p.img}" alt="" loading="lazy">`:'<span>Visuel à venir</span>'}</div><div class="txt"><small>${p.where||''}</small><h4>${p.title}</h4><p>${p.desc||''}</p><div class="tags">${(p.tags||[]).slice(0,4).map(t=>`<span>${t}</span>`).join('')}</div></div></article>`).join('')}</div></div>`}).join('');
+
+// ---------- compétences ----------
+const lv=['bases','intermédiaire','autonome','avancé'];
+document.getElementById('skills').innerHTML=(window.SKILLS||[]).map((c,i)=>`<div class="card reveal" style="--d:${(i%3)*.06}s"><h3>${c.title}</h3><ul>${c.skills.map(([n,l])=>`<li><span>${n}</span><em>${lv[l-1]}</em><span class="lv"><i style="--w:${l*25}%"></i></span></li>`).join('')}</ul></div>`).join('');
+
+// ---------- apparitions ----------
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+// ---------- planètes ----------
+const LOOK={
+  moon:{c:['#f1efe9','#a9a59c','#3b3934'],glow:'#ffffff',noise:'.05',seed:3,craters:1},
+  sncf:{c:['#f3dcff','#9a5cf0','#24104f'],glow:'#b38bff',noise:'.004 .07',seed:8,tilt:-14,ring:['#e7d4ff','#b89cff'],moon:1},
+  colart:{c:['#ffe0bf','#f08a3d','#4a1a0a'],glow:'#ff9b54',noise:'.035',seed:5,craters:1},
+  ensim:{c:['#d8fbff','#41b6d8','#0a2c46'],glow:'#7fe0ff',noise:'.006 .05',seed:12,tilt:12,ring:['#cdf4ff','#7fd3ff']},
+  red:{c:['#ffd0c8','#e0524a','#3a0d10'],glow:'#ff6b5e',noise:'.02',seed:21,craters:1},
+  green:{c:['#d9ffe9','#3cc48f','#08362a'],glow:'#5ef0a0',noise:'.005 .06',seed:17,tilt:-8,moon:1},
+  gold:{c:['#fff3c4','#e5ad2c','#4a2f05'],glow:'#ffc94d',noise:'.03',seed:9},
+  ice:{c:['#ffffff','#b9c8ff','#2b3570'],glow:'#c4d0ff',noise:'.008 .03',seed:30,tilt:20,ring:['#ffffff','#c4d0ff']},
+};
+let pid=0;
+function planetSVG(k){const o=LOOK[k],i=pid++,t=o.tilt||0;
+  const ring=(half)=>o.ring?`<g transform="rotate(${t-16})" opacity=".9">${[[138,30,6,o.ring[0],.55],[124,26,3,o.ring[1],.8],[150,33,2,o.ring[1],.35]].map(([rx,ry,w,c,op])=>`<path d="M-${rx},0 A${rx},${ry} 0 0 ${half} ${rx},0" fill="none" stroke="${c}" stroke-width="${w}" stroke-opacity="${op}"/>`).join('')}</g>`:'';
+  let craters='';if(o.craters){const r=s=>(s=Math.sin(i*99+s)*1e4,s-Math.floor(s));for(let j=0;j<6;j++){const a=r(j)*6.28,d=r(j+9)*55,x=Math.cos(a)*d,y=Math.sin(a)*d,rr=5+r(j+3)*11;craters+=`<circle cx="${x}" cy="${y}" r="${rr}" fill="#000" opacity=".18"/><circle cx="${x-rr*.25}" cy="${y-rr*.25}" r="${rr*.8}" fill="none" stroke="#fff" stroke-opacity=".12"/>`}}
+  return `<svg viewBox="-150 -150 300 300" aria-hidden="true"><defs>
+   <radialGradient id="pb${i}" cx="34%" cy="30%" r="80%"><stop offset="0" stop-color="${o.c[0]}"/><stop offset=".45" stop-color="${o.c[1]}"/><stop offset="1" stop-color="${o.c[2]}"/></radialGradient>
+   <radialGradient id="ps${i}" cx="32%" cy="28%" r="85%"><stop offset=".45" stop-color="#000" stop-opacity="0"/><stop offset=".8" stop-color="#000" stop-opacity=".55"/><stop offset="1" stop-color="#000" stop-opacity=".85"/></radialGradient>
+   <radialGradient id="pa${i}" r="50%"><stop offset=".8" stop-color="${o.glow}" stop-opacity="0"/><stop offset=".84" stop-color="${o.glow}" stop-opacity=".35"/><stop offset="1" stop-color="${o.glow}" stop-opacity="0"/></radialGradient>
+   <filter id="pn${i}" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="${o.noise}" numOctaves="4" seed="${o.seed}"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope="0" intercept="1"/></feComponentTransfer></filter>
+   <clipPath id="pc${i}"><circle r="80"/></clipPath></defs>
+   <circle r="100" fill="url(#pa${i})"/>
+   ${ring(1)}
+   <g clip-path="url(#pc${i})"><circle r="80" fill="url(#pb${i})"/><rect x="-95" y="-95" width="190" height="190" filter="url(#pn${i})" opacity=".55" style="mix-blend-mode:overlay" transform="rotate(${t})"/>${craters}<circle r="80" fill="url(#ps${i})"/></g>
+   <circle r="79.5" fill="none" stroke="${o.glow}" stroke-opacity=".35" stroke-width="1.2"/>
+   ${ring(0)}
+   ${o.moon?`<g transform="rotate(${t-10})"><circle r="6" fill="#e9e6f2"><animateMotion dur="${14+i%5}s" repeatCount="indefinite" path="M-118,0 A118,34 0 1 1 118,0 A118,34 0 1 1 -118,0"/></circle></g>`:''}
+  </svg>`}
+document.querySelectorAll('[data-planet]').forEach(el=>{el.innerHTML=`<div class="float" style="position:absolute;inset:0;animation-delay:-${(pid*1.7)%9}s">${planetSVG(el.dataset.planet)}</div>`;el.dataset.r=LOOK[el.dataset.planet].ring?.75:.56});
+
+// ---------- ciel ----------
+const cv=document.getElementById('stars'),cx=cv.getContext('2d');let stars=[];
+function seedSky(){cv.width=innerWidth*devicePixelRatio;cv.height=innerHeight*devicePixelRatio;stars=Array.from({length:Math.round(innerWidth*innerHeight/3200)},()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,z:Math.random(),p:Math.random()*6}))}
+function sky(t){cx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);cx.clearRect(0,0,innerWidth,innerHeight);const H=innerHeight;
+  for(const s of stars){const y=((s.y-scrollY*(.04+s.z*.12))%H+H)%H;cx.globalAlpha=(.25+.6*s.z)*(.6+.4*Math.sin(t/800+s.p));cx.fillStyle=s.z>.85?'#ffe7c4':'#e3e6ff';cx.beginPath();cx.arc(s.x,y,.4+s.z*1.1,0,7);cx.fill()}
+  requestAnimationFrame(sky)}
+
+// ---------- route de la fusée : couloir de droite, elle contourne les planètes ----------
+const page=document.getElementById('page'),route=document.getElementById('route'),trail=document.getElementById('trail'),rocket=document.getElementById('rocket'),stage=document.getElementById('stage');
+let S=[],land=null;
+function plot(){
+  const b=page.getBoundingClientRect(),W=b.width,H=page.scrollHeight,mobile=innerWidth<=900;
+  route.setAttribute('viewBox',`0 0 ${W} ${H}`);
+  const laneEl=document.querySelector('.lane');const lr=laneEl.getBoundingClientRect();
+  const x0=mobile?W-18:lr.left-b.left+lr.width/2;
+  const obs=mobile?[]:[...document.querySelectorAll('[data-planet]')].map(el=>{const r=el.getBoundingClientRect();return{x:r.left-b.left+r.width/2,y:r.top-b.top+r.height/2,r:r.width*+el.dataset.r+26}}).sort((a,z)=>a.y-z.y);
+  // point d'atterrissage : à la surface de la planète des habitants, un peu à gauche du drapeau
+  const sr=stage.getBoundingClientRect(),s=sr.width/600,C={x:sr.left-b.left+300*s,y:sr.top-b.top+340*s},R=170*s,th=-118*Math.PI/180;
+  const lift=innerWidth<=900?20:27; // la fusée se pose sur ses ailerons, pas à moitié enfoncée
+  land={x:C.x+Math.cos(th)*(R+lift),y:C.y+Math.sin(th)*(R+lift),ang:-118};
+  let d=`M${x0},${Math.max(90,obs[0]?obs[0].y-obs[0].r-200:120)}`,cy=+d.split(',')[1];let side=1;
+  for(const o of obs){
+    // côté le plus libre dans le couloir, sinon on alterne
+    side=Math.abs(o.x-x0)<8?-side:(o.x>x0?-1:1);
+    const xs=o.x+side*o.r,top=o.y-o.r-40,bot=o.y+o.r+40;
+    if(top>cy)d+=` C${x0},${(cy+top)/2} ${x0},${(cy+top)/2} ${x0},${top}`;
+    d+=` C${x0},${top+o.r*.55} ${xs},${o.y-o.r*.75} ${xs},${o.y} C${xs},${o.y+o.r*.75} ${x0},${bot-o.r*.55} ${x0},${bot}`;cy=bot;
+  }
+  // descente finale vers la planète des habitants
+  const yA=land.y-260;
+  if(yA>cy)d+=` C${x0},${(cy+yA)/2} ${x0},${(cy+yA)/2} ${x0},${yA}`;
+  d+=` C${x0},${yA+150} ${land.x},${land.y-170} ${land.x},${land.y}`;
+  trail.setAttribute('d',d);
+  const L=trail.getTotalLength();S=[];for(let l=0;l<=L;l+=4){const p=trail.getPointAtLength(l);S.push([l,p.x,p.y])}
+  const e=trail.getPointAtLength(L);S.push([L,e.x,e.y]);
+  trail.style.strokeDasharray=`0 ${L*2}`;fly();
+}
+let landed=false;
+function fly(){if(!S.length)return;
+  const b=page.getBoundingClientRect(),lim=-b.top+innerHeight*.5;
+  let k=0;while(k<S.length-1&&S[k+1][2]<=lim)k++;
+  if(innerHeight+scrollY>=document.documentElement.scrollHeight-4)k=S.length-1;
+  const [l,x,y]=S[k],n=S[Math.min(k+3,S.length-1)],p=S[Math.max(k-3,0)];
+  let ang=Math.atan2(n[2]-p[2],n[1]-p[1])*180/Math.PI;
+  // sur la fin, la fusée se retourne pour se poser à reculons, flamme vers le sol
+  const left=S[S.length-1][0]-l,flip=Math.max(0,Math.min(1,1-left/240));
+  if(flip>0){let target=land.ang,delta=((target-ang+540)%360)-180;ang+=delta*flip}
+  rocket.setAttribute('transform',`translate(${x},${y}) rotate(${ang}) scale(${innerWidth<=900?.8:1.05})`);
+  const tl=Math.min(l,380);trail.style.strokeDasharray=`0 ${l-tl} ${tl*(1-flip)} ${S[S.length-1][0]*2}`;
+  const now=k>=S.length-1;if(now!==landed){landed=now;rocket.classList.toggle('landed',now);if(now)window.cheer&&cheer()}
+}
+addEventListener('scroll',()=>requestAnimationFrame(fly),{passive:true});
+</script>
+<script>
+// ---------- planète des habitants : on les attrape, on les lance, la gravité les ramène ----------
+(()=>{
+const st=document.getElementById('stage'),svg=st.querySelector('svg');
+const LOOKS=[
+ `<ellipse cx="0" cy="-1" rx="30" ry="5" fill="#000" opacity=".2"/><path d="M-30 0 C-34 -50 34 -50 30 0 Z" fill="#ff8fc7"/><rect x="-22" y="-4" width="10" height="8" rx="4" fill="#e66aa8"/><rect x="12" y="-4" width="10" height="8" rx="4" fill="#e66aa8"/><circle cx="-11" cy="-24" r="8" fill="#fff"/><circle cx="-11" cy="-24" r="4" fill="#111" data-pupil="3.5"/><circle cx="11" cy="-24" r="8" fill="#fff"/><circle cx="11" cy="-24" r="4" fill="#111" data-pupil="3.5"/><path class="mouth" d="M-6 -11 Q0 -6 6 -11" stroke="#7a2350" stroke-width="2" fill="none" stroke-linecap="round"/>`,
+ `<ellipse cx="0" cy="-1" rx="26" ry="5" fill="#000" opacity=".2"/><path d="M-12 -52 L-20 -72 M12 -52 L20 -72" stroke="#3fc9dd" stroke-width="3" stroke-linecap="round"/><circle cx="-20" cy="-74" r="4.5" fill="#ffd36e"/><circle cx="20" cy="-74" r="4.5" fill="#ffd36e"/><rect x="-24" y="-56" width="48" height="56" rx="20" fill="#5fe0f0"/><circle cx="0" cy="-32" r="13" fill="#fff"/><circle cx="0" cy="-32" r="6.5" fill="#111" data-pupil="5.5"/><rect class="mouth" x="-8" y="-14" width="16" height="4" rx="2" fill="#1d7f8c"/>`,
+ `<ellipse cx="0" cy="-1" rx="20" ry="4" fill="#000" opacity=".2"/><path d="M-20 0 L-20 -30 A20 20 0 0 1 20 -30 L20 0 L13 -6 L7 0 L0 -6 L-7 0 L-13 -6 Z" fill="#8ff0b2"/><circle cx="-7" cy="-32" r="5.5" fill="#fff"/><circle cx="-7" cy="-32" r="2.8" fill="#111" data-pupil="2.5"/><circle cx="7" cy="-32" r="5.5" fill="#fff"/><circle cx="7" cy="-32" r="2.8" fill="#111" data-pupil="2.5"/><circle cx="-13" cy="-22" r="3" fill="#ff9cc8" opacity=".7"/><circle cx="13" cy="-22" r="3" fill="#ff9cc8" opacity=".7"/>`,
+ `<ellipse cx="0" cy="-1" rx="24" ry="4.5" fill="#000" opacity=".2"/><path d="M-14 -38 L-20 -54 L-6 -42 Z M14 -38 L20 -54 L6 -42 Z" fill="#ffd36e"/><path d="M-24 0 C-28 -46 28 -46 24 0 Z" fill="#ffa65c"/><circle cx="-10" cy="-24" r="5" fill="#fff"/><circle cx="-10" cy="-24" r="2.5" fill="#111" data-pupil="2.2"/><circle cx="0" cy="-31" r="5" fill="#fff"/><circle cx="0" cy="-31" r="2.5" fill="#111" data-pupil="2.2"/><circle cx="10" cy="-24" r="5" fill="#fff"/><circle cx="10" cy="-24" r="2.5" fill="#111" data-pupil="2.2"/><path class="mouth" d="M-7 -12 Q0 -7 7 -12" stroke="#8a3a12" stroke-width="2" fill="none" stroke-linecap="round"/>`,
+];
+const START=[-40,-72,128,200];
+const M=LOOKS.map((g,i)=>{const el=document.createElement('div');el.className='mon';el.innerHTML=`<svg viewBox="-36 -80 72 82">${g}</svg>`;st.appendChild(el);
+  return{el,mode:'ground',th:(START[i]-90)*Math.PI/180,w:(i%2?1:-1)*(.08+.05*i),hop:0,hv:0,x:0,y:0,vx:0,vy:0,phi:0,pupils:[...el.querySelectorAll('[data-pupil]')]}});
+let C={x:0,y:0},R=1,size=1;
+function measure(){const r=st.getBoundingClientRect(),s=r.width/600;C={x:300*s,y:340*s};R=170*s;size=R*.42;st.style.setProperty('--mw',size+'px')}
+measure();addEventListener('resize',measure);
+let ptr={x:-1e4,y:-1e4},held=null,off={x:0,y:0},hist=[];
+addEventListener('pointermove',e=>{ptr={x:e.clientX,y:e.clientY};if(held){const r=st.getBoundingClientRect();held.x=e.clientX-r.left+off.x;held.y=e.clientY-r.top+off.y;hist.push([performance.now(),held.x,held.y]);if(hist.length>6)hist.shift()}},{passive:true});
+M.forEach(m=>{
+  m.el.addEventListener('pointerdown',e=>{e.preventDefault();m.el.setPointerCapture(e.pointerId);const r=st.getBoundingClientRect();
+    if(m.mode==='ground'){m.x=C.x+Math.cos(m.th)*(R+m.hop);m.y=C.y+Math.sin(m.th)*(R+m.hop)}
+    off={x:m.x-(e.clientX-r.left),y:m.y-(e.clientY-r.top)};held=m;m.mode='held';m.el.classList.add('held');hist=[[performance.now(),m.x,m.y]]});
+  const drop=()=>{if(held!==m)return;held=null;m.el.classList.remove('held');m.mode='air';
+    const a=hist[0],z=hist[hist.length-1],dt=Math.max(16,z[0]-a[0])/1000;const V=R*7;m.vx=Math.max(-V,Math.min(V,(z[1]-a[1])/dt));m.vy=Math.max(-V,Math.min(V,(z[2]-a[2])/dt))};
+  m.el.addEventListener('pointerup',drop);m.el.addEventListener('pointercancel',drop);
+});
+// petite fête quand la fusée se pose
+window.cheer=()=>M.forEach((m,i)=>{if(m.mode==='ground')setTimeout(()=>{m.hv=R*1.6},i*120)});
+let last=performance.now();
+function step(t){const dt=Math.min(.033,(t-last)/1000);last=t;
+  for(const m of M){
+    if(m.mode==='ground'){
+      m.th+=m.w*dt;if(Math.random()<.004)m.w=-m.w;
+      // sautillement
+      if(m.hop<=0&&m.hv<=0&&Math.random()<.003)m.hv=R*(.6+Math.random()*.5);
+      if(m.hv>0||m.hop>0){m.hop+=m.hv*dt;m.hv-=R*6*dt;if(m.hop<=0){m.hop=0;m.hv=0}}
+      m.x=C.x+Math.cos(m.th)*(R+m.hop);m.y=C.y+Math.sin(m.th)*(R+m.hop);
+      m.phi+=((m.th*180/Math.PI+90)-m.phi+540)%360-180;
+    }else if(m.mode==='held'){
+      m.phi+=(Math.max(-35,Math.min(35,(hist.length>1?(hist[hist.length-1][1]-hist[0][1]):0)*-.6))-m.phi)*.2;
+    }else{
+      const dx=C.x-m.x,dy=C.y-m.y,d=Math.hypot(dx,dy)||1,g=R*9;
+      // gravité constante : un habitant lancé finit toujours par revenir
+      m.vx+=dx/d*g*dt;m.vy+=dy/d*g*dt;const damp=d>R*3?.97:.998;m.vx*=damp;m.vy*=damp;m.x+=m.vx*dt;m.y+=m.vy*dt;
+      const target=Math.atan2(m.y-C.y,m.x-C.x)*180/Math.PI+90;m.phi+=(((target-m.phi+540)%360)-180)*Math.min(1,dt*6);
+      if(d<=R){const nx=-dx/d,ny=-dy/d,vr=m.vx*nx+m.vy*ny;m.x=C.x+nx*R;m.y=C.y+ny*R;
+        if(vr<-R*2.2){m.vx-=1.45*vr*nx;m.vy-=1.45*vr*ny}  // rebond
+        else{const vt=-m.vx*ny+m.vy*nx;m.th=Math.atan2(ny,nx);m.w=Math.max(-1.2,Math.min(1.2,vt/R*.5))||.1;m.mode='ground';m.hop=0;m.hv=0}}
+    }
+    m.el.style.transform=`translate(${m.x-size/2}px,${m.y-size*1.05}px) rotate(${m.phi}deg)`;
+  }
+  // les yeux suivent le pointeur
+  for(const m of M)for(const p of m.pupils){const e=p.previousElementSibling.getBoundingClientRect();const dx=ptr.x-(e.left+e.width/2),dy=ptr.y-(e.top+e.height/2);
+    const a=-m.phi*Math.PI/180,lx=dx*Math.cos(a)-dy*Math.sin(a),ly=dx*Math.sin(a)+dy*Math.cos(a),len=Math.hypot(lx,ly)||1,dist=Math.min(+p.dataset.pupil,len/40);
+    p.setAttribute('transform',`translate(${lx/len*dist} ${ly/len*dist})`)}
+  requestAnimationFrame(step)}
+requestAnimationFrame(step);
+
+// drapeau : le tirer vers le haut soulève une part de la planète (easter egg)
+const flag=svg.querySelector('.flag'),close=document.getElementById('closeLid');let y0=null,pull=0;
+const unit=()=>560/svg.getBoundingClientRect().height;
+const setPull=v=>{pull=v;st.style.setProperty('--pull',`${-v}px`)};
+const open=()=>{st.classList.add('opened');st.style.removeProperty('--pull');close.hidden=false};
+flag.addEventListener('pointerdown',e=>{if(st.classList.contains('opened'))return;y0=e.clientY;flag.setPointerCapture(e.pointerId);st.classList.add('pulling')});
+flag.addEventListener('pointermove',e=>{if(y0===null)return;setPull(Math.min(70,Math.max(0,(y0-e.clientY)*unit())*.6))});
+const release=()=>{if(y0===null)return;y0=null;st.classList.remove('pulling');if(pull>34)open();else{const tapped=pull===0;setPull(0);if(tapped){st.classList.remove('wiggle');void st.offsetWidth;st.classList.add('wiggle')}}};
+flag.addEventListener('pointerup',release);flag.addEventListener('pointercancel',release);
+flag.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open()}});
+close.addEventListener('click',()=>{st.classList.remove('opened');setPull(0);close.hidden=true});
+})();
+
+// ---------- démarrage ----------
+const reduced=matchMedia('(prefers-reduced-motion:reduce)').matches;
+seedSky();if(!reduced)requestAnimationFrame(sky);
+addEventListener('load',plot);document.fonts&&document.fonts.ready.then(plot);
+let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{seedSky();plot()},150)});
+// les cartes qui apparaissent ne changent pas la mise en page, mais les images si : on recalcule une fois chargées
+document.querySelectorAll('img').forEach(i=>i.complete||i.addEventListener('load',()=>{clearTimeout(rt);rt=setTimeout(plot,100)}));
+</script>
+</body>
+</html>
