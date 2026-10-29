@@ -53,6 +53,10 @@ h1,h2,h3{font-family:Sora,sans-serif}
 .orb{position:absolute;width:var(--s);height:var(--s);transform:translate(-50%,-50%)}
 .orb svg{position:absolute;inset:-43.75%;width:187.5%;height:187.5%;overflow:visible}
 .orb .float{animation:float 9s ease-in-out infinite}
+.orb .spin{transform-box:fill-box;transform-origin:center;animation:spin var(--t,30s) linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.far{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.far i{position:absolute;border-radius:50%}
 @keyframes float{50%{transform:translateY(-8px)}}
 
 /* titres de section */
@@ -179,6 +183,7 @@ h1,h2,h3{font-family:Sora,sans-serif}
 </header>
 
 <div class="page" id="page">
+  <div class="far" id="far" aria-hidden="true"></div>
   <svg id="route" aria-hidden="true">
     <defs>
       <linearGradient id="trailg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ffb26b" stop-opacity="0"/><stop offset="1" stop-color="#ffd9a0"/></linearGradient>
@@ -207,7 +212,7 @@ h1,h2,h3{font-family:Sora,sans-serif}
       </div>
       <figure class="photo reveal" style="--d:.2s;margin:0"><img src="assets/jade.webp" alt="Portrait de Jade Barbier"><small>Le Mans</small></figure>
     </section>
-    <div class="lane"><div class="orb" data-planet="moon" style="--s:110px;left:62%;top:30%"></div></div>
+    <div class="lane"><div class="orb" data-planet="moon" style="--s:110px;left:62%;top:26%"></div><div class="orb" data-planet="satellite" style="--s:90px;left:30%;top:62%"></div><div class="orb" data-planet="rose" style="--s:56px;left:70%;top:90%"></div></div>
   </div>
 
   <!-- expérience -->
@@ -235,7 +240,7 @@ h1,h2,h3{font-family:Sora,sans-serif}
       </div>
       <a class="more reveal" href="parcours-universitaire.html">Détail des semestres →</a>
     </section>
-    <div class="lane"><div class="orb" data-planet="ensim" style="--s:170px;left:66%;top:42%"></div></div>
+    <div class="lane"><div class="orb" data-planet="comet" style="--s:120px;left:30%;top:8%"></div><div class="orb" data-planet="ensim" style="--s:170px;left:66%;top:48%"></div><div class="orb" data-planet="rose" style="--s:60px;left:30%;top:92%"></div></div>
   </div>
 
   <!-- projets -->
@@ -244,7 +249,7 @@ h1,h2,h3{font-family:Sora,sans-serif}
       <div class="sec-h reveal"><span>03</span><h2>Projets</h2></div>
       <div id="groups"></div>
     </section>
-    <div class="lane"><div class="orb" data-planet="red" style="--s:120px;left:34%;top:14%"></div><div class="orb" data-planet="green" style="--s:150px;left:66%;top:50%"></div><div class="orb" data-planet="gold" style="--s:104px;left:36%;top:86%"></div></div>
+    <div class="lane"><div class="orb" data-planet="red" style="--s:120px;left:34%;top:8%"></div><div class="orb" data-planet="comet" style="--s:130px;left:64%;top:22%"></div><div class="orb" data-planet="green" style="--s:150px;left:66%;top:38%"></div><div class="orb" data-planet="asteroids" style="--s:120px;left:30%;top:53%"></div><div class="orb" data-planet="purple" style="--s:90px;left:68%;top:66%"></div><div class="orb" data-planet="gold" style="--s:104px;left:36%;top:80%"></div><div class="orb" data-planet="satellite" style="--s:84px;left:66%;top:94%"></div></div>
   </div>
 
   <!-- compétences -->
@@ -253,7 +258,7 @@ h1,h2,h3{font-family:Sora,sans-serif}
       <div class="sec-h reveal"><span>04</span><h2>Compétences</h2><p>bases · intermédiaire · autonome · avancé</p></div>
       <div class="skills" id="skills"></div>
     </section>
-    <div class="lane"><div class="orb" data-planet="ice" style="--s:140px;left:62%;top:45%"></div></div>
+    <div class="lane"><div class="orb" data-planet="ice" style="--s:140px;left:62%;top:20%"></div><div class="orb" data-planet="purple" style="--s:80px;left:30%;top:50%"></div><div class="orb" data-planet="asteroids" style="--s:100px;left:64%;top:80%"></div></div>
   </div>
 
   <!-- contact -->
@@ -268,7 +273,7 @@ h1,h2,h3{font-family:Sora,sans-serif}
         <a class="btn o" href="#">CV (PDF)</a>
       </div>
     </section>
-    <div class="lane"></div>
+    <div class="lane"><div class="orb" data-planet="station" style="--s:150px;left:50%;top:50%"></div></div>
   </div>
 
   <!-- atterrissage -->
@@ -353,6 +358,28 @@ const LOOK={
   green:{c:['#d9ffe9','#3cc48f','#08362a'],glow:'#5ef0a0',noise:'.005 .06',seed:17,tilt:-8,moon:1},
   gold:{c:['#fff3c4','#e5ad2c','#4a2f05'],glow:'#ffc94d',noise:'.03',seed:9},
   ice:{c:['#ffffff','#b9c8ff','#2b3570'],glow:'#c4d0ff',noise:'.008 .03',seed:30,tilt:20,ring:['#ffffff','#c4d0ff']},
+  rose:{c:['#ffe3f0','#f07ab4','#3f0f2a'],glow:'#f5a3c7',noise:'.03',seed:41,craters:1},
+  purple:{c:['#efe2ff','#7d5cf0','#170c45'],glow:'#9b7bff',noise:'.005 .08',seed:52,tilt:-20,ring:['#d9ccff','#9b7bff']},
+};
+// objets spatiaux (non planètes) : la fusée les contourne aussi
+const DECO={
+  asteroids:{r:.62,svg:i=>{const rock=(x,y,s,rot,seed)=>{let pts=[];for(let j=0;j<9;j++){const a=j/9*6.283,rr=s*(.72+.35*Math.abs(Math.sin(seed*13+j*7.1)));pts.push((x+Math.cos(a)*rr).toFixed(1)+','+(y+Math.sin(a)*rr).toFixed(1))}
+      return `<g class="spin" style="--t:${18+seed*5}s"><polygon points="${pts.join(' ')}" fill="url(#ag${i})" stroke="#00000055" stroke-width="1.5"/><circle cx="${x-s*.25}" cy="${y-s*.15}" r="${s*.18}" fill="#0003"/><circle cx="${x+s*.3}" cy="${y+s*.25}" r="${s*.12}" fill="#0003"/></g>`};
+    return `<svg viewBox="-150 -150 300 300" aria-hidden="true"><defs><radialGradient id="ag${i}" cx="35%" cy="30%" r="80%"><stop offset="0" stop-color="#c9bfb4"/><stop offset=".6" stop-color="#6f655c"/><stop offset="1" stop-color="#2a2420"/></radialGradient></defs>${rock(-30,-20,42,0,1)}${rock(45,30,26,0,2)}${rock(-55,55,16,0,3)}${rock(60,-50,12,0,4)}${rock(5,75,10,0,5)}</svg>`}},
+  satellite:{r:.6,svg:i=>`<svg viewBox="-150 -150 300 300" aria-hidden="true"><g class="spin" style="--t:40s"><g transform="rotate(-20)">
+    <rect x="-110" y="-16" width="70" height="32" rx="2" fill="#1f3a7a" stroke="#9fb6ff" stroke-width="1.5"/><path d="M-92,-16 V16 M-75,-16 V16 M-58,-16 V16 M-110,0 H-40" stroke="#9fb6ff" stroke-width="1" opacity=".6"/>
+    <rect x="40" y="-16" width="70" height="32" rx="2" fill="#1f3a7a" stroke="#9fb6ff" stroke-width="1.5"/><path d="M58,-16 V16 M75,-16 V16 M92,-16 V16 M40,0 H110" stroke="#9fb6ff" stroke-width="1" opacity=".6"/>
+    <path d="M-40,0 H-26 M26,0 H40" stroke="#c9c6d8" stroke-width="3"/>
+    <rect x="-26" y="-24" width="52" height="48" rx="6" fill="#d9a73a" stroke="#7a5512" stroke-width="1.5"/><path d="M-26,-8 H26 M-26,8 H26" stroke="#7a5512" stroke-width="1" opacity=".6"/>
+    <path d="M0,-24 V-40" stroke="#c9c6d8" stroke-width="2"/><path d="M-14,-52 Q0,-34 14,-52" fill="#e9e6f2" stroke="#8a87a0" stroke-width="1.5"/>
+    <circle cx="0" cy="-40" r="3" fill="#ff5d73"><animate attributeName="opacity" values="1;.2;1" dur="1.6s" repeatCount="indefinite"/></circle></g></g></svg>`},
+  comet:{r:.55,svg:i=>`<svg viewBox="-150 -150 300 300" aria-hidden="true"><defs><linearGradient id="ct${i}" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#9fe8ff" stop-opacity="0"/><stop offset="1" stop-color="#cff4ff" stop-opacity=".85"/></linearGradient><radialGradient id="ch${i}" r="50%"><stop offset="0" stop-color="#fff"/><stop offset=".4" stop-color="#cff4ff"/><stop offset="1" stop-color="#7fe0ff" stop-opacity="0"/></radialGradient></defs>
+    <g transform="rotate(-32)"><path d="M-140,-6 Q-40,-22 40,-10 L40,10 Q-40,22 -140,6 Z" fill="url(#ct${i})"/><path d="M-120,-2 Q-40,-8 40,-3 L40,3 Q-40,8 -120,2 Z" fill="#fff" opacity=".5"/><circle cx="44" cy="0" r="30" fill="url(#ch${i})"/><circle cx="44" cy="0" r="9" fill="#fff"/></g></svg>`},
+  station:{r:.62,svg:i=>`<svg viewBox="-150 -150 300 300" aria-hidden="true"><g transform="scale(1,.62) rotate(0)"><g class="spin" style="--t:30s">
+    <circle r="100" fill="none" stroke="#3a3f52" stroke-width="22"/><circle r="100" fill="none" stroke="#6c7392" stroke-width="2" stroke-dasharray="6 10"/>
+    <circle r="100" fill="none" stroke="#ffd27a" stroke-width="3" stroke-dasharray="2 22" opacity=".9"/>
+    <path d="M-100,0 H100 M0,-100 V100" stroke="#4a5068" stroke-width="7"/></g></g>
+    <circle r="26" fill="#5a6070" stroke="#c9c6d8" stroke-width="2"/><circle r="9" fill="#ffd27a"><animate attributeName="opacity" values="1;.4;1" dur="2.2s" repeatCount="indefinite"/></circle></svg>`},
 };
 let pid=0;
 function planetSVG(k){const o=LOOK[k],i=pid++,t=o.tilt||0;
@@ -371,13 +398,24 @@ function planetSVG(k){const o=LOOK[k],i=pid++,t=o.tilt||0;
    ${ring(0)}
    ${o.moon?`<g transform="rotate(${t-10})"><circle r="6" fill="#e9e6f2"><animateMotion dur="${14+i%5}s" repeatCount="indefinite" path="M-118,0 A118,34 0 1 1 118,0 A118,34 0 1 1 -118,0"/></circle></g>`:''}
   </svg>`}
-document.querySelectorAll('[data-planet]').forEach(el=>{el.innerHTML=`<div class="float" style="position:absolute;inset:0;animation-delay:-${(pid*1.7)%9}s">${planetSVG(el.dataset.planet)}</div>`;el.dataset.r=LOOK[el.dataset.planet].ring?.75:.56});
+document.querySelectorAll('[data-planet]').forEach(el=>{const k=el.dataset.planet,dk=DECO[k];el.innerHTML=`<div class="float" style="position:absolute;inset:0;animation-delay:-${(pid*1.7)%9}s">${dk?dk.svg(pid++):planetSVG(k)}</div>`;el.dataset.r=dk?dk.r:(LOOK[k].ring?.75:.56)});
 
 // ---------- ciel ----------
 const cv=document.getElementById('stars'),cx=cv.getContext('2d');let stars=[];
-function seedSky(){cv.width=innerWidth*devicePixelRatio;cv.height=innerHeight*devicePixelRatio;stars=Array.from({length:Math.round(innerWidth*innerHeight/3200)},()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,z:Math.random(),p:Math.random()*6}))}
-function sky(t){cx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);cx.clearRect(0,0,innerWidth,innerHeight);const H=innerHeight;
-  for(const s of stars){const y=((s.y-scrollY*(.04+s.z*.12))%H+H)%H;cx.globalAlpha=(.25+.6*s.z)*(.6+.4*Math.sin(t/800+s.p));cx.fillStyle=s.z>.85?'#ffe7c4':'#e3e6ff';cx.beginPath();cx.arc(s.x,y,.4+s.z*1.1,0,7);cx.fill()}
+function seedSky(){cv.width=innerWidth*devicePixelRatio;cv.height=innerHeight*devicePixelRatio;stars=Array.from({length:Math.round(innerWidth*innerHeight/2600)},()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,z:Math.random(),p:Math.random()*6}))}
+// on descend : les étoiles montent, et s'étirent en traits quand on scrolle vite
+let vel=0,lastY=scrollY,shoot=null;
+function sky(t){const dy=scrollY-lastY;lastY=scrollY;vel+=(dy-vel)*.12;
+  cx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);cx.clearRect(0,0,innerWidth,innerHeight);const H=innerHeight;cx.lineCap='round';
+  for(const s of stars){s.y-=(vel*.9+.15)*(s.z*.9+.1);
+    if(s.y<-30){s.y=H+30;s.x=Math.random()*innerWidth}if(s.y>H+30){s.y=-30;s.x=Math.random()*innerWidth}
+    const len=Math.min(160,Math.abs(vel)*s.z*2.4);
+    cx.globalAlpha=(.3+.65*s.z)*(len>2?1:.65+.35*Math.sin(t/700+s.p));cx.strokeStyle=s.z>.85?'#ffe2b0':'#dfe6ff';cx.lineWidth=.6+s.z*1.6;
+    cx.beginPath();cx.moveTo(s.x,s.y);cx.lineTo(s.x,s.y+(vel>0?len:-len)+.01);cx.stroke()}
+  // étoile filante de temps en temps
+  if(!shoot&&Math.random()<.004)shoot={x:Math.random()*innerWidth*.8,y:Math.random()*H*.5,l:0};
+  if(shoot){shoot.l+=14;const a=shoot.l,x=shoot.x+a,y=shoot.y+a*.45;cx.globalAlpha=Math.max(0,1-a/420);cx.strokeStyle='#fff';cx.lineWidth=1.6;
+    cx.beginPath();cx.moveTo(x,y);cx.lineTo(x-90,y-40);cx.stroke();if(a>420)shoot=null}
   requestAnimationFrame(sky)}
 
 // ---------- route de la fusée : couloir de droite, elle contourne les planètes ----------
@@ -388,7 +426,7 @@ function plot(){
   route.setAttribute('viewBox',`0 0 ${W} ${H}`);
   const laneEl=document.querySelector('.lane');const lr=laneEl.getBoundingClientRect();
   const x0=mobile?W-18:lr.left-b.left+lr.width/2;
-  const obs=mobile?[]:[...document.querySelectorAll('[data-planet]')].map(el=>{const r=el.getBoundingClientRect();return{x:r.left-b.left+r.width/2,y:r.top-b.top+r.height/2,r:r.width*+el.dataset.r+26}}).sort((a,z)=>a.y-z.y);
+  const obs=mobile?[]:[...document.querySelectorAll('[data-planet]')].map(el=>{const r=el.getBoundingClientRect();return{x:r.left-b.left+r.width/2,y:r.top-b.top+r.height/2,r:r.width*+el.dataset.r+46}}).sort((a,z)=>a.y-z.y);
   // point d'atterrissage : à la surface de la planète des habitants, un peu à gauche du drapeau
   const sr=stage.getBoundingClientRect(),s=sr.width/600,C={x:sr.left-b.left+300*s,y:sr.top-b.top+340*s},R=170*s,th=-118*Math.PI/180;
   const lift=innerWidth<=900?20:27; // la fusée se pose sur ses ailerons, pas à moitié enfoncée
@@ -397,7 +435,7 @@ function plot(){
   for(const o of obs){
     // côté le plus libre dans le couloir, sinon on alterne
     side=Math.abs(o.x-x0)<8?-side:(o.x>x0?-1:1);
-    const xs=o.x+side*o.r,top=o.y-o.r-40,bot=o.y+o.r+40;
+    const xs=o.x+side*o.r,top=Math.max(o.y-o.r-40,cy),bot=Math.max(o.y+o.r+40,top+40);
     if(top>cy)d+=` C${x0},${(cy+top)/2} ${x0},${(cy+top)/2} ${x0},${top}`;
     d+=` C${x0},${top+o.r*.55} ${xs},${o.y-o.r*.75} ${xs},${o.y} C${xs},${o.y+o.r*.75} ${x0},${bot-o.r*.55} ${x0},${bot}`;cy=bot;
   }
@@ -497,11 +535,18 @@ flag.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDe
 close.addEventListener('click',()=>{st.classList.remove('opened');setPull(0);close.hidden=true});
 })();
 
+// ---------- objets lointains ----------
+function far(){const el=document.getElementById('far'),W=page.clientWidth,H=page.scrollHeight;let r=7,out='';const rnd=()=>(r=(r*16807)%2147483647)/2147483647;
+  const cols=[['#9b7bff','#2a1a6a'],['#f5a3c7','#4a1530'],['#7aa8ff','#13244a'],['#ffd27a','#4a3005'],['#5ef0a0','#0b3a2a']];
+  for(let y=500;y<H-900;y+=380+rnd()*260){const x=rnd()*W,[c1,c2]=cols[Math.floor(rnd()*cols.length)];
+    if(rnd()<.35){const w=90+rnd()*120;out+=`<i style="left:${x}px;top:${y}px;width:${w}px;height:${w*.38}px;transform:rotate(${rnd()*180}deg);background:radial-gradient(ellipse at center,#fff9 0,${c1}66 18%,${c1}22 45%,transparent 70%);filter:blur(1px);opacity:.55"></i>`}
+    else{const d=6+rnd()*16;out+=`<i style="left:${x}px;top:${y}px;width:${d}px;height:${d}px;background:radial-gradient(circle at 35% 30%,${c1},${c2});box-shadow:0 0 ${d}px ${c1}55;opacity:.7"></i>`}}
+  el.innerHTML=out}
 // ---------- démarrage ----------
 const reduced=matchMedia('(prefers-reduced-motion:reduce)').matches;
 seedSky();if(!reduced)requestAnimationFrame(sky);
-addEventListener('load',plot);document.fonts&&document.fonts.ready.then(plot);
-let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{seedSky();plot()},150)});
+addEventListener('load',()=>{far();plot()});document.fonts&&document.fonts.ready.then(plot);
+let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{seedSky();far();plot()},150)});
 // les cartes qui apparaissent ne changent pas la mise en page, mais les images si : on recalcule une fois chargées
 document.querySelectorAll('img').forEach(i=>i.complete||i.addEventListener('load',()=>{clearTimeout(rt);rt=setTimeout(plot,100)}));
 </script>
