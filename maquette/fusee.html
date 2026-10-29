@@ -86,7 +86,62 @@ h1,h2,h3{font-family:Sora,sans-serif}
 .photo small{position:absolute;left:16px;bottom:16px;font-size:.8rem;padding:.35rem .7rem;border-radius:999px;background:#07070dcc;backdrop-filter:blur(6px)}
 
 /* cartes */
-.card{background:linear-gradient(160deg,#15152299,#0d0d16cc);border:1px solid var(--line);border-radius:20px;padding:clamp(20px,3vw,30px);backdrop-filter:blur(6px)}
+.card{position:relative;border:1px solid var(--line);border-radius:20px;padding:clamp(20px,3vw,30px);backdrop-filter:blur(6px);transition:border-color .3s,box-shadow .3s;
+  background:
+   radial-gradient(1.2px 1.2px at 8% 18%,#fff9,transparent),radial-gradient(1px 1px at 22% 82%,#fff7,transparent),
+   radial-gradient(1.4px 1.4px at 64% 12%,#ffe7c4,transparent),radial-gradient(1px 1px at 88% 62%,#fff8,transparent),
+   radial-gradient(1px 1px at 46% 92%,#fff6,transparent),radial-gradient(1.2px 1.2px at 95% 24%,#cfd8ff,transparent),
+   radial-gradient(1px 1px at 34% 40%,#fff5,transparent),
+   radial-gradient(70% 90% at 100% 0%,var(--neb,#9b7bff1c),transparent 70%),
+   linear-gradient(160deg,#151522cc,#0d0d16e6)}
+.card:hover{border-color:#9b7bff55;box-shadow:0 0 40px #9b7bff1a}
+/* titres : numéro en orbite et constellation qui se dessine */
+.sec-h{position:relative}
+.sec-h > span{position:relative;display:grid;place-items:center;width:40px;height:40px;border:1px solid #9b7bff55;border-radius:50%;flex:none;align-self:center}
+.sec-h > span::after{content:"";position:absolute;inset:-1px;border-radius:50%;background:radial-gradient(circle at 50% 0,#ffd9a0 0 3px,transparent 4px);animation:spin 7s linear infinite}
+.const{position:absolute;left:-24px;top:-58px;width:340px;height:120px;z-index:-1;pointer-events:none;overflow:visible}
+.const path{fill:none;stroke:#9b7bff;stroke-opacity:.45;stroke-width:1;stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1.6s ease .2s}
+.const circle{fill:#fff;opacity:0;transition:opacity .4s;transition-delay:calc(var(--i) * .15s)}
+.sec-h.in .const path{stroke-dashoffset:0}
+.sec-h.in .const circle{opacity:var(--o,.9)}
+/* frise en orbite */
+.xp{position:relative;padding-left:62px}
+.xp::before{content:"";position:absolute;left:23px;top:20px;bottom:20px;width:2px;background:repeating-linear-gradient(#9b7bff99 0 4px,transparent 4px 11px)}
+.mini{position:absolute;left:-62px;top:22px;width:48px;height:48px;transform:scale(0);transition:transform .7s cubic-bezier(.3,1.6,.5,1) .2s}
+.card.in .mini{transform:none}
+.mini b{position:absolute;inset:7px;border-radius:50%;background:radial-gradient(circle at 34% 30%,var(--c1),var(--c2) 50%,var(--c3));box-shadow:inset -5px -4px 8px #000b,0 0 18px var(--glow)}
+.mini i{position:absolute;left:-4px;right:-4px;top:42%;height:9px;border-radius:50%;border:1.5px solid var(--ringc,transparent);transform:rotate(-18deg)}
+.mini em{position:absolute;inset:-5px;border-radius:50%;animation:spin var(--t,6s) linear infinite}
+.mini em::after{content:"";position:absolute;left:50%;top:0;width:5px;height:5px;margin-left:-2.5px;border-radius:50%;background:#e9e6f2;box-shadow:0 0 6px #fff}
+/* photo en orbite */
+.photo .orbits{position:absolute;left:-30%;top:-14%;width:160%;height:128%;z-index:-1;overflow:visible;pointer-events:none}
+.photo .orbits ellipse{fill:none;stroke:#ffffff26;stroke-dasharray:3 6}
+/* projets */
+.proj .pic{position:relative}
+.scene{position:absolute;inset:0;display:grid;place-items:end start;padding:12px 14px;
+  background:radial-gradient(1px 1px at 20% 30%,#fff9,transparent),radial-gradient(1.3px 1.3px at 70% 20%,#fff,transparent),radial-gradient(1px 1px at 85% 75%,#fff8,transparent),radial-gradient(1px 1px at 40% 70%,#fff7,transparent),radial-gradient(1px 1px at 10% 85%,#fff6,transparent),
+   radial-gradient(60% 70% at 72% 35%,hsla(var(--h),80%,62%,.32),transparent 70%),linear-gradient(135deg,#14122a,#0a0a16)}
+.scene b{position:absolute;right:16%;top:22%;width:30%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 34% 30%,hsl(var(--h),90%,85%),hsl(var(--h),70%,55%) 50%,hsl(var(--h),60%,12%));box-shadow:inset -8px -6px 14px #000b,0 0 30px hsla(var(--h),80%,60%,.45);transition:transform .6s}
+.scene i{position:absolute;right:8%;top:42%;width:46%;height:12%;border-radius:50%;border:2px solid hsla(var(--h),90%,85%,.6);transform:rotate(-16deg)}
+.proj:hover .scene b{transform:translateY(-6px) rotate(20deg)}
+.scene span{position:relative;font-size:.78rem;color:#a6a3b8}
+.group h3 .dot{width:14px;height:14px;border-radius:50%;background:radial-gradient(circle at 34% 30%,#fff,var(--c) 45%,#000 100%);box-shadow:0 0 12px var(--c)}
+/* compétences en constellations */
+.skills li{grid-template-columns:1fr auto auto;align-items:center}
+.skills h3{display:flex;align-items:center;gap:10px}
+.skills h3 .dot{width:16px;height:16px;flex:none;border-radius:50%;background:radial-gradient(circle at 34% 30%,#fff,var(--c) 45%,#000);box-shadow:0 0 12px var(--c)}
+.cst{width:66px;height:16px;overflow:visible}
+.cst path{fill:none;stroke:#f5a3c7;stroke-opacity:.6;stroke-width:1;stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1s ease .3s}
+.cst circle{fill:#4a4760;transition:fill .3s,filter .3s;transition-delay:calc(.2s + var(--i) * .12s)}
+.card.in .cst path{stroke-dashoffset:0}
+.card.in .cst circle.f{fill:#fff;filter:drop-shadow(0 0 3px #f5a3c7)}
+/* contact : signal */
+.btn.sig{position:relative}
+.btn.sig::before,.btn.sig::after{content:"";position:absolute;inset:-2px;border-radius:999px;border:1px solid #9b7bff;opacity:0;animation:ping 2.6s ease-out infinite}
+.btn.sig::after{animation-delay:1.3s}
+@keyframes ping{0%{opacity:.8;transform:scale(1)}100%{opacity:0;transform:scale(1.4,1.9)}}
+.contact{position:relative}
+.contact::before{content:"";position:absolute;left:50%;top:40%;width:min(700px,90%);height:260px;transform:translate(-50%,-50%);background:radial-gradient(closest-side,#9b7bff22,transparent);z-index:-1}
 .xp{display:grid;gap:20px}
 .xp .card{display:grid;grid-template-columns:56px 1fr;gap:18px}
 .xp img{width:56px;height:56px;border-radius:14px;object-fit:contain;background:#fff;padding:6px}
@@ -118,7 +173,7 @@ h1,h2,h3{font-family:Sora,sans-serif}
 .skills{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px}
 .skills h3{font-size:1rem;margin:0 0 12px}
 .skills ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
-.skills li{display:grid;grid-template-columns:1fr auto;gap:4px 10px;font-size:.92rem}
+.skills li{display:grid;gap:4px 10px;font-size:.92rem}
 .skills li em{font-style:normal;color:var(--dim);font-size:.8rem}
 .lv{grid-column:1/-1;height:4px;border-radius:2px;background:#ffffff10;overflow:hidden}
 .lv i{display:block;height:100%;width:0;border-radius:2px;background:linear-gradient(90deg,var(--vio),var(--rose));transition:width 1.2s cubic-bezier(.2,.7,.2,1)}
@@ -164,6 +219,10 @@ h1,h2,h3{font-family:Sora,sans-serif}
   .hero{grid-template-columns:1fr;min-height:0;padding-top:20px}
   .photo{width:min(70%,280px);order:-1;justify-self:start}
   .xp .card{grid-template-columns:1fr}
+  .xp{padding-left:46px}
+  .xp::before{left:16px}
+  .mini{left:-46px;width:34px;height:34px;top:20px}
+  .const{width:240px}
 }
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
@@ -210,7 +269,7 @@ h1,h2,h3{font-family:Sora,sans-serif}
         <p class="lead reveal" style="--d:.16s">Élève ingénieure à l'ENSIM, en alternance chez <b>SNCF Voyageurs</b>. À la frontière du logiciel et du matériel : <b>systèmes embarqués, réseaux et cybersécurité</b>.</p>
         <div class="ctas reveal" style="--d:.24s"><a class="btn" href="#projets">Voir les projets</a><a class="btn o" href="#contact">Me contacter</a></div>
       </div>
-      <figure class="photo reveal" style="--d:.2s;margin:0"><img src="assets/jade.webp" alt="Portrait de Jade Barbier"><small>Le Mans</small></figure>
+      <figure class="photo reveal" style="--d:.2s;margin:0"><svg class="orbits" viewBox="-200 -160 400 320" aria-hidden="true"><ellipse rx="190" ry="54" transform="rotate(-16)"/><ellipse rx="160" ry="120" transform="rotate(24)" opacity=".7"/><circle r="6" fill="#ffb26b" style="filter:drop-shadow(0 0 6px #ffb26b)"><animateMotion dur="16s" repeatCount="indefinite" rotate="0" path="M-190,0 A190,54 0 1 1 190,0 A190,54 0 1 1 -190,0" transform="rotate(-16)"/></circle><g transform="rotate(24)"><circle r="4" fill="#9fd8ff"><animateMotion dur="11s" repeatCount="indefinite" path="M160,0 A160,120 0 1 1 -160,0 A160,120 0 1 1 160,0"/></circle></g><g transform="rotate(-16)"><circle r="9" fill="url(#hp)"><animateMotion dur="24s" repeatCount="indefinite" path="M190,0 A190,54 0 1 1 -190,0 A190,54 0 1 1 190,0"/></circle></g><defs><radialGradient id="hp" cx="34%" cy="30%"><stop offset="0" stop-color="#ffe3f0"/><stop offset=".5" stop-color="#f07ab4"/><stop offset="1" stop-color="#3f0f2a"/></radialGradient></defs></svg><img src="assets/jade.webp" alt="Portrait de Jade Barbier"><small>Le Mans</small></figure>
     </section>
     <div class="lane"><div class="orb" data-planet="moon" style="--s:110px;left:62%;top:26%"></div><div class="orb" data-planet="satellite" style="--s:90px;left:30%;top:62%"></div><div class="orb" data-planet="rose" style="--s:56px;left:70%;top:90%"></div></div>
   </div>
@@ -220,9 +279,9 @@ h1,h2,h3{font-family:Sora,sans-serif}
     <section class="main sec">
       <div class="sec-h reveal"><span>01</span><h2>Expérience</h2></div>
       <div class="xp">
-        <article class="card reveal"><img src="assets/sncf.webp" alt=""><div><span class="when">Sept. 2024 — sept. 2027 · en cours</span><h3>Alternance en informatique embarquée et réseaux</h3><span class="where">SNCF Voyageurs, CIM du Mans</span>
+        <article class="card reveal" style="--neb:#9b7bff26"><span class="mini" style="--c1:#f3dcff;--c2:#9a5cf0;--c3:#24104f;--glow:#b38bff88;--ringc:#d9ccffaa;--t:7s" aria-hidden="true"><b></b><i></i><em></em></span><img src="assets/sncf.webp" alt=""><div><span class="when">Sept. 2024 — sept. 2027 · en cours</span><h3>Alternance en informatique embarquée et réseaux</h3><span class="where">SNCF Voyageurs, CIM du Mans</span>
           <ul><li>Tests de conformité des équipements embarqués aux spécifications ITxPT : consommation électrique, services échangés.</li><li>Client EST pour une preuve de concept de sécurisation des communications à bord (mTLS).</li><li>Outil de test de connexion SFTP et étude d'impact du Cyber Resilience Act.</li></ul></div></article>
-        <article class="card reveal"><img src="assets/colart.webp" alt=""><div><span class="when">Juin — août 2023</span><h3>Opératrice de conditionnement</h3><span class="where">Colart International, Le Mans</span>
+        <article class="card reveal" style="--neb:#ff8a3d1f"><span class="mini" style="--c1:#ffe0bf;--c2:#f08a3d;--c3:#4a1a0a;--glow:#ff9b5488;--ringc:transparent;--t:5s" aria-hidden="true"><b></b><i></i><em></em></span><img src="assets/colart.webp" alt=""><div><span class="when">Juin — août 2023</span><h3>Opératrice de conditionnement</h3><span class="where">Colart International, Le Mans</span>
           <ul><li>Assemblage, contrôle et conditionnement sur lignes de production, dans le respect des normes qualité et sécurité.</li></ul></div></article>
       </div>
     </section>
@@ -234,9 +293,9 @@ h1,h2,h3{font-family:Sora,sans-serif}
     <section class="main sec">
       <div class="sec-h reveal"><span>02</span><h2>Formation</h2></div>
       <div class="xp">
-        <article class="card reveal"><img src="assets/ensim.webp" alt=""><div><span class="when">2024 — 2027</span><h3>Cycle ingénieur en alternance</h3><span class="where">ENSIM, Le Mans</span>
+        <article class="card reveal" style="--neb:#7fe0ff1f"><span class="mini" style="--c1:#d8fbff;--c2:#41b6d8;--c3:#0a2c46;--glow:#7fe0ff88;--ringc:#cdf4ffaa;--t:8s" aria-hidden="true"><b></b><i></i><em></em></span><img src="assets/ensim.webp" alt=""><div><span class="when">2024 — 2027</span><h3>Cycle ingénieur en alternance</h3><span class="where">ENSIM, Le Mans</span>
           <ul><li>Systèmes embarqués, réseaux, cybersécurité.</li><li>Projets d'équipe : mécatronique, IA, application mobile.</li></ul></div></article>
-        <article class="card reveal"><img src="assets/malraux.webp" alt=""><div><span class="when">2019 — 2022</span><h3>Baccalauréat général</h3><span class="where">Lycée André Malraux, Allonnes</span></div></article>
+        <article class="card reveal" style="--neb:#ffffff14"><span class="mini" style="--c1:#f1efe9;--c2:#a9a59c;--c3:#3b3934;--glow:#ffffff55;--ringc:transparent;--t:9s" aria-hidden="true"><b></b><i></i><em></em></span><img src="assets/malraux.webp" alt=""><div><span class="when">2019 — 2022</span><h3>Baccalauréat général</h3><span class="where">Lycée André Malraux, Allonnes</span></div></article>
       </div>
       <a class="more reveal" href="parcours-universitaire.html">Détail des semestres →</a>
     </section>
@@ -267,7 +326,7 @@ h1,h2,h3{font-family:Sora,sans-serif}
       <h2 class="reveal">Travaillons ensemble</h2>
       <p class="reveal" style="--d:.08s">Disponible en septembre 2027 pour un poste d'ingénieure en systèmes embarqués, réseaux ou cybersécurité.</p>
       <div class="ctas reveal" style="--d:.16s">
-        <a class="btn" href="mailto:jade72210@gmail.com">jade72210@gmail.com</a>
+        <a class="btn sig" href="mailto:jade72210@gmail.com">jade72210@gmail.com</a>
         <a class="btn o" href="https://www.linkedin.com/in/jade-barbier-b261b8266" target="_blank" rel="noopener">LinkedIn</a>
         <a class="btn o" href="https://github.com/MoggleJ" target="_blank" rel="noopener">GitHub</a>
         <a class="btn o" href="#">CV (PDF)</a>
@@ -336,13 +395,22 @@ h1,h2,h3{font-family:Sora,sans-serif}
 <script src="skills.js"></script>
 <script>
 // ---------- projets ----------
-const kinds=[['pro','Entreprise'],['school','École'],['perso','Personnel']];
-document.getElementById('groups').innerHTML=kinds.map(([k,l])=>{const items=(window.PROJECTS||[]).filter(p=>p.kind===k);
-  return `<div class="group"><h3><b>${l}</b> · ${items.length}</h3><div class="projects">${items.map((p,i)=>`<article class="card proj reveal" style="--d:${(i%3)*.08}s"><div class="pic">${p.img?`<img src="${p.img}" alt="" loading="lazy">`:'<span>Visuel à venir</span>'}</div><div class="txt"><small>${p.where||''}</small><h4>${p.title}</h4><p>${p.desc||''}</p><div class="tags">${(p.tags||[]).slice(0,4).map(t=>`<span>${t}</span>`).join('')}</div></div></article>`).join('')}</div></div>`}).join('');
+const kinds=[['pro','Entreprise','#ff6b5e'],['school','École','#5ef0a0'],['perso','Personnel','#ffc94d']];
+let hue=250;
+document.getElementById('groups').innerHTML=kinds.map(([k,l,c])=>{const items=(window.PROJECTS||[]).filter(p=>p.kind===k);
+  return `<div class="group"><h3><i class="dot" style="--c:${c}"></i><b>${l}</b> · ${items.length}</h3><div class="projects">${items.map((p,i)=>`<article class="card proj reveal" style="--d:${(i%3)*.08}s"><div class="pic">${p.img?`<img src="${p.img}" alt="" loading="lazy">`:`<div class="scene" style="--h:${(hue+=67)%360}"><b></b><i></i><span>Visuel à venir</span></div>`}</div><div class="txt"><small>${p.where||''}</small><h4>${p.title}</h4><p>${p.desc||''}</p><div class="tags">${(p.tags||[]).slice(0,4).map(t=>`<span>${t}</span>`).join('')}</div></div></article>`).join('')}</div></div>`}).join('');
 
 // ---------- compétences ----------
 const lv=['bases','intermédiaire','autonome','avancé'];
-document.getElementById('skills').innerHTML=(window.SKILLS||[]).map((c,i)=>`<div class="card reveal" style="--d:${(i%3)*.06}s"><h3>${c.title}</h3><ul>${c.skills.map(([n,l])=>`<li><span>${n}</span><em>${lv[l-1]}</em><span class="lv"><i style="--w:${l*25}%"></i></span></li>`).join('')}</ul></div>`).join('');
+const SC=['#9b7bff','#7fe0ff','#ffc94d','#5ef0a0','#f5a3c7','#ff6b5e','#c4d0ff','#ffb26b'],SY=[9,4,10,5];
+// niveau : 1 à 4 étoiles allumées, reliées comme une constellation
+const cst=l=>{const pts=[0,1,2,3].map(j=>[6+j*18,SY[j]]);return `<svg class="cst" viewBox="0 0 66 14" aria-hidden="true">${l>1?`<path pathLength="1" d="M${pts.slice(0,l).map(p=>p.join(',')).join(' L')}"/>`:''}${pts.map((p,j)=>`<circle class="${j<l?'f':''}" cx="${p[0]}" cy="${p[1]}" r="${j<l?2.6:1.6}" style="--i:${j}"/>`).join('')}</svg>`};
+document.getElementById('skills').innerHTML=(window.SKILLS||[]).map((c,i)=>`<div class="card reveal" style="--d:${(i%3)*.06}s;--neb:${SC[i%SC.length]}1a"><h3><i class="dot" style="--c:${SC[i%SC.length]}"></i>${c.title}</h3><ul>${c.skills.map(([n,l])=>`<li title="${lv[l-1]}"><span>${n}</span><em>${lv[l-1]}</em>${cst(l)}</li>`).join('')}</ul></div>`).join('');
+
+// ---------- constellations derrière les titres ----------
+document.querySelectorAll('.sec-h').forEach((h,hi)=>{let r=hi*7+3;const rnd=()=>(r=(r*16807)%2147483647)/2147483647;
+  const pts=Array.from({length:7},(_,j)=>[20+j*45+rnd()*20,15+rnd()*90]);
+  h.insertAdjacentHTML('afterbegin',`<svg class="const" viewBox="0 0 340 120" aria-hidden="true"><path pathLength="1" d="M${pts.map(p=>p.map(v=>v.toFixed(1)).join(',')).join(' L')}"/>${pts.map((p,j)=>`<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="${(1.2+rnd()*1.6).toFixed(1)}" style="--i:${j};--o:${(.5+rnd()*.5).toFixed(2)}"/>`).join('')}</svg>`)});
 
 // ---------- apparitions ----------
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
