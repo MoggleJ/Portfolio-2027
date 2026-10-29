@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jade Barbier · Poste de pilotage</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --void:#05050a; --ink:#eef0f6; --mute:#9aa0b4; --dim:#5b6075;
+  --amber:#ffb547; --amber2:#ff8a3d; --vio:#9b7bff; --cyan:#7fe0ff; --ok:#5ef0a0;
+  --metal1:#1b1d24; --metal2:#2a2d36; --hud:"Chakra Petch",sans-serif;
+  --side:clamp(10px,3.4vw,52px); --dash:clamp(72px,14vh,128px); --top:clamp(18px,3vh,30px);
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--void);color:var(--ink);font:400 1rem/1.6 Inter,system-ui,sans-serif;overflow-x:clip}
+img{display:block;max-width:100%}
+a{color:inherit}
+button{font:inherit;color:inherit}
+
+/* ---------- espace (derrière le pare-brise) ---------- */
+#space{position:fixed;inset:0;z-index:-2;width:100%;height:100%}
+.nebula{position:fixed;inset:-10%;z-index:-3;background:
+  radial-gradient(35% 30% at 75% 25%,#4a2f9a55,transparent 70%),
+  radial-gradient(30% 28% at 20% 70%,#1f4a8a40,transparent 70%),
+  radial-gradient(25% 20% at 60% 85%,#8a2f6a35,transparent 70%),var(--void);will-change:transform}
+
+/* ---------- poste de pilotage ---------- */
+#frame{position:fixed;inset:0;z-index:20;width:100%;height:100%;pointer-events:none}
+#frame .metal{fill:url(#metal)}
+#frame .edge{fill:none;stroke:#ffffff22;stroke-width:1.5}
+#frame .rivet{fill:#3a3e4a;stroke:#0008}
+#frame .glass{fill:url(#glare);pointer-events:none}
+.dash{position:fixed;left:0;right:0;bottom:0;height:var(--dash);z-index:21;display:grid;grid-template-columns:1fr minmax(260px,1.3fr) 1fr;align-items:center;gap:clamp(10px,2vw,30px);padding:14px clamp(14px,4vw,64px) 10px;
+  background:linear-gradient(#262932,#14161c 40%,#0c0d11);border-radius:50% 50% 0 0/26px 26px 0 0;box-shadow:0 -1px 0 #ffffff1c,0 -18px 40px #000a}
+.dash .lbl{font:600 .62rem/1 var(--hud);letter-spacing:.18em;text-transform:uppercase;color:var(--dim)}
+.gauge{display:flex;align-items:center;gap:14px}
+.gauge svg{width:clamp(56px,7vw,86px);height:auto;overflow:visible}
+.gauge .arc{fill:none;stroke:#2c303b;stroke-width:6;stroke-linecap:round}
+.gauge .val{fill:none;stroke:var(--amber);stroke-width:6;stroke-linecap:round;filter:drop-shadow(0 0 4px var(--amber))}
+.gauge .needle{stroke:#fff;stroke-width:2;stroke-linecap:round;transition:transform .2s}
+.gauge b{display:block;font:700 1.15rem/1.1 var(--hud);color:var(--amber)}
+.pilot{display:flex;align-items:center;gap:12px}
+.pilot img{width:clamp(36px,4.4vw,52px);aspect-ratio:1;border-radius:50%;object-fit:cover;box-shadow:0 0 0 2px #2c303b,0 0 0 4px var(--amber)}
+.pilot b{display:block;font:600 .9rem/1.2 var(--hud)}
+.screen{position:relative;height:100%;max-height:96px;border-radius:8px;background:#06110f;box-shadow:inset 0 0 0 1px #ffffff14,inset 0 0 30px #00ffa60d;padding:10px 14px;overflow:hidden;font-family:var(--hud);display:grid;align-content:center;gap:6px}
+.screen::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(#0000 0 2px,#0000002e 2px 3px);pointer-events:none}
+.screen .row{display:flex;justify-content:space-between;gap:10px;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:#5ef0a0aa}
+.screen .cap{font:600 clamp(.85rem,1.5vw,1.1rem)/1.1 var(--hud);color:var(--ok);text-shadow:0 0 8px #5ef0a088;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.track{position:relative;height:4px;background:#5ef0a022;border-radius:2px}
+.track i{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--ok);border-radius:2px;box-shadow:0 0 8px var(--ok)}
+.toggles{display:flex;justify-content:flex-end;gap:clamp(6px,1vw,12px)}
+.tg{display:flex;flex-direction:column;align-items:center;gap:6px;text-decoration:none;font:600 .56rem/1 var(--hud);letter-spacing:.14em;text-transform:uppercase;color:var(--dim);pointer-events:auto}
+.tg span{width:clamp(22px,2.6vw,30px);height:clamp(28px,3.4vw,38px);border-radius:5px;background:linear-gradient(#383c48,#1f222a);box-shadow:inset 0 1px #ffffff22,0 3px 0 #000;position:relative;transition:transform .1s}
+.tg span::after{content:"";position:absolute;left:50%;top:6px;width:8px;height:4px;margin-left:-4px;border-radius:2px;background:#3a2a14;transition:.3s}
+.tg.on{color:var(--amber)}
+.tg.on span::after{background:var(--amber);box-shadow:0 0 8px var(--amber)}
+.tg:hover span{transform:translateY(2px)}
+
+/* ---------- route ---------- */
+.sea{position:relative;max-width:1180px;margin:0 auto;padding:var(--top) calc(var(--side) + clamp(16px,4vw,48px)) calc(var(--dash) + 40px)}
+#route{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none;z-index:1}
+#route .ahead{fill:none;stroke:#ffffff40;stroke-width:1.6;stroke-dasharray:2 10;stroke-linecap:round}
+#route .done{fill:none;stroke:url(#trail);stroke-width:3;stroke-linecap:round;filter:drop-shadow(0 0 6px var(--amber2))}
+#ship .body{fill:#e9ecf3;stroke:#0a0b10;stroke-width:1.2}
+#ship .wing{fill:#7c84a0;stroke:#0a0b10;stroke-width:1.2}
+#ship .win{fill:var(--cyan)}
+#ship .fire{fill:url(#fire);transform-box:fill-box;transform-origin:100% 50%}
+
+section,header{position:relative}
+.stop{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,80px);align-items:center;padding:90px 0}
+.stop.flip .body-slot{order:2}
+.body-slot{position:relative;z-index:0;justify-self:center;display:grid;place-items:center;width:100%;min-height:300px}
+.wp{position:absolute;left:50%;top:50%;width:1px;height:1px}
+
+/* planètes */
+.planet{position:relative;width:var(--s,200px);aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle at 32% 30%,var(--c1),var(--c2) 45%,var(--c3) 78%,#000 100%);
+  box-shadow:inset -18px -14px 40px #000c,0 0 60px var(--glow,#9b7bff33)}
+.planet::before{content:"";position:absolute;inset:0;border-radius:50%;background:repeating-linear-gradient(var(--band,170deg),#ffffff00 0 9%,#ffffff10 9% 12%,#00000018 12% 16%);mix-blend-mode:overlay}
+.planet .ring{position:absolute;left:-28%;right:-28%;top:42%;height:18%;border-radius:50%;border:3px solid var(--ringc,#e8d3a4aa);transform:rotate(-14deg);box-shadow:0 0 0 6px #ffffff10}
+.planet .crater{position:absolute;border-radius:50%;background:#0003;box-shadow:inset 2px 2px 3px #0005}
+.beacon{position:absolute;left:50%;top:-14px;width:10px;height:10px;margin-left:-5px;border-radius:50%;background:#333;transition:.4s;z-index:2}
+.stop.on .beacon,.dock.on .beacon{background:var(--ok);box-shadow:0 0 12px var(--ok),0 0 30px var(--ok)}
+.pname{position:absolute;left:0;right:0;bottom:-6px;text-align:center;font:600 .78rem/1.4 var(--hud);letter-spacing:.18em;text-transform:uppercase;color:var(--mute)}
+.pname b{display:block;color:var(--ink);font-size:1rem;letter-spacing:.06em}
+
+/* panneaux holographiques */
+.panel{position:relative;z-index:2;background:linear-gradient(160deg,#141826e6,#0b0d16e6);border:1px solid #ffffff1a;border-radius:6px;padding:clamp(20px,3vw,30px);backdrop-filter:blur(6px);opacity:0;transform:translateY(20px);transition:opacity .8s,transform .8s}
+.panel::before,.panel::after{content:"";position:absolute;width:14px;height:14px;border:2px solid var(--amber)}
+.panel::before{top:-1px;left:-1px;border-right:0;border-bottom:0}
+.panel::after{bottom:-1px;right:-1px;border-left:0;border-top:0}
+.panel.in{opacity:1;transform:none}
+.panel .k{font:600 .72rem/1 var(--hud);letter-spacing:.2em;text-transform:uppercase;color:var(--amber)}
+.panel h2{font:700 clamp(1.6rem,3vw,2.2rem)/1.1 var(--hud);margin:10px 0 6px}
+.panel h3{font:600 1.35rem/1.25 var(--hud);margin:8px 0 4px}
+.panel .where{color:var(--mute)}
+.panel ul{margin:12px 0 0;padding:0;list-style:none;display:grid;gap:8px;color:#c9cde0}
+.panel li{position:relative;padding-left:18px}
+.panel li::before{content:"";position:absolute;left:0;top:.6em;width:8px;height:2px;background:var(--amber)}
+
+/* départ */
+.hero{min-height:calc(100vh - var(--dash) - var(--top));display:grid;grid-template-columns:1.15fr 1fr;gap:clamp(20px,4vw,60px);align-items:center;padding:30px 0 60px}
+.hero .k{font:600 .78rem/1 var(--hud);letter-spacing:.3em;text-transform:uppercase;color:var(--amber)}
+.hero h1{font:700 clamp(3rem,8vw,6.6rem)/.92 var(--hud);letter-spacing:-.01em;margin:18px 0 16px;text-transform:uppercase}
+.hero h1 span{display:block;color:transparent;-webkit-text-stroke:1.5px var(--ink)}
+.hero p{color:var(--mute);font-size:1.08rem;max-width:44ch;margin:0}
+.status{display:inline-flex;align-items:center;gap:10px;margin-top:22px;font:600 .8rem var(--hud);letter-spacing:.14em;text-transform:uppercase}
+.status::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--ok);box-shadow:0 0 10px var(--ok);animation:pulse 2s infinite}
+@keyframes pulse{50%{opacity:.35}}
+.ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.btn{display:inline-flex;align-items:center;gap:10px;text-decoration:none;font:600 .8rem/1 var(--hud);letter-spacing:.16em;text-transform:uppercase;padding:14px 20px;border-radius:4px;background:var(--amber);color:#1b1205;box-shadow:0 0 24px #ffb54755;transition:transform .15s}
+.btn.o{background:none;color:var(--ink);box-shadow:inset 0 0 0 1px #ffffff40}
+.btn:hover{transform:translateY(-2px)}
+.home{position:relative;width:min(100%,380px);aspect-ratio:1;justify-self:center}
+.home img{position:absolute;inset:16%;width:68%;height:68%;border-radius:50%;object-fit:cover;box-shadow:0 0 0 2px #ffffff30,0 0 60px #9b7bff55}
+.home .orb{position:absolute;inset:4%;border:1px dashed #ffffff30;border-radius:50%;animation:spin 40s linear infinite}
+.home .orb i{position:absolute;top:50%;left:-6px;width:12px;height:12px;margin-top:-6px;border-radius:50%;background:var(--amber);box-shadow:0 0 14px var(--amber)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.home .pname{bottom:-14px}
+
+.chapter{text-align:center;padding:100px 0 10px;position:relative;z-index:2}
+.chapter span{font:600 .75rem var(--hud);letter-spacing:.3em;text-transform:uppercase;color:var(--amber)}
+.chapter h2{font:700 clamp(2rem,5vw,3.4rem)/1.05 var(--hud);margin:.2em 0 .25em;text-transform:uppercase}
+.chapter p{max-width:52ch;margin:0 auto;color:var(--mute)}
+
+/* projets */
+.group{padding:30px 0 20px}
+.group .stop{padding:30px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:22px;position:relative;z-index:2}
+.card{padding:0;overflow:hidden;transition-delay:var(--d,0s)}
+.card .pic{aspect-ratio:16/10;background:#0b0e18;display:grid;place-items:center;border-bottom:1px solid #ffffff14;overflow:hidden}
+.card .pic img{width:100%;height:100%;object-fit:cover;opacity:.9}
+.card .pic span{font:600 .7rem var(--hud);letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+.card .txt{padding:16px 18px 20px}
+.card h3{font-size:1.12rem}
+.card p{margin:0;color:#b9bed0;font-size:.92rem;line-height:1.55}
+.card .tags{margin-top:10px;display:flex;flex-wrap:wrap;gap:6px}
+.card .tags span{font:600 .62rem/1 var(--hud);letter-spacing:.1em;text-transform:uppercase;padding:5px 7px;border:1px solid #ffffff22;border-radius:3px;color:var(--mute)}
+
+/* ordinateur de bord */
+.computer{max-width:1040px;margin:30px auto 0}
+.computer .cols{columns:3 250px;column-gap:34px;margin-top:18px}
+.computer .cat{break-inside:avoid;margin-bottom:20px}
+.computer h4{font:600 .78rem var(--hud);letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);margin:0 0 8px;padding-bottom:6px;border-bottom:1px solid #ffffff14}
+.computer li{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:0;font-size:.92rem}
+.computer li::before{display:none}
+.seg{display:flex;gap:3px}
+.seg i{width:14px;height:6px;border-radius:1px;background:#ffffff14}
+.seg i.f{background:var(--amber);box-shadow:0 0 6px #ffb54788}
+.key{display:flex;flex-wrap:wrap;gap:8px 20px;font:600 .66rem var(--hud);letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+
+/* station */
+.dock{padding:120px 0 40px;text-align:center}
+.station{position:relative;width:min(70vw,260px);aspect-ratio:1;margin:0 auto 34px}
+.station .ring{position:absolute;inset:0;border-radius:50%;border:10px solid #3a3f4c;box-shadow:inset 0 0 0 2px #ffffff22,0 0 0 2px #0008;animation:spin 30s linear infinite}
+.station .ring::before{content:"";position:absolute;inset:-10px;border-radius:50%;background:repeating-conic-gradient(#ffffff00 0 8deg,#ffb54700 8deg 12deg);transition:.6s}
+.station .hub{position:absolute;inset:34%;border-radius:50%;background:radial-gradient(circle at 35% 30%,#5a6070,#20232c);box-shadow:inset 0 0 0 2px #ffffff22}
+.station .arm{position:absolute;left:50%;top:10px;bottom:10px;width:6px;margin-left:-3px;background:#3a3f4c}
+.station .arm.h{transform:rotate(90deg)}
+.dock.on .station .ring::before{background:repeating-conic-gradient(#ffffff00 0 8deg,#ffb547 8deg 10deg)}
+.dock.on .station .hub{box-shadow:inset 0 0 0 2px var(--amber),0 0 40px #ffb54788}
+.dock .wp{top:50%}
+.dock .msg{font:600 .8rem var(--hud);letter-spacing:.24em;text-transform:uppercase;color:var(--dim);transition:color .4s}
+.dock.on .msg{color:var(--ok);text-shadow:0 0 10px #5ef0a088}
+.dock h2{font:700 clamp(2rem,5vw,3.4rem)/1.05 var(--hud);text-transform:uppercase;margin:.25em 0}
+.dock p{color:var(--mute);max-width:46ch;margin:0 auto 28px}
+.links{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;position:relative;z-index:2}
+.sig{margin-top:50px;font:600 .7rem var(--hud);letter-spacing:.24em;text-transform:uppercase;color:var(--dim)}
+
+@media (max-width:860px){
+  :root{--dash:66px}
+  .sea{padding-left:34px;padding-right:34px}
+  .hero,.stop{grid-template-columns:1fr}
+  .stop.flip .body-slot{order:0}
+  .home{width:min(76%,300px);order:-1}
+  .body-slot{min-height:220px}
+  .planet{--s:min(var(--s0,200px),48vw)!important;width:var(--s)}
+  .dash{grid-template-columns:1fr;padding:10px 12px 8px}
+  .gauge,.toggles,.pilot{display:none}
+  .screen{max-height:52px;padding:6px 10px;gap:4px}
+  .screen .row:first-child{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .panel{opacity:1;transform:none;transition:none}
+  .home .orb,.station .ring{animation:none}
+}
+</style>
+</head>
+<body>
+<div class="nebula" id="nebula"></div>
+<canvas id="space" aria-hidden="true"></canvas>
+
+<!-- cadre du pare-brise (dessiné en JS selon la taille de l'écran) -->
+<svg id="frame" aria-hidden="true">
+  <defs>
+    <linearGradient id="metal" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2b2e38"/><stop offset=".5" stop-color="#16181e"/><stop offset="1" stop-color="#22252e"/></linearGradient>
+    <linearGradient id="glare" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".05"/><stop offset=".3" stop-color="#fff" stop-opacity="0"/><stop offset=".62" stop-color="#fff" stop-opacity="0"/><stop offset=".7" stop-color="#9b7bff" stop-opacity=".04"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+  </defs>
+  <path class="glass" id="glass"/>
+  <path class="metal" id="metalPath" fill-rule="evenodd"/>
+  <path class="edge" id="edgePath"/>
+  <g id="rivets"></g>
+</svg>
+
+<!-- tableau de bord -->
+<nav class="dash" aria-label="Tableau de bord">
+  <div class="gauge">
+    <svg viewBox="-50 -50 100 60" aria-hidden="true"><path class="arc" d="M-40,0 A40,40 0 0 1 40,0"/><path class="val" id="gval" d="M-40,0 A40,40 0 0 1 40,0" pathLength="1" stroke-dasharray="0 1"/><line class="needle" id="needle" x1="0" y1="0" x2="-34" y2="0"/></svg>
+    <div><span class="lbl">Vitesse</span><b id="speed">0 km/s</b></div>
+  </div>
+  <div class="screen">
+    <div class="row"><span>Nav · route MJ-2027</span><span id="pct">0 %</span></div>
+    <div class="cap" id="cap">Cap : base de départ</div>
+    <div class="track"><i id="bar"></i></div>
+  </div>
+  <div class="toggles">
+    <a class="tg" href="#depart" data-sec="depart"><span></span>Départ</a>
+    <a class="tg" href="#escales" data-sec="escales"><span></span>Escales</a>
+    <a class="tg" href="#systemes" data-sec="systemes"><span></span>Projets</a>
+    <a class="tg" href="#bord" data-sec="bord"><span></span>Bord</a>
+    <a class="tg" href="#station" data-sec="station"><span></span>Contact</a>
+  </div>
+</nav>
+
+<div class="sea" id="sea">
+  <svg id="route" aria-hidden="true">
+    <defs>
+      <clipPath id="flown"><rect id="flownRect" x="-50" y="-50" width="5000" height="0"/></clipPath>
+      <linearGradient id="trail" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9b7bff"/><stop offset="1" stop-color="#ffb547"/></linearGradient>
+      <linearGradient id="fire" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#fff"/><stop offset=".3" stop-color="#ffd27a"/><stop offset="1" stop-color="#ff5a1f" stop-opacity="0"/></linearGradient>
+    </defs>
+    <path class="ahead" id="ahead"/><path class="done" id="done" clip-path="url(#flown)"/>
+    <g id="ship">
+      <path class="fire" id="fire" d="M-14,-4 L-40,0 L-14,4 Z"/>
+      <path class="wing" d="M-8,-4 L-14,-14 L2,-5 Z M-8,4 L-14,14 L2,5 Z"/>
+      <path class="body" d="M-14,-5 L8,-5 Q18,0 8,5 L-14,5 Z"/>
+      <circle class="win" cx="5" cy="0" r="2.4"/>
+    </g>
+  </svg>
+
+  <!-- départ -->
+  <section class="hero" id="depart">
+    <div>
+      <span class="k">Pilote · Le Mans · 2026</span>
+      <h1>Jade<span>Barbier</span></h1>
+      <p>Élève ingénieure à l'ENSIM, en alternance chez SNCF Voyageurs. À la frontière du logiciel et du matériel : systèmes embarqués, réseaux et cybersécurité.</p>
+      <span class="status">Disponible à partir de sept. 2027</span>
+      <div class="ctas"><a class="btn" href="#escales">Décoller</a><a class="btn o" href="#station">Aller à la station</a></div>
+    </div>
+    <div class="home" data-name="base de départ">
+      <span class="orb"><i></i></span>
+      <img src="assets/jade.webp" alt="Portrait de Jade Barbier">
+      <span class="wp" data-wp data-name="base de départ"></span>
+      <div class="pname"><b>Base MJ</b>point de départ</div>
+    </div>
+  </section>
+
+  <div class="chapter" id="escales"><span>Partie 1</span><h2>Les escales</h2><p>Chaque monde visité, dans l'ordre du voyage.</p></div>
+
+  <section class="stop">
+    <div class="body-slot"><div class="planet" style="--s:150px;--s0:150px;--c1:#d9d6cf;--c2:#8e8a84;--c3:#3c3a38;--glow:#ffffff22"><span class="crater" style="left:24%;top:30%;width:20%;height:20%"></span><span class="crater" style="left:58%;top:56%;width:14%;height:14%"></span><span class="beacon"></span></div><span class="wp" data-wp data-name="lune Malraux"></span><div class="pname"><b>Lune Malraux</b>2019 — 2022</div></div>
+    <div class="panel"><span class="k">Lycée André Malraux · Allonnes</span><h3>Baccalauréat général</h3><p class="where">Premier mouillage : les bases scientifiques avant le grand départ.</p></div>
+  </section>
+  <section class="stop flip">
+    <div class="body-slot"><div class="planet" style="--s:170px;--s0:170px;--c1:#ffd2a1;--c2:#e07a3a;--c3:#5a2412;--glow:#ff8a3d33;--band:160deg"><span class="beacon"></span></div><span class="wp" data-wp data-name="planète Colart"></span><div class="pname"><b>Planète Colart</b>été 2023</div></div>
+    <div class="panel"><span class="k">Colart International · Le Mans</span><h3>Opératrice de conditionnement</h3><ul><li>Assemblage, contrôle et conditionnement sur lignes de production.</li><li>Normes qualité et sécurité.</li></ul></div>
+  </section>
+  <section class="stop">
+    <div class="body-slot"><div class="planet" style="--s:210px;--s0:210px;--c1:#b8f0ff;--c2:#2f8fb8;--c3:#0c2a44;--glow:#7fe0ff33;--ringc:#bfe9ffaa"><span class="ring"></span><span class="beacon"></span></div><span class="wp" data-wp data-name="planète ENSIM"></span><div class="pname"><b>Planète ENSIM</b>2024 — 2027</div></div>
+    <div class="panel"><span class="k">ENSIM · Le Mans</span><h3>Cycle ingénieur en alternance</h3><ul><li>Systèmes embarqués, réseaux, cybersécurité.</li><li>Projets d'équipe : mécatronique, IA, mobile.</li></ul></div>
+  </section>
+  <section class="stop flip">
+    <div class="body-slot"><div class="planet" style="--s:270px;--s0:270px;--c1:#e6c8ff;--c2:#8a4fd8;--c3:#2a1052;--glow:#9b7bff55;--band:175deg;--ringc:#e2c8ffaa"><span class="ring"></span><span class="beacon"></span></div><span class="wp" data-wp data-name="géante SNCF Voyageurs"></span><div class="pname"><b>Géante SNCF Voyageurs</b>2024 — 2027 · en orbite</div></div>
+    <div class="panel"><span class="k">SNCF Voyageurs · CIM du Mans</span><h3>Alternance en informatique embarquée et réseaux</h3><ul><li>Tests de conformité des équipements embarqués aux spécifications ITxPT : consommation électrique, services échangés.</li><li>Client EST pour sécuriser les communications à bord (mTLS).</li><li>Outil de test de connexion SFTP et étude d'impact du Cyber Resilience Act.</li></ul></div>
+  </section>
+
+  <div class="chapter" id="systemes"><span>Partie 2</span><h2>Les systèmes</h2><p>Les projets, regroupés en trois systèmes stellaires.</p></div>
+  <div id="groups"></div>
+
+  <div class="chapter" id="bord"><span>Partie 3</span><h2>Ordinateur de bord</h2><p>Les systèmes embarqués de la pilote, sur quatre paliers.</p></div>
+  <div class="panel computer">
+    <div class="key"><span>1 · bases</span><span>2 · intermédiaire</span><span>3 · autonome</span><span>4 · avancé</span></div>
+    <div class="cols" id="cols"></div>
+  </div>
+
+  <section class="dock" id="station">
+    <div class="station"><span class="ring"></span><span class="arm"></span><span class="arm h"></span><span class="hub"></span><span class="wp" data-wp data-name="station de contact"></span></div>
+    <span class="msg" id="dockmsg">Approche de la station</span>
+    <h2>Fin du voyage</h2>
+    <p>Une ingénieure en embarqué, réseaux et cybersécurité, disponible en septembre 2027. Ouvrez un canal.</p>
+    <div class="links">
+      <a class="btn" href="mailto:jade72210@gmail.com">jade72210@gmail.com</a>
+      <a class="btn o" href="https://www.linkedin.com/in/jade-barbier-b261b8266" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn o" href="https://github.com/MoggleJ" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn o" href="#">CV (PDF)</a>
+    </div>
+    <p class="sig">Journal de bord tenu par Jade Barbier</p>
+  </section>
+</div>
+
+<script src="data.js"></script>
+<script src="skills.js"></script>
+<script>
+// ---------- systèmes de projets ----------
+const G=[['pro','Système Entreprise','Trois missions au cœur du ferroviaire.',{c1:'#ffb3a1',c2:'#d0453a',c3:'#3a0f10',glow:'#ff5a4a33'}],
+         ['school','Système École','Cinq projets d\'école, du bras robotique à l\'IA.',{c1:'#b4ffe6',c2:'#2fb894',c3:'#0b3a30',glow:'#5ef0a033'}],
+         ['perso','Système Perso','Deux projets personnels, par curiosité.',{c1:'#fff0b0',c2:'#e0a92a',c3:'#4a2f05',glow:'#ffb54733'}]];
+document.getElementById('groups').innerHTML=G.map(([k,label,line,c],gi)=>{const items=(window.PROJECTS||[]).filter(p=>p.kind===k);
+  return `<div class="group"><section class="stop ${gi%2?'flip':''}"><div class="body-slot"><div class="planet" style="--s:180px;--s0:180px;--c1:${c.c1};--c2:${c.c2};--c3:${c.c3};--glow:${c.glow}"><span class="beacon"></span></div><span class="wp" data-wp data-name="${label.toLowerCase()}"></span><div class="pname"><b>${label}</b>${items.length} mondes explorés</div></div><p style="font:600 clamp(1.2rem,2.4vw,1.6rem)/1.35 var(--hud);color:var(--mute);margin:0">${line}</p></section>
+  <div class="cards">${items.map((p,i)=>`<article class="panel card" style="--d:${(i%3)*.1}s"><div class="pic">${p.img?`<img src="${p.img}" alt="" loading="lazy">`:'<span>Image à venir</span>'}</div><div class="txt"><span class="k">${p.where||''}</span><h3>${p.title}</h3><p>${p.desc||''}</p><div class="tags">${(p.tags||[]).slice(0,4).map(t=>`<span>${t}</span>`).join('')}</div></div></article>`).join('')}</div></div>`}).join('');
+
+// ---------- ordinateur de bord ----------
+document.getElementById('cols').innerHTML=(window.SKILLS||[]).map(c=>`<div class="cat"><h4>${c.title}</h4><ul>${c.skills.map(([n,l])=>`<li><span>${n}</span><span class="seg">${[0,1,2,3].map(i=>`<i class="${i<l?'f':''}"></i>`).join('')}</span></li>`).join('')}</ul></div>`).join('');
+
+// ---------- apparitions ----------
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.panel').forEach(el=>io.observe(el));
+
+// ---------- cadre du pare-brise ----------
+function cockpit(){
+  const w=innerWidth,h=innerHeight,cs=getComputedStyle(document.documentElement);
+  const side=parseFloat(cs.getPropertyValue('--side'))||30,top=parseFloat(cs.getPropertyValue('--top'))||24,dash=document.querySelector('.dash').offsetHeight;
+  const ti=side+w*.035,r=Math.min(46,w*.05),bot=h-dash+18;
+  const inner=`M${ti+r},${top} L${w-ti-r},${top} Q${w-ti},${top} ${w-ti+r*.25},${top+r} L${w-side},${bot-r} Q${w-side},${bot} ${w-side-r},${bot} L${side+r},${bot} Q${side},${bot} ${side},${bot-r} L${ti-r*.25},${top+r} Q${ti},${top} ${ti+r},${top}Z`;
+  const svg=document.getElementById('frame');svg.setAttribute('viewBox',`0 0 ${w} ${h}`);
+  document.getElementById('metalPath').setAttribute('d',`M0,0 H${w} V${h} H0Z ${inner}`);
+  document.getElementById('edgePath').setAttribute('d',inner);
+  document.getElementById('glass').setAttribute('d',inner);
+  let rv='';const n=Math.round(w/90);for(let i=1;i<n;i++)rv+=`<circle class="rivet" cx="${i*w/n}" cy="${top/2}" r="2.6"/>`;
+  document.getElementById('rivets').innerHTML=rv;
+}
+
+// ---------- espace qui défile ----------
+const cv=document.getElementById('space'),cx=cv.getContext('2d'),neb=document.getElementById('nebula');
+let stars=[],vel=0,lastY=scrollY;
+function seed(){cv.width=innerWidth*devicePixelRatio;cv.height=innerHeight*devicePixelRatio;
+  stars=Array.from({length:Math.round(innerWidth*innerHeight/2600)},()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,z:Math.random()*.9+.1}))}
+function space(){
+  const dy=scrollY-lastY;lastY=scrollY;vel+=(dy-vel)*.12;
+  cx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);cx.clearRect(0,0,innerWidth,innerHeight);
+  for(const s of stars){
+    // on descend : les étoiles montent, d'autant plus vite qu'elles sont proches
+    s.y-=(vel*.9+.25)*s.z;
+    if(s.y<-20){s.y=innerHeight+20;s.x=Math.random()*innerWidth}if(s.y>innerHeight+20){s.y=-20;s.x=Math.random()*innerWidth}
+    const len=Math.min(140,Math.abs(vel)*s.z*2.2);
+    cx.globalAlpha=.35+.65*s.z;cx.strokeStyle=s.z>.8?'#ffe2b0':'#dfe6ff';cx.lineWidth=s.z*1.8;
+    cx.beginPath();cx.moveTo(s.x,s.y);cx.lineTo(s.x,s.y+(vel>0?len:-len)+.01);cx.lineCap='round';cx.stroke()}
+  neb.style.transform=`translateY(${-scrollY*.04}px)`;
+  // tableau de bord
+  const sp=Math.min(1,Math.abs(vel)/60);
+  document.getElementById('speed').textContent=Math.round(Math.abs(vel)*120).toLocaleString('fr-FR')+' km/s';
+  document.getElementById('gval').setAttribute('stroke-dasharray',`${sp} 1`);
+  document.getElementById('needle').style.transform=`rotate(${sp*180}deg)`;
+  requestAnimationFrame(space)}
+
+// ---------- route et vaisseau ----------
+const sea=document.getElementById('sea'),route=document.getElementById('route'),ahead=document.getElementById('ahead'),done=document.getElementById('done'),ship=document.getElementById('ship'),fire=document.getElementById('fire');
+let S=[],W=[];
+function plot(){
+  const b=sea.getBoundingClientRect();route.setAttribute('viewBox',`0 0 ${b.width} ${sea.scrollHeight}`);
+  W=[...document.querySelectorAll('[data-wp]')].map(n=>{const r=n.getBoundingClientRect();return{x:r.left-b.left,y:r.top-b.top,name:n.dataset.name,el:n.closest('.stop,.dock,.home')}});
+  let d=`M${W[0].x},${W[0].y}`;
+  for(let i=1;i<W.length;i++){const a=W[i-1],z=W[i],dy=(z.y-a.y)*.5,sw=(i%2?1:-1)*Math.min(160,b.width*.14);d+=` C${a.x+sw},${a.y+dy} ${z.x-sw},${z.y-dy} ${z.x},${z.y}`}
+  ahead.setAttribute('d',d);done.setAttribute('d',d);
+  const g=document.getElementById('trail');g.setAttribute('y2',sea.scrollHeight);
+  const L=done.getTotalLength();S=[];for(let l=0;l<=L;l+=5){const p=done.getPointAtLength(l);S.push([p.x,p.y])}
+  {const e=done.getPointAtLength(L);S.push([e.x,e.y])}
+  fly();
+}
+const tgs=[...document.querySelectorAll('.tg')],secs=tgs.map(t=>document.getElementById(t.dataset.sec));
+function fly(){if(!S.length)return;
+  const b=sea.getBoundingClientRect(),lim=-b.top+(innerHeight-(document.querySelector('.dash').offsetHeight))*.55;
+  let k=0;while(k<S.length-1&&S[k+1][1]<=lim)k++;
+  if(innerHeight+scrollY>=document.documentElement.scrollHeight-4)k=S.length-1;
+  const [x,y]=S[k],n=S[Math.min(k+3,S.length-1)],p=S[Math.max(k-3,0)];
+  const ang=Math.atan2(n[1]-p[1],n[0]-p[0])*180/Math.PI;
+  ship.setAttribute('transform',`translate(${x},${y}) rotate(${k>=S.length-1?90:ang})`);
+  fire.style.transform=`scaleX(${.5+Math.min(1.6,Math.abs(vel)/18)})`;
+  document.getElementById('flownRect').setAttribute('height',y+50);
+  // escales atteintes et écran de navigation
+  let cur=W[0];W.forEach(w=>{const on=w.y<=y+6;w.el&&w.el.classList.toggle('on',on);if(on)cur=w});
+  const next=W.find(w=>w.y>y+6);
+  document.getElementById('cap').textContent=next?`Cap : ${next.name}`:'Arrimage réussi';
+  document.getElementById('dockmsg').textContent=next?'Approche de la station':'Arrimage réussi · canal ouvert';
+  const pct=Math.round(k/(S.length-1)*100);document.getElementById('pct').textContent=pct+' %';document.getElementById('bar').style.width=pct+'%';
+  let ci=0;secs.forEach((s,i)=>{if(s&&s.getBoundingClientRect().top<innerHeight*.5)ci=i});tgs.forEach((t,i)=>t.classList.toggle('on',i===ci));
+}
+addEventListener('scroll',()=>requestAnimationFrame(fly),{passive:true});
+function all(){cockpit();seed();plot()}
+addEventListener('load',all);document.fonts&&document.fonts.ready.then(plot);
+let t;addEventListener('resize',()=>{clearTimeout(t);t=setTimeout(all,150)});
+cockpit();seed();
+if(!matchMedia('(prefers-reduced-motion:reduce)').matches)requestAnimationFrame(space);
+// le vaisseau s'anime aussi entre deux scrolls (flamme)
+setInterval(()=>{if(Math.abs(vel)>.2)fly()},100);
+</script>
+</body>
+</html>
