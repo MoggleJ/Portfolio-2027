@@ -1,0 +1,661 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jade Barbier · Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07070d; --line:#ffffff14; --ink:#f1eff8; --mute:#a6a3b8; --dim:#66637a;
+  --vio:#9b7bff; --rose:#f5a3c7; --blue:#7aa8ff; --ok:#5ef0a0; --gold:#d9a73a;
+  /* couleurs reprises par la planète des habitants */
+  --planet-a:#3a2d8f; --planet-b:#6b4fd8; --planet-c:#1d2a6b; --accent:#9b7bff; --accent-2:#f5a3c7; --text:#f1eff8; --muted:#a6a3b8; --bg-0:#07070d;
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0}
+html{overflow-x:clip}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font:400 1rem/1.6 Inter,system-ui,sans-serif;overflow-x:clip}
+img{display:block;max-width:100%}
+a{color:inherit}
+button{font:inherit;color:inherit}
+h1,h2,h3,h4{font-family:Sora,sans-serif}
+
+/* ciel */
+.sky{position:fixed;inset:0;z-index:-2;background:
+  radial-gradient(40% 32% at 82% 18%,#3b2a7a40,transparent 70%),
+  radial-gradient(36% 30% at 10% 60%,#1d3c7a30,transparent 70%),
+  radial-gradient(30% 24% at 60% 95%,#7a2a5c26,transparent 70%),var(--bg)}
+#stars{position:fixed;inset:0;z-index:-1;width:100%;height:100%;pointer-events:none}
+.far{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.far i{position:absolute;border-radius:50%}
+
+/* barre du haut */
+.top{position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px clamp(16px,4vw,48px);background:linear-gradient(#07070dee,#07070d00)}
+.mark{font:700 1.05rem Sora;letter-spacing:.02em;text-decoration:none}
+.mark span{color:var(--vio)}
+.top nav{display:flex;gap:4px;padding:5px;border:1px solid var(--line);border-radius:999px;background:#ffffff06;backdrop-filter:blur(10px)}
+.top nav a{text-decoration:none;font-size:.88rem;color:var(--mute);padding:.4rem .85rem;border-radius:999px;transition:background .2s,color .2s}
+.top nav a:hover{background:#ffffff12;color:var(--ink)}
+.lang{border:1px solid var(--line);background:none;border-radius:999px;padding:.4rem .8rem;font-size:.82rem;cursor:pointer}
+
+/* page : les objets alternent à gauche et à droite, la fusée passe dans l'espace libre */
+.page{position:relative;max-width:1320px;margin:0 auto;padding:0 clamp(16px,4vw,48px)}
+#route{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none;z-index:1}
+#route .trail{fill:none;stroke:#ffc98a;stroke-width:2.5;stroke-linecap:round;opacity:.55;filter:drop-shadow(0 0 6px #ffb26b)}
+#rocket .flame{transform-box:fill-box;transform-origin:100% 50%;animation:flick .12s infinite alternate}
+@keyframes flick{to{transform:scaleX(.8) scaleY(.9)}}
+#rocket.landed .flame{opacity:0;animation:none}
+.blk{position:relative;z-index:2;width:62%;margin-top:190px}
+.blk.r{margin-left:auto;margin-right:56px}
+.blk.l{margin-left:56px}
+.blk.l.hero{margin-left:0}
+.reveal{opacity:0;transform:translateX(var(--from,0));transition:opacity .9s,transform 1.1s cubic-bezier(.2,.7,.2,1);transition-delay:var(--d,0s)}
+.blk.l .reveal,.blk.l.reveal{--from:-70px}.blk.r .reveal,.blk.r.reveal{--from:70px}
+.reveal.in{opacity:1;transform:none}
+@keyframes drift{50%{translate:0 -7px}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes blink{50%{opacity:.2}}
+
+/* titres */
+.sec-h{display:flex;align-items:center;gap:16px;margin:0 0 40px}
+.sec-h span{display:grid;place-items:center;width:40px;height:40px;border:1px solid #9b7bff55;border-radius:50%;font:600 .78rem Sora;color:var(--vio);flex:none}
+.sec-h h2{font-size:clamp(2rem,4.2vw,3rem);line-height:1.05;margin:0;letter-spacing:-.02em}
+.blk.r .sec-h{justify-content:flex-end}
+
+/* profil : la photo est dans le hublot de la station d'où part la fusée */
+.hero{display:grid;grid-template-columns:62% 38%;align-items:center;min-height:calc(100vh - 70px);padding:10px 0 40px;margin:0;width:100%}
+.pill{display:inline-flex;align-items:center;gap:8px;font-size:.85rem;color:var(--mute);border:1px solid var(--line);border-radius:999px;padding:.35rem .8rem}
+.pill::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 10px var(--ok)}
+.hero h1{font-size:clamp(3rem,7.4vw,6.2rem);line-height:.95;letter-spacing:-.04em;margin:22px 0 18px}
+.hero h1 span{background:linear-gradient(90deg,var(--vio),var(--rose));-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{font-size:1.12rem;color:var(--mute);max-width:46ch;margin:0}
+.lead b{color:var(--ink);font-weight:500}
+.ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.btn{position:relative;display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:500;padding:.8rem 1.25rem;border-radius:999px;background:var(--ink);color:var(--bg);transition:transform .2s}
+.btn.o{background:none;color:var(--ink);box-shadow:inset 0 0 0 1px #ffffff2e}
+.btn:hover{transform:translateY(-2px)}
+.station{position:relative;justify-self:center;width:min(100%,440px);aspect-ratio:440/400;animation:drift 10s ease-in-out infinite}
+.station svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.station .solar{transform-box:fill-box;transform-origin:center}
+.station .window{position:absolute;left:50%;top:47.5%;width:43%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;overflow:hidden;box-shadow:inset 0 0 24px #000,0 0 0 3px #1a1c26}
+.station .window img{width:100%;height:100%;object-fit:cover}
+.station .window::after{content:"";position:absolute;inset:0;border-radius:50%;background:linear-gradient(140deg,#ffffff40 0 16%,transparent 32%),radial-gradient(circle,transparent 62%,#0007)}
+.station small{position:absolute;left:50%;top:6%;transform:translateX(-50%);font-size:.75rem;color:var(--mute);letter-spacing:.08em;white-space:nowrap}
+
+/* expérience : chaque poste est un vaisseau */
+.ship{position:relative;filter:drop-shadow(0 0 1px #b9a4ff99) drop-shadow(0 30px 40px #000c)}
+.hull{position:relative;padding:44px 26% 46px 78px;clip-path:polygon(0 9%,74% 0,90% 18%,100% 50%,90% 82%,74% 100%,0 91%);
+  background:linear-gradient(90deg,transparent 0 76px,#ffffff0c 76px 78px,transparent 78px),repeating-linear-gradient(90deg,transparent 0 139px,#ffffff08 139px 140px),
+   linear-gradient(180deg,#2f2d40 0,#1b1a28 46%,#13121c 100%)}
+.hull::before{content:"";position:absolute;left:0;right:0;top:9%;height:3px;background:linear-gradient(90deg,var(--c,#9b7bff),transparent 80%);opacity:.8}
+.ship.flip .hull{padding:44px 78px 46px 26%;clip-path:polygon(100% 9%,26% 0,10% 18%,0 50%,10% 82%,26% 100%,100% 91%);
+  background:linear-gradient(270deg,transparent 0 76px,#ffffff0c 76px 78px,transparent 78px),repeating-linear-gradient(90deg,transparent 0 139px,#ffffff08 139px 140px),linear-gradient(180deg,#2f2d40 0,#1b1a28 46%,#13121c 100%)}
+.ship.flip .hull::before{background:linear-gradient(270deg,var(--c,#9b7bff),transparent 80%)}
+.cockpit{display:block;position:absolute;right:7%;top:50%;width:76px;aspect-ratio:1;transform:translateY(-50%);border-radius:50%;background:#fff;padding:12px;box-shadow:0 0 0 4px #3a3850,0 0 0 6px #1a1926,0 0 26px var(--c,#9b7bff);z-index:2}
+.cockpit img{width:100%;height:100%;object-fit:contain}
+.ship.flip .cockpit{right:auto;left:7%}
+.eng{position:absolute;left:-30px;width:34px;height:20%;border-radius:6px 0 0 6px;background:linear-gradient(#5a5870,#2a2838);z-index:-1}
+.eng::after{content:"";position:absolute;right:100%;top:10%;height:80%;width:90px;clip-path:polygon(0 50%,100% 0,100% 100%);background:linear-gradient(270deg,#fff6d8,#ffc35a 25%,#ff5a2a00);transform-origin:100% 50%;animation:flick .14s infinite alternate}
+.eng.a{top:24%}.eng.b{top:56%}
+.ship.flip .eng{left:auto;right:-30px;border-radius:0 6px 6px 0}
+.ship.flip .eng::after{right:auto;left:100%;clip-path:polygon(100% 50%,0 0,0 100%);background:linear-gradient(90deg,#fff6d8,#ffc35a 30%,#ff5a2a00);transform-origin:0 50%}
+.fin{position:absolute;left:5%;width:22%;height:46px;background:linear-gradient(#ff5d73,#a8243c);z-index:-1}
+.fin.t{top:-34px;clip-path:polygon(0 100%,26% 0,46% 0,100% 100%)}
+.fin.b{bottom:-34px;clip-path:polygon(0 0,100% 0,46% 100%,26% 100%)}
+.ship.flip .fin{left:auto;right:5%}
+.ship .when{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;font-size:.85rem;color:var(--vio);font-weight:600}
+.ship .when em{font-style:normal;font-size:.75rem;color:var(--ok);border:1px solid #5ef0a055;border-radius:999px;padding:.05rem .55rem;font-weight:500}
+.ship h3{font-size:1.3rem;margin:8px 0 4px;line-height:1.3}
+.where{color:var(--mute);font-size:.95rem;margin:0}
+.ship ul{margin:16px 0 0;padding:0;list-style:none;display:grid;gap:9px;color:#cfccdd;font-size:.95rem}
+.ship li{position:relative;padding-left:20px}
+.ship li::before{content:"";position:absolute;left:0;top:.62em;width:9px;height:3px;border-radius:2px;background:var(--c,#9b7bff)}
+.ship.small{width:86%}
+.blk.l .ship.small{margin-right:auto}.blk.r .ship.small{margin-left:auto}
+
+/* formation : chaque diplôme est une planète */
+.system{position:relative;display:flex;align-items:flex-start;justify-content:space-between;gap:0}
+.orbit{position:absolute;left:-4%;right:-4%;top:12%;height:80%;border:1px dashed #ffffff22;border-radius:50%;transform:rotate(-8deg);pointer-events:none}
+.pl{position:relative;flex:none;display:grid;place-items:center;text-align:center;border-radius:50%;padding:12%;animation:drift 11s ease-in-out infinite}
+.pl::after{content:"";position:absolute;inset:0;border-radius:50%;box-shadow:inset -26px -22px 50px #000c,inset 6px 6px 24px #ffffff22;pointer-events:none}
+.pl div{position:relative;z-index:1;text-shadow:0 1px 10px #000c}
+.pl .yr{font-size:.8rem;font-weight:600;letter-spacing:.04em;color:#fff;opacity:.85}
+.pl h3{margin:6px 0 6px;line-height:1.25}
+.pl p{margin:0;font-size:.88rem;color:#e6e4f0}
+.pl .logo{width:38px;height:38px;margin:0 auto 10px;border-radius:50%;background:#fff;padding:6px;object-fit:contain;box-shadow:0 0 0 3px #ffffff33}
+.pl.moon{width:240px;padding:13%;aspect-ratio:1;margin-top:10px;animation-delay:-3s;
+  background:radial-gradient(22px 18px at 30% 70%,#0003,transparent),radial-gradient(30px 26px at 72% 30%,#0003,transparent),radial-gradient(16px 14px at 64% 78%,#0003,transparent),radial-gradient(circle at 34% 30%,#a9a59c,#6c6962 50%,#2e2c28)}
+.pl.moon h3{font-size:1rem}
+.pl.moon,.pl.ghost{height:auto}.pl.moon{width:250px;height:250px;padding:10%}.pl.moon p{font-size:.78rem}.pl.moon .logo{width:30px;height:30px;padding:4px;margin-bottom:6px}.pl.ensim{height:400px}.pl.ghost{width:210px;height:210px;padding:8%}.pl.ghost p,.pl.ghost .yr{font-size:.78rem}
+@media (max-width:1100px){.pl.ensim{height:340px}.pl.ghost{width:190px;height:190px}.pl.moon{width:220px;height:220px}}
+@media (max-width:900px){.pl.ensim{width:320px;height:320px}}
+.pl.ensim{width:400px;aspect-ratio:1;margin-top:70px;padding:15%;
+  background:repeating-linear-gradient(-16deg,#ffffff0a 0 16px,transparent 16px 40px,#00000014 40px 52px,transparent 52px 70px),radial-gradient(circle at 34% 30%,#59bfe0,#1d6f96 45%,#082538 85%)}
+.pl.ensim h3{font-size:1.3rem}
+.pl.ensim::before{content:"";position:absolute;left:-17%;right:-17%;top:41%;height:20%;border-radius:50%;border:7px solid #bfefff55;box-shadow:0 0 0 3px #7fd3ff22;transform:rotate(-12deg);z-index:2;pointer-events:none;
+  -webkit-mask:linear-gradient(#0000 48%,#000 52%);mask:linear-gradient(#0000 48%,#000 52%)}
+.pl.ghost{width:190px;aspect-ratio:1;margin-top:330px;border:2px dashed #ffffff55;background:radial-gradient(circle,#9b7bff14,transparent 70%);animation-delay:-6s}
+.pl.ghost::after{display:none}
+.pl.ghost h3{font-size:.98rem}
+.more{display:inline-block;margin-top:26px;color:var(--mute);font-size:.95rem}
+
+/* projets */
+.grp{display:flex;align-items:center;gap:12px;font-size:1.05rem;margin:0 0 26px;color:var(--mute);font-weight:600}
+.grp b{color:var(--ink)}
+.grp::after{content:"";flex:1;height:1px;background:var(--line)}
+.blk.r .grp{flex-direction:row-reverse}
+.tags{margin-top:10px;font-size:.76rem;color:#8f8ca6;letter-spacing:.02em}
+.scene{position:absolute;inset:0;display:grid;place-items:end start;padding:10px 12px;
+  background:radial-gradient(1px 1px at 20% 30%,#fff9,transparent),radial-gradient(1.3px 1.3px at 70% 20%,#fff,transparent),radial-gradient(1px 1px at 85% 75%,#fff8,transparent),radial-gradient(1px 1px at 40% 70%,#fff7,transparent),
+   radial-gradient(60% 70% at 72% 35%,hsla(var(--h),80%,62%,.32),transparent 70%),linear-gradient(135deg,#14122a,#0a0a16)}
+.scene b{position:absolute;right:18%;top:20%;width:30%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 34% 30%,hsl(var(--h),90%,85%),hsl(var(--h),70%,55%) 50%,hsl(var(--h),60%,12%));box-shadow:inset -8px -6px 14px #000b,0 0 30px hsla(var(--h),80%,60%,.45)}
+.scene span{position:relative;font-size:.72rem;color:#a6a3b8}
+/* satellites */
+.sats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:70px 26px;padding-top:30px}
+.sat{display:grid;grid-template-columns:44px minmax(0,1fr) 44px;align-items:start;animation:drift 9s ease-in-out infinite}
+.sat:nth-child(2){animation-delay:-3s}.sat:nth-child(3){animation-delay:-6s}
+.wing{position:relative;height:120px;margin-top:34px;border:1px solid #9fb6ff99;
+  background:linear-gradient(90deg,#9fb6ff44 1px,transparent 1px) 0 0/11px 100%,linear-gradient(#9fb6ff44 1px,transparent 1px) 0 0/100% 20px,linear-gradient(160deg,#2c4ea6,#13254f)}
+.wing::after{content:"";position:absolute;top:50%;width:12px;height:3px;margin-top:-1.5px;background:#c9c6d8}
+.wing.a::after{right:-13px}.wing.b::after{left:-13px}
+.core{position:relative;margin:0 12px;border-radius:10px;background:linear-gradient(#1d1c29,#121119);border:2px solid var(--gold);box-shadow:0 0 0 4px #0006,inset 0 0 0 1px #ffe2a044}
+.core::before{content:"";position:absolute;left:50%;top:-30px;width:2px;height:30px;background:#c9c6d8}
+.core::after{content:"";position:absolute;left:50%;top:-36px;width:9px;height:9px;margin-left:-3.5px;border-radius:50%;background:#ff5d73;box-shadow:0 0 8px #ff5d73;animation:blink 1.6s infinite}
+.core .img{position:relative;aspect-ratio:16/9;overflow:hidden;border-bottom:2px solid var(--gold);border-radius:8px 8px 0 0}
+.core .img img{width:100%;height:100%;object-fit:cover}
+.core .t{padding:12px 14px 16px}
+.core small,.rock small,.comet small{color:var(--vio);font-weight:500;font-size:.8rem}
+.core h4,.rock h4,.comet h4{font-size:1.02rem;line-height:1.3;margin:4px 0 6px}
+.core p,.rock p,.comet p{margin:0;font-size:.86rem;line-height:1.5;color:#c4c1d4}
+/* astéroïdes */
+.rocks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:30px 30px}
+.rock{position:relative;padding:16% 15% 18%;clip-path:var(--cp);animation:drift 12s ease-in-out infinite;
+  background:radial-gradient(circle at 30% 22%,#ffffff1a,transparent 45%),radial-gradient(30px 22px at 82% 26%,#0005,transparent),radial-gradient(40px 30px at 16% 80%,#0004,transparent),radial-gradient(20px 16px at 64% 88%,#0004,transparent),radial-gradient(14px 12px at 90% 60%,#0004,transparent),
+   linear-gradient(150deg,#6b625a,#3c352f 55%,#221d19)}
+.rock:nth-child(even){margin-top:90px}
+.rock:nth-child(3n+1){--cp:polygon(12% 6%,48% 0,82% 5%,97% 26%,100% 62%,90% 90%,58% 100%,22% 96%,3% 76%,0 34%)}
+.rock:nth-child(3n+2){--cp:polygon(6% 14%,36% 2%,72% 0,94% 14%,100% 46%,96% 80%,70% 98%,30% 100%,8% 86%,0 50%);animation-delay:-4s}
+.rock:nth-child(3n){--cp:polygon(18% 0,60% 4%,90% 0,100% 30%,94% 66%,100% 88%,64% 100%,26% 94%,0 80%,4% 30%);animation-delay:-8s}
+.crater{position:relative;width:110px;aspect-ratio:1;border-radius:50%;overflow:hidden;margin-bottom:12px;box-shadow:inset 0 8px 18px #000d,0 1px 0 #ffffff26;background:#15131a}
+.crater img{width:100%;height:100%;object-fit:cover;opacity:.92}
+.crater::after{content:"";position:absolute;inset:0;border-radius:50%;box-shadow:inset 0 8px 16px #000b}
+.crater .scene span{display:none}
+.rock p,.comet p{color:#ddd8d2}
+/* comètes */
+.comets{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:40px 40px;padding-top:70px}
+.comet{position:relative;animation:drift 10s ease-in-out infinite}
+.comet:nth-child(2){margin-top:110px;animation-delay:-5s}
+.comet .head{position:relative;border-radius:50%;padding:22% 17% 24%;text-align:center;
+  background:radial-gradient(closest-side,#0f2a3f 0,#0f2a3f 74%,#2b8cbc 90%,#9fe8ff 97%,#cff4ff00 100%);box-shadow:0 0 50px #7fe0ff40}
+.comet::before{content:"";position:absolute;right:62%;bottom:64%;width:260px;height:70px;border-radius:50%;background:linear-gradient(90deg,#cff4ff00,#cff4ff40 60%,#e8fbff99);transform:rotate(38deg);transform-origin:100% 50%;filter:blur(3px);z-index:-1}
+.comet::after{content:"";position:absolute;right:66%;bottom:70%;width:200px;height:20px;border-radius:50%;background:linear-gradient(90deg,#fff0,#fff9);transform:rotate(44deg);transform-origin:100% 50%;filter:blur(1px);z-index:-1}
+.comet .ico{width:64px;aspect-ratio:1;margin:0 auto 10px;border-radius:50%;overflow:hidden;position:relative;box-shadow:0 0 0 2px #9fe8ff66}
+
+/* compétences : champ de débris */
+.legend{display:flex;flex-wrap:wrap;gap:8px 22px;color:var(--mute);font-size:.85rem;margin:-20px 0 34px;justify-content:flex-end}
+.legend span{display:inline-flex;align-items:center;gap:8px}
+.field{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:44px 40px}
+.cluster h3{display:flex;align-items:center;gap:10px;font-size:1rem;margin:0 0 14px}
+.cluster h3::before{content:"";width:12px;height:12px;border-radius:50%;background:radial-gradient(circle at 34% 30%,#fff,var(--c) 45%,#000);box-shadow:0 0 10px var(--c)}
+.chips{display:flex;flex-wrap:wrap;gap:12px 10px;align-items:center}
+.chip{display:inline-flex;align-items:center;gap:9px;padding:.5rem .85rem .5rem .95rem;color:#ece9f4;font-size:var(--fs);transform:rotate(var(--rot));animation:drift 7s ease-in-out infinite;animation-delay:var(--dl);
+  clip-path:polygon(5% 4%,62% 0,96% 10%,100% 54%,93% 100%,40% 94%,8% 100%,0 48%);background:radial-gradient(circle at 25% 20%,#ffffff1c,transparent 50%),linear-gradient(150deg,#4d4959,#2a2833 60%,#1e1c25)}
+.n{display:inline-flex;gap:2px}
+.n b{width:3px;height:11px;border-radius:1px;background:#ffffff1f}
+.n b.on{background:var(--c);box-shadow:0 0 6px var(--c)}
+
+/* contact : antenne */
+.contact{display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:20px;align-items:center}
+.contact h2{font-size:clamp(2.2rem,5vw,3.4rem);letter-spacing:-.03em;margin:0;line-height:1.1}
+.contact p{color:var(--mute);max-width:46ch;margin:14px 0 26px}
+.contact .ctas{margin:0}
+.dish{width:100%;overflow:visible}
+.dish .wave{fill:none;stroke:#9b7bff;stroke-width:2;opacity:0;animation:wave 2.4s ease-out infinite}
+.dish .wave:nth-of-type(2){animation-delay:.8s}.dish .wave:nth-of-type(3){animation-delay:1.6s}
+@keyframes wave{0%{opacity:.9;transform:translate(0,0) scale(.6)}100%{opacity:0;transform:translate(40px,-40px) scale(1.4)}}
+.dish .wave{transform-box:fill-box;transform-origin:0 100%}
+
+/* atterrissage */
+.landing{position:relative;z-index:0;padding:40px 0 30px}
+.stage{position:relative;width:min(100%,760px);margin:0 auto;aspect-ratio:600/560;touch-action:pan-y}
+.stage > svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.stage .flag{cursor:grab;outline:none}
+.stage.pulling .flag{cursor:grabbing}
+.stage .lid,.stage .flag{transform-box:view-box;transform-origin:300px 340px;transition:transform .7s cubic-bezier(.3,1.5,.5,1),opacity .6s}
+.stage .flag{transform:translateY(var(--pull,0px))}
+.stage .lid{transform:translateY(calc(var(--pull,0px) * .3))}
+.stage.pulling .lid,.stage.pulling .flag{transition:none}
+.stage.opened .flag{transform:translate(56px,-58px) rotate(10deg)}
+.stage.opened .lid{transform:translate(56px,-58px) rotate(10deg);opacity:0}
+.stage .interior{opacity:0;transition:opacity .5s .15s}
+.stage.opened .interior{opacity:1}
+.stage .relic,.stage .legend{opacity:0;transition:opacity .5s}
+.stage.opened .relic{opacity:1;transition-delay:.6s}
+.stage.opened .legend{opacity:1;transition-delay:1.2s}
+.stage .legend text{fill:#d6dcff}
+.stage.wiggle .cloth{transform-box:fill-box;transform-origin:0 50%;animation:flap .6s ease}
+@keyframes flap{25%{transform:skewY(-8deg) scaleX(.92)}60%{transform:skewY(5deg)}}
+.mon{position:absolute;left:0;top:0;width:var(--mw);height:calc(var(--mw) * 1.05);transform-origin:50% 100%;cursor:grab;touch-action:none;z-index:3;user-select:none;-webkit-user-select:none}
+.mon svg{width:100%;height:100%;overflow:visible;pointer-events:none}
+.mon.held{cursor:grabbing;z-index:4}
+.hint{text-align:center;color:var(--dim);font-size:.9rem;margin:6px 0 0}
+.close{display:block;margin:10px auto 0;border:1px solid var(--line);background:none;border-radius:999px;padding:.4rem .9rem;font-size:.85rem;color:var(--mute);cursor:pointer}
+.close[hidden]{display:none}
+.foot{text-align:center;color:var(--dim);font-size:.85rem;padding:40px 0 50px}
+.landing{margin-top:170px}
+
+@media (max-width:1100px){
+  .blk{width:70%}
+  .pl.ensim{width:340px}.pl.moon{width:190px}.pl.ghost{width:170px;margin-top:280px}
+}
+@media (max-width:900px){
+  .top nav{display:none}
+  .blk{width:auto;margin-top:110px;margin-left:22px}
+  .blk.r{margin-left:22px;margin-right:0}
+  .blk.l{margin-left:22px}
+  .page{overflow-x:clip}
+  .blk.r .sec-h{justify-content:flex-start}.blk.r .grp{flex-direction:row}.legend{justify-content:flex-start}
+  .hero{grid-template-columns:1fr;min-height:0;padding-top:10px;margin-left:0}
+  .station{order:-1;width:min(86%,340px)}
+  .hull,.ship.flip .hull{padding:40px 20px 42px 46px;clip-path:polygon(0 4%,82% 0,100% 50%,82% 100%,0 96%)}
+  .ship.flip .hull{padding:40px 46px 42px 20px;clip-path:polygon(100% 4%,18% 0,0 50%,18% 100%,100% 96%)}
+  .cockpit,.ship.flip .cockpit{position:relative;left:auto;right:auto;top:auto;transform:none;width:54px;padding:8px;margin-bottom:14px}
+  .ship.small{width:100%}
+  .eng{left:-18px;width:20px}.eng::after{width:40px}.ship.flip .eng{right:-18px}
+  .system{flex-direction:column;align-items:center;gap:30px}
+  .pl.moon,.pl.ghost,.pl.ensim{margin-top:0}
+  .pl.ensim{width:min(100%,320px)}
+  .orbit{display:none}
+  .sats,.rocks,.comets,.field{grid-template-columns:1fr}
+  .rock:nth-child(even),.comet:nth-child(2){margin-top:0}
+  .contact{grid-template-columns:1fr}
+  .dish{width:150px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .reveal{opacity:1;transform:none;transition:none}
+  .station,.pl,.sat,.rock,.comet,.chip,#rocket .flame,.eng::after{animation:none}
+}
+</style>
+</head>
+<body>
+<div class="sky"></div>
+<canvas id="stars" aria-hidden="true"></canvas>
+
+<header class="top">
+  <a class="mark" href="#profil">Jade<span>.</span>B</a>
+  <nav><a href="#experience">Expérience</a><a href="#formation">Formation</a><a href="#projets">Projets</a><a href="#competences">Compétences</a><a href="#contact">Contact</a></nav>
+  <button class="lang" type="button">FR / EN</button>
+</header>
+
+<div class="page" id="page">
+  <div class="far" id="far" aria-hidden="true"></div>
+  <svg id="route" aria-hidden="true">
+    <defs>
+      <linearGradient id="trailg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ffb26b" stop-opacity="0"/><stop offset="1" stop-color="#ffd9a0"/></linearGradient>
+      <linearGradient id="fl" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#fff6d8"/><stop offset=".35" stop-color="#ffc35a"/><stop offset="1" stop-color="#ff5a2a" stop-opacity="0"/></linearGradient>
+    </defs>
+    <path class="trail" id="trail"/>
+    <g id="rocket">
+      <g class="flame"><path d="M-25,-5.5 Q-52,0 -25,5.5 Z" fill="url(#fl)"/><path d="M-25,-2.8 Q-36,0 -25,2.8 Z" fill="#fff"/></g>
+      <path d="M-17,-6.5 L-29,-17 L-23,-6 Z M-17,6.5 L-29,17 L-23,6 Z" fill="#ff5d73" stroke="#1a1730" stroke-width="1.1" stroke-linejoin="round"/>
+      <path d="M-25,-7 L9,-7 Q23,-5 29,0 Q23,5 9,7 L-25,7 Z" fill="#f4f2fa" stroke="#1a1730" stroke-width="1.2" stroke-linejoin="round"/>
+      <path d="M14,-6.3 Q23,-5 29,0 Q23,5 14,6.3 Z" fill="#ff5d73"/>
+      <path d="M-19,-7 V7" stroke="#1a1730" stroke-width="1" opacity=".4"/>
+      <circle cx="2" cy="0" r="3.6" fill="#8fd8ff" stroke="#1a1730" stroke-width="1.2"/>
+      <path d="M-20,0 L-31,0" stroke="#c43c56" stroke-width="3" stroke-linecap="round"/>
+    </g>
+  </svg>
+
+  <!-- profil : la fusée part de la station -->
+  <section class="blk l hero" id="profil" data-free="#station">
+    <div>
+      <span class="pill reveal">Disponible à partir de septembre 2027</span>
+      <h1 class="reveal" style="--d:.08s">Jade<br><span>Barbier</span></h1>
+      <p class="lead reveal" style="--d:.16s">Élève ingénieure à l'ENSIM, en alternance chez <b>SNCF Voyageurs</b>. À la frontière du logiciel et du matériel : <b>systèmes embarqués, réseaux et cybersécurité</b>.</p>
+      <div class="ctas reveal" style="--d:.24s"><a class="btn" href="#projets">Voir les projets</a><a class="btn o" href="#contact">Me contacter</a></div>
+    </div>
+    <div class="station" id="station">
+      <svg viewBox="-220 -200 440 400" aria-hidden="true">
+        <defs><linearGradient id="sp" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3460c4"/><stop offset="1" stop-color="#132552"/></linearGradient>
+          <pattern id="cell" width="14" height="14" patternUnits="userSpaceOnUse"><path d="M14 0H0V14" fill="none" stroke="#9fb6ff" stroke-opacity=".45"/></pattern></defs>
+        <path d="M-214,-5 H214 M-214,5 H214" stroke="#6c7392" stroke-width="3"/>
+        <path d="M-214,0 L-200,-5 L-186,5 L-172,-5 L-158,5 L-144,-5 L-130,5 M130,5 L144,-5 L158,5 L172,-5 L186,5 L200,-5 L214,0" stroke="#6c7392" stroke-width="1.5" fill="none"/>
+        <g class="solar"><rect x="-212" y="-82" width="84" height="70" fill="url(#sp)"/><rect x="-212" y="-82" width="84" height="70" fill="url(#cell)" stroke="#9fb6ff" stroke-width="1.5"/>
+          <rect x="-212" y="12" width="84" height="70" fill="url(#sp)"/><rect x="-212" y="12" width="84" height="70" fill="url(#cell)" stroke="#9fb6ff" stroke-width="1.5"/>
+          <rect x="128" y="-82" width="84" height="70" fill="url(#sp)"/><rect x="128" y="-82" width="84" height="70" fill="url(#cell)" stroke="#9fb6ff" stroke-width="1.5"/>
+          <rect x="128" y="12" width="84" height="70" fill="url(#sp)"/><rect x="128" y="12" width="84" height="70" fill="url(#cell)" stroke="#9fb6ff" stroke-width="1.5"/></g>
+        <path d="M0,-118 V-168" stroke="#c9c6d8" stroke-width="3"/><path d="M-18,-176 Q0,-156 18,-176" fill="#e9e6f2" stroke="#8a87a0" stroke-width="2"/>
+        <circle cx="0" cy="-168" r="4" fill="#ff5d73"><animate attributeName="opacity" values="1;.2;1" dur="1.6s" repeatCount="indefinite"/></circle>
+        <rect x="-30" y="104" width="60" height="50" rx="6" fill="#4a5068" stroke="#8a90aa" stroke-width="2"/><path d="M-30,122 H30 M-30,138 H30" stroke="#2a2d3c" stroke-width="2"/>
+        <ellipse cx="0" cy="160" rx="26" ry="7" fill="#1a1c26" stroke="#ffd27a" stroke-width="2.5"/>
+        <circle r="120" fill="#2a2d3c" stroke="#6c7392" stroke-width="4"/>
+        <circle r="120" fill="none" stroke="#ffd27a" stroke-width="2" stroke-dasharray="2 18" opacity=".8"/>
+        <circle r="106" fill="#14151d" stroke="#8a90aa" stroke-width="2"/>
+      </svg>
+      <div class="window"><img src="assets/jade.webp" alt="Portrait de Jade Barbier"></div>
+      <small>LE MANS</small>
+    </div>
+  </section>
+
+  <!-- expérience : les vaisseaux -->
+  <section class="blk r" id="experience">
+    <div class="sec-h reveal"><span>01</span><h2>Expérience</h2></div>
+    <article class="ship flip reveal" style="--c:#b38bff">
+      <span class="fin t"></span><span class="fin b"></span><span class="eng a"></span><span class="eng b"></span>
+      <div class="hull">
+        <span class="cockpit"><img src="assets/sncf.webp" alt="SNCF Voyageurs"></span>
+        <div class="when">Sept. 2024 — sept. 2027 <em>en cours</em></div>
+        <h3>Alternance en informatique embarquée et réseaux</h3><p class="where">SNCF Voyageurs, CIM du Mans</p>
+        <ul><li>Tests de conformité des équipements embarqués aux spécifications ITxPT : consommation électrique, services échangés.</li><li>Client EST pour une preuve de concept de sécurisation des communications à bord (mTLS).</li><li>Outil de test de connexion SFTP et étude d'impact du Cyber Resilience Act.</li></ul>
+      </div>
+    </article>
+  </section>
+  <section class="blk l">
+    <article class="ship small reveal" style="--c:#ff9b54">
+      <span class="fin t"></span><span class="fin b"></span><span class="eng a"></span><span class="eng b"></span>
+      <div class="hull">
+        <span class="cockpit"><img src="assets/colart.webp" alt="Colart"></span>
+        <div class="when">Juin — août 2023</div>
+        <h3>Opératrice de conditionnement</h3><p class="where">Colart International, Le Mans</p>
+        <ul><li>Assemblage, contrôle et conditionnement sur lignes de production, dans le respect des normes qualité et sécurité.</li></ul>
+      </div>
+    </article>
+  </section>
+
+  <!-- formation : les planètes -->
+  <section class="blk r" id="formation">
+    <div class="sec-h reveal"><span>02</span><h2>Formation</h2></div>
+    <div class="system reveal">
+      <span class="orbit" aria-hidden="true"></span>
+      <div class="pl moon"><div><img class="logo" src="assets/malraux.webp" alt=""><span class="yr">2019 — 2022</span><h3>Baccalauréat général</h3><p>Lycée André Malraux, Allonnes</p></div></div>
+      <div class="pl ensim"><div><img class="logo" src="assets/ensim.webp" alt=""><span class="yr">2024 — 2027</span><h3>Cycle ingénieur en alternance</h3><p>ENSIM, Le Mans. Systèmes embarqués, réseaux, cybersécurité, projets d'équipe en mécatronique, IA et application mobile.</p></div></div>
+      <div class="pl ghost"><div><span class="yr">Septembre 2027</span><h3>Diplôme d'ingénieure</h3><p>Prochaine étape</p></div></div>
+    </div>
+    <a class="more reveal" href="parcours-universitaire.html">Détail des semestres →</a>
+  </section>
+
+  <!-- projets : satellites, astéroïdes, comètes -->
+  <section class="blk l" id="projets">
+    <div class="sec-h reveal"><span>03</span><h2>Projets</h2></div>
+    <h3 class="grp reveal"><b>Entreprise</b> · <span id="n-pro"></span></h3>
+    <div class="sats" id="g-pro"></div>
+  </section>
+  <section class="blk r">
+    <h3 class="grp reveal"><b>École</b> · <span id="n-school"></span></h3>
+    <div class="rocks" id="g-school"></div>
+  </section>
+  <section class="blk l">
+    <h3 class="grp reveal"><b>Personnel</b> · <span id="n-perso"></span></h3>
+    <div class="comets" id="g-perso"></div>
+  </section>
+
+  <!-- compétences : champ de débris -->
+  <section class="blk r" id="competences">
+    <div class="sec-h reveal"><span>04</span><h2>Compétences</h2></div>
+    <div class="legend reveal" id="legend"></div>
+    <div class="field" id="skills"></div>
+  </section>
+
+  <!-- contact : l'antenne -->
+  <section class="blk l contact" id="contact">
+    <div class="reveal">
+      <h2>Travaillons ensemble</h2>
+      <p>Disponible en septembre 2027 pour un poste d'ingénieure en systèmes embarqués, réseaux ou cybersécurité.</p>
+      <div class="ctas">
+        <a class="btn" href="mailto:jade72210@gmail.com">jade72210@gmail.com</a>
+        <a class="btn o" href="https://www.linkedin.com/in/jade-barbier-b261b8266" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn o" href="https://github.com/MoggleJ" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn o" href="#">CV (PDF)</a>
+      </div>
+    </div>
+    <svg class="dish reveal" viewBox="0 0 220 240" aria-hidden="true">
+      <path class="wave" d="M150,70 A30,30 0 0 1 180,40"/><path class="wave" d="M150,70 A30,30 0 0 1 180,40"/><path class="wave" d="M150,70 A30,30 0 0 1 180,40"/>
+      <path d="M70,230 L100,150 L130,230 Z" fill="#3a3f52" stroke="#8a90aa" stroke-width="2"/><path d="M84,196 H116" stroke="#8a90aa" stroke-width="2"/>
+      <rect x="40" y="226" width="120" height="10" rx="3" fill="#4a5068"/>
+      <g transform="rotate(-40 100 140)"><path d="M30,120 Q100,190 170,120 Z" fill="#d6d3e2" stroke="#6c7392" stroke-width="3"/><path d="M30,120 Q100,170 170,120" fill="#b9b5c9"/>
+        <path d="M100,150 V70" stroke="#c9c6d8" stroke-width="3"/><path d="M60,128 L100,70 L140,128" stroke="#c9c6d8" stroke-width="2" fill="none"/><circle cx="100" cy="68" r="7" fill="#ffd27a"/></g>
+      <circle cx="152" cy="68" r="4" fill="#ff5d73"><animate attributeName="opacity" values="1;.2;1" dur="1.2s" repeatCount="indefinite"/></circle>
+    </svg>
+  </section>
+
+  <!-- atterrissage -->
+  <section class="landing" id="atterrissage">
+    <div class="stage" id="stage">
+      <svg viewBox="0 0 600 560" role="img" aria-label="Une petite planète habitée et un drapeau MJ"><defs>
+                    <radialGradient id="pg" gradientUnits="userSpaceOnUse" cx="259" cy="279" r="255"><stop offset="0" stop-color="var(--planet-b)"/><stop offset=".6" stop-color="var(--planet-a)"/><stop offset="1" stop-color="var(--planet-c)"/></radialGradient>
+                    <radialGradient id="atmo" r=".5"><stop offset=".78" stop-color="var(--accent)" stop-opacity=".35"/><stop offset="1" stop-color="var(--accent)" stop-opacity="0"/></radialGradient>
+                    <radialGradient id="core" r=".5"><stop offset="0" stop-color="#fff2b0"/><stop offset="1" stop-color="#ffb347"/></radialGradient>
+                  </defs>
+                  <circle cx="300" cy="340" r="215" fill="url(#atmo)"/>
+                  <circle cx="300" cy="340" r="170" fill="url(#pg)"/>
+                  <g fill="#000" opacity=".16"><circle cx="240" cy="300" r="26"/><circle cx="350" cy="410" r="18"/><circle cx="250" cy="420" r="12"/></g>
+                  <path d="M160 300 Q300 270 440 300" stroke="#fff" stroke-opacity=".08" stroke-width="14" fill="none"/>
+
+                  <!-- Intérieur : caché sous la part, visible seulement une fois le drapeau tiré -->
+                  <g class="interior">
+                    <path d="M300 340 L300 170 A170 170 0 0 1 470 340 Z" fill="#8a5a3c"/>
+                    <path d="M300 340 L300 215 A125 125 0 0 1 425 340 Z" fill="#c4683f"/>
+                    <path d="M300 340 L300 270 A70 70 0 0 1 370 340 Z" fill="url(#core)"/>
+                    <path d="M300 340 L300 170 A170 170 0 0 1 470 340 Z" fill="none" stroke="var(--text)" stroke-opacity=".5" stroke-width="2"/>
+                    <!-- Couche du dessus : aujourd'hui -->
+            <g class="relic" transform="translate(352 205) rotate(-12) scale(1.4)"><rect x="-13" y="-9" width="26" height="18" rx="2" fill="#f4e6c8"/><path d="M0 -9 V9" stroke="#8a5a3c" stroke-width="1.5"/><rect x="-13" y="-9" width="26" height="18" rx="2" fill="none" stroke="#5b3a24" stroke-width="1.5"/></g>
+            <g class="relic" transform="translate(408 245) rotate(18) scale(1.4)"><ellipse cx="0" cy="6" rx="20" ry="6" fill="#e8742a"/><path d="M-11 6 C-11 -12 11 -12 11 6 Z" fill="#f08a36"/><rect x="-11" y="-1" width="22" height="3" fill="#c23b22"/><circle cx="-5" cy="-5" r="2.2" fill="#ffd36e"/><circle cx="4" cy="-5" r="2.2" fill="#6ec3ff"/></g>
+            <g class="relic" transform="translate(445 300) scale(1.3)"><path d="M0 -14 C-8 -14 -10 -6 -10 -4 C-10 4 0 12 0 12 C0 12 10 4 10 -4 C10 -6 8 -14 0 -14 Z" fill="#ff5d73"/><circle cx="0" cy="-4" r="3.5" fill="#fff"/></g>
+            <!-- Couche du milieu : adolescence (à définir) -->
+            <text class="relic" x="356" y="262" font-family="Sora" font-weight="700" font-size="22" fill="#fff" opacity=".85">?</text>
+            <text class="relic" x="392" y="300" font-family="Sora" font-weight="700" font-size="18" fill="#fff" opacity=".6">?</text>
+            <!-- Noyau : enfance -->
+            <g class="relic" transform="translate(345 315) rotate(-35) scale(1.3)"><rect x="-1.5" y="-12" width="3" height="20" rx="1" fill="#f4e6c8"/><circle cx="0" cy="-13" r="3.5" fill="#c23b22"/><path d="M0 -24 C4 -19 3 -16 0 -16 C-3 -16 -4 -19 0 -24 Z" fill="#ff9a3c"/></g>
+            <g class="relic" transform="translate(318 296) scale(1.3)"><rect x="-10" y="-7" width="20" height="14" rx="3" fill="#6b4fd8"/><rect x="-7" y="-4.5" width="14" height="9" rx="1.5" fill="#bfe9ff"/><path d="M-4 -7 L-8 -12 M4 -7 L8 -12" stroke="#6b4fd8" stroke-width="1.5"/></g>
+                    <!-- Légendes -->
+            <g class="legend" font-family="Inter" font-size="13" fill="var(--muted)">
+              <line x1="470" y1="210" x2="520" y2="190" stroke="var(--muted)"/><text x="524" y="186">Aujourd'hui</text>
+              <line x1="420" y1="300" x2="520" y2="330" stroke="var(--muted)"/><text x="524" y="334">Ado</text>
+              <line x1="350" y1="330" x2="520" y2="420" stroke="var(--muted)"/><text x="524" y="424">Enfance</text>
+            </g>
+                  </g>
+
+                  <!-- La part de planète et le drapeau : on tire le drapeau vers le haut pour la soulever -->
+                  <g class="lid">
+                    <path d="M300 340 L300 170 A170 170 0 0 1 470 340 Z" fill="url(#pg)"/>
+                    <circle cx="380" cy="300" r="10" fill="#000" opacity=".16"/>
+                    <path d="M300 286 Q380 280 440 300" stroke="#fff" stroke-opacity=".08" stroke-width="14" fill="none"/>
+                  </g>
+                  <g class="flag" tabindex="0" role="button" aria-label="Drapeau MJ">
+                    <rect x="280" y="60" width="110" height="120" fill="transparent"/>
+                    <line x1="300" y1="172" x2="300" y2="70" stroke="var(--text)" stroke-width="3" stroke-linecap="round"/>
+                    <path class="cloth" d="M302 74 C330 66 345 86 372 78 L372 120 C345 128 330 108 302 116 Z" fill="var(--accent-2)"/>
+                    <text x="337" y="103" text-anchor="middle" font-family="Sora" font-weight="700" font-size="17" fill="var(--bg-0)">MJ</text>
+                  </g></svg>
+    </div>
+    <p class="hint">Les habitants sont joueurs : attrapez-les et lancez-les.</p>
+    <button class="close" id="closeLid" type="button" hidden>Refermer</button>
+  </section>
+  <p class="foot">Conçu et développé par Jade Barbier · 2027</p>
+</div>
+
+<script src="data.js"></script>
+<script src="skills.js"></script>
+<script>
+// ---------- projets : satellites (entreprise), astéroïdes (école), comètes (perso) ----------
+let hue=250;
+const pic=p=>p.img?`<img src="${p.img}" alt="" loading="lazy">`:`<div class="scene" style="--h:${(hue+=67)%360}"><b></b><span>Visuel à venir</span></div>`;
+const txt=p=>`<small>${p.where||''}</small><h4>${p.title}</h4><p>${p.desc||''}</p><div class="tags">${(p.tags||[]).slice(0,4).join('  ·  ')}</div>`;
+const SHAPE={
+  pro:p=>`<article class="sat reveal"><span class="wing a"></span><div class="core"><div class="img">${pic(p)}</div><div class="t">${txt(p)}</div></div><span class="wing b"></span></article>`,
+  school:p=>`<article class="rock reveal"><div class="crater">${pic(p)}</div>${txt(p)}</article>`,
+  perso:p=>`<article class="comet reveal"><div class="head"><div class="ico">${pic(p)}</div>${txt(p)}</div></article>`,
+};
+for(const k in SHAPE){const items=(window.PROJECTS||[]).filter(p=>p.kind===k);
+  document.getElementById('g-'+k).innerHTML=items.map(SHAPE[k]).join('');document.getElementById('n-'+k).textContent=items.length}
+
+// ---------- compétences : chaque compétence est un débris, ses voyants donnent le niveau ----------
+const lv=['bases','intermédiaire','autonome','avancé'];
+const SC=['#9b7bff','#7fe0ff','#ffc94d','#5ef0a0','#f5a3c7','#ff6b5e'];
+const notches=(l,c)=>`<i class="n" style="--c:${c}">${[1,2,3,4].map(j=>`<b class="${j<=l?'on':''}"></b>`).join('')}</i>`;
+document.getElementById('legend').innerHTML=lv.map((n,i)=>`<span>${notches(i+1,'#f5a3c7')}${n}</span>`).join('');
+let seed=11;const rnd=()=>(seed=(seed*16807)%2147483647)/2147483647;
+document.getElementById('skills').innerHTML=(window.SKILLS||[]).map((c,i)=>{const col=SC[i%SC.length];
+  return `<div class="cluster reveal" style="--c:${col}"><h3>${c.title}</h3><div class="chips">${c.skills.map(([n,l])=>`<span class="chip" title="${lv[l-1]}" style="--fs:${[.82,.88,.95,1.02][l-1]}rem;--rot:${(rnd()*8-4).toFixed(1)}deg;--dl:-${(rnd()*7).toFixed(1)}s">${n}${notches(l,col)}</span>`).join('')}</div></div>`}).join('');
+
+// ---------- apparitions ----------
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+// ---------- ciel ----------
+const cv=document.getElementById('stars'),cx=cv.getContext('2d');let stars=[];
+// un peu plus de la moitié des étoiles s'étirent en traits, les autres restent des points
+function seedSky(){cv.width=innerWidth*devicePixelRatio;cv.height=innerHeight*devicePixelRatio;stars=Array.from({length:Math.round(innerWidth*innerHeight/2600)},()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,z:Math.random(),p:Math.random()*6,k:Math.random()<.55}))}
+let vel=0,lastY=scrollY,shoot=null;
+function sky(t){const dy=scrollY-lastY;lastY=scrollY;vel+=(dy-vel)*.12;
+  cx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);cx.clearRect(0,0,innerWidth,innerHeight);const H=innerHeight;cx.lineCap='round';
+  for(const s of stars){s.y-=(vel*.9+.15)*(s.z*.9+.1);
+    if(s.y<-30){s.y=H+30;s.x=Math.random()*innerWidth}if(s.y>H+30){s.y=-30;s.x=Math.random()*innerWidth}
+    const len=s.k?Math.min(110,Math.abs(vel)*s.z*1.7):0;
+    cx.globalAlpha=(.3+.65*s.z)*(len>2?1:.65+.35*Math.sin(t/700+s.p));cx.strokeStyle=s.z>.85?'#ffe2b0':'#dfe6ff';cx.lineWidth=.6+s.z*1.6;
+    cx.beginPath();cx.moveTo(s.x,s.y);cx.lineTo(s.x,s.y+(vel>0?len:-len)+.01);cx.stroke()}
+  if(!shoot&&Math.random()<.004)shoot={x:Math.random()*innerWidth*.8,y:Math.random()*H*.5,l:0};
+  if(shoot){shoot.l+=14;const a=shoot.l,x=shoot.x+a,y=shoot.y+a*.45;cx.globalAlpha=Math.max(0,1-a/420);cx.strokeStyle='#fff';cx.lineWidth=1.6;
+    cx.beginPath();cx.moveTo(x,y);cx.lineTo(x-90,y-40);cx.stroke();if(a>420)shoot=null}
+  requestAnimationFrame(sky)}
+
+// ---------- route de la fusée ----------
+// Elle part de la station, descend dans l'espace libre à côté de chaque objet,
+// traverse dans l'intervalle entre deux objets, puis se pose sur la planète des habitants.
+const page=document.getElementById('page'),route=document.getElementById('route'),trail=document.getElementById('trail'),rocket=document.getElementById('rocket'),stage=document.getElementById('stage');
+// position dans la page sans tenir compte des animations (transform)
+const rel=el=>{let x=0,y=0,e=el;while(e&&e!==page){x+=e.offsetLeft;y+=e.offsetTop;e=e.offsetParent}return{x,y,w:el.offsetWidth,h:el.offsetHeight}};
+let S=[],land=null;
+function plot(){
+  const W=page.clientWidth,H=page.scrollHeight,mobile=innerWidth<=900;
+  route.setAttribute('viewBox',`0 0 ${W} ${H}`);
+  const st=rel(document.getElementById('station'));
+  const sr=rel(stage),s=sr.w/600,C={x:sr.x+300*s,y:sr.y+340*s},R=170*s,th=-118*Math.PI/180;
+  const lift=mobile?20:27; // la fusée se pose sur ses ailerons, pas à moitié enfoncée
+  land={x:C.x+Math.cos(th)*(R+lift),y:C.y+Math.sin(th)*(R+lift),ang:-118};
+  const blocks=[...document.querySelectorAll('.blk')].map(el=>{const b=rel(el);
+    const x=mobile?10:el.dataset.free?st.x+st.w/2:el.classList.contains('l')?(b.x+b.w+W)/2:b.x/2;
+    return{x,top:b.y,bot:b.y+b.h}});
+  // départ : sous la station, au sas d'amarrage
+  let cx0=mobile?10:st.x+st.w/2,cy0=mobile?st.y+st.h:st.y+st.h*.92;
+  let d=`M${cx0},${cy0}`;
+  for(const bl of blocks){
+    const top=Math.max(bl.top-10,cy0+10);
+    if(Math.abs(bl.x-cx0)>2){const k=(top-cy0)*.6;d+=` C${cx0},${cy0+k} ${bl.x},${top-k} ${bl.x},${top}`}
+    else d+=` L${bl.x},${top}`;
+    d+=` L${bl.x},${bl.bot+10}`;cx0=bl.x;cy0=bl.bot+10;
+  }
+  // descente finale : on se place au-dessus de la planète puis on se pose
+  const yA=land.y-240,k=(yA-cy0)*.6;
+  d+=` C${cx0},${cy0+k} ${land.x},${yA-k} ${land.x},${yA} L${land.x},${land.y}`;
+  trail.setAttribute('d',d);
+  const L=trail.getTotalLength();S=[];for(let l=0;l<=L;l+=4){const p=trail.getPointAtLength(l);S.push([l,p.x,p.y])}
+  const e=trail.getPointAtLength(L);S.push([L,e.x,e.y]);fly();
+}
+let landed=false;
+function fly(){if(!S.length)return;
+  const b=page.getBoundingClientRect(),lim=-b.top+innerHeight*.5;
+  let k=0;while(k<S.length-1&&S[k+1][2]<=lim)k++;
+  if(innerHeight+scrollY>=document.documentElement.scrollHeight-4)k=S.length-1;
+  const [l,x,y]=S[k],n=S[Math.min(k+3,S.length-1)],p=S[Math.max(k-3,0)];
+  let ang=Math.atan2(n[2]-p[2],n[1]-p[1])*180/Math.PI;
+  // sur la fin, la fusée se retourne pour se poser à reculons, flamme vers le sol
+  const left=S[S.length-1][0]-l,flip=Math.max(0,Math.min(1,1-left/240));
+  if(flip>0){let delta=((land.ang-ang+540)%360)-180;ang+=delta*flip}
+  rocket.setAttribute('transform',`translate(${x},${y}) rotate(${ang}) scale(${innerWidth<=900?.8:1.05})`);
+  const tl=Math.min(l,380);trail.style.strokeDasharray=`0 ${l-tl} ${tl*(1-flip)} ${S[S.length-1][0]*2}`;
+  const now=k>=S.length-1;if(now!==landed){landed=now;rocket.classList.toggle('landed',now);if(now)window.cheer&&cheer()}
+}
+addEventListener('scroll',()=>requestAnimationFrame(fly),{passive:true});
+</script>
+<script>
+// ---------- planète des habitants : on les attrape, on les lance, la gravité les ramène ----------
+(()=>{
+const st=document.getElementById('stage'),svg=st.querySelector('svg');
+const LOOKS=[
+ `<ellipse cx="0" cy="-1" rx="30" ry="5" fill="#000" opacity=".2"/><path d="M-30 0 C-34 -50 34 -50 30 0 Z" fill="#ff8fc7"/><rect x="-22" y="-4" width="10" height="8" rx="4" fill="#e66aa8"/><rect x="12" y="-4" width="10" height="8" rx="4" fill="#e66aa8"/><circle cx="-11" cy="-24" r="8" fill="#fff"/><circle cx="-11" cy="-24" r="4" fill="#111" data-pupil="3.5"/><circle cx="11" cy="-24" r="8" fill="#fff"/><circle cx="11" cy="-24" r="4" fill="#111" data-pupil="3.5"/><path class="mouth" d="M-6 -11 Q0 -6 6 -11" stroke="#7a2350" stroke-width="2" fill="none" stroke-linecap="round"/>`,
+ `<ellipse cx="0" cy="-1" rx="26" ry="5" fill="#000" opacity=".2"/><path d="M-12 -52 L-20 -72 M12 -52 L20 -72" stroke="#3fc9dd" stroke-width="3" stroke-linecap="round"/><circle cx="-20" cy="-74" r="4.5" fill="#ffd36e"/><circle cx="20" cy="-74" r="4.5" fill="#ffd36e"/><rect x="-24" y="-56" width="48" height="56" rx="20" fill="#5fe0f0"/><circle cx="0" cy="-32" r="13" fill="#fff"/><circle cx="0" cy="-32" r="6.5" fill="#111" data-pupil="5.5"/><rect class="mouth" x="-8" y="-14" width="16" height="4" rx="2" fill="#1d7f8c"/>`,
+ `<ellipse cx="0" cy="-1" rx="20" ry="4" fill="#000" opacity=".2"/><path d="M-20 0 L-20 -30 A20 20 0 0 1 20 -30 L20 0 L13 -6 L7 0 L0 -6 L-7 0 L-13 -6 Z" fill="#8ff0b2"/><circle cx="-7" cy="-32" r="5.5" fill="#fff"/><circle cx="-7" cy="-32" r="2.8" fill="#111" data-pupil="2.5"/><circle cx="7" cy="-32" r="5.5" fill="#fff"/><circle cx="7" cy="-32" r="2.8" fill="#111" data-pupil="2.5"/><circle cx="-13" cy="-22" r="3" fill="#ff9cc8" opacity=".7"/><circle cx="13" cy="-22" r="3" fill="#ff9cc8" opacity=".7"/>`,
+ `<ellipse cx="0" cy="-1" rx="24" ry="4.5" fill="#000" opacity=".2"/><path d="M-14 -38 L-20 -54 L-6 -42 Z M14 -38 L20 -54 L6 -42 Z" fill="#ffd36e"/><path d="M-24 0 C-28 -46 28 -46 24 0 Z" fill="#ffa65c"/><circle cx="-10" cy="-24" r="5" fill="#fff"/><circle cx="-10" cy="-24" r="2.5" fill="#111" data-pupil="2.2"/><circle cx="0" cy="-31" r="5" fill="#fff"/><circle cx="0" cy="-31" r="2.5" fill="#111" data-pupil="2.2"/><circle cx="10" cy="-24" r="5" fill="#fff"/><circle cx="10" cy="-24" r="2.5" fill="#111" data-pupil="2.2"/><path class="mouth" d="M-7 -12 Q0 -7 7 -12" stroke="#8a3a12" stroke-width="2" fill="none" stroke-linecap="round"/>`,
+];
+const START=[-40,-72,128,200];
+const M=LOOKS.map((g,i)=>{const el=document.createElement('div');el.className='mon';el.innerHTML=`<svg viewBox="-36 -80 72 82">${g}</svg>`;st.appendChild(el);
+  return{el,mode:'ground',th:(START[i]-90)*Math.PI/180,w:(i%2?1:-1)*(.08+.05*i),hop:0,hv:0,x:0,y:0,vx:0,vy:0,phi:0,pupils:[...el.querySelectorAll('[data-pupil]')]}});
+let C={x:0,y:0},R=1,size=1;
+function measure(){const r=st.getBoundingClientRect(),s=r.width/600;C={x:300*s,y:340*s};R=170*s;size=R*.42;st.style.setProperty('--mw',size+'px')}
+measure();addEventListener('resize',measure);
+let ptr={x:-1e4,y:-1e4},held=null,off={x:0,y:0},hist=[];
+addEventListener('pointermove',e=>{ptr={x:e.clientX,y:e.clientY};if(held){const r=st.getBoundingClientRect();held.x=e.clientX-r.left+off.x;held.y=e.clientY-r.top+off.y;hist.push([performance.now(),held.x,held.y]);if(hist.length>6)hist.shift()}},{passive:true});
+M.forEach(m=>{
+  m.el.addEventListener('pointerdown',e=>{e.preventDefault();m.el.setPointerCapture(e.pointerId);const r=st.getBoundingClientRect();
+    if(m.mode==='ground'){m.x=C.x+Math.cos(m.th)*(R+m.hop);m.y=C.y+Math.sin(m.th)*(R+m.hop)}
+    off={x:m.x-(e.clientX-r.left),y:m.y-(e.clientY-r.top)};held=m;m.mode='held';m.el.classList.add('held');hist=[[performance.now(),m.x,m.y]]});
+  const drop=()=>{if(held!==m)return;held=null;m.el.classList.remove('held');m.mode='air';
+    const a=hist[0],z=hist[hist.length-1],dt=Math.max(16,z[0]-a[0])/1000;const V=R*7;m.vx=Math.max(-V,Math.min(V,(z[1]-a[1])/dt));m.vy=Math.max(-V,Math.min(V,(z[2]-a[2])/dt))};
+  m.el.addEventListener('pointerup',drop);m.el.addEventListener('pointercancel',drop);
+});
+// petite fête quand la fusée se pose
+window.cheer=()=>M.forEach((m,i)=>{if(m.mode==='ground')setTimeout(()=>{m.hv=R*1.6},i*120)});
+let last=performance.now();
+function step(t){const dt=Math.min(.033,(t-last)/1000);last=t;
+  for(const m of M){
+    if(m.mode==='ground'){
+      m.th+=m.w*dt;if(Math.random()<.004)m.w=-m.w;
+      // sautillement
+      if(m.hop<=0&&m.hv<=0&&Math.random()<.003)m.hv=R*(.6+Math.random()*.5);
+      if(m.hv>0||m.hop>0){m.hop+=m.hv*dt;m.hv-=R*6*dt;if(m.hop<=0){m.hop=0;m.hv=0}}
+      m.x=C.x+Math.cos(m.th)*(R+m.hop);m.y=C.y+Math.sin(m.th)*(R+m.hop);
+      m.phi+=((m.th*180/Math.PI+90)-m.phi+540)%360-180;
+    }else if(m.mode==='held'){
+      m.phi+=(Math.max(-35,Math.min(35,(hist.length>1?(hist[hist.length-1][1]-hist[0][1]):0)*-.6))-m.phi)*.2;
+    }else{
+      const dx=C.x-m.x,dy=C.y-m.y,d=Math.hypot(dx,dy)||1,g=R*9;
+      // gravité constante : un habitant lancé finit toujours par revenir
+      m.vx+=dx/d*g*dt;m.vy+=dy/d*g*dt;const damp=d>R*3?.97:.998;m.vx*=damp;m.vy*=damp;m.x+=m.vx*dt;m.y+=m.vy*dt;
+      const target=Math.atan2(m.y-C.y,m.x-C.x)*180/Math.PI+90;m.phi+=(((target-m.phi+540)%360)-180)*Math.min(1,dt*6);
+      if(d<=R){const nx=-dx/d,ny=-dy/d,vr=m.vx*nx+m.vy*ny;m.x=C.x+nx*R;m.y=C.y+ny*R;
+        if(vr<-R*2.2){m.vx-=1.45*vr*nx;m.vy-=1.45*vr*ny}  // rebond
+        else{const vt=-m.vx*ny+m.vy*nx;m.th=Math.atan2(ny,nx);m.w=Math.max(-1.2,Math.min(1.2,vt/R*.5))||.1;m.mode='ground';m.hop=0;m.hv=0}}
+    }
+    m.el.style.transform=`translate(${m.x-size/2}px,${m.y-size*1.05}px) rotate(${m.phi}deg)`;
+  }
+  // les yeux suivent le pointeur
+  for(const m of M)for(const p of m.pupils){const e=p.previousElementSibling.getBoundingClientRect();const dx=ptr.x-(e.left+e.width/2),dy=ptr.y-(e.top+e.height/2);
+    const a=-m.phi*Math.PI/180,lx=dx*Math.cos(a)-dy*Math.sin(a),ly=dx*Math.sin(a)+dy*Math.cos(a),len=Math.hypot(lx,ly)||1,dist=Math.min(+p.dataset.pupil,len/40);
+    p.setAttribute('transform',`translate(${lx/len*dist} ${ly/len*dist})`)}
+  requestAnimationFrame(step)}
+requestAnimationFrame(step);
+
+// drapeau : le tirer vers le haut soulève une part de la planète (easter egg)
+const flag=svg.querySelector('.flag'),close=document.getElementById('closeLid');let y0=null,pull=0;
+const unit=()=>560/svg.getBoundingClientRect().height;
+const setPull=v=>{pull=v;st.style.setProperty('--pull',`${-v}px`)};
+const open=()=>{st.classList.add('opened');st.style.removeProperty('--pull');close.hidden=false};
+flag.addEventListener('pointerdown',e=>{if(st.classList.contains('opened'))return;y0=e.clientY;flag.setPointerCapture(e.pointerId);st.classList.add('pulling')});
+flag.addEventListener('pointermove',e=>{if(y0===null)return;setPull(Math.min(70,Math.max(0,(y0-e.clientY)*unit())*.6))});
+const release=()=>{if(y0===null)return;y0=null;st.classList.remove('pulling');if(pull>34)open();else{const tapped=pull===0;setPull(0);if(tapped){st.classList.remove('wiggle');void st.offsetWidth;st.classList.add('wiggle')}}};
+flag.addEventListener('pointerup',release);flag.addEventListener('pointercancel',release);
+flag.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open()}});
+close.addEventListener('click',()=>{st.classList.remove('opened');setPull(0);close.hidden=true});
+})();
+
+// ---------- nébuleuses lointaines ----------
+function far(){const el=document.getElementById('far'),W=page.clientWidth,H=page.scrollHeight;let r=7,out='';const rnd=()=>(r=(r*16807)%2147483647)/2147483647;
+  const cols=['#9b7bff','#f5a3c7','#7aa8ff','#5ef0a0'];
+  for(let y=700;y<H-900;y+=700+rnd()*500){const x=rnd()*W,c=cols[Math.floor(rnd()*cols.length)],w=90+rnd()*120;
+    out+=`<i style="left:${x}px;top:${y}px;width:${w}px;height:${w*.38}px;transform:rotate(${rnd()*180}deg);background:radial-gradient(ellipse at center,#fff9 0,${c}66 18%,${c}22 45%,transparent 70%);filter:blur(1px);opacity:.5"></i>`}
+  el.innerHTML=out}
+// ---------- démarrage ----------
+const reduced=matchMedia('(prefers-reduced-motion:reduce)').matches;
+seedSky();if(!reduced)requestAnimationFrame(sky);
+addEventListener('load',()=>{far();plot()});document.fonts&&document.fonts.ready.then(plot);
+let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{seedSky();far();plot()},150)});
+document.querySelectorAll('img').forEach(i=>i.complete||i.addEventListener('load',()=>{clearTimeout(rt);rt=setTimeout(plot,100)}));
+</script>
+</body>
+</html>
