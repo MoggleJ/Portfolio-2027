@@ -25,21 +25,19 @@ h1,h2,h3,h4{font-family:Sora,sans-serif}
 
 /* ciel */
 .sky{position:fixed;inset:0;z-index:-2;background:
-  radial-gradient(40% 32% at 82% 18%,#3b2a7a40,transparent 70%),
-  radial-gradient(36% 30% at 10% 60%,#1d3c7a30,transparent 70%),
-  radial-gradient(30% 24% at 60% 95%,#7a2a5c26,transparent 70%),var(--bg)}
+  radial-gradient(50% 40% at 80% 10%,#2a1f5a33,transparent 70%),var(--bg)}
 #stars{position:fixed;inset:0;z-index:-1;width:100%;height:100%;pointer-events:none}
 .far{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
 .far i{position:absolute;border-radius:50%}
 
 /* barre du haut */
-.top{position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px clamp(16px,4vw,48px);background:linear-gradient(#07070dee,#07070d00)}
+.top{position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px clamp(16px,4vw,48px);background:#07070de0;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid #ffffff14}
 .mark{font:700 1.05rem Sora;letter-spacing:.02em;text-decoration:none}
 .mark span{color:var(--vio)}
 .top nav{display:flex;gap:4px;padding:5px;border:1px solid var(--line);border-radius:999px;background:#ffffff06;backdrop-filter:blur(10px)}
-.top nav a{text-decoration:none;font-size:.88rem;color:var(--mute);padding:.4rem .85rem;border-radius:999px;transition:background .2s,color .2s}
+.top nav a{text-decoration:none;font-size:.9rem;color:#d9d6e6;font-weight:500;padding:.4rem .85rem;border-radius:999px;transition:background .2s,color .2s}
 .top nav a:hover{background:#ffffff12;color:var(--ink)}
-.lang{border:1px solid var(--line);background:none;border-radius:999px;padding:.4rem .8rem;font-size:.82rem;cursor:pointer}
+.lang{border:1px solid #ffffff2e;background:none;border-radius:999px;padding:.4rem .8rem;font-size:.82rem;cursor:pointer}
 
 /* page : les blocs alternent à gauche et à droite, la fusée passe dans l'espace libre */
 .page{position:relative;max-width:1320px;margin:0 auto;padding:0 clamp(16px,4vw,48px)}
@@ -84,7 +82,9 @@ h1,h2,h3,h4{font-family:Sora,sans-serif}
 .btn{position:relative;display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:500;padding:.8rem 1.25rem;border-radius:999px;background:var(--ink);color:var(--bg);transition:transform .2s}
 .btn.o{background:none;color:var(--ink);box-shadow:inset 0 0 0 1px #ffffff2e}
 .btn:hover{transform:translateY(-2px)}
-.photo{position:relative;justify-self:center;width:min(100%,330px)}
+.photo{position:relative;justify-self:center;width:min(100%,330px);margin:0}
+/* le pas de tir sous la photo : la fusée part d'ici */
+.photo .pad{position:absolute;left:50%;top:100%;width:70px;height:8px;margin:6px 0 0 -35px;border-radius:50%;background:radial-gradient(closest-side,#ffb26b99,transparent);filter:blur(1px)}
 .photo img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:28px;box-shadow:0 30px 60px #0009,0 0 0 1px #ffffff1a}
 .photo small{position:absolute;left:16px;bottom:16px;font-size:.8rem;padding:.35rem .7rem;border-radius:999px;background:#07070dcc;backdrop-filter:blur(6px)}
 .photo .orbits{position:absolute;left:-30%;top:-14%;width:160%;height:128%;z-index:-1;overflow:visible;pointer-events:none}
@@ -225,11 +225,6 @@ dialog.sheet::backdrop{background:#05050acc;backdrop-filter:blur(6px)}
 .link.li{right:3%;top:24%;--c:#7aa8ff;animation-delay:-2s}
 .link.gh{left:6%;top:70%;--c:#5ef0a0;animation-delay:-4s}
 .link.cv{right:6%;top:66%;--c:#ffc94d;animation-delay:-6s}
-.earth{position:relative;justify-self:center;width:min(100%,460px);aspect-ratio:1;animation:drift 12s ease-in-out infinite}
-.earth svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
-.selfie{position:absolute;left:-4%;bottom:2%;width:36%;margin:0;animation:drift 9s ease-in-out infinite reverse}
-.selfie img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:50%;box-shadow:0 0 0 3px #ffffff2e,0 0 40px #7fc6ff44,0 20px 40px #000a}
-.selfie figcaption{position:absolute;left:50%;bottom:-6px;transform:translateX(-50%);font-size:.75rem;padding:.25rem .65rem;border-radius:999px;background:#07070dcc;backdrop-filter:blur(6px);white-space:nowrap}
 /* atterrissage */
 .stage{position:relative;width:min(100%,760px);margin:0 auto;aspect-ratio:600/560;touch-action:pan-y}
 .stage > svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
@@ -264,7 +259,7 @@ dialog.sheet::backdrop{background:#05050acc;backdrop-filter:blur(6px)}
   .blk,.blk.l,.blk.r{width:auto;margin:120px 0 0 24px}
   .blk.r .sec-h{justify-content:flex-start}.blk.r .const{left:-30px;right:auto}.blk.r .grp{flex-direction:row}
   .hero{grid-template-columns:1fr;min-height:0;padding-top:10px}
-  .earth{order:-1;width:min(80%,320px);margin-left:20px}
+  .photo{order:-1;width:min(64%,260px);justify-self:center;margin-bottom:40px}
   .trip{padding-left:70px;gap:60px}
   .sys{grid-template-columns:1fr;gap:46px}.sys > svg{display:none}
   .cluster,.cluster.two{grid-template-columns:repeat(2,minmax(0,1fr));width:auto;gap:30px 18px}.pj:nth-child(n){margin-top:0}.pj:nth-child(even){margin-top:50px}.blk.r .grp{flex-direction:row}
@@ -278,7 +273,7 @@ dialog.sheet::backdrop{background:#05050acc;backdrop-filter:blur(6px)}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   .reveal{opacity:1;transform:none;transition:none}
-  .earth,.selfie,.pv,.link,.star::before,#rocket .flame,.ariane .fl{animation:none}
+  .pv,.link,.star::before,#rocket .flame,.ariane .fl{animation:none}
 }
 </style>
 </head>
@@ -315,7 +310,7 @@ dialog.sheet::backdrop{background:#05050acc;backdrop-filter:blur(6px)}
     </g>
   </svg>
 
-<!-- profil : la fusée décolle de la Terre -->
+<!-- profil : la fusée décolle depuis la photo -->
   <section class="blk l hero" id="profil" data-free="#station">
     <div>
       <span class="pill reveal">Disponible à partir de septembre 2027</span>
@@ -323,31 +318,7 @@ dialog.sheet::backdrop{background:#05050acc;backdrop-filter:blur(6px)}
       <p class="lead reveal" style="--d:.16s">Élève ingénieure à l'ENSIM, en alternance chez <b>SNCF Voyageurs</b>. À la frontière du logiciel et du matériel : <b>systèmes embarqués, réseaux et cybersécurité</b>.</p>
       <div class="ctas reveal" style="--d:.24s"><a class="btn" href="#projets">Voir les projets</a><a class="btn o" href="#contact">Me contacter</a></div>
     </div>
-    <div class="earth" id="station">
-      <svg viewBox="-200 -200 400 400" aria-hidden="true">
-        <defs>
-          <radialGradient id="ocean" cx="36%" cy="32%" r="75%"><stop offset="0" stop-color="#6fc0ff"/><stop offset=".45" stop-color="#1f66c4"/><stop offset="1" stop-color="#081d48"/></radialGradient>
-          <radialGradient id="night" cx="28%" cy="26%" r="85%"><stop offset=".36" stop-color="#000" stop-opacity="0"/><stop offset=".78" stop-color="#000" stop-opacity=".7"/><stop offset="1" stop-color="#000" stop-opacity=".95"/></radialGradient>
-          <radialGradient id="atmo2" r="50%"><stop offset=".855" stop-color="#7fc6ff" stop-opacity="0"/><stop offset=".875" stop-color="#9fd6ff" stop-opacity=".7"/><stop offset=".95" stop-color="#7fc6ff" stop-opacity="0"/></radialGradient>
-          <filter id="land" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".011" numOctaves="5" seed="11"/>
-            <feColorMatrix values=".5 0 0 0 .02  .75 0 0 0 -.05  0 0 0 0 .1  9 0 0 0 -4.5"/></filter>
-          <filter id="cloud" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".014 .04" numOctaves="5" seed="4"/>
-            <feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 5 0 0 -2.75"/></filter>
-          <clipPath id="ec"><circle r="150"/></clipPath>
-        </defs>
-        <ellipse rx="196" ry="58" transform="rotate(-18)" fill="none" stroke="#ffffff30" stroke-dasharray="3 7"/>
-        <circle r="172" fill="url(#atmo2)"/>
-        <g clip-path="url(#ec)">
-          <circle r="150" fill="url(#ocean)"/>
-          <g><rect x="-400" y="-160" width="800" height="320" filter="url(#land)"/><animateTransform attributeName="transform" type="translate" values="0 0;-180 0;0 0" dur="240s" repeatCount="indefinite"/></g>
-          
-          <g opacity=".6"><rect x="-400" y="-160" width="800" height="320" filter="url(#cloud)"/><animateTransform attributeName="transform" type="translate" values="0 0;-260 0;0 0" dur="180s" repeatCount="indefinite"/></g>
-          <circle r="150" fill="url(#night)"/>
-        </g>
-        <circle r="150" fill="none" stroke="#bfe3ff" stroke-opacity=".45" stroke-width="1.5"/>
-      </svg>
-      <figure class="selfie"><img src="assets/jade.webp" alt="Portrait de Jade Barbier"><figcaption>Le Mans</figcaption></figure>
-    </div>
+    <figure class="photo" id="station"><svg class="orbits" viewBox="-200 -160 400 320" aria-hidden="true"><ellipse rx="190" ry="54" transform="rotate(-16)"/><ellipse rx="160" ry="120" transform="rotate(24)" opacity=".7"/><circle r="6" fill="#ffb26b" style="filter:drop-shadow(0 0 6px #ffb26b)"><animateMotion dur="16s" repeatCount="indefinite" path="M-190,0 A190,54 0 1 1 190,0 A190,54 0 1 1 -190,0" transform="rotate(-16)"/></circle><g transform="rotate(24)"><circle r="4" fill="#9fd8ff"><animateMotion dur="11s" repeatCount="indefinite" path="M160,0 A160,120 0 1 1 -160,0 A160,120 0 1 1 160,0"/></circle></g><g transform="rotate(-16)"><circle r="9" fill="url(#hp)"><animateMotion dur="24s" repeatCount="indefinite" path="M190,0 A190,54 0 1 1 -190,0 A190,54 0 1 1 190,0"/></circle></g><defs><radialGradient id="hp" cx="34%" cy="30%"><stop offset="0" stop-color="#ffe3f0"/><stop offset=".5" stop-color="#f07ab4"/><stop offset="1" stop-color="#3f0f2a"/></radialGradient></defs></svg><img src="assets/jade.webp" alt="Portrait de Jade Barbier"><small>Le Mans</small><span class="pad" aria-hidden="true"></span></figure>
   </section>
 
   
@@ -568,23 +539,23 @@ document.querySelectorAll('.reveal,.sec-h').forEach(el=>io.observe(el));
 
 // ---------- ciel ----------
 const cv=document.getElementById('stars'),cx=cv.getContext('2d');let stars=[];
-// un peu plus de la moitié des étoiles s'étirent en traits, les autres restent des points
-function seedSky(){cv.width=innerWidth*devicePixelRatio;cv.height=innerHeight*devicePixelRatio;stars=Array.from({length:Math.round(innerWidth*innerHeight/2600)},()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,z:Math.random(),p:Math.random()*6,k:Math.random()<.55}))}
+// fond calme : peu d'étoiles, et seulement un tiers d'entre elles s'étirent quand on défile vite
+function seedSky(){cv.width=innerWidth*devicePixelRatio;cv.height=innerHeight*devicePixelRatio;stars=Array.from({length:Math.round(innerWidth*innerHeight/5200)},()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,z:Math.random(),p:Math.random()*6,k:Math.random()<.3}))}
 let vel=0,lastY=scrollY,shoot=null;
 function sky(t){const dy=scrollY-lastY;lastY=scrollY;vel+=(dy-vel)*.12;
   cx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);cx.clearRect(0,0,innerWidth,innerHeight);const H=innerHeight;cx.lineCap='round';
-  for(const s of stars){s.y-=(vel*.9+.15)*(s.z*.9+.1);
+  for(const s of stars){s.y-=(vel*.5+.06)*(s.z*.9+.1);
     if(s.y<-30){s.y=H+30;s.x=Math.random()*innerWidth}if(s.y>H+30){s.y=-30;s.x=Math.random()*innerWidth}
-    const len=s.k?Math.min(110,Math.abs(vel)*s.z*1.7):0;
+    const len=s.k?Math.min(70,Math.abs(vel)*s.z*1.1):0;
     cx.globalAlpha=(.3+.65*s.z)*(len>2?1:.65+.35*Math.sin(t/700+s.p));cx.strokeStyle=s.z>.85?'#ffe2b0':'#dfe6ff';cx.lineWidth=.6+s.z*1.6;
     cx.beginPath();cx.moveTo(s.x,s.y);cx.lineTo(s.x,s.y+(vel>0?len:-len)+.01);cx.stroke()}
-  if(!shoot&&Math.random()<.004)shoot={x:Math.random()*innerWidth*.8,y:Math.random()*H*.5,l:0};
+  if(!shoot&&Math.random()<.0008)shoot={x:Math.random()*innerWidth*.8,y:Math.random()*H*.5,l:0};
   if(shoot){shoot.l+=14;const a=shoot.l,x=shoot.x+a,y=shoot.y+a*.45;cx.globalAlpha=Math.max(0,1-a/420);cx.strokeStyle='#fff';cx.lineWidth=1.6;
     cx.beginPath();cx.moveTo(x,y);cx.lineTo(x-90,y-40);cx.stroke();if(a>420)shoot=null}
   requestAnimationFrame(sky)}
 
 // ---------- route de la fusée ----------
-// Elle décolle de la Terre, descend dans l'espace libre à côté de chaque bloc,
+// Elle décolle sous la photo, descend dans l'espace libre à côté de chaque bloc,
 // traverse dans l'intervalle entre deux blocs, puis se pose sur la planète des habitants.
 const page=document.getElementById('page'),route=document.getElementById('route'),trail=document.getElementById('trail'),rocket=document.getElementById('rocket'),stage=document.getElementById('stage');
 // position dans la page sans tenir compte des animations (transform)
@@ -600,7 +571,7 @@ function plot(){trip();drawTrip();
   const blocks=[...document.querySelectorAll('.blk')].map(el=>{const b=rel(el);
     const x=mobile?10:el.dataset.free?st.x+st.w/2:el.classList.contains('l')?(b.x+b.w+W)/2:b.x/2;
     return{x,top:b.y,bot:b.y+b.h}});
-  let cx0=mobile?10:st.x+st.w/2,cy0=mobile?st.y+st.h:st.y+st.h*.97;
+  let cx0=st.x+st.w/2,cy0=st.y+st.h+18;
   let d=`M${cx0},${cy0}`;
   for(const bl of blocks){
     const top=Math.max(bl.top-10,cy0+10);
@@ -616,7 +587,8 @@ function plot(){trip();drawTrip();
 }
 let landed=false;
 function fly(){if(!S.length)return;
-  const b=page.getBoundingClientRect(),lim=-b.top+innerHeight*.5;
+  // la fusée suit le milieu de l'écran, mais reste sous la photo tant qu'on n'a pas défilé
+  const b=page.getBoundingClientRect(),lim=-b.top+Math.min(innerHeight*.5,S[0][2]+b.top+scrollY);
   let k=0;while(k<S.length-1&&S[k+1][2]<=lim)k++;
   if(innerHeight+scrollY>=document.documentElement.scrollHeight-4)k=S.length-1;
   const [l,x,y]=S[k],n=S[Math.min(k+3,S.length-1)],p=S[Math.max(k-3,0)];
@@ -710,8 +682,8 @@ function far(){const el=document.getElementById('far'),W=page.clientWidth,H=page
 // ---------- démarrage ----------
 const reduced=matchMedia('(prefers-reduced-motion:reduce)').matches;
 seedSky();if(!reduced)requestAnimationFrame(sky);
-addEventListener('load',()=>{far();plot()});document.fonts&&document.fonts.ready.then(plot);
-let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{seedSky();far();plot()},150)});
+addEventListener('load',plot);document.fonts&&document.fonts.ready.then(plot);
+let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{seedSky();plot()},150)});
 document.querySelectorAll('img').forEach(i=>i.complete||i.addEventListener('load',()=>{clearTimeout(rt);rt=setTimeout(plot,100)}));
 </script>
 </body>
