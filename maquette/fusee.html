@@ -59,7 +59,7 @@ h1,h2,h3,h4{font-family:Sora,sans-serif}
 @keyframes spin{to{transform:rotate(360deg)}}
 
 /* titres : grand numéro en creux, constellation qui se dessine derrière */
-.sec-h{position:relative;display:flex;align-items:flex-end;gap:20px;margin:0 0 56px;padding-top:40px}
+.sec-h{position:relative;display:flex;align-items:center;gap:22px;margin:0 0 56px;padding-top:40px}
 .sec-h .num{font:800 clamp(4rem,8vw,6.4rem)/.78 Sora;letter-spacing:-.04em;color:transparent;-webkit-text-stroke:1.2px #b9a4ff99;background:linear-gradient(180deg,#9b7bff33,transparent 80%);-webkit-background-clip:text;background-clip:text}
 .sec-h h2{font-size:clamp(2.1rem,4.2vw,3.1rem);line-height:1;margin:0;letter-spacing:-.02em}
 .sec-h p{margin:10px 0 0;color:var(--mute);font-size:.95rem}
@@ -69,7 +69,7 @@ h1,h2,h3,h4{font-family:Sora,sans-serif}
 .const circle.big{filter:drop-shadow(0 0 4px #c9b8ff)}
 .sec-h.in .const path{stroke-dashoffset:0}
 .sec-h.in .const circle{opacity:var(--o,.9)}
-.blk.r .sec-h{flex-direction:row-reverse;text-align:right}
+.blk.r .sec-h{justify-content:flex-end}
 .blk.r .const{left:auto;right:-30px}
 
 /* profil */
@@ -93,8 +93,7 @@ h1,h2,h3,h4{font-family:Sora,sans-serif}
 /* expérience : un trajet dans l'espace, une étoile par poste */
 .trip{position:relative;padding-left:130px;display:grid;gap:80px}
 .trip > svg{position:absolute;left:0;top:0;width:100%;height:100%;overflow:visible;pointer-events:none}
-.trip .tp{fill:none;stroke:#ffd9a0;stroke-width:1.6;stroke-dasharray:2 7;stroke-linecap:round;opacity:.75}
-.trip .tl{fill:none;stroke:#c9b8ff;stroke-width:1;opacity:.35}
+.trip .tl{fill:none;stroke:#c9b8ff;stroke-width:1.2;opacity:.6;stroke-dasharray:1;stroke-dashoffset:var(--draw,1)}
 .trip .dust{fill:#fff}
 .leg{position:relative}
 .star{position:absolute;left:calc(var(--x) - 130px);top:14px;width:0;height:0}
@@ -111,7 +110,11 @@ h1,h2,h3,h4{font-family:Sora,sans-serif}
 .where img{width:28px;height:28px;border-radius:8px;background:#fff;object-fit:contain;padding:3px}
 .leg ul{margin:16px 0 0;padding:0;list-style:none;display:grid;gap:9px;color:#cfccdd;font-size:.95rem;max-width:60ch}
 .leg li{position:relative;padding-left:20px}
-.leg li::before{content:"";position:absolute;left:0;top:.55em;width:7px;height:7px;transform:rotate(45deg);background:var(--c);box-shadow:0 0 6px var(--c)}
+.leg li{padding-left:30px}
+.leg li::before{content:"";position:absolute;left:0;top:.3em;width:20px;height:14px;background:var(--c);filter:drop-shadow(0 0 3px var(--c));
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 14'%3E%3Cpath d='M2 11 L8 4 L13 8 L18 2' fill='none' stroke='%23000' stroke-width='.8'/%3E%3Ccircle cx='2' cy='11' r='1.6'/%3E%3Ccircle cx='8' cy='4' r='2.1'/%3E%3Ccircle cx='13' cy='8' r='1.4'/%3E%3Ccircle cx='18' cy='2' r='1.8'/%3E%3C/svg%3E") center/contain no-repeat;
+          mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 14'%3E%3Cpath d='M2 11 L8 4 L13 8 L18 2' fill='none' stroke='%23000' stroke-width='.8'/%3E%3Ccircle cx='2' cy='11' r='1.6'/%3E%3Ccircle cx='8' cy='4' r='2.1'/%3E%3Ccircle cx='13' cy='8' r='1.4'/%3E%3Ccircle cx='18' cy='2' r='1.8'/%3E%3C/svg%3E") center/contain no-repeat}
+.leg li:nth-child(2)::before{transform:scaleX(-1) rotate(8deg)}.leg li:nth-child(3)::before{transform:scaleY(-1)}
 .leg.next h3{font-size:1.1rem;color:var(--mute);font-weight:600}
 
 /* formation : planètes sur une même orbite */
@@ -129,44 +132,52 @@ h1,h2,h3,h4{font-family:Sora,sans-serif}
 .body p{color:#bdbacd;font-size:.92rem;margin:8px auto 0;max-width:30ch}
 .more{display:inline-block;margin-top:34px;color:var(--mute);font-size:.95rem}
 
-/* projets : un système de planètes, une par projet, et un écran de détail */
-.tabs{display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end;margin:-24px 0 10px}
-.tab{border:1px solid var(--line);background:none;border-radius:999px;padding:.45rem 1rem;color:var(--mute);cursor:pointer;font-size:.9rem;display:inline-flex;align-items:center;gap:8px;transition:background .2s,color .2s}
-.tab i{width:10px;height:10px;border-radius:50%;background:var(--c);box-shadow:0 0 8px var(--c)}
-.tab small{opacity:.6}
-.tab[aria-selected=true]{background:var(--ink);color:var(--bg)}
-.orrery{position:relative;height:270px}
-.orrery > svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
-.orrery > svg path{fill:none;stroke:#ffffff2a;stroke-dasharray:3 7}
-.pp{position:absolute;left:var(--x);top:var(--y);width:140px;transform:translate(-50%,-32px);background:none;border:0;padding:0;cursor:pointer;text-align:center;color:var(--mute);font:inherit;transition:left .7s cubic-bezier(.3,1.2,.4,1),top .7s cubic-bezier(.3,1.2,.4,1),opacity .4s}
-.pp .pv{--s:64px;margin:0 auto 14px;transition:transform .5s cubic-bezier(.3,1.5,.5,1)}
-.pp:hover .pv{transform:scale(1.15)}
-.pp[aria-current=true] .pv{transform:scale(1.5)}
-.pp[aria-current=true] .pv::after{content:"";position:absolute;inset:-14px;border-radius:50%;border:1px dashed #ffffff88;animation:spin 14s linear infinite}
-.pp span{display:block;font-size:.8rem;line-height:1.3;margin-top:4px}
-.pp[aria-current=true] span{color:var(--ink);font-weight:600;margin-top:16px}
-.pp:focus-visible{outline:2px solid var(--vio);outline-offset:6px;border-radius:12px}
-.viewer{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:32px;align-items:start;margin-top:20px;transition:opacity .35s}
-.viewer.swap{opacity:0}
-.vis{position:relative;aspect-ratio:4/3;border-radius:16px;overflow:hidden;background:radial-gradient(1px 1px at 20% 30%,#fff9,transparent),radial-gradient(1.3px 1.3px at 70% 20%,#fff,transparent),radial-gradient(1px 1px at 85% 75%,#fff8,transparent),radial-gradient(1px 1px at 40% 80%,#fff7,transparent),radial-gradient(60% 60% at 60% 40%,var(--glow,#9b7bff33),transparent 70%),#0b0a14;box-shadow:0 0 0 1px #ffffff1c,0 20px 50px #0009}
-.vis img{width:100%;height:100%;object-fit:cover}
-.vis .pv{position:absolute;left:50%;top:50%;--s:46%;width:46%;height:auto;aspect-ratio:1;transform:translate(-50%,-50%);margin:0;animation:none}
-.vis::after{content:"";position:absolute;inset:12px;pointer-events:none;
-  background:linear-gradient(#fff9,#fff9) 0 0/18px 1.5px,linear-gradient(#fff9,#fff9) 0 0/1.5px 18px,linear-gradient(#fff9,#fff9) 100% 0/18px 1.5px,linear-gradient(#fff9,#fff9) 100% 0/1.5px 18px,
-   linear-gradient(#fff9,#fff9) 0 100%/18px 1.5px,linear-gradient(#fff9,#fff9) 0 100%/1.5px 18px,linear-gradient(#fff9,#fff9) 100% 100%/18px 1.5px,linear-gradient(#fff9,#fff9) 100% 100%/1.5px 18px;background-repeat:no-repeat}
-.vis .soon{position:absolute;left:16px;bottom:14px;font-size:.75rem;color:var(--mute)}
-.info small{color:var(--vio);font-weight:500;font-size:.85rem}
-.info h4{font-size:1.4rem;line-height:1.25;margin:6px 0 10px}
-.info p{margin:0;color:#c9c6d8;font-size:.95rem}
-.info dl{margin:16px 0 0;display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:.9rem}
-.info dt{color:var(--ink);font-weight:600}
-.info dd{margin:0;color:#b9b6ca}
-.tags{margin-top:16px;display:flex;flex-wrap:wrap;gap:6px}
-.tags span{font-size:.74rem;color:#bdb9cf;padding:.15rem .55rem;border-radius:4px;background:#ffffff0d;border:1px solid #ffffff12}
-.nav{display:flex;align-items:center;gap:10px;margin-top:20px;font-size:.85rem;color:var(--mute)}
-.nav button{width:38px;height:38px;border-radius:50%;border:1px solid #ffffff2e;background:none;color:var(--ink);cursor:pointer;font-size:1rem}
-.nav button:hover{background:#ffffff12}
-.nav a{margin-left:auto}
+/* projets : des amas de planètes-photos, mots-clés visibles, détails au clic */
+.grp{display:flex;align-items:center;gap:12px;font-size:1.05rem;margin:0 0 34px;color:var(--mute);font-weight:600}
+.grp b{color:var(--ink)}
+.grp i{width:16px;height:16px;border-radius:50%;background:radial-gradient(circle at 34% 30%,#fff,var(--c) 45%,#000);box-shadow:0 0 14px var(--c)}
+.grp::after{content:"";flex:1;height:1px;background:var(--line)}
+.blk.r .grp{flex-direction:row-reverse}
+.cluster{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:34px 26px;align-items:start}
+.cluster::before{content:"";position:absolute;inset:-6% -8%;z-index:-1;border-radius:50%;background:radial-gradient(closest-side,color-mix(in srgb,var(--c) 14%,transparent),transparent);pointer-events:none}
+.cluster.two{grid-template-columns:repeat(2,minmax(0,1fr));width:80%;margin-left:auto}
+.blk.l .cluster.two{margin-left:0}
+.pj{all:unset;box-sizing:border-box;display:block;cursor:pointer;text-align:center}
+.pj:nth-child(3n+2){margin-top:70px}.pj:nth-child(3n){margin-top:22px}
+.cluster.two .pj:nth-child(2){margin-top:90px}
+.pj .ball{position:relative;width:var(--sz,88%);aspect-ratio:1;margin:0 auto;border-radius:50%;overflow:hidden;transition:transform .5s cubic-bezier(.3,1.5,.5,1),box-shadow .4s;
+  box-shadow:0 0 0 2px #ffffff22,0 0 40px color-mix(in srgb,var(--c) 30%,transparent),0 24px 40px #000a;background:radial-gradient(1px 1px at 20% 30%,#fff9,transparent),radial-gradient(1.3px 1.3px at 70% 20%,#fff,transparent),radial-gradient(1px 1px at 80% 80%,#fff8,transparent),#0b0a14}
+.pj:nth-child(4n+2) .ball{--sz:74%}.pj:nth-child(4n+3) .ball{--sz:96%}
+.pj .ball img{width:100%;height:100%;object-fit:cover}
+.pj .ball::after{content:"";position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 32% 28%,#ffffff2e,transparent 40%),radial-gradient(circle at 70% 75%,#0000,#0008 80%);pointer-events:none}
+.pj .ball .pv{position:absolute;left:50%;top:50%;--s:52%;width:52%;height:auto;aspect-ratio:1;margin:0;transform:translate(-50%,-50%);animation:none}
+.pj .ring{position:absolute;inset:-9%;border-radius:50%;border:1px dashed #ffffff33;pointer-events:none;transition:transform 1.2s}
+.pj .orbit{position:relative;width:var(--sz,88%);margin:0 auto}
+.pj .ball{width:100%}
+.pj:hover .ball,.pj:focus-visible .ball{transform:scale(1.05);box-shadow:0 0 0 2px var(--c),0 0 60px color-mix(in srgb,var(--c) 50%,transparent),0 24px 40px #000a}
+.pj:hover .ring{transform:rotate(60deg) scale(1.04)}
+.pj:focus-visible{outline:2px solid var(--vio);outline-offset:8px;border-radius:16px}
+.pj h4{font-size:1rem;line-height:1.3;margin:18px 0 8px;color:var(--ink)}
+.pj .kw{display:flex;flex-wrap:wrap;justify-content:center;gap:5px}
+.pj .kw span{font-size:.72rem;color:#d9d6e6;padding:.12rem .5rem;border-radius:999px;background:color-mix(in srgb,var(--c) 18%,transparent);border:1px solid color-mix(in srgb,var(--c) 40%,transparent)}
+.pj .more-i{display:inline-block;margin-top:10px;font-size:.78rem;color:var(--mute)}
+.pj:hover .more-i{color:var(--ink)}
+/* fiche projet */
+dialog.sheet{width:min(92vw,880px);max-height:88vh;padding:0;border:0;border-radius:22px;background:#0f0e19;color:var(--ink);box-shadow:0 0 0 1px #ffffff22,0 40px 100px #000c;overflow:auto}
+dialog.sheet::backdrop{background:#05050acc;backdrop-filter:blur(6px)}
+.sheet .in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:30px;padding:30px}
+.sheet .vis{position:relative;aspect-ratio:1;border-radius:50%;overflow:hidden;background:radial-gradient(1px 1px at 20% 30%,#fff9,transparent),radial-gradient(1.3px 1.3px at 70% 20%,#fff,transparent),#0b0a14;box-shadow:0 0 0 2px #ffffff22,0 0 60px color-mix(in srgb,var(--c) 35%,transparent)}
+.sheet .vis img{width:100%;height:100%;object-fit:cover}
+.sheet .vis .pv{position:absolute;left:50%;top:50%;--s:50%;width:50%;height:auto;aspect-ratio:1;margin:0;transform:translate(-50%,-50%);animation:none}
+.sheet small{color:var(--vio);font-weight:500;font-size:.85rem}
+.sheet h3{font-size:1.5rem;line-height:1.25;margin:6px 0 12px}
+.sheet p{margin:0;color:#c9c6d8}
+.sheet dl{margin:18px 0 0;display:grid;grid-template-columns:auto 1fr;gap:8px 14px;font-size:.92rem}
+.sheet dt{font-weight:600}.sheet dd{margin:0;color:#b9b6ca}
+.sheet .tags{margin-top:18px;display:flex;flex-wrap:wrap;gap:6px}
+.sheet .tags span{font-size:.75rem;color:#bdb9cf;padding:.15rem .55rem;border-radius:4px;background:#ffffff0d;border:1px solid #ffffff12}
+.sheet .x{position:absolute;right:16px;top:14px;width:38px;height:38px;border-radius:50%;border:1px solid #ffffff2e;background:#0f0e19;color:var(--ink);cursor:pointer;font-size:1.1rem;z-index:2}
+.sheet .go{display:inline-block;margin-top:20px}
 
 /* compétences : la fusée assemblée étage par étage */
 .legend{display:flex;flex-wrap:wrap;gap:8px 22px;color:var(--mute);font-size:.85rem;margin:-26px 0 40px}
@@ -175,22 +186,30 @@ h1,h2,h3,h4{font-family:Sora,sans-serif}
 .n b{width:4px;height:11px;border-radius:1px;background:#00000022}
 .legend .n b{background:#ffffff22}
 .n b.on{background:var(--c);box-shadow:0 0 5px var(--c)}
-.build{position:relative;width:min(100%,600px);margin:0 auto;padding-bottom:120px}
-.build .cone{display:block;width:100%;height:auto;margin-bottom:-2px}
-.stage-r{position:relative;padding:20px 30px 22px;color:#1a1730;
-  background:radial-gradient(circle,#00000038 1.6px,transparent 2.2px) 12px 7px/26px 14px repeat-x,
-   linear-gradient(90deg,#6f7186 0,#c9c8d6 9%,#f4f3f9 26%,#ffffff 34%,#dcdbe6 58%,#9a9cb0 84%,#5d5f72 100%);
-  border-top:3px solid #3a3850}
-.stage-r h3{display:flex;align-items:center;gap:10px;font-size:.78rem;text-transform:uppercase;letter-spacing:.12em;margin:0 0 12px;color:#2a2740}
+.ariane{position:relative;width:min(100%,660px);margin:0 auto;padding:0 84px}
+.core{position:relative}
+.fairing{display:block;width:100%;height:auto;margin-bottom:-1px}
+.stage-r{position:relative;padding:20px 28px 22px;color:#1a1730;border-top:4px solid #1d1b29;
+  background:linear-gradient(90deg,#7c7e92 0,#cfced9 8%,#f6f5fa 24%,#ffffff 34%,#e3e2ea 58%,#a4a6b8 84%,#6a6c7f 100%)}
+.stage-r:nth-of-type(3n){background:linear-gradient(90deg,#6a6c7f 0,#bcbbc8 8%,#e9e8f0 24%,#f4f3f8 34%,#d6d5df 58%,#9597aa 84%,#5d5f72 100%)}
+.stage-r h3{display:flex;align-items:center;gap:10px;font-size:.76rem;text-transform:uppercase;letter-spacing:.14em;margin:0 0 12px;color:#2a2740}
 .stage-r h3::before{content:"";width:22px;height:6px;border-radius:3px;background:var(--c);box-shadow:0 0 0 1px #0002}
 .sks{display:flex;flex-wrap:wrap;gap:8px}
-.sk{display:inline-flex;align-items:center;gap:8px;padding:.32rem .7rem;border-radius:7px;background:#ffffffb0;box-shadow:inset 0 0 0 1px #1a173022,0 1px 0 #fff;font-size:.88rem;font-weight:500}
-.fins{position:absolute;left:-70px;right:-70px;bottom:120px;height:260px;pointer-events:none;z-index:-1}
-.fins svg{width:100%;height:100%}
-.engines{position:absolute;left:0;right:0;bottom:0;height:124px}
-.engines svg{width:100%;height:100%;overflow:visible}
-.engines .fl{transform-box:fill-box;transform-origin:50% 0;animation:flame .12s infinite alternate}
-@keyframes flame{to{transform:scaleY(.82) scaleX(.94)}}
+.sk{display:inline-flex;align-items:center;gap:8px;padding:.32rem .7rem;border-radius:7px;background:#ffffffb8;box-shadow:inset 0 0 0 1px #1a173022,0 1px 0 #fff;font-size:.88rem;font-weight:500}
+.skirt{display:block;width:100%;height:170px;overflow:visible}
+.bst{position:absolute;top:34%;bottom:170px;width:62px;
+  background:linear-gradient(#1d1b29 0 0) 0 14%/100% 9px no-repeat,linear-gradient(#1d1b29 0 0) 0 82%/100% 9px no-repeat,
+   linear-gradient(90deg,#7c7e92 0,#d6d5df 18%,#fff 38%,#e3e2ea 62%,#8e90a3 100%)}
+.bst.a{left:6px}.bst.b{right:6px}
+.bst::before{content:"";position:absolute;left:0;right:0;bottom:100%;height:96px;background:linear-gradient(90deg,#7c7e92 0,#d6d5df 18%,#fff 38%,#e3e2ea 62%,#8e90a3 100%);
+  clip-path:polygon(50% 0,64% 6%,78% 18%,90% 38%,97% 64%,100% 100%,0 100%,3% 64%,10% 38%,22% 18%,36% 6%)}
+.bst span{position:absolute;left:50%;top:28%;transform:translateX(-50%);writing-mode:vertical-rl;font:700 .78rem Sora;letter-spacing:.35em;color:#1d1b29;opacity:.75}
+.bst i{position:absolute;top:40px;width:18px;height:6px;background:#3a3850}
+.bst.a i{right:-18px}.bst.b i{left:-18px}
+.bst i + i{top:auto;bottom:40px}
+.bst svg{position:absolute;left:-15%;top:100%;width:130%;height:auto;overflow:visible}
+.ariane .fl{transform-box:fill-box;transform-origin:50% 0;animation:flame .12s infinite alternate}
+@keyframes flame{to{transform:scaleY(.84) scaleX(.94)}}
 
 /* contact : les liens gravitent autour de la planète d'arrivée */
 .contact-txt h2{font-size:clamp(2.2rem,5vw,3.4rem);letter-spacing:-.03em;margin:0;line-height:1.1}
@@ -206,13 +225,11 @@ h1,h2,h3,h4{font-family:Sora,sans-serif}
 .link.li{right:3%;top:24%;--c:#7aa8ff;animation-delay:-2s}
 .link.gh{left:6%;top:70%;--c:#5ef0a0;animation-delay:-4s}
 .link.cv{right:6%;top:66%;--c:#ffc94d;animation-delay:-6s}
-.station{position:relative;justify-self:center;width:min(100%,440px);aspect-ratio:440/400;animation:drift 10s ease-in-out infinite}
-.station svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
-.station .solar{transform-box:fill-box;transform-origin:center}
-.station .window{position:absolute;left:50%;top:47.5%;width:43%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;overflow:hidden;box-shadow:inset 0 0 24px #000,0 0 0 3px #1a1c26}
-.station .window img{width:100%;height:100%;object-fit:cover}
-.station .window::after{content:"";position:absolute;inset:0;border-radius:50%;background:linear-gradient(140deg,#ffffff40 0 16%,transparent 32%),radial-gradient(circle,transparent 62%,#0007)}
-.station small{position:absolute;left:50%;top:6%;transform:translateX(-50%);font-size:.75rem;color:var(--mute);letter-spacing:.08em;white-space:nowrap}
+.earth{position:relative;justify-self:center;width:min(100%,460px);aspect-ratio:1;animation:drift 12s ease-in-out infinite}
+.earth svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.selfie{position:absolute;left:-4%;bottom:2%;width:36%;margin:0;animation:drift 9s ease-in-out infinite reverse}
+.selfie img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:50%;box-shadow:0 0 0 3px #ffffff2e,0 0 40px #7fc6ff44,0 20px 40px #000a}
+.selfie figcaption{position:absolute;left:50%;bottom:-6px;transform:translateX(-50%);font-size:.75rem;padding:.25rem .65rem;border-radius:999px;background:#07070dcc;backdrop-filter:blur(6px);white-space:nowrap}
 /* atterrissage */
 .stage{position:relative;width:min(100%,760px);margin:0 auto;aspect-ratio:600/560;touch-action:pan-y}
 .stage > svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
@@ -245,16 +262,15 @@ h1,h2,h3,h4{font-family:Sora,sans-serif}
   .top nav{display:none}
   .page{overflow-x:clip}
   .blk,.blk.l,.blk.r{width:auto;margin:120px 0 0 24px}
-  .blk.r .sec-h{flex-direction:row;text-align:left}.blk.r .const{left:-30px;right:auto}.blk.r .grp{flex-direction:row}
+  .blk.r .sec-h{justify-content:flex-start}.blk.r .const{left:-30px;right:auto}.blk.r .grp{flex-direction:row}
   .hero{grid-template-columns:1fr;min-height:0;padding-top:10px}
-  .station{order:-1;width:min(86%,340px)}
+  .earth{order:-1;width:min(80%,320px);margin-left:20px}
   .trip{padding-left:70px;gap:60px}
   .sys{grid-template-columns:1fr;gap:46px}.sys > svg{display:none}
-  .orrery{height:auto;display:flex;gap:4px;overflow-x:auto;padding:30px 0 10px}.orrery > svg{display:none}
-  #pls{display:flex;gap:4px}.pp{position:static;transform:none;flex:none;width:112px}
-  .viewer{grid-template-columns:1fr}.tabs{justify-content:flex-start;margin-top:0}
+  .cluster,.cluster.two{grid-template-columns:repeat(2,minmax(0,1fr));width:auto;gap:30px 18px}.pj:nth-child(n){margin-top:0}.pj:nth-child(even){margin-top:50px}.blk.r .grp{flex-direction:row}
+  .sheet .in{grid-template-columns:1fr;padding:22px}.sheet .vis{width:60%;margin:0 auto}
   .stage-r{padding:16px 18px}
-  .fins{left:-30px;right:-30px}
+  .ariane{padding:0 34px}.bst{width:26px}.bst span{display:none}.bst.a{left:4px}.bst.b{right:4px}.bst i{width:4px}.bst.a i{right:-4px}.bst.b i{left:-4px}.bst::before{height:50px}
   .orbitwrap > svg.ring{display:none}
   .links{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 20px 24px}
   .link{position:static;animation:none}
@@ -262,7 +278,7 @@ h1,h2,h3,h4{font-family:Sora,sans-serif}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   .reveal{opacity:1;transform:none;transition:none}
-  .station,.pv,.link,.star::before,#rocket .flame,.engines .fl{animation:none}
+  .earth,.selfie,.pv,.link,.star::before,#rocket .flame,.ariane .fl{animation:none}
 }
 </style>
 </head>
@@ -288,20 +304,18 @@ h1,h2,h3,h4{font-family:Sora,sans-serif}
     </defs>
     <path class="trail" id="trail"/>
     <g id="rocket">
-      <g class="flame"><path d="M-34,-8 Q-62,-6 -84,0 Q-62,6 -34,8 Z" fill="url(#fl1)"/><path d="M-34,-4 Q-50,-2 -60,0 Q-50,2 -34,4 Z" fill="url(#fl2)"/></g>
-      <path d="M-27,-7.5 L-35,-10 L-35,10 L-27,7.5 Z" fill="#4d5064" stroke="#1a1730" stroke-width="1"/>
-      <path d="M-20,-10 L-36,-26 Q-38,-28 -35,-28 L-24,-27 L-6,-10 Z" fill="url(#rf)" stroke="#1a1730" stroke-width="1.1" stroke-linejoin="round"/>
-      <path d="M-20,10 L-36,26 Q-38,28 -35,28 L-24,27 L-6,10 Z" fill="url(#rf)" stroke="#1a1730" stroke-width="1.1" stroke-linejoin="round"/>
-      <path d="M-28,-11 L16,-11 Q36,-10 48,0 Q36,10 16,11 L-28,11 Q-31,0 -28,-11 Z" fill="url(#rb)" stroke="#1a1730" stroke-width="1.2"/>
-      <path d="M22,-10.6 Q37,-9.6 48,0 Q37,9.6 22,10.6 Q25,0 22,-10.6 Z" fill="url(#rn)"/>
-      <path d="M-16,-11 V11 M-12,-11 V11" stroke="#ff5d73" stroke-width="2.5"/>
-      <path d="M-26,-7 H18" stroke="#fff" stroke-width="2" opacity=".7" stroke-linecap="round"/>
-      <circle cx="4" cy="0" r="6.2" fill="#c9c8d6" stroke="#1a1730" stroke-width="1.1"/><circle cx="4" cy="0" r="4.4" fill="#1d2a52"/><circle cx="2.6" cy="-1.6" r="1.4" fill="#bfe6ff"/>
-      <path d="M-24,-1.6 L-40,0 L-24,1.6 Z" fill="#9c1f37"/>
+      <g class="flame"><path d="M-30,-4.5 Q-50,-3 -64,0 Q-50,3 -30,4.5 Z" fill="#cfe9ff" opacity=".9"/><path d="M-32,-19 Q-60,-17 -86,-13 Q-60,-9 -32,-7 Z" fill="url(#fl1)"/><path d="M-32,7 Q-60,9 -86,13 Q-60,17 -32,19 Z" fill="url(#fl1)"/></g>
+      <path d="M-30,-4 L-36,-6 L-36,6 L-30,4 Z" fill="#4d5064"/>
+      <path d="M-30,-19 L10,-19 Q20,-18 26,-13 Q20,-8 10,-7 L-30,-7 Z" fill="url(#rb)" stroke="#1a1730" stroke-width="1"/>
+      <path d="M-30,7 L10,7 Q20,8 26,13 Q20,18 10,19 L-30,19 Z" fill="url(#rb)" stroke="#1a1730" stroke-width="1"/>
+      <path d="M-22,-19 V-7 M-22,7 V19" stroke="#22202e" stroke-width="3"/>
+      <path d="M-32,-8 L24,-8 Q42,-8 50,0 Q42,8 24,8 L-32,8 Z" fill="url(#rb)" stroke="#1a1730" stroke-width="1.1"/>
+      <path d="M14,-8 V8" stroke="#22202e" stroke-width="2.4"/><path d="M-6,-8 V8" stroke="#22202e" stroke-width="1" opacity=".5"/>
+      <path d="M-28,-5 H20" stroke="#fff" stroke-width="1.6" opacity=".8" stroke-linecap="round"/>
     </g>
   </svg>
 
-<!-- profil : la fusée part de la station -->
+<!-- profil : la fusée décolle de la Terre -->
   <section class="blk l hero" id="profil" data-free="#station">
     <div>
       <span class="pill reveal">Disponible à partir de septembre 2027</span>
@@ -309,35 +323,39 @@ h1,h2,h3,h4{font-family:Sora,sans-serif}
       <p class="lead reveal" style="--d:.16s">Élève ingénieure à l'ENSIM, en alternance chez <b>SNCF Voyageurs</b>. À la frontière du logiciel et du matériel : <b>systèmes embarqués, réseaux et cybersécurité</b>.</p>
       <div class="ctas reveal" style="--d:.24s"><a class="btn" href="#projets">Voir les projets</a><a class="btn o" href="#contact">Me contacter</a></div>
     </div>
-    <div class="station" id="station">
-      <svg viewBox="-220 -200 440 400" aria-hidden="true">
-        <defs><linearGradient id="sp" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3460c4"/><stop offset="1" stop-color="#132552"/></linearGradient>
-          <pattern id="cell" width="14" height="14" patternUnits="userSpaceOnUse"><path d="M14 0H0V14" fill="none" stroke="#9fb6ff" stroke-opacity=".45"/></pattern></defs>
-        <path d="M-214,-5 H214 M-214,5 H214" stroke="#6c7392" stroke-width="3"/>
-        <path d="M-214,0 L-200,-5 L-186,5 L-172,-5 L-158,5 L-144,-5 L-130,5 M130,5 L144,-5 L158,5 L172,-5 L186,5 L200,-5 L214,0" stroke="#6c7392" stroke-width="1.5" fill="none"/>
-        <g class="solar"><rect x="-212" y="-82" width="84" height="70" fill="url(#sp)"/><rect x="-212" y="-82" width="84" height="70" fill="url(#cell)" stroke="#9fb6ff" stroke-width="1.5"/>
-          <rect x="-212" y="12" width="84" height="70" fill="url(#sp)"/><rect x="-212" y="12" width="84" height="70" fill="url(#cell)" stroke="#9fb6ff" stroke-width="1.5"/>
-          <rect x="128" y="-82" width="84" height="70" fill="url(#sp)"/><rect x="128" y="-82" width="84" height="70" fill="url(#cell)" stroke="#9fb6ff" stroke-width="1.5"/>
-          <rect x="128" y="12" width="84" height="70" fill="url(#sp)"/><rect x="128" y="12" width="84" height="70" fill="url(#cell)" stroke="#9fb6ff" stroke-width="1.5"/></g>
-        <path d="M0,-118 V-168" stroke="#c9c6d8" stroke-width="3"/><path d="M-18,-176 Q0,-156 18,-176" fill="#e9e6f2" stroke="#8a87a0" stroke-width="2"/>
-        <circle cx="0" cy="-168" r="4" fill="#ff5d73"><animate attributeName="opacity" values="1;.2;1" dur="1.6s" repeatCount="indefinite"/></circle>
-        <rect x="-30" y="104" width="60" height="50" rx="6" fill="#4a5068" stroke="#8a90aa" stroke-width="2"/><path d="M-30,122 H30 M-30,138 H30" stroke="#2a2d3c" stroke-width="2"/>
-        <ellipse cx="0" cy="160" rx="26" ry="7" fill="#1a1c26" stroke="#ffd27a" stroke-width="2.5"/>
-        <circle r="120" fill="#2a2d3c" stroke="#6c7392" stroke-width="4"/>
-        <circle r="120" fill="none" stroke="#ffd27a" stroke-width="2" stroke-dasharray="2 18" opacity=".8"/>
-        <circle r="106" fill="#14151d" stroke="#8a90aa" stroke-width="2"/>
+    <div class="earth" id="station">
+      <svg viewBox="-200 -200 400 400" aria-hidden="true">
+        <defs>
+          <radialGradient id="ocean" cx="36%" cy="32%" r="75%"><stop offset="0" stop-color="#6fc0ff"/><stop offset=".45" stop-color="#1f66c4"/><stop offset="1" stop-color="#081d48"/></radialGradient>
+          <radialGradient id="night" cx="28%" cy="26%" r="85%"><stop offset=".36" stop-color="#000" stop-opacity="0"/><stop offset=".78" stop-color="#000" stop-opacity=".7"/><stop offset="1" stop-color="#000" stop-opacity=".95"/></radialGradient>
+          <radialGradient id="atmo2" r="50%"><stop offset=".855" stop-color="#7fc6ff" stop-opacity="0"/><stop offset=".875" stop-color="#9fd6ff" stop-opacity=".7"/><stop offset=".95" stop-color="#7fc6ff" stop-opacity="0"/></radialGradient>
+          <filter id="land" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".011" numOctaves="5" seed="11"/>
+            <feColorMatrix values=".5 0 0 0 .02  .75 0 0 0 -.05  0 0 0 0 .1  9 0 0 0 -4.5"/></filter>
+          <filter id="cloud" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".014 .04" numOctaves="5" seed="4"/>
+            <feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 5 0 0 -2.75"/></filter>
+          <clipPath id="ec"><circle r="150"/></clipPath>
+        </defs>
+        <ellipse rx="196" ry="58" transform="rotate(-18)" fill="none" stroke="#ffffff30" stroke-dasharray="3 7"/>
+        <circle r="172" fill="url(#atmo2)"/>
+        <g clip-path="url(#ec)">
+          <circle r="150" fill="url(#ocean)"/>
+          <g><rect x="-400" y="-160" width="800" height="320" filter="url(#land)"/><animateTransform attributeName="transform" type="translate" values="0 0;-180 0;0 0" dur="240s" repeatCount="indefinite"/></g>
+          
+          <g opacity=".6"><rect x="-400" y="-160" width="800" height="320" filter="url(#cloud)"/><animateTransform attributeName="transform" type="translate" values="0 0;-260 0;0 0" dur="180s" repeatCount="indefinite"/></g>
+          <circle r="150" fill="url(#night)"/>
+        </g>
+        <circle r="150" fill="none" stroke="#bfe3ff" stroke-opacity=".45" stroke-width="1.5"/>
       </svg>
-      <div class="window"><img src="assets/jade.webp" alt="Portrait de Jade Barbier"></div>
-      <small>LE MANS</small>
+      <figure class="selfie"><img src="assets/jade.webp" alt="Portrait de Jade Barbier"><figcaption>Le Mans</figcaption></figure>
     </div>
   </section>
 
   
-  <!-- expérience : un trajet dans l'espace -->
+  <!-- expérience : une constellation, une étoile par poste -->
   <section class="blk r" id="experience">
     <div class="sec-h reveal"><span class="num">01</span><div><h2>Expérience</h2><p>Alternance et emplois</p></div></div>
     <div class="trip" id="trip">
-      <svg aria-hidden="true"><path class="tl" id="tripL"/><path class="tp" id="tripP"/><g id="tripDust"></g></svg>
+      <svg aria-hidden="true"><path class="tl" id="tripL" pathLength="1"/><g id="tripDust"></g></svg>
       <article class="leg reveal" style="--x:40px;--c:#c9b8ff"><span class="star"></span>
         <div class="when">Sept. 2024 — sept. 2027 <em>en cours</em></div>
         <h3>Alternance en informatique embarquée et réseaux</h3><p class="where"><img src="assets/sncf.webp" alt="">SNCF Voyageurs, CIM du Mans</p>
@@ -367,17 +385,25 @@ h1,h2,h3,h4{font-family:Sora,sans-serif}
     <a class="more reveal" href="parcours-universitaire.html">Détail des semestres →</a>
   </section>
 
-  <!-- projets : une planète par projet -->
+  <!-- projets : un amas par catégorie -->
   <section class="blk r" id="projets">
-    <div class="sec-h reveal"><span class="num">03</span><div><h2>Projets</h2><p>Choisissez une planète pour voir le projet</p></div></div>
-    <div class="tabs reveal" role="tablist" id="tabs"></div>
-    <div class="orrery reveal" id="orrery"><svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M2,70 Q50,-10 98,70" vector-effect="non-scaling-stroke"/></svg><div id="pls"></div></div>
-    <div class="viewer" id="viewer" aria-live="polite"></div>
+    <div class="sec-h reveal"><span class="num">03</span><div><h2>Projets</h2><p>Cliquez sur un projet pour le détail</p></div></div>
+    <h3 class="grp reveal" style="--c:#ff6b5e"><i></i><b>Entreprise</b> · <span id="n-pro"></span></h3>
+    <div class="cluster" id="g-pro" style="--c:#ff6b5e"></div>
   </section>
+  <section class="blk l">
+    <h3 class="grp reveal" style="--c:#5ef0a0"><i></i><b>École</b> · <span id="n-school"></span></h3>
+    <div class="cluster" id="g-school" style="--c:#5ef0a0"></div>
+  </section>
+  <section class="blk r">
+    <h3 class="grp reveal" style="--c:#ffc94d"><i></i><b>Personnel</b> · <span id="n-perso"></span></h3>
+    <div class="cluster two" id="g-perso" style="--c:#ffc94d"></div>
+  </section>
+  <dialog class="sheet" id="sheet" aria-label="Détail du projet"></dialog>
 
   <!-- compétences : la fusée, un étage par domaine -->
   <section class="blk l" id="competences">
-    <div class="sec-h reveal"><span class="num">04</span><div><h2>Compétences</h2><p>Un étage par domaine</p></div></div>
+    <div class="sec-h reveal"><span class="num">04</span><div><h2>Compétences</h2><p>Un étage par domaine, les voyants donnent le niveau</p></div></div>
     <div class="legend reveal" id="legend"></div>
     <div class="build reveal" id="build"></div>
   </section>
@@ -463,29 +489,32 @@ const lv=['bases','intermédiaire','autonome','avancé'];
 const SC=['#9b7bff','#36b6e0','#e5a72c','#2fc985','#f07ab4','#ff6b5e'];
 const lights=(l,c)=>`<i class="n" style="--c:${c}">${[1,2,3,4].map(j=>`<b class="${j<=l?'on':''}"></b>`).join('')}</i>`;
 document.getElementById('legend').innerHTML=lv.map((n,i)=>`<span>${lights(i+1,'#f5a3c7')}${n}</span>`).join('');
-const MET='<linearGradient id="met" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#6f7186"/><stop offset=".09" stop-color="#c9c8d6"/><stop offset=".26" stop-color="#f4f3f9"/><stop offset=".34" stop-color="#fff"/><stop offset=".58" stop-color="#dcdbe6"/><stop offset=".84" stop-color="#9a9cb0"/><stop offset="1" stop-color="#5d5f72"/></linearGradient>';
-document.getElementById('build').innerHTML=`<svg class="cone" viewBox="0 0 600 300" aria-hidden="true"><defs>${MET}<linearGradient id="tip" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#a8243c"/><stop offset=".35" stop-color="#ff7186"/><stop offset="1" stop-color="#8c1a30"/></linearGradient>
-   <clipPath id="cc"><path d="M0,300 C40,160 180,30 300,0 C420,30 560,160 600,300 Z"/></clipPath><radialGradient id="gl" cx="35%" cy="30%"><stop offset="0" stop-color="#6fb6ff"/><stop offset="1" stop-color="#0d1838"/></radialGradient></defs>
-   <path d="M0,300 C40,160 180,30 300,0 C420,30 560,160 600,300 Z" fill="url(#met)"/>
-   <rect x="0" y="0" width="600" height="80" fill="url(#tip)" clip-path="url(#cc)"/>
-   <circle cx="300" cy="185" r="52" fill="#3a3850"/><circle cx="300" cy="185" r="44" fill="url(#gl)"/><path d="M272,165 A36,36 0 0 1 312,152" stroke="#fff" stroke-opacity=".6" stroke-width="6" fill="none" stroke-linecap="round"/>
-   <text x="300" y="193" text-anchor="middle" font-family="Sora" font-weight="800" font-size="24" fill="#fff" opacity=".9">MJ</text></svg>`+
+const MET=(id)=>`<linearGradient id="${id}" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7c7e92"/><stop offset=".08" stop-color="#cfced9"/><stop offset=".24" stop-color="#f6f5fa"/><stop offset=".34" stop-color="#fff"/><stop offset=".58" stop-color="#e3e2ea"/><stop offset=".84" stop-color="#a4a6b8"/><stop offset="1" stop-color="#6a6c7f"/></linearGradient>`;
+const FIRE='<linearGradient id="fire" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".2" stop-color="#ffe2a0"/><stop offset=".55" stop-color="#ff8a2a" stop-opacity=".75"/><stop offset="1" stop-color="#ff4a1c" stop-opacity="0"/></linearGradient><linearGradient id="cryo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".3" stop-color="#bfe3ff" stop-opacity=".8"/><stop offset="1" stop-color="#7fb6ff" stop-opacity="0"/></linearGradient>';
+// lanceur lourd : coiffe, un étage par domaine, deux propulseurs latéraux
+const booster=(c)=>`<div class="bst ${c}" aria-hidden="true"><span>MJ · 2027</span><i></i><i></i><svg viewBox="0 0 80 220"><defs>${MET('bm'+c)}</defs><path class="fl" d="M14,46 Q20,140 40,220 Q60,140 66,46 Z" fill="url(#fire)"/><path d="M22,0 L58,0 L70,48 L10,48 Z" fill="url(#bm${c})" stroke="#2a2838" stroke-width="2"/></svg></div>`;
+document.getElementById('build').className='ariane reveal';
+document.getElementById('build').innerHTML=`<div class="core"><svg class="fairing" viewBox="0 0 600 360" aria-hidden="true"><defs>${MET('met')}</defs>
+   <path d="M0,360 L0,240 C10,140 170,40 300,0 C430,40 590,140 600,240 L600,360 Z" fill="url(#met)"/>
+   <path d="M300,0 L300,360" stroke="#1d1b29" stroke-opacity=".18" stroke-width="2"/><path d="M0,240 H600" stroke="#1d1b29" stroke-opacity=".15" stroke-width="2"/>
+   <rect x="0" y="330" width="600" height="30" fill="#1d1b29"/><rect x="0" y="336" width="600" height="3" fill="#ffffff22"/></svg>`+
   (window.SKILLS||[]).map((c,i)=>{const col=SC[i%SC.length];return `<div class="stage-r" style="--c:${col}"><h3>${c.title}</h3><div class="sks">${c.skills.map(([n,l])=>`<span class="sk" title="${lv[l-1]}">${n}${lights(l,col)}</span>`).join('')}</div></div>`}).join('')+
-  `<div class="fins" aria-hidden="true"><svg viewBox="0 0 740 260" preserveAspectRatio="none"><defs><linearGradient id="fg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff7186"/><stop offset="1" stop-color="#8c1a30"/></linearGradient></defs>
-   <path d="M72,10 L72,260 L2,260 L2,200 Q10,80 72,10 Z" fill="url(#fg)" stroke="#3a1020" stroke-width="2"/><path d="M668,10 L668,260 L738,260 L738,200 Q730,80 668,10 Z" fill="url(#fg)" stroke="#3a1020" stroke-width="2"/></svg></div>
-   <div class="engines" aria-hidden="true"><svg viewBox="0 0 600 124" preserveAspectRatio="xMidYMin meet"><defs>${MET.replace('id="met"','id="met2"')}<linearGradient id="ff" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".25" stop-color="#ffd27a"/><stop offset=".6" stop-color="#ff7a2a" stop-opacity=".7"/><stop offset="1" stop-color="#ff4a1c" stop-opacity="0"/></linearGradient></defs>
-   <rect x="0" y="0" width="600" height="14" fill="#3a3850"/>
-   ${[150,300,450].map(x=>`<path class="fl" d="M${x-46},58 Q${x-30},120 ${x},170 Q${x+30},120 ${x+46},58 Z" fill="url(#ff)"/><path d="M${x-40},14 L${x+40},14 L${x+56},60 L${x-56},60 Z" fill="url(#met2)" stroke="#2a2838" stroke-width="2"/>`).join('')}</svg></div>`;
+  `<svg class="skirt" viewBox="0 0 600 170" preserveAspectRatio="xMidYMin meet" aria-hidden="true"><defs>${MET('met3')}${FIRE}</defs>
+   <path d="M0,0 H600 L570,26 H30 Z" fill="#1d1b29"/>
+   <path class="fl" d="M246,92 Q270,150 300,200 Q330,150 354,92 Z" fill="url(#cryo)"/>
+   <path d="M276,26 L324,26 L330,40 Q362,70 368,94 Q300,104 232,94 Q238,70 270,40 Z" fill="url(#met3)" stroke="#2a2838" stroke-width="2"/></svg></div>`+booster('a')+booster('b');
 
-// ---------- expérience : le trajet relie les étoiles ----------
+// ---------- expérience : une constellation qui relie les postes ----------
+// entre deux postes, quelques étoiles plus petites ; le trait se dessine au fil du défilement
 function trip(){const t=document.getElementById('trip');const st=[...t.querySelectorAll('.star')].map(s=>{const l=s.parentElement;return[l.offsetLeft+s.offsetLeft,l.offsetTop+s.offsetTop]});
   const sv=t.querySelector('svg');sv.setAttribute('viewBox',`0 0 ${t.offsetWidth} ${t.offsetHeight}`);
-  let d=`M${st[0][0]},${st[0][1]-120}`,prev=[st[0][0],st[0][1]-120],s=1;
-  for(const p of st){const dy=p[1]-prev[1];d+=` C${prev[0]+60*s},${prev[1]+dy*.35} ${p[0]+60*s},${p[1]-dy*.35} ${p[0]},${p[1]}`;prev=p;s=-s}
-  const P=document.getElementById('tripP');P.setAttribute('d',d);
-  document.getElementById('tripL').setAttribute('d','M'+st.map(p=>p.join(',')).join(' L'));
-  const L=P.getTotalLength(),r=rng(5);let g='';for(let l=20;l<L;l+=46){const q=P.getPointAtLength(l);g+=`<circle class="dust" cx="${(q.x+(r()-.5)*60).toFixed(1)}" cy="${(q.y+(r()-.5)*30).toFixed(1)}" r="${(.6+r()*1.3).toFixed(1)}" opacity="${(.3+r()*.6).toFixed(2)}"/>`}
-  document.getElementById('tripDust').innerHTML=g}
+  const r=rng(9);r();const pts=[[st[0][0]+30,st[0][1]-110],[st[0][0]-20,st[0][1]-60]];
+  st.forEach((p,j)=>{pts.push(p);const q=st[j+1];if(q)[.3,.62].forEach((f,m)=>pts.push([p[0]+(q[0]-p[0])*f+(m?-1:1)*(28+r()*22),p[1]+(q[1]-p[1])*f]))});
+  document.getElementById('tripL').setAttribute('d','M'+pts.map(p=>p.map(v=>v.toFixed(1)).join(',')).join(' L'));
+  const main=new Set(st.map(p=>p.join(',')));
+  document.getElementById('tripDust').innerHTML=pts.filter(p=>!main.has(p.join(','))).map(p=>`<circle class="dust" cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="${(1.4+r()*1.4).toFixed(1)}" opacity="${(.5+r()*.5).toFixed(2)}"/>`).join('')}
+function drawTrip(){const t=document.getElementById('trip'),b=t.getBoundingClientRect(),f=Math.max(0,Math.min(1,(innerHeight*.75-b.top)/b.height));t.style.setProperty('--draw',(1-f).toFixed(3))}
+addEventListener('scroll',drawTrip,{passive:true});
 
 // ---------- constellations derrière les titres ----------
 document.querySelectorAll('.sec-h').forEach((h,hi)=>{const r=rng(hi*31+7);r();
@@ -515,30 +544,23 @@ function planetSVG(k){const o=typeof k==='string'?LOOK[k]:k,i=uid++,t=o.tilt||0;
   </svg>`}
 document.querySelectorAll('[data-planet]').forEach(el=>el.innerHTML=planetSVG(el.dataset.planet));
 
-// ---------- projets : une planète par projet, un écran de détail ----------
+// ---------- projets : une planète-photo par projet, la fiche s'ouvre au clic ----------
 const KINDS=[['pro','Entreprise','#ff6b5e',[0,30]],['school','École','#5ef0a0',[150,210]],['perso','Personnel','#ffc94d',[40,290]]];
 const PJ=window.PROJECTS||[];
 // chaque projet reçoit sa propre planète, dans les teintes de sa catégorie
 PJ.forEach((p,i)=>{const [, , ,hues]=KINDS.find(k=>k[0]===p.kind),n=PJ.filter(q=>q.kind===p.kind).indexOf(p),h=hues[n%2]+n*14,r=rng(i*13+5);r();
   p.look={c:[`hsl(${h} 90% 88%)`,`hsl(${h} 62% 52%)`,`hsl(${h} 70% 12%)`],glow:`hsl(${h} 90% 70%)`,noise:r()<.5?'.03':(.004+r()*.004).toFixed(3)+' .06',seed:Math.floor(r()*60),tilt:Math.round(r()*40-20),craters:r()<.4?1:0,ring:r()<.35?[`hsl(${h} 90% 90%)`,`hsl(${h} 80% 70%)`]:null,moon:r()<.3?1:0};p.svg=planetSVG(p.look)});
-let cat='pro',idx=0;
-const tabs=document.getElementById('tabs'),pls=document.getElementById('pls'),viewer=document.getElementById('viewer');
-tabs.innerHTML=KINDS.map(([k,l,c])=>`<button class="tab" role="tab" data-k="${k}" style="--c:${c}"><i></i>${l} <small>${PJ.filter(p=>p.kind===k).length}</small></button>`).join('');
-function showProjects(swap){const items=PJ.filter(p=>p.kind===cat),p=items[idx];
-  tabs.querySelectorAll('.tab').forEach(t=>t.setAttribute('aria-selected',t.dataset.k===cat));
-  // les planètes sont posées sur un arc
-  pls.innerHTML=items.map((q,j)=>{const t=items.length>1?j/(items.length-1):.5,x=8+t*84,y=70-80*t*(1-t)*1.0;return `<button class="pp" style="--x:${x}%;--y:${y}%" data-i="${j}" aria-current="${j===idx}" aria-label="${q.title}"><div class="pv">${q.svg}</div><span>${q.title}</span></button>`}).join('');
-  const fill=()=>{viewer.innerHTML=`<div class="vis" style="--glow:${p.look.glow.replace(')',' / .25)')}">${p.img?`<img src="${p.img}" alt="${p.title}">`:`<div class="pv">${p.svg}</div><span class="soon">Visuel à venir</span>`}</div>
-    <div class="info"><small>${[p.where,p.when].filter(Boolean).join(' · ')}</small><h4>${p.title}</h4><p>${p.desc||''}</p>
+const sheet=document.getElementById('sheet');
+const ball=p=>p.img?`<img src="${p.img}" alt="" loading="lazy">`:`<div class="pv">${p.svg}</div>`;
+for(const [k,,c] of KINDS){const items=PJ.filter(p=>p.kind===k);document.getElementById('n-'+k).textContent=items.length;
+  document.getElementById('g-'+k).innerHTML=items.map(p=>`<button class="pj reveal" type="button" data-i="${PJ.indexOf(p)}"><div class="orbit"><span class="ring"></span><div class="ball">${ball(p)}</div></div><h4>${p.title}</h4><div class="kw">${(p.tags||[]).slice(0,3).map(t=>`<span>${t}</span>`).join('')}</div><span class="more-i">Voir le détail</span></button>`).join('')}
+document.querySelectorAll('.cluster').forEach(cl=>cl.addEventListener('click',e=>{const b=e.target.closest('.pj');if(!b)return;const p=PJ[+b.dataset.i],c=KINDS.find(k=>k[0]===p.kind)[2];
+  sheet.style.setProperty('--c',c);
+  sheet.innerHTML=`<button class="x" type="button" aria-label="Fermer">×</button><div class="in"><div class="vis">${ball(p)}</div><div><small>${[p.where,p.when].filter(Boolean).join(' · ')}</small><h3>${p.title}</h3><p>${p.desc||''}</p>
     ${p.missions&&p.missions.length?`<dl>${p.missions.map(([a,b])=>`<dt>${a}</dt><dd>${b}</dd>`).join('')}</dl>`:''}
-    <div class="tags">${(p.tags||[]).map(t=>`<span>${t}</span>`).join('')}</div>
-    <div class="nav"><button type="button" data-step="-1" aria-label="Projet précédent">←</button><span>${idx+1} / ${items.length}</span><button type="button" data-step="1" aria-label="Projet suivant">→</button>${p.link?`<a href="${p.link}" target="_blank" rel="noopener">Voir le code</a>`:''}</div></div>`;
-    viewer.classList.remove('swap');window.plot&&requestAnimationFrame(plot)};
-  if(swap){viewer.classList.add('swap');setTimeout(fill,250)}else fill()}
-tabs.addEventListener('click',e=>{const t=e.target.closest('.tab');if(!t||t.dataset.k===cat)return;cat=t.dataset.k;idx=0;showProjects(true)});
-pls.addEventListener('click',e=>{const b=e.target.closest('.pp');if(!b||+b.dataset.i===idx)return;idx=+b.dataset.i;showProjects(true)});
-viewer.addEventListener('click',e=>{const b=e.target.closest('[data-step]');if(!b)return;const n=PJ.filter(p=>p.kind===cat).length;idx=(idx+ +b.dataset.step+n)%n;showProjects(true)});
-showProjects(false);
+    <div class="tags">${(p.tags||[]).map(t=>`<span>${t}</span>`).join('')}</div>${p.link?`<a class="go btn o" href="${p.link}" target="_blank" rel="noopener">Voir le code</a>`:''}</div></div>`;
+  sheet.showModal()}));
+sheet.addEventListener('click',e=>{if(e.target===sheet||e.target.closest('.x'))sheet.close()});
 
 // ---------- apparitions ----------
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.1});
@@ -562,13 +584,13 @@ function sky(t){const dy=scrollY-lastY;lastY=scrollY;vel+=(dy-vel)*.12;
   requestAnimationFrame(sky)}
 
 // ---------- route de la fusée ----------
-// Elle part de la station, descend dans l'espace libre à côté de chaque bloc,
+// Elle décolle de la Terre, descend dans l'espace libre à côté de chaque bloc,
 // traverse dans l'intervalle entre deux blocs, puis se pose sur la planète des habitants.
 const page=document.getElementById('page'),route=document.getElementById('route'),trail=document.getElementById('trail'),rocket=document.getElementById('rocket'),stage=document.getElementById('stage');
 // position dans la page sans tenir compte des animations (transform)
 const rel=el=>{let x=0,y=0,e=el;while(e&&e!==page){x+=e.offsetLeft;y+=e.offsetTop;e=e.offsetParent}return{x,y,w:el.offsetWidth,h:el.offsetHeight}};
 let S=[],land=null;
-function plot(){trip();
+function plot(){trip();drawTrip();
   const W=page.clientWidth,H=page.scrollHeight,mobile=innerWidth<=900;
   route.setAttribute('viewBox',`0 0 ${W} ${H}`);
   const st=rel(document.getElementById('station'));
@@ -578,7 +600,7 @@ function plot(){trip();
   const blocks=[...document.querySelectorAll('.blk')].map(el=>{const b=rel(el);
     const x=mobile?10:el.dataset.free?st.x+st.w/2:el.classList.contains('l')?(b.x+b.w+W)/2:b.x/2;
     return{x,top:b.y,bot:b.y+b.h}});
-  let cx0=mobile?10:st.x+st.w/2,cy0=mobile?st.y+st.h:st.y+st.h*.92;
+  let cx0=mobile?10:st.x+st.w/2,cy0=mobile?st.y+st.h:st.y+st.h*.97;
   let d=`M${cx0},${cy0}`;
   for(const bl of blocks){
     const top=Math.max(bl.top-10,cy0+10);
