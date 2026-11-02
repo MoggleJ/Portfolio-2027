@@ -10,14 +10,13 @@
 <style>
 :root{
   --bg:#07070d; --line:#ffffff14; --ink:#f1eff8; --mute:#a6a3b8; --dim:#66637a;
-  --vio:#9b7bff; --rose:#f5a3c7; --blue:#7aa8ff; --ok:#5ef0a0; --gold:#d9a73a;
+  --vio:#9b7bff; --rose:#f5a3c7; --blue:#7aa8ff; --ok:#5ef0a0;
   /* couleurs reprises par la planète des habitants */
   --planet-a:#3a2d8f; --planet-b:#6b4fd8; --planet-c:#1d2a6b; --accent:#9b7bff; --accent-2:#f5a3c7; --text:#f1eff8; --muted:#a6a3b8; --bg-0:#07070d;
 }
 *,*::before,*::after{box-sizing:border-box}
 html,body{margin:0}
-html{overflow-x:clip}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;overflow-x:clip}
 body{background:var(--bg);color:var(--ink);font:400 1rem/1.6 Inter,system-ui,sans-serif;overflow-x:clip}
 img{display:block;max-width:100%}
 a{color:inherit}
@@ -42,32 +41,39 @@ h1,h2,h3,h4{font-family:Sora,sans-serif}
 .top nav a:hover{background:#ffffff12;color:var(--ink)}
 .lang{border:1px solid var(--line);background:none;border-radius:999px;padding:.4rem .8rem;font-size:.82rem;cursor:pointer}
 
-/* page : les objets alternent à gauche et à droite, la fusée passe dans l'espace libre */
+/* page : les blocs alternent à gauche et à droite, la fusée passe dans l'espace libre */
 .page{position:relative;max-width:1320px;margin:0 auto;padding:0 clamp(16px,4vw,48px)}
 #route{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none;z-index:1}
-#route .trail{fill:none;stroke:#ffc98a;stroke-width:2.5;stroke-linecap:round;opacity:.55;filter:drop-shadow(0 0 6px #ffb26b)}
-#rocket .flame{transform-box:fill-box;transform-origin:100% 50%;animation:flick .12s infinite alternate}
-@keyframes flick{to{transform:scaleX(.8) scaleY(.9)}}
+#route .trail{fill:none;stroke:#ffc98a;stroke-width:2.5;stroke-linecap:round;opacity:.5;filter:drop-shadow(0 0 6px #ffb26b)}
+#rocket .flame{transform-box:fill-box;transform-origin:100% 50%;animation:flick .1s infinite alternate}
+@keyframes flick{to{transform:scaleX(.82) scaleY(.92)}}
 #rocket.landed .flame{opacity:0;animation:none}
-.blk{position:relative;z-index:2;width:62%;margin-top:190px}
-.blk.r{margin-left:auto;margin-right:56px}
-.blk.l{margin-left:56px}
-.blk.l.hero{margin-left:0}
+.blk{position:relative;z-index:2;width:60%;margin-top:200px}
+.blk.l{margin-left:40px}.blk.r{margin-left:auto;margin-right:40px}
 .reveal{opacity:0;transform:translateX(var(--from,0));transition:opacity .9s,transform 1.1s cubic-bezier(.2,.7,.2,1);transition-delay:var(--d,0s)}
-.blk.l .reveal,.blk.l.reveal{--from:-70px}.blk.r .reveal,.blk.r.reveal{--from:70px}
+.blk.l .reveal{--from:-60px}.blk.r .reveal{--from:60px}
 .reveal.in{opacity:1;transform:none}
-@keyframes drift{50%{translate:0 -7px}}
+@keyframes drift{50%{translate:0 -8px}}
+@keyframes tilt{50%{rotate:4deg}}
+@keyframes blink{50%{opacity:.15}}
 @keyframes spin{to{transform:rotate(360deg)}}
-@keyframes blink{50%{opacity:.2}}
 
-/* titres */
-.sec-h{display:flex;align-items:center;gap:16px;margin:0 0 40px}
-.sec-h span{display:grid;place-items:center;width:40px;height:40px;border:1px solid #9b7bff55;border-radius:50%;font:600 .78rem Sora;color:var(--vio);flex:none}
-.sec-h h2{font-size:clamp(2rem,4.2vw,3rem);line-height:1.05;margin:0;letter-spacing:-.02em}
-.blk.r .sec-h{justify-content:flex-end}
+/* titres : grand numéro en creux, constellation qui se dessine derrière */
+.sec-h{position:relative;display:flex;align-items:flex-end;gap:20px;margin:0 0 56px;padding-top:40px}
+.sec-h .num{font:800 clamp(4rem,8vw,6.4rem)/.78 Sora;letter-spacing:-.04em;color:transparent;-webkit-text-stroke:1.2px #b9a4ff99;background:linear-gradient(180deg,#9b7bff33,transparent 80%);-webkit-background-clip:text;background-clip:text}
+.sec-h h2{font-size:clamp(2.1rem,4.2vw,3.1rem);line-height:1;margin:0;letter-spacing:-.02em}
+.sec-h p{margin:10px 0 0;color:var(--mute);font-size:.95rem}
+.const{position:absolute;left:-30px;top:-30px;width:520px;height:150px;z-index:-1;pointer-events:none;overflow:visible}
+.const path{fill:none;stroke:#b9a4ff;stroke-opacity:.5;stroke-width:1;stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 2s ease .2s}
+.const circle{fill:#fff;opacity:0;transition:opacity .5s;transition-delay:calc(.3s + var(--i) * .16s)}
+.const circle.big{filter:drop-shadow(0 0 4px #c9b8ff)}
+.sec-h.in .const path{stroke-dashoffset:0}
+.sec-h.in .const circle{opacity:var(--o,.9)}
+.blk.r .sec-h{flex-direction:row-reverse;text-align:right}
+.blk.r .const{left:auto;right:-30px}
 
-/* profil : la photo est dans le hublot de la station d'où part la fusée */
-.hero{display:grid;grid-template-columns:62% 38%;align-items:center;min-height:calc(100vh - 70px);padding:10px 0 40px;margin:0;width:100%}
+/* profil */
+.hero{display:grid;grid-template-columns:60% 40%;align-items:center;min-height:calc(100vh - 70px);padding:10px 0 40px;margin:0!important;width:100%}
 .pill{display:inline-flex;align-items:center;gap:8px;font-size:.85rem;color:var(--mute);border:1px solid var(--line);border-radius:999px;padding:.35rem .8rem}
 .pill::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 10px var(--ok)}
 .hero h1{font-size:clamp(3rem,7.4vw,6.2rem);line-height:.95;letter-spacing:-.04em;margin:22px 0 18px}
@@ -78,6 +84,107 @@ h1,h2,h3,h4{font-family:Sora,sans-serif}
 .btn{position:relative;display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:500;padding:.8rem 1.25rem;border-radius:999px;background:var(--ink);color:var(--bg);transition:transform .2s}
 .btn.o{background:none;color:var(--ink);box-shadow:inset 0 0 0 1px #ffffff2e}
 .btn:hover{transform:translateY(-2px)}
+.photo{position:relative;justify-self:center;width:min(100%,330px)}
+.photo img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:28px;box-shadow:0 30px 60px #0009,0 0 0 1px #ffffff1a}
+.photo small{position:absolute;left:16px;bottom:16px;font-size:.8rem;padding:.35rem .7rem;border-radius:999px;background:#07070dcc;backdrop-filter:blur(6px)}
+.photo .orbits{position:absolute;left:-30%;top:-14%;width:160%;height:128%;z-index:-1;overflow:visible;pointer-events:none}
+.photo .orbits ellipse{fill:none;stroke:#ffffff26;stroke-dasharray:3 6}
+
+/* expérience : un trajet dans l'espace, une étoile par poste */
+.trip{position:relative;padding-left:130px;display:grid;gap:80px}
+.trip > svg{position:absolute;left:0;top:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.trip .tp{fill:none;stroke:#ffd9a0;stroke-width:1.6;stroke-dasharray:2 7;stroke-linecap:round;opacity:.75}
+.trip .tl{fill:none;stroke:#c9b8ff;stroke-width:1;opacity:.35}
+.trip .dust{fill:#fff}
+.leg{position:relative}
+.star{position:absolute;left:calc(var(--x) - 130px);top:14px;width:0;height:0}
+.star::before{content:"";position:absolute;left:-46px;top:-46px;width:92px;height:92px;
+  background:linear-gradient(90deg,transparent 0,var(--c) 50%,transparent 100%) center/100% 1.5px no-repeat,linear-gradient(0deg,transparent 0,var(--c) 50%,transparent 100%) center/1.5px 100% no-repeat;opacity:.9;animation:twinkle 4s ease-in-out infinite}
+.star::after{content:"";position:absolute;left:-9px;top:-9px;width:18px;height:18px;border-radius:50%;background:radial-gradient(circle,#fff 0 30%,var(--c) 55%,transparent 72%);box-shadow:0 0 26px 6px color-mix(in srgb,var(--c) 45%,transparent)}
+.star.small::before{transform:scale(.55)}.star.small::after{transform:scale(.7)}
+.star.ghost::after{background:none;border:1.5px dashed #ffffffaa;box-shadow:none}.star.ghost::before{opacity:.3}
+@keyframes twinkle{50%{transform:scale(.8) rotate(10deg);opacity:.6}}
+.leg .when{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;font-size:.85rem;color:var(--c);font-weight:600;letter-spacing:.02em}
+.leg .when em{font-style:normal;font-size:.75rem;color:var(--ok);border:1px solid #5ef0a055;border-radius:999px;padding:.05rem .55rem;font-weight:500}
+.leg h3{font-size:1.4rem;line-height:1.25;margin:8px 0 8px}
+.where{display:flex;align-items:center;gap:10px;color:var(--mute);font-size:.95rem;margin:0}
+.where img{width:28px;height:28px;border-radius:8px;background:#fff;object-fit:contain;padding:3px}
+.leg ul{margin:16px 0 0;padding:0;list-style:none;display:grid;gap:9px;color:#cfccdd;font-size:.95rem;max-width:60ch}
+.leg li{position:relative;padding-left:20px}
+.leg li::before{content:"";position:absolute;left:0;top:.55em;width:7px;height:7px;transform:rotate(45deg);background:var(--c);box-shadow:0 0 6px var(--c)}
+.leg.next h3{font-size:1.1rem;color:var(--mute);font-weight:600}
+
+/* formation : planètes sur une même orbite */
+.sys{position:relative;display:grid;grid-template-columns:.8fr 1.3fr .7fr;align-items:end;gap:10px}
+.sys > svg{position:absolute;left:-6%;top:-4%;width:112%;height:80%;overflow:visible;pointer-events:none}
+.sys > svg ellipse{fill:none;stroke:#ffffff26;stroke-dasharray:3 7}
+.body{text-align:center}
+.pv{position:relative;width:var(--s);height:var(--s);margin:0 auto 26px;animation:drift 11s ease-in-out infinite}
+.pv > svg{position:absolute;inset:-43.75%;width:187.5%;height:187.5%;overflow:visible}
+.pv.goal{border-radius:50%;border:1.5px dashed #ffffffaa;background:radial-gradient(circle,#9b7bff22,transparent 70%)}
+.pv.goal::after{content:"";position:absolute;inset:-16px;border-radius:50%;border:1px solid #9b7bff33;animation:spin 30s linear infinite}
+.body .yr{font-size:.82rem;color:var(--vio);font-weight:600;letter-spacing:.04em}
+.body h3{font-size:1.15rem;margin:6px 0 8px;line-height:1.3}
+.body .where{justify-content:center}
+.body p{color:#bdbacd;font-size:.92rem;margin:8px auto 0;max-width:30ch}
+.more{display:inline-block;margin-top:34px;color:var(--mute);font-size:.95rem}
+
+/* projets : une illustration par projet, le texte à côté */
+.grp{display:flex;align-items:center;gap:12px;font-size:1.05rem;margin:0 0 30px;color:var(--mute);font-weight:600}
+.grp b{color:var(--ink)}
+.grp::after{content:"";flex:1;height:1px;background:var(--line)}
+.blk.r .grp{flex-direction:row-reverse}
+.items{display:grid;gap:56px}
+.item{display:grid;grid-template-columns:200px minmax(0,1fr);gap:30px;align-items:center}
+.item .art{position:relative;width:200px;height:170px;animation:drift 9s ease-in-out infinite}
+.item:nth-child(2) .art{animation-delay:-3s}.item:nth-child(3) .art{animation-delay:-6s}
+.item .art svg{width:100%;height:100%;overflow:visible}
+.sat-art{animation:tilt 12s ease-in-out infinite}
+.item small{color:var(--vio);font-weight:500;font-size:.82rem}
+.item h4{font-size:1.12rem;line-height:1.3;margin:4px 0 8px}
+.item p{margin:0;font-size:.93rem;line-height:1.55;color:#c4c1d4;max-width:58ch}
+.tags{margin-top:12px;display:flex;flex-wrap:wrap;gap:6px}
+.tags span{font-size:.74rem;color:#bdb9cf;padding:.15rem .55rem;border-radius:4px;background:#ffffff0d;border:1px solid #ffffff12}
+.thumb{margin-top:14px;width:min(100%,280px);aspect-ratio:16/9;object-fit:cover;border-radius:12px;box-shadow:0 0 0 1px #ffffff1f,0 14px 30px #0008}
+
+/* compétences : la fusée assemblée étage par étage */
+.legend{display:flex;flex-wrap:wrap;gap:8px 22px;color:var(--mute);font-size:.85rem;margin:-26px 0 40px}
+.legend span{display:inline-flex;align-items:center;gap:8px}
+.n{display:inline-flex;gap:2px}
+.n b{width:4px;height:11px;border-radius:1px;background:#00000022}
+.legend .n b{background:#ffffff22}
+.n b.on{background:var(--c);box-shadow:0 0 5px var(--c)}
+.build{position:relative;width:min(100%,600px);margin:0 auto;padding-bottom:120px}
+.build .cone{display:block;width:100%;height:auto;margin-bottom:-2px}
+.stage-r{position:relative;padding:20px 30px 22px;color:#1a1730;
+  background:radial-gradient(circle,#00000038 1.6px,transparent 2.2px) 12px 7px/26px 14px repeat-x,
+   linear-gradient(90deg,#6f7186 0,#c9c8d6 9%,#f4f3f9 26%,#ffffff 34%,#dcdbe6 58%,#9a9cb0 84%,#5d5f72 100%);
+  border-top:3px solid #3a3850}
+.stage-r h3{display:flex;align-items:center;gap:10px;font-size:.78rem;text-transform:uppercase;letter-spacing:.12em;margin:0 0 12px;color:#2a2740}
+.stage-r h3::before{content:"";width:22px;height:6px;border-radius:3px;background:var(--c);box-shadow:0 0 0 1px #0002}
+.sks{display:flex;flex-wrap:wrap;gap:8px}
+.sk{display:inline-flex;align-items:center;gap:8px;padding:.32rem .7rem;border-radius:7px;background:#ffffffb0;box-shadow:inset 0 0 0 1px #1a173022,0 1px 0 #fff;font-size:.88rem;font-weight:500}
+.fins{position:absolute;left:-70px;right:-70px;bottom:120px;height:260px;pointer-events:none;z-index:-1}
+.fins svg{width:100%;height:100%}
+.engines{position:absolute;left:0;right:0;bottom:0;height:124px}
+.engines svg{width:100%;height:100%;overflow:visible}
+.engines .fl{transform-box:fill-box;transform-origin:50% 0;animation:flame .12s infinite alternate}
+@keyframes flame{to{transform:scaleY(.82) scaleX(.94)}}
+
+/* contact : les liens gravitent autour de la planète d'arrivée */
+.contact-txt h2{font-size:clamp(2.2rem,5vw,3.4rem);letter-spacing:-.03em;margin:0;line-height:1.1}
+.contact-txt p{color:var(--mute);max-width:46ch;margin:14px 0 0}
+.landing{position:relative;z-index:0;padding:30px 0 30px;margin-top:60px}
+.orbitwrap{position:relative;width:min(100%,1100px);margin:0 auto}
+.orbitwrap > svg.ring{position:absolute;left:0;top:18%;width:100%;height:70%;overflow:visible;pointer-events:none}
+.orbitwrap > svg.ring ellipse{fill:none;stroke:#9b7bff55;stroke-width:1.2;stroke-dasharray:4 8}
+.link{position:absolute;z-index:5;display:inline-flex;align-items:center;gap:10px;text-decoration:none;padding:.65rem 1.1rem .65rem .7rem;border-radius:999px;background:#12111dcc;backdrop-filter:blur(8px);box-shadow:inset 0 0 0 1px #ffffff26,0 10px 30px #0008;font-weight:500;transition:transform .25s,box-shadow .25s;animation:drift 8s ease-in-out infinite}
+.link:hover{transform:scale(1.05);box-shadow:inset 0 0 0 1px #c9b8ff,0 0 30px #9b7bff55}
+.link i{width:30px;height:30px;border-radius:50%;flex:none;background:radial-gradient(circle at 34% 30%,#fff,var(--c) 45%,#000 110%);box-shadow:0 0 14px var(--c)}
+.link.mail{left:2%;top:30%;--c:#f5a3c7;background:var(--ink);color:var(--bg)}
+.link.li{right:3%;top:24%;--c:#7aa8ff;animation-delay:-2s}
+.link.gh{left:6%;top:70%;--c:#5ef0a0;animation-delay:-4s}
+.link.cv{right:6%;top:66%;--c:#ffc94d;animation-delay:-6s}
 .station{position:relative;justify-self:center;width:min(100%,440px);aspect-ratio:440/400;animation:drift 10s ease-in-out infinite}
 .station svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
 .station .solar{transform-box:fill-box;transform-origin:center}
@@ -85,142 +192,7 @@ h1,h2,h3,h4{font-family:Sora,sans-serif}
 .station .window img{width:100%;height:100%;object-fit:cover}
 .station .window::after{content:"";position:absolute;inset:0;border-radius:50%;background:linear-gradient(140deg,#ffffff40 0 16%,transparent 32%),radial-gradient(circle,transparent 62%,#0007)}
 .station small{position:absolute;left:50%;top:6%;transform:translateX(-50%);font-size:.75rem;color:var(--mute);letter-spacing:.08em;white-space:nowrap}
-
-/* expérience : chaque poste est un vaisseau */
-.ship{position:relative;filter:drop-shadow(0 0 1px #b9a4ff99) drop-shadow(0 30px 40px #000c)}
-.hull{position:relative;padding:44px 26% 46px 78px;clip-path:polygon(0 9%,74% 0,90% 18%,100% 50%,90% 82%,74% 100%,0 91%);
-  background:linear-gradient(90deg,transparent 0 76px,#ffffff0c 76px 78px,transparent 78px),repeating-linear-gradient(90deg,transparent 0 139px,#ffffff08 139px 140px),
-   linear-gradient(180deg,#2f2d40 0,#1b1a28 46%,#13121c 100%)}
-.hull::before{content:"";position:absolute;left:0;right:0;top:9%;height:3px;background:linear-gradient(90deg,var(--c,#9b7bff),transparent 80%);opacity:.8}
-.ship.flip .hull{padding:44px 78px 46px 26%;clip-path:polygon(100% 9%,26% 0,10% 18%,0 50%,10% 82%,26% 100%,100% 91%);
-  background:linear-gradient(270deg,transparent 0 76px,#ffffff0c 76px 78px,transparent 78px),repeating-linear-gradient(90deg,transparent 0 139px,#ffffff08 139px 140px),linear-gradient(180deg,#2f2d40 0,#1b1a28 46%,#13121c 100%)}
-.ship.flip .hull::before{background:linear-gradient(270deg,var(--c,#9b7bff),transparent 80%)}
-.cockpit{display:block;position:absolute;right:7%;top:50%;width:76px;aspect-ratio:1;transform:translateY(-50%);border-radius:50%;background:#fff;padding:12px;box-shadow:0 0 0 4px #3a3850,0 0 0 6px #1a1926,0 0 26px var(--c,#9b7bff);z-index:2}
-.cockpit img{width:100%;height:100%;object-fit:contain}
-.ship.flip .cockpit{right:auto;left:7%}
-.eng{position:absolute;left:-30px;width:34px;height:20%;border-radius:6px 0 0 6px;background:linear-gradient(#5a5870,#2a2838);z-index:-1}
-.eng::after{content:"";position:absolute;right:100%;top:10%;height:80%;width:90px;clip-path:polygon(0 50%,100% 0,100% 100%);background:linear-gradient(270deg,#fff6d8,#ffc35a 25%,#ff5a2a00);transform-origin:100% 50%;animation:flick .14s infinite alternate}
-.eng.a{top:24%}.eng.b{top:56%}
-.ship.flip .eng{left:auto;right:-30px;border-radius:0 6px 6px 0}
-.ship.flip .eng::after{right:auto;left:100%;clip-path:polygon(100% 50%,0 0,0 100%);background:linear-gradient(90deg,#fff6d8,#ffc35a 30%,#ff5a2a00);transform-origin:0 50%}
-.fin{position:absolute;left:5%;width:22%;height:46px;background:linear-gradient(#ff5d73,#a8243c);z-index:-1}
-.fin.t{top:-34px;clip-path:polygon(0 100%,26% 0,46% 0,100% 100%)}
-.fin.b{bottom:-34px;clip-path:polygon(0 0,100% 0,46% 100%,26% 100%)}
-.ship.flip .fin{left:auto;right:5%}
-.ship .when{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;font-size:.85rem;color:var(--vio);font-weight:600}
-.ship .when em{font-style:normal;font-size:.75rem;color:var(--ok);border:1px solid #5ef0a055;border-radius:999px;padding:.05rem .55rem;font-weight:500}
-.ship h3{font-size:1.3rem;margin:8px 0 4px;line-height:1.3}
-.where{color:var(--mute);font-size:.95rem;margin:0}
-.ship ul{margin:16px 0 0;padding:0;list-style:none;display:grid;gap:9px;color:#cfccdd;font-size:.95rem}
-.ship li{position:relative;padding-left:20px}
-.ship li::before{content:"";position:absolute;left:0;top:.62em;width:9px;height:3px;border-radius:2px;background:var(--c,#9b7bff)}
-.ship.small{width:86%}
-.blk.l .ship.small{margin-right:auto}.blk.r .ship.small{margin-left:auto}
-
-/* formation : chaque diplôme est une planète */
-.system{position:relative;display:flex;align-items:flex-start;justify-content:space-between;gap:0}
-.orbit{position:absolute;left:-4%;right:-4%;top:12%;height:80%;border:1px dashed #ffffff22;border-radius:50%;transform:rotate(-8deg);pointer-events:none}
-.pl{position:relative;flex:none;display:grid;place-items:center;text-align:center;border-radius:50%;padding:12%;animation:drift 11s ease-in-out infinite}
-.pl::after{content:"";position:absolute;inset:0;border-radius:50%;box-shadow:inset -26px -22px 50px #000c,inset 6px 6px 24px #ffffff22;pointer-events:none}
-.pl div{position:relative;z-index:1;text-shadow:0 1px 10px #000c}
-.pl .yr{font-size:.8rem;font-weight:600;letter-spacing:.04em;color:#fff;opacity:.85}
-.pl h3{margin:6px 0 6px;line-height:1.25}
-.pl p{margin:0;font-size:.88rem;color:#e6e4f0}
-.pl .logo{width:38px;height:38px;margin:0 auto 10px;border-radius:50%;background:#fff;padding:6px;object-fit:contain;box-shadow:0 0 0 3px #ffffff33}
-.pl.moon{width:240px;padding:13%;aspect-ratio:1;margin-top:10px;animation-delay:-3s;
-  background:radial-gradient(22px 18px at 30% 70%,#0003,transparent),radial-gradient(30px 26px at 72% 30%,#0003,transparent),radial-gradient(16px 14px at 64% 78%,#0003,transparent),radial-gradient(circle at 34% 30%,#a9a59c,#6c6962 50%,#2e2c28)}
-.pl.moon h3{font-size:1rem}
-.pl.moon,.pl.ghost{height:auto}.pl.moon{width:250px;height:250px;padding:10%}.pl.moon p{font-size:.78rem}.pl.moon .logo{width:30px;height:30px;padding:4px;margin-bottom:6px}.pl.ensim{height:400px}.pl.ghost{width:210px;height:210px;padding:8%}.pl.ghost p,.pl.ghost .yr{font-size:.78rem}
-@media (max-width:1100px){.pl.ensim{height:340px}.pl.ghost{width:190px;height:190px}.pl.moon{width:220px;height:220px}}
-@media (max-width:900px){.pl.ensim{width:320px;height:320px}}
-.pl.ensim{width:400px;aspect-ratio:1;margin-top:70px;padding:15%;
-  background:repeating-linear-gradient(-16deg,#ffffff0a 0 16px,transparent 16px 40px,#00000014 40px 52px,transparent 52px 70px),radial-gradient(circle at 34% 30%,#59bfe0,#1d6f96 45%,#082538 85%)}
-.pl.ensim h3{font-size:1.3rem}
-.pl.ensim::before{content:"";position:absolute;left:-17%;right:-17%;top:41%;height:20%;border-radius:50%;border:7px solid #bfefff55;box-shadow:0 0 0 3px #7fd3ff22;transform:rotate(-12deg);z-index:2;pointer-events:none;
-  -webkit-mask:linear-gradient(#0000 48%,#000 52%);mask:linear-gradient(#0000 48%,#000 52%)}
-.pl.ghost{width:190px;aspect-ratio:1;margin-top:330px;border:2px dashed #ffffff55;background:radial-gradient(circle,#9b7bff14,transparent 70%);animation-delay:-6s}
-.pl.ghost::after{display:none}
-.pl.ghost h3{font-size:.98rem}
-.more{display:inline-block;margin-top:26px;color:var(--mute);font-size:.95rem}
-
-/* projets */
-.grp{display:flex;align-items:center;gap:12px;font-size:1.05rem;margin:0 0 26px;color:var(--mute);font-weight:600}
-.grp b{color:var(--ink)}
-.grp::after{content:"";flex:1;height:1px;background:var(--line)}
-.blk.r .grp{flex-direction:row-reverse}
-.tags{margin-top:10px;font-size:.76rem;color:#8f8ca6;letter-spacing:.02em}
-.scene{position:absolute;inset:0;display:grid;place-items:end start;padding:10px 12px;
-  background:radial-gradient(1px 1px at 20% 30%,#fff9,transparent),radial-gradient(1.3px 1.3px at 70% 20%,#fff,transparent),radial-gradient(1px 1px at 85% 75%,#fff8,transparent),radial-gradient(1px 1px at 40% 70%,#fff7,transparent),
-   radial-gradient(60% 70% at 72% 35%,hsla(var(--h),80%,62%,.32),transparent 70%),linear-gradient(135deg,#14122a,#0a0a16)}
-.scene b{position:absolute;right:18%;top:20%;width:30%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 34% 30%,hsl(var(--h),90%,85%),hsl(var(--h),70%,55%) 50%,hsl(var(--h),60%,12%));box-shadow:inset -8px -6px 14px #000b,0 0 30px hsla(var(--h),80%,60%,.45)}
-.scene span{position:relative;font-size:.72rem;color:#a6a3b8}
-/* satellites */
-.sats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:70px 26px;padding-top:30px}
-.sat{display:grid;grid-template-columns:44px minmax(0,1fr) 44px;align-items:start;animation:drift 9s ease-in-out infinite}
-.sat:nth-child(2){animation-delay:-3s}.sat:nth-child(3){animation-delay:-6s}
-.wing{position:relative;height:120px;margin-top:34px;border:1px solid #9fb6ff99;
-  background:linear-gradient(90deg,#9fb6ff44 1px,transparent 1px) 0 0/11px 100%,linear-gradient(#9fb6ff44 1px,transparent 1px) 0 0/100% 20px,linear-gradient(160deg,#2c4ea6,#13254f)}
-.wing::after{content:"";position:absolute;top:50%;width:12px;height:3px;margin-top:-1.5px;background:#c9c6d8}
-.wing.a::after{right:-13px}.wing.b::after{left:-13px}
-.core{position:relative;margin:0 12px;border-radius:10px;background:linear-gradient(#1d1c29,#121119);border:2px solid var(--gold);box-shadow:0 0 0 4px #0006,inset 0 0 0 1px #ffe2a044}
-.core::before{content:"";position:absolute;left:50%;top:-30px;width:2px;height:30px;background:#c9c6d8}
-.core::after{content:"";position:absolute;left:50%;top:-36px;width:9px;height:9px;margin-left:-3.5px;border-radius:50%;background:#ff5d73;box-shadow:0 0 8px #ff5d73;animation:blink 1.6s infinite}
-.core .img{position:relative;aspect-ratio:16/9;overflow:hidden;border-bottom:2px solid var(--gold);border-radius:8px 8px 0 0}
-.core .img img{width:100%;height:100%;object-fit:cover}
-.core .t{padding:12px 14px 16px}
-.core small,.rock small,.comet small{color:var(--vio);font-weight:500;font-size:.8rem}
-.core h4,.rock h4,.comet h4{font-size:1.02rem;line-height:1.3;margin:4px 0 6px}
-.core p,.rock p,.comet p{margin:0;font-size:.86rem;line-height:1.5;color:#c4c1d4}
-/* astéroïdes */
-.rocks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:30px 30px}
-.rock{position:relative;padding:16% 15% 18%;clip-path:var(--cp);animation:drift 12s ease-in-out infinite;
-  background:radial-gradient(circle at 30% 22%,#ffffff1a,transparent 45%),radial-gradient(30px 22px at 82% 26%,#0005,transparent),radial-gradient(40px 30px at 16% 80%,#0004,transparent),radial-gradient(20px 16px at 64% 88%,#0004,transparent),radial-gradient(14px 12px at 90% 60%,#0004,transparent),
-   linear-gradient(150deg,#6b625a,#3c352f 55%,#221d19)}
-.rock:nth-child(even){margin-top:90px}
-.rock:nth-child(3n+1){--cp:polygon(12% 6%,48% 0,82% 5%,97% 26%,100% 62%,90% 90%,58% 100%,22% 96%,3% 76%,0 34%)}
-.rock:nth-child(3n+2){--cp:polygon(6% 14%,36% 2%,72% 0,94% 14%,100% 46%,96% 80%,70% 98%,30% 100%,8% 86%,0 50%);animation-delay:-4s}
-.rock:nth-child(3n){--cp:polygon(18% 0,60% 4%,90% 0,100% 30%,94% 66%,100% 88%,64% 100%,26% 94%,0 80%,4% 30%);animation-delay:-8s}
-.crater{position:relative;width:110px;aspect-ratio:1;border-radius:50%;overflow:hidden;margin-bottom:12px;box-shadow:inset 0 8px 18px #000d,0 1px 0 #ffffff26;background:#15131a}
-.crater img{width:100%;height:100%;object-fit:cover;opacity:.92}
-.crater::after{content:"";position:absolute;inset:0;border-radius:50%;box-shadow:inset 0 8px 16px #000b}
-.crater .scene span{display:none}
-.rock p,.comet p{color:#ddd8d2}
-/* comètes */
-.comets{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:40px 40px;padding-top:70px}
-.comet{position:relative;animation:drift 10s ease-in-out infinite}
-.comet:nth-child(2){margin-top:110px;animation-delay:-5s}
-.comet .head{position:relative;border-radius:50%;padding:22% 17% 24%;text-align:center;
-  background:radial-gradient(closest-side,#0f2a3f 0,#0f2a3f 74%,#2b8cbc 90%,#9fe8ff 97%,#cff4ff00 100%);box-shadow:0 0 50px #7fe0ff40}
-.comet::before{content:"";position:absolute;right:62%;bottom:64%;width:260px;height:70px;border-radius:50%;background:linear-gradient(90deg,#cff4ff00,#cff4ff40 60%,#e8fbff99);transform:rotate(38deg);transform-origin:100% 50%;filter:blur(3px);z-index:-1}
-.comet::after{content:"";position:absolute;right:66%;bottom:70%;width:200px;height:20px;border-radius:50%;background:linear-gradient(90deg,#fff0,#fff9);transform:rotate(44deg);transform-origin:100% 50%;filter:blur(1px);z-index:-1}
-.comet .ico{width:64px;aspect-ratio:1;margin:0 auto 10px;border-radius:50%;overflow:hidden;position:relative;box-shadow:0 0 0 2px #9fe8ff66}
-
-/* compétences : champ de débris */
-.legend{display:flex;flex-wrap:wrap;gap:8px 22px;color:var(--mute);font-size:.85rem;margin:-20px 0 34px;justify-content:flex-end}
-.legend span{display:inline-flex;align-items:center;gap:8px}
-.field{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:44px 40px}
-.cluster h3{display:flex;align-items:center;gap:10px;font-size:1rem;margin:0 0 14px}
-.cluster h3::before{content:"";width:12px;height:12px;border-radius:50%;background:radial-gradient(circle at 34% 30%,#fff,var(--c) 45%,#000);box-shadow:0 0 10px var(--c)}
-.chips{display:flex;flex-wrap:wrap;gap:12px 10px;align-items:center}
-.chip{display:inline-flex;align-items:center;gap:9px;padding:.5rem .85rem .5rem .95rem;color:#ece9f4;font-size:var(--fs);transform:rotate(var(--rot));animation:drift 7s ease-in-out infinite;animation-delay:var(--dl);
-  clip-path:polygon(5% 4%,62% 0,96% 10%,100% 54%,93% 100%,40% 94%,8% 100%,0 48%);background:radial-gradient(circle at 25% 20%,#ffffff1c,transparent 50%),linear-gradient(150deg,#4d4959,#2a2833 60%,#1e1c25)}
-.n{display:inline-flex;gap:2px}
-.n b{width:3px;height:11px;border-radius:1px;background:#ffffff1f}
-.n b.on{background:var(--c);box-shadow:0 0 6px var(--c)}
-
-/* contact : antenne */
-.contact{display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:20px;align-items:center}
-.contact h2{font-size:clamp(2.2rem,5vw,3.4rem);letter-spacing:-.03em;margin:0;line-height:1.1}
-.contact p{color:var(--mute);max-width:46ch;margin:14px 0 26px}
-.contact .ctas{margin:0}
-.dish{width:100%;overflow:visible}
-.dish .wave{fill:none;stroke:#9b7bff;stroke-width:2;opacity:0;animation:wave 2.4s ease-out infinite}
-.dish .wave:nth-of-type(2){animation-delay:.8s}.dish .wave:nth-of-type(3){animation-delay:1.6s}
-@keyframes wave{0%{opacity:.9;transform:translate(0,0) scale(.6)}100%{opacity:0;transform:translate(40px,-40px) scale(1.4)}}
-.dish .wave{transform-box:fill-box;transform-origin:0 100%}
-
 /* atterrissage */
-.landing{position:relative;z-index:0;padding:40px 0 30px}
 .stage{position:relative;width:min(100%,760px);margin:0 auto;aspect-ratio:600/560;touch-action:pan-y}
 .stage > svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
 .stage .flag{cursor:grab;outline:none}
@@ -246,39 +218,28 @@ h1,h2,h3,h4{font-family:Sora,sans-serif}
 .close{display:block;margin:10px auto 0;border:1px solid var(--line);background:none;border-radius:999px;padding:.4rem .9rem;font-size:.85rem;color:var(--mute);cursor:pointer}
 .close[hidden]{display:none}
 .foot{text-align:center;color:var(--dim);font-size:.85rem;padding:40px 0 50px}
-.landing{margin-top:170px}
 
-@media (max-width:1100px){
-  .blk{width:70%}
-  .pl.ensim{width:340px}.pl.moon{width:190px}.pl.ghost{width:170px;margin-top:280px}
-}
+@media (max-width:1100px){.blk{width:66%}.item{grid-template-columns:150px minmax(0,1fr)}.item .art{width:150px;height:130px}}
 @media (max-width:900px){
   .top nav{display:none}
-  .blk{width:auto;margin-top:110px;margin-left:22px}
-  .blk.r{margin-left:22px;margin-right:0}
-  .blk.l{margin-left:22px}
   .page{overflow-x:clip}
-  .blk.r .sec-h{justify-content:flex-start}.blk.r .grp{flex-direction:row}.legend{justify-content:flex-start}
-  .hero{grid-template-columns:1fr;min-height:0;padding-top:10px;margin-left:0}
+  .blk,.blk.l,.blk.r{width:auto;margin:120px 0 0 24px}
+  .blk.r .sec-h{flex-direction:row;text-align:left}.blk.r .const{left:-30px;right:auto}.blk.r .grp{flex-direction:row}
+  .hero{grid-template-columns:1fr;min-height:0;padding-top:10px}
   .station{order:-1;width:min(86%,340px)}
-  .hull,.ship.flip .hull{padding:40px 20px 42px 46px;clip-path:polygon(0 4%,82% 0,100% 50%,82% 100%,0 96%)}
-  .ship.flip .hull{padding:40px 46px 42px 20px;clip-path:polygon(100% 4%,18% 0,0 50%,18% 100%,100% 96%)}
-  .cockpit,.ship.flip .cockpit{position:relative;left:auto;right:auto;top:auto;transform:none;width:54px;padding:8px;margin-bottom:14px}
-  .ship.small{width:100%}
-  .eng{left:-18px;width:20px}.eng::after{width:40px}.ship.flip .eng{right:-18px}
-  .system{flex-direction:column;align-items:center;gap:30px}
-  .pl.moon,.pl.ghost,.pl.ensim{margin-top:0}
-  .pl.ensim{width:min(100%,320px)}
-  .orbit{display:none}
-  .sats,.rocks,.comets,.field{grid-template-columns:1fr}
-  .rock:nth-child(even),.comet:nth-child(2){margin-top:0}
-  .contact{grid-template-columns:1fr}
-  .dish{width:150px}
+  .trip{padding-left:70px;gap:60px}
+  .sys{grid-template-columns:1fr;gap:46px}.sys > svg{display:none}
+  .item{grid-template-columns:1fr;gap:12px}.item .art{width:150px;height:120px}
+  .stage-r{padding:16px 18px}
+  .fins{left:-30px;right:-30px}
+  .orbitwrap > svg.ring{display:none}
+  .links{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 20px 24px}
+  .link{position:static;animation:none}
 }
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   .reveal{opacity:1;transform:none;transition:none}
-  .station,.pl,.sat,.rock,.comet,.chip,#rocket .flame,.eng::after{animation:none}
+  .station,.pv,.item .art,.sat-art,.link,.star::before,#rocket .flame,.engines .fl{animation:none}
 }
 </style>
 </head>
@@ -296,22 +257,28 @@ h1,h2,h3,h4{font-family:Sora,sans-serif}
   <div class="far" id="far" aria-hidden="true"></div>
   <svg id="route" aria-hidden="true">
     <defs>
-      <linearGradient id="trailg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ffb26b" stop-opacity="0"/><stop offset="1" stop-color="#ffd9a0"/></linearGradient>
-      <linearGradient id="fl" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#fff6d8"/><stop offset=".35" stop-color="#ffc35a"/><stop offset="1" stop-color="#ff5a2a" stop-opacity="0"/></linearGradient>
+      <linearGradient id="rb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".45" stop-color="#e4e3ee"/><stop offset="1" stop-color="#8d8fa3"/></linearGradient>
+      <linearGradient id="rn" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff8a9b"/><stop offset=".5" stop-color="#ff5d73"/><stop offset="1" stop-color="#a8243c"/></linearGradient>
+      <linearGradient id="rf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff7186"/><stop offset="1" stop-color="#9c1f37"/></linearGradient>
+      <linearGradient id="fl1" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#ffe9b0"/><stop offset=".3" stop-color="#ffa63c"/><stop offset="1" stop-color="#ff4a1c" stop-opacity="0"/></linearGradient>
+      <linearGradient id="fl2" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#fff3c8" stop-opacity="0"/></linearGradient>
     </defs>
     <path class="trail" id="trail"/>
     <g id="rocket">
-      <g class="flame"><path d="M-25,-5.5 Q-52,0 -25,5.5 Z" fill="url(#fl)"/><path d="M-25,-2.8 Q-36,0 -25,2.8 Z" fill="#fff"/></g>
-      <path d="M-17,-6.5 L-29,-17 L-23,-6 Z M-17,6.5 L-29,17 L-23,6 Z" fill="#ff5d73" stroke="#1a1730" stroke-width="1.1" stroke-linejoin="round"/>
-      <path d="M-25,-7 L9,-7 Q23,-5 29,0 Q23,5 9,7 L-25,7 Z" fill="#f4f2fa" stroke="#1a1730" stroke-width="1.2" stroke-linejoin="round"/>
-      <path d="M14,-6.3 Q23,-5 29,0 Q23,5 14,6.3 Z" fill="#ff5d73"/>
-      <path d="M-19,-7 V7" stroke="#1a1730" stroke-width="1" opacity=".4"/>
-      <circle cx="2" cy="0" r="3.6" fill="#8fd8ff" stroke="#1a1730" stroke-width="1.2"/>
-      <path d="M-20,0 L-31,0" stroke="#c43c56" stroke-width="3" stroke-linecap="round"/>
+      <g class="flame"><path d="M-34,-8 Q-62,-6 -84,0 Q-62,6 -34,8 Z" fill="url(#fl1)"/><path d="M-34,-4 Q-50,-2 -60,0 Q-50,2 -34,4 Z" fill="url(#fl2)"/></g>
+      <path d="M-27,-7.5 L-35,-10 L-35,10 L-27,7.5 Z" fill="#4d5064" stroke="#1a1730" stroke-width="1"/>
+      <path d="M-20,-10 L-36,-26 Q-38,-28 -35,-28 L-24,-27 L-6,-10 Z" fill="url(#rf)" stroke="#1a1730" stroke-width="1.1" stroke-linejoin="round"/>
+      <path d="M-20,10 L-36,26 Q-38,28 -35,28 L-24,27 L-6,10 Z" fill="url(#rf)" stroke="#1a1730" stroke-width="1.1" stroke-linejoin="round"/>
+      <path d="M-28,-11 L16,-11 Q36,-10 48,0 Q36,10 16,11 L-28,11 Q-31,0 -28,-11 Z" fill="url(#rb)" stroke="#1a1730" stroke-width="1.2"/>
+      <path d="M22,-10.6 Q37,-9.6 48,0 Q37,9.6 22,10.6 Q25,0 22,-10.6 Z" fill="url(#rn)"/>
+      <path d="M-16,-11 V11 M-12,-11 V11" stroke="#ff5d73" stroke-width="2.5"/>
+      <path d="M-26,-7 H18" stroke="#fff" stroke-width="2" opacity=".7" stroke-linecap="round"/>
+      <circle cx="4" cy="0" r="6.2" fill="#c9c8d6" stroke="#1a1730" stroke-width="1.1"/><circle cx="4" cy="0" r="4.4" fill="#1d2a52"/><circle cx="2.6" cy="-1.6" r="1.4" fill="#bfe6ff"/>
+      <path d="M-24,-1.6 L-40,0 L-24,1.6 Z" fill="#9c1f37"/>
     </g>
   </svg>
 
-  <!-- profil : la fusée part de la station -->
+<!-- profil : la fusée part de la station -->
   <section class="blk l hero" id="profil" data-free="#station">
     <div>
       <span class="pill reveal">Disponible à partir de septembre 2027</span>
@@ -342,90 +309,79 @@ h1,h2,h3,h4{font-family:Sora,sans-serif}
     </div>
   </section>
 
-  <!-- expérience : les vaisseaux -->
+  
+  <!-- expérience : un trajet dans l'espace -->
   <section class="blk r" id="experience">
-    <div class="sec-h reveal"><span>01</span><h2>Expérience</h2></div>
-    <article class="ship flip reveal" style="--c:#b38bff">
-      <span class="fin t"></span><span class="fin b"></span><span class="eng a"></span><span class="eng b"></span>
-      <div class="hull">
-        <span class="cockpit"><img src="assets/sncf.webp" alt="SNCF Voyageurs"></span>
+    <div class="sec-h reveal"><span class="num">01</span><div><h2>Expérience</h2><p>Alternance et emplois</p></div></div>
+    <div class="trip" id="trip">
+      <svg aria-hidden="true"><path class="tl" id="tripL"/><path class="tp" id="tripP"/><g id="tripDust"></g></svg>
+      <article class="leg reveal" style="--x:40px;--c:#c9b8ff"><span class="star"></span>
         <div class="when">Sept. 2024 — sept. 2027 <em>en cours</em></div>
-        <h3>Alternance en informatique embarquée et réseaux</h3><p class="where">SNCF Voyageurs, CIM du Mans</p>
+        <h3>Alternance en informatique embarquée et réseaux</h3><p class="where"><img src="assets/sncf.webp" alt="">SNCF Voyageurs, CIM du Mans</p>
         <ul><li>Tests de conformité des équipements embarqués aux spécifications ITxPT : consommation électrique, services échangés.</li><li>Client EST pour une preuve de concept de sécurisation des communications à bord (mTLS).</li><li>Outil de test de connexion SFTP et étude d'impact du Cyber Resilience Act.</li></ul>
-      </div>
-    </article>
-  </section>
-  <section class="blk l">
-    <article class="ship small reveal" style="--c:#ff9b54">
-      <span class="fin t"></span><span class="fin b"></span><span class="eng a"></span><span class="eng b"></span>
-      <div class="hull">
-        <span class="cockpit"><img src="assets/colart.webp" alt="Colart"></span>
+      </article>
+      <article class="leg reveal" style="--x:96px;--c:#ffb26b"><span class="star small"></span>
         <div class="when">Juin — août 2023</div>
-        <h3>Opératrice de conditionnement</h3><p class="where">Colart International, Le Mans</p>
+        <h3>Opératrice de conditionnement</h3><p class="where"><img src="assets/colart.webp" alt="">Colart International, Le Mans</p>
         <ul><li>Assemblage, contrôle et conditionnement sur lignes de production, dans le respect des normes qualité et sécurité.</li></ul>
-      </div>
-    </article>
+      </article>
+      <article class="leg next reveal" style="--x:30px;--c:#ffffff"><span class="star ghost"></span>
+        <div class="when">Septembre 2027</div>
+        <h3>Prochaine étape : un premier poste d'ingénieure</h3>
+      </article>
+    </div>
   </section>
 
   <!-- formation : les planètes -->
-  <section class="blk r" id="formation">
-    <div class="sec-h reveal"><span>02</span><h2>Formation</h2></div>
-    <div class="system reveal">
-      <span class="orbit" aria-hidden="true"></span>
-      <div class="pl moon"><div><img class="logo" src="assets/malraux.webp" alt=""><span class="yr">2019 — 2022</span><h3>Baccalauréat général</h3><p>Lycée André Malraux, Allonnes</p></div></div>
-      <div class="pl ensim"><div><img class="logo" src="assets/ensim.webp" alt=""><span class="yr">2024 — 2027</span><h3>Cycle ingénieur en alternance</h3><p>ENSIM, Le Mans. Systèmes embarqués, réseaux, cybersécurité, projets d'équipe en mécatronique, IA et application mobile.</p></div></div>
-      <div class="pl ghost"><div><span class="yr">Septembre 2027</span><h3>Diplôme d'ingénieure</h3><p>Prochaine étape</p></div></div>
+  <section class="blk l" id="formation">
+    <div class="sec-h reveal"><span class="num">02</span><div><h2>Formation</h2><p>Diplômes et écoles</p></div></div>
+    <div class="sys">
+      <svg viewBox="0 0 100 40" preserveAspectRatio="none" aria-hidden="true"><ellipse cx="50" cy="22" rx="49" ry="16" vector-effect="non-scaling-stroke"/></svg>
+      <div class="body reveal"><div class="pv" data-planet="moon" style="--s:120px"></div><span class="yr">2019 — 2022</span><h3>Baccalauréat général</h3><p class="where"><img src="assets/malraux.webp" alt="">Lycée André Malraux, Allonnes</p></div>
+      <div class="body reveal" style="--d:.15s"><div class="pv" data-planet="ensim" style="--s:200px"></div><span class="yr">2024 — 2027</span><h3>Cycle ingénieur en alternance</h3><p class="where"><img src="assets/ensim.webp" alt="">ENSIM, Le Mans</p><p>Systèmes embarqués, réseaux, cybersécurité. Projets d'équipe en mécatronique, IA et application mobile.</p></div>
+      <div class="body reveal" style="--d:.3s"><div class="pv goal" style="--s:96px"></div><span class="yr">Septembre 2027</span><h3>Diplôme d'ingénieure</h3><p>Prochaine étape</p></div>
     </div>
     <a class="more reveal" href="parcours-universitaire.html">Détail des semestres →</a>
   </section>
 
-  <!-- projets : satellites, astéroïdes, comètes -->
-  <section class="blk l" id="projets">
-    <div class="sec-h reveal"><span>03</span><h2>Projets</h2></div>
+  <!-- projets -->
+  <section class="blk r" id="projets">
+    <div class="sec-h reveal"><span class="num">03</span><div><h2>Projets</h2><p>En entreprise, à l'école et en personnel</p></div></div>
     <h3 class="grp reveal"><b>Entreprise</b> · <span id="n-pro"></span></h3>
-    <div class="sats" id="g-pro"></div>
-  </section>
-  <section class="blk r">
-    <h3 class="grp reveal"><b>École</b> · <span id="n-school"></span></h3>
-    <div class="rocks" id="g-school"></div>
+    <div class="items" id="g-pro"></div>
   </section>
   <section class="blk l">
+    <h3 class="grp reveal"><b>École</b> · <span id="n-school"></span></h3>
+    <div class="items" id="g-school"></div>
+  </section>
+  <section class="blk r">
     <h3 class="grp reveal"><b>Personnel</b> · <span id="n-perso"></span></h3>
-    <div class="comets" id="g-perso"></div>
+    <div class="items" id="g-perso"></div>
   </section>
 
-  <!-- compétences : champ de débris -->
-  <section class="blk r" id="competences">
-    <div class="sec-h reveal"><span>04</span><h2>Compétences</h2></div>
+  <!-- compétences : la fusée, un étage par domaine -->
+  <section class="blk l" id="competences">
+    <div class="sec-h reveal"><span class="num">04</span><div><h2>Compétences</h2><p>Un étage par domaine</p></div></div>
     <div class="legend reveal" id="legend"></div>
-    <div class="field" id="skills"></div>
+    <div class="build reveal" id="build"></div>
   </section>
 
-  <!-- contact : l'antenne -->
-  <section class="blk l contact" id="contact">
-    <div class="reveal">
-      <h2>Travaillons ensemble</h2>
-      <p>Disponible en septembre 2027 pour un poste d'ingénieure en systèmes embarqués, réseaux ou cybersécurité.</p>
-      <div class="ctas">
-        <a class="btn" href="mailto:jade72210@gmail.com">jade72210@gmail.com</a>
-        <a class="btn o" href="https://www.linkedin.com/in/jade-barbier-b261b8266" target="_blank" rel="noopener">LinkedIn</a>
-        <a class="btn o" href="https://github.com/MoggleJ" target="_blank" rel="noopener">GitHub</a>
-        <a class="btn o" href="#">CV (PDF)</a>
-      </div>
-    </div>
-    <svg class="dish reveal" viewBox="0 0 220 240" aria-hidden="true">
-      <path class="wave" d="M150,70 A30,30 0 0 1 180,40"/><path class="wave" d="M150,70 A30,30 0 0 1 180,40"/><path class="wave" d="M150,70 A30,30 0 0 1 180,40"/>
-      <path d="M70,230 L100,150 L130,230 Z" fill="#3a3f52" stroke="#8a90aa" stroke-width="2"/><path d="M84,196 H116" stroke="#8a90aa" stroke-width="2"/>
-      <rect x="40" y="226" width="120" height="10" rx="3" fill="#4a5068"/>
-      <g transform="rotate(-40 100 140)"><path d="M30,120 Q100,190 170,120 Z" fill="#d6d3e2" stroke="#6c7392" stroke-width="3"/><path d="M30,120 Q100,170 170,120" fill="#b9b5c9"/>
-        <path d="M100,150 V70" stroke="#c9c6d8" stroke-width="3"/><path d="M60,128 L100,70 L140,128" stroke="#c9c6d8" stroke-width="2" fill="none"/><circle cx="100" cy="68" r="7" fill="#ffd27a"/></g>
-      <circle cx="152" cy="68" r="4" fill="#ff5d73"><animate attributeName="opacity" values="1;.2;1" dur="1.2s" repeatCount="indefinite"/></circle>
-    </svg>
+  <!-- contact -->
+  <section class="blk r contact-txt" id="contact">
+    <div class="sec-h reveal"><span class="num">05</span><div><h2>Travaillons ensemble</h2></div></div>
+    <p class="reveal">Disponible en septembre 2027 pour un poste d'ingénieure en systèmes embarqués, réseaux ou cybersécurité. Les liens gravitent autour de la planète juste en dessous.</p>
   </section>
 
-  <!-- atterrissage -->
   <section class="landing" id="atterrissage">
-    <div class="stage" id="stage">
+    <div class="orbitwrap">
+      <svg class="ring" viewBox="0 0 100 40" preserveAspectRatio="none" aria-hidden="true"><ellipse cx="50" cy="20" rx="44" ry="17" vector-effect="non-scaling-stroke"/></svg>
+      <div class="links">
+        <a class="link mail" href="mailto:jade72210@gmail.com"><i></i>jade72210@gmail.com</a>
+        <a class="link li" href="https://www.linkedin.com/in/jade-barbier-b261b8266" target="_blank" rel="noopener"><i></i>LinkedIn</a>
+        <a class="link gh" href="https://github.com/MoggleJ" target="_blank" rel="noopener"><i></i>GitHub</a>
+        <a class="link cv" href="#"><i></i>CV (PDF)</a>
+      </div>
+      <div class="stage" id="stage">
       <svg viewBox="0 0 600 560" role="img" aria-label="Une petite planète habitée et un drapeau MJ"><defs>
                     <radialGradient id="pg" gradientUnits="userSpaceOnUse" cx="259" cy="279" r="255"><stop offset="0" stop-color="var(--planet-b)"/><stop offset=".6" stop-color="var(--planet-a)"/><stop offset="1" stop-color="var(--planet-c)"/></radialGradient>
                     <radialGradient id="atmo" r=".5"><stop offset=".78" stop-color="var(--accent)" stop-opacity=".35"/><stop offset="1" stop-color="var(--accent)" stop-opacity="0"/></radialGradient>
@@ -473,6 +429,7 @@ h1,h2,h3,h4{font-family:Sora,sans-serif}
                     <text x="337" y="103" text-anchor="middle" font-family="Sora" font-weight="700" font-size="17" fill="var(--bg-0)">MJ</text>
                   </g></svg>
     </div>
+    </div>
     <p class="hint">Les habitants sont joueurs : attrapez-les et lancez-les.</p>
     <button class="close" id="closeLid" type="button" hidden>Refermer</button>
   </section>
@@ -482,30 +439,118 @@ h1,h2,h3,h4{font-family:Sora,sans-serif}
 <script src="data.js"></script>
 <script src="skills.js"></script>
 <script>
-// ---------- projets : satellites (entreprise), astéroïdes (école), comètes (perso) ----------
-let hue=250;
-const pic=p=>p.img?`<img src="${p.img}" alt="" loading="lazy">`:`<div class="scene" style="--h:${(hue+=67)%360}"><b></b><span>Visuel à venir</span></div>`;
-const txt=p=>`<small>${p.where||''}</small><h4>${p.title}</h4><p>${p.desc||''}</p><div class="tags">${(p.tags||[]).slice(0,4).join('  ·  ')}</div>`;
-const SHAPE={
-  pro:p=>`<article class="sat reveal"><span class="wing a"></span><div class="core"><div class="img">${pic(p)}</div><div class="t">${txt(p)}</div></div><span class="wing b"></span></article>`,
-  school:p=>`<article class="rock reveal"><div class="crater">${pic(p)}</div>${txt(p)}</article>`,
-  perso:p=>`<article class="comet reveal"><div class="head"><div class="ico">${pic(p)}</div>${txt(p)}</div></article>`,
-};
-for(const k in SHAPE){const items=(window.PROJECTS||[]).filter(p=>p.kind===k);
-  document.getElementById('g-'+k).innerHTML=items.map(SHAPE[k]).join('');document.getElementById('n-'+k).textContent=items.length}
+let uid=0;
+const rng=s=>()=>(s=(s*16807)%2147483647)/2147483647;
 
-// ---------- compétences : chaque compétence est un débris, ses voyants donnent le niveau ----------
+// ---------- illustrations des projets ----------
+function satSVG(){const i=uid++;
+  const panel=x=>`<g transform="translate(${x},-26)">${[0,26,52].map(o=>`<rect x="${o}" width="24" height="52" fill="url(#pn${i})"/><rect x="${o}" width="24" height="52" fill="url(#ce${i})" stroke="#c9d4ff" stroke-width=".8"/>`).join('')}<path d="M0,0 L30,0 L6,52 L0,52 Z" fill="#fff" opacity=".1"/></g>`;
+  return `<svg viewBox="-110 -90 220 180" class="sat-art" aria-hidden="true"><defs>
+   <linearGradient id="go${i}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff1b8"/><stop offset=".25" stop-color="#e7b443"/><stop offset=".5" stop-color="#9a6614"/><stop offset=".72" stop-color="#f2c65a"/><stop offset="1" stop-color="#7a4c0c"/></linearGradient>
+   <linearGradient id="pn${i}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4a7ff0"/><stop offset=".5" stop-color="#1a3a8c"/><stop offset="1" stop-color="#0b1a46"/></linearGradient>
+   <pattern id="ce${i}" width="8" height="10.4" patternUnits="userSpaceOnUse"><path d="M8 0H0V10.4" fill="none" stroke="#9fb6ff" stroke-opacity=".5" stroke-width=".6"/></pattern></defs>
+   ${panel(-104)}${panel(28)}
+   <rect x="-28" y="-2" width="4" height="4" fill="#c9c6d8"/><rect x="24" y="-2" width="4" height="4" fill="#c9c6d8"/>
+   <polygon points="24,-28 34,-38 34,20 24,30" fill="#7a4c0c"/><polygon points="-24,-28 -14,-38 34,-38 24,-28" fill="#ffe7a0"/>
+   <rect x="-24" y="-28" width="48" height="58" fill="url(#go${i})"/>
+   <path d="M-24,-10 L-8,-14 L4,-6 L24,-12 M-24,12 L-10,8 L6,16 L24,10 M-6,-28 L-2,-14 L-8,8 L-4,30" fill="none" stroke="#6b420a" stroke-opacity=".45"/>
+   <path d="M8,-38 V-52" stroke="#c9c6d8" stroke-width="2"/>
+   <ellipse cx="8" cy="-58" rx="24" ry="8" fill="#f1f0f6" stroke="#9a9cb0"/><ellipse cx="8" cy="-57" rx="17" ry="5" fill="#d2d1de"/><path d="M8,-57 L8,-70" stroke="#9a9cb0" stroke-width="1.5"/><circle cx="8" cy="-71" r="2.5" fill="#e9e6f2"/>
+   <path d="M-10,30 L10,30 L14,40 L-14,40 Z" fill="#4d5064"/>
+   <circle cx="-16" cy="-20" r="2.6" fill="#ff5d73"><animate attributeName="opacity" values="1;.15;1" dur="1.6s" repeatCount="indefinite"/></circle>
+  </svg>`}
+
+function rockSVG(seed){const i=uid++,r=rng(seed*977+13);r();
+  const n=14,pts=Array.from({length:n},(_,j)=>{const a=j/n*6.283,rr=84*(.76+.3*r());return[Math.cos(a)*rr,Math.sin(a)*rr*.86]});
+  let d='';pts.forEach((p,j)=>{const q=pts[(j+1)%n],m=[(p[0]+q[0])/2,(p[1]+q[1])/2];d+=j?` Q${p[0].toFixed(1)},${p[1].toFixed(1)} ${m[0].toFixed(1)},${m[1].toFixed(1)}`:`M${m[0].toFixed(1)},${m[1].toFixed(1)}`});
+  const m0=[(pts[0][0]+pts[1][0])/2,(pts[0][1]+pts[1][1])/2];d+=` Q${pts[0][0].toFixed(1)},${pts[0][1].toFixed(1)} ${m0[0].toFixed(1)},${m0[1].toFixed(1)}Z`;
+  const cr=Array.from({length:4},()=>({x:(r()-.5)*90,y:(r()-.5)*70,s:6+r()*13}));
+  return `<svg viewBox="-100 -100 200 200" aria-hidden="true"><defs>
+   <radialGradient id="rb${i}" cx="35%" cy="30%" r="85%"><stop offset="0" stop-color="#b3a698"/><stop offset=".5" stop-color="#6d6258"/><stop offset="1" stop-color="#2b2521"/></radialGradient>
+   <radialGradient id="rs${i}" cx="30%" cy="25%" r="90%"><stop offset=".5" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".7"/></radialGradient>
+   <filter id="rk${i}" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency=".045" numOctaves="5" seed="${seed+3}" result="t"/><feDiffuseLighting in="t" surfaceScale="6" lighting-color="#efe4d6" result="l"><feDistantLight azimuth="225" elevation="38"/></feDiffuseLighting><feComposite in="l" in2="SourceGraphic" operator="in" result="c"/><feBlend in="c" in2="SourceGraphic" mode="multiply"/></filter>
+   <clipPath id="rc${i}"><path d="${d}"/></clipPath></defs>
+   <path d="${d}" fill="url(#rb${i})" filter="url(#rk${i})"/>
+   <g clip-path="url(#rc${i})">${cr.map(c=>`<ellipse cx="${c.x.toFixed(1)}" cy="${c.y.toFixed(1)}" rx="${c.s.toFixed(1)}" ry="${(c.s*.8).toFixed(1)}" fill="#1e1915" opacity=".45"/><path d="M${(c.x-c.s*.9).toFixed(1)},${(c.y+c.s*.2).toFixed(1)} A${c.s},${(c.s*.8).toFixed(1)} 0 0 0 ${(c.x+c.s*.9).toFixed(1)},${(c.y+c.s*.2).toFixed(1)}" fill="none" stroke="#e6d9c8" stroke-opacity=".35" stroke-width="1.4"/>`).join('')}<rect x="-100" y="-100" width="200" height="200" fill="url(#rs${i})"/></g>
+   <path d="${d}" fill="none" stroke="#fff" stroke-opacity=".08"/>
+   <circle cx="${88+r()*8}" cy="${-50+r()*20}" r="5" fill="#6d6258"/><circle cx="${-94+r()*4}" cy="${46+r()*14}" r="3.5" fill="#5a5048"/>
+  </svg>`}
+
+function cometSVG(){const i=uid++;
+  return `<svg viewBox="-110 -85 220 170" aria-hidden="true"><defs>
+   <linearGradient id="dt${i}" x1="1" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#fff6dc" stop-opacity=".9"/><stop offset=".4" stop-color="#ffd9a0" stop-opacity=".35"/><stop offset="1" stop-color="#ffd9a0" stop-opacity="0"/></linearGradient>
+   <linearGradient id="it${i}" x1="1" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#cff4ff"/><stop offset="1" stop-color="#7fe0ff" stop-opacity="0"/></linearGradient>
+   <radialGradient id="cm${i}" r="50%"><stop offset="0" stop-color="#fff"/><stop offset=".25" stop-color="#e8fbff" stop-opacity=".9"/><stop offset=".6" stop-color="#7fe0ff" stop-opacity=".25"/><stop offset="1" stop-color="#7fe0ff" stop-opacity="0"/></radialGradient></defs>
+   <path d="M44,34 C10,30 -60,-10 -108,-70 C-60,-30 0,0 52,20 Z" fill="url(#dt${i})"/>
+   <path d="M46,26 L-104,-80 L-100,-84 L50,22 Z" fill="url(#it${i})" opacity=".8"/>
+   <circle cx="48" cy="28" r="34" fill="url(#cm${i})"/><circle cx="48" cy="28" r="6" fill="#fff"/>
+  </svg>`}
+
+// ---------- projets ----------
+const ART={pro:satSVG,school:i=>rockSVG(i+1),perso:cometSVG};
+for(const k in ART){const items=(window.PROJECTS||[]).filter(p=>p.kind===k);document.getElementById('n-'+k).textContent=items.length;
+  document.getElementById('g-'+k).innerHTML=items.map((p,j)=>`<article class="item reveal"><div class="art">${ART[k](j)}</div><div><small>${p.where||''}</small><h4>${p.title}</h4><p>${p.desc||''}</p><div class="tags">${(p.tags||[]).slice(0,4).map(t=>`<span>${t}</span>`).join('')}</div>${p.img?`<img class="thumb" src="${p.img}" alt="" loading="lazy">`:''}</div></article>`).join('')}
+
+// ---------- compétences : la fusée, un étage par domaine, des voyants pour le niveau ----------
 const lv=['bases','intermédiaire','autonome','avancé'];
-const SC=['#9b7bff','#7fe0ff','#ffc94d','#5ef0a0','#f5a3c7','#ff6b5e'];
-const notches=(l,c)=>`<i class="n" style="--c:${c}">${[1,2,3,4].map(j=>`<b class="${j<=l?'on':''}"></b>`).join('')}</i>`;
-document.getElementById('legend').innerHTML=lv.map((n,i)=>`<span>${notches(i+1,'#f5a3c7')}${n}</span>`).join('');
-let seed=11;const rnd=()=>(seed=(seed*16807)%2147483647)/2147483647;
-document.getElementById('skills').innerHTML=(window.SKILLS||[]).map((c,i)=>{const col=SC[i%SC.length];
-  return `<div class="cluster reveal" style="--c:${col}"><h3>${c.title}</h3><div class="chips">${c.skills.map(([n,l])=>`<span class="chip" title="${lv[l-1]}" style="--fs:${[.82,.88,.95,1.02][l-1]}rem;--rot:${(rnd()*8-4).toFixed(1)}deg;--dl:-${(rnd()*7).toFixed(1)}s">${n}${notches(l,col)}</span>`).join('')}</div></div>`}).join('');
+const SC=['#9b7bff','#36b6e0','#e5a72c','#2fc985','#f07ab4','#ff6b5e'];
+const lights=(l,c)=>`<i class="n" style="--c:${c}">${[1,2,3,4].map(j=>`<b class="${j<=l?'on':''}"></b>`).join('')}</i>`;
+document.getElementById('legend').innerHTML=lv.map((n,i)=>`<span>${lights(i+1,'#f5a3c7')}${n}</span>`).join('');
+const MET='<linearGradient id="met" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#6f7186"/><stop offset=".09" stop-color="#c9c8d6"/><stop offset=".26" stop-color="#f4f3f9"/><stop offset=".34" stop-color="#fff"/><stop offset=".58" stop-color="#dcdbe6"/><stop offset=".84" stop-color="#9a9cb0"/><stop offset="1" stop-color="#5d5f72"/></linearGradient>';
+document.getElementById('build').innerHTML=`<svg class="cone" viewBox="0 0 600 300" aria-hidden="true"><defs>${MET}<linearGradient id="tip" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#a8243c"/><stop offset=".35" stop-color="#ff7186"/><stop offset="1" stop-color="#8c1a30"/></linearGradient>
+   <clipPath id="cc"><path d="M0,300 C40,160 180,30 300,0 C420,30 560,160 600,300 Z"/></clipPath><radialGradient id="gl" cx="35%" cy="30%"><stop offset="0" stop-color="#6fb6ff"/><stop offset="1" stop-color="#0d1838"/></radialGradient></defs>
+   <path d="M0,300 C40,160 180,30 300,0 C420,30 560,160 600,300 Z" fill="url(#met)"/>
+   <rect x="0" y="0" width="600" height="80" fill="url(#tip)" clip-path="url(#cc)"/>
+   <circle cx="300" cy="185" r="52" fill="#3a3850"/><circle cx="300" cy="185" r="44" fill="url(#gl)"/><path d="M272,165 A36,36 0 0 1 312,152" stroke="#fff" stroke-opacity=".6" stroke-width="6" fill="none" stroke-linecap="round"/>
+   <text x="300" y="193" text-anchor="middle" font-family="Sora" font-weight="800" font-size="24" fill="#fff" opacity=".9">MJ</text></svg>`+
+  (window.SKILLS||[]).map((c,i)=>{const col=SC[i%SC.length];return `<div class="stage-r" style="--c:${col}"><h3>${c.title}</h3><div class="sks">${c.skills.map(([n,l])=>`<span class="sk" title="${lv[l-1]}">${n}${lights(l,col)}</span>`).join('')}</div></div>`}).join('')+
+  `<div class="fins" aria-hidden="true"><svg viewBox="0 0 740 260" preserveAspectRatio="none"><defs><linearGradient id="fg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff7186"/><stop offset="1" stop-color="#8c1a30"/></linearGradient></defs>
+   <path d="M72,10 L72,260 L2,260 L2,200 Q10,80 72,10 Z" fill="url(#fg)" stroke="#3a1020" stroke-width="2"/><path d="M668,10 L668,260 L738,260 L738,200 Q730,80 668,10 Z" fill="url(#fg)" stroke="#3a1020" stroke-width="2"/></svg></div>
+   <div class="engines" aria-hidden="true"><svg viewBox="0 0 600 124" preserveAspectRatio="xMidYMin meet"><defs>${MET.replace('id="met"','id="met2"')}<linearGradient id="ff" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".25" stop-color="#ffd27a"/><stop offset=".6" stop-color="#ff7a2a" stop-opacity=".7"/><stop offset="1" stop-color="#ff4a1c" stop-opacity="0"/></linearGradient></defs>
+   <rect x="0" y="0" width="600" height="14" fill="#3a3850"/>
+   ${[150,300,450].map(x=>`<path class="fl" d="M${x-46},58 Q${x-30},120 ${x},170 Q${x+30},120 ${x+46},58 Z" fill="url(#ff)"/><path d="M${x-40},14 L${x+40},14 L${x+56},60 L${x-56},60 Z" fill="url(#met2)" stroke="#2a2838" stroke-width="2"/>`).join('')}</svg></div>`;
+
+// ---------- expérience : le trajet relie les étoiles ----------
+function trip(){const t=document.getElementById('trip');const st=[...t.querySelectorAll('.star')].map(s=>{const l=s.parentElement;return[l.offsetLeft+s.offsetLeft,l.offsetTop+s.offsetTop]});
+  const sv=t.querySelector('svg');sv.setAttribute('viewBox',`0 0 ${t.offsetWidth} ${t.offsetHeight}`);
+  let d=`M${st[0][0]},${st[0][1]-120}`,prev=[st[0][0],st[0][1]-120],s=1;
+  for(const p of st){const dy=p[1]-prev[1];d+=` C${prev[0]+60*s},${prev[1]+dy*.35} ${p[0]+60*s},${p[1]-dy*.35} ${p[0]},${p[1]}`;prev=p;s=-s}
+  const P=document.getElementById('tripP');P.setAttribute('d',d);
+  document.getElementById('tripL').setAttribute('d','M'+st.map(p=>p.join(',')).join(' L'));
+  const L=P.getTotalLength(),r=rng(5);let g='';for(let l=20;l<L;l+=46){const q=P.getPointAtLength(l);g+=`<circle class="dust" cx="${(q.x+(r()-.5)*60).toFixed(1)}" cy="${(q.y+(r()-.5)*30).toFixed(1)}" r="${(.6+r()*1.3).toFixed(1)}" opacity="${(.3+r()*.6).toFixed(2)}"/>`}
+  document.getElementById('tripDust').innerHTML=g}
+
+// ---------- constellations derrière les titres ----------
+document.querySelectorAll('.sec-h').forEach((h,hi)=>{const r=rng(hi*31+7);r();
+  const pts=Array.from({length:8},(_,j)=>[20+j*62+r()*24,14+r()*110]);
+  h.insertAdjacentHTML('afterbegin',`<svg class="const" viewBox="0 0 520 150" aria-hidden="true"><path pathLength="1" d="M${pts.map(p=>p.map(v=>v.toFixed(1)).join(',')).join(' L')}"/>${pts.map((p,j)=>{const big=r()<.3;return `<circle class="${big?'big':''}" cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="${big?3:(1.1+r()*1.3).toFixed(1)}" style="--i:${j};--o:${(.55+r()*.45).toFixed(2)}"/>`}).join('')}</svg>`)});
+
+// ---------- planètes ----------
+const LOOK={
+  moon:{c:['#f1efe9','#a9a59c','#3b3934'],glow:'#ffffff',noise:'.05',seed:3,craters:1},
+  ensim:{c:['#d8fbff','#41b6d8','#0a2c46'],glow:'#7fe0ff',noise:'.006 .05',seed:12,tilt:12,ring:['#cdf4ff','#7fd3ff'],moon:1},
+};
+function planetSVG(k){const o=LOOK[k],i=uid++,t=o.tilt||0;
+  const ring=(half)=>o.ring?`<g transform="rotate(${t-16})" opacity=".9">${[[138,30,6,o.ring[0],.55],[124,26,3,o.ring[1],.8],[150,33,2,o.ring[1],.35]].map(([rx,ry,w,c,op])=>`<path d="M-${rx},0 A${rx},${ry} 0 0 ${half} ${rx},0" fill="none" stroke="${c}" stroke-width="${w}" stroke-opacity="${op}"/>`).join('')}</g>`:'';
+  let craters='';if(o.craters){const r=s=>(s=Math.sin(i*99+s)*1e4,s-Math.floor(s));for(let j=0;j<7;j++){const a=r(j)*6.28,d=r(j+9)*58,x=Math.cos(a)*d,y=Math.sin(a)*d,rr=5+r(j+3)*11;craters+=`<circle cx="${x}" cy="${y}" r="${rr}" fill="#000" opacity=".2"/><circle cx="${x-rr*.25}" cy="${y-rr*.25}" r="${rr*.8}" fill="none" stroke="#fff" stroke-opacity=".14"/>`}}
+  return `<svg viewBox="-150 -150 300 300" aria-hidden="true"><defs>
+   <radialGradient id="pb${i}" cx="34%" cy="30%" r="80%"><stop offset="0" stop-color="${o.c[0]}"/><stop offset=".45" stop-color="${o.c[1]}"/><stop offset="1" stop-color="${o.c[2]}"/></radialGradient>
+   <radialGradient id="ps${i}" cx="32%" cy="28%" r="85%"><stop offset=".45" stop-color="#000" stop-opacity="0"/><stop offset=".8" stop-color="#000" stop-opacity=".55"/><stop offset="1" stop-color="#000" stop-opacity=".85"/></radialGradient>
+   <radialGradient id="pa${i}" r="50%"><stop offset=".8" stop-color="${o.glow}" stop-opacity="0"/><stop offset=".84" stop-color="${o.glow}" stop-opacity=".35"/><stop offset="1" stop-color="${o.glow}" stop-opacity="0"/></radialGradient>
+   <filter id="pn${i}" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="${o.noise}" numOctaves="4" seed="${o.seed}"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope="0" intercept="1"/></feComponentTransfer></filter>
+   <clipPath id="pc${i}"><circle r="80"/></clipPath></defs>
+   <circle r="100" fill="url(#pa${i})"/>
+   ${ring(1)}
+   <g clip-path="url(#pc${i})"><circle r="80" fill="url(#pb${i})"/><rect x="-95" y="-95" width="190" height="190" filter="url(#pn${i})" opacity=".55" style="mix-blend-mode:overlay" transform="rotate(${t})"/>${craters}<circle r="80" fill="url(#ps${i})"/></g>
+   <circle r="79.5" fill="none" stroke="${o.glow}" stroke-opacity=".35" stroke-width="1.2"/>
+   ${ring(0)}
+   ${o.moon?`<g transform="rotate(${t-10})"><circle r="6" fill="#e9e6f2"><animateMotion dur="16s" repeatCount="indefinite" path="M-118,0 A118,34 0 1 1 118,0 A118,34 0 1 1 -118,0"/></circle></g>`:''}
+  </svg>`}
+document.querySelectorAll('[data-planet]').forEach(el=>el.innerHTML=planetSVG(el.dataset.planet));
 
 // ---------- apparitions ----------
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.1});
-document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+document.querySelectorAll('.reveal,.sec-h').forEach(el=>io.observe(el));
 
 // ---------- ciel ----------
 const cv=document.getElementById('stars'),cx=cv.getContext('2d');let stars=[];
@@ -525,23 +570,22 @@ function sky(t){const dy=scrollY-lastY;lastY=scrollY;vel+=(dy-vel)*.12;
   requestAnimationFrame(sky)}
 
 // ---------- route de la fusée ----------
-// Elle part de la station, descend dans l'espace libre à côté de chaque objet,
-// traverse dans l'intervalle entre deux objets, puis se pose sur la planète des habitants.
+// Elle part de la station, descend dans l'espace libre à côté de chaque bloc,
+// traverse dans l'intervalle entre deux blocs, puis se pose sur la planète des habitants.
 const page=document.getElementById('page'),route=document.getElementById('route'),trail=document.getElementById('trail'),rocket=document.getElementById('rocket'),stage=document.getElementById('stage');
 // position dans la page sans tenir compte des animations (transform)
 const rel=el=>{let x=0,y=0,e=el;while(e&&e!==page){x+=e.offsetLeft;y+=e.offsetTop;e=e.offsetParent}return{x,y,w:el.offsetWidth,h:el.offsetHeight}};
 let S=[],land=null;
-function plot(){
+function plot(){trip();
   const W=page.clientWidth,H=page.scrollHeight,mobile=innerWidth<=900;
   route.setAttribute('viewBox',`0 0 ${W} ${H}`);
   const st=rel(document.getElementById('station'));
   const sr=rel(stage),s=sr.w/600,C={x:sr.x+300*s,y:sr.y+340*s},R=170*s,th=-118*Math.PI/180;
-  const lift=mobile?20:27; // la fusée se pose sur ses ailerons, pas à moitié enfoncée
+  const lift=mobile?24:32; // la fusée se pose sur ses ailerons, pas à moitié enfoncée
   land={x:C.x+Math.cos(th)*(R+lift),y:C.y+Math.sin(th)*(R+lift),ang:-118};
   const blocks=[...document.querySelectorAll('.blk')].map(el=>{const b=rel(el);
     const x=mobile?10:el.dataset.free?st.x+st.w/2:el.classList.contains('l')?(b.x+b.w+W)/2:b.x/2;
     return{x,top:b.y,bot:b.y+b.h}});
-  // départ : sous la station, au sas d'amarrage
   let cx0=mobile?10:st.x+st.w/2,cy0=mobile?st.y+st.h:st.y+st.h*.92;
   let d=`M${cx0},${cy0}`;
   for(const bl of blocks){
@@ -550,8 +594,7 @@ function plot(){
     else d+=` L${bl.x},${top}`;
     d+=` L${bl.x},${bl.bot+10}`;cx0=bl.x;cy0=bl.bot+10;
   }
-  // descente finale : on se place au-dessus de la planète puis on se pose
-  const yA=land.y-240,k=(yA-cy0)*.6;
+  const yA=Math.max(land.y-240,cy0+60),k=(yA-cy0)*.6;
   d+=` C${cx0},${cy0+k} ${land.x},${yA-k} ${land.x},${yA} L${land.x},${land.y}`;
   trail.setAttribute('d',d);
   const L=trail.getTotalLength();S=[];for(let l=0;l<=L;l+=4){const p=trail.getPointAtLength(l);S.push([l,p.x,p.y])}
@@ -567,7 +610,7 @@ function fly(){if(!S.length)return;
   // sur la fin, la fusée se retourne pour se poser à reculons, flamme vers le sol
   const left=S[S.length-1][0]-l,flip=Math.max(0,Math.min(1,1-left/240));
   if(flip>0){let delta=((land.ang-ang+540)%360)-180;ang+=delta*flip}
-  rocket.setAttribute('transform',`translate(${x},${y}) rotate(${ang}) scale(${innerWidth<=900?.8:1.05})`);
+  rocket.setAttribute('transform',`translate(${x},${y}) rotate(${ang}) scale(${innerWidth<=900?.7:.95})`);
   const tl=Math.min(l,380);trail.style.strokeDasharray=`0 ${l-tl} ${tl*(1-flip)} ${S[S.length-1][0]*2}`;
   const now=k>=S.length-1;if(now!==landed){landed=now;rocket.classList.toggle('landed',now);if(now)window.cheer&&cheer()}
 }
@@ -645,10 +688,10 @@ close.addEventListener('click',()=>{st.classList.remove('opened');setPull(0);clo
 })();
 
 // ---------- nébuleuses lointaines ----------
-function far(){const el=document.getElementById('far'),W=page.clientWidth,H=page.scrollHeight;let r=7,out='';const rnd=()=>(r=(r*16807)%2147483647)/2147483647;
+function far(){const el=document.getElementById('far'),W=page.clientWidth,H=page.scrollHeight;const r=rng(7);let out='';
   const cols=['#9b7bff','#f5a3c7','#7aa8ff','#5ef0a0'];
-  for(let y=700;y<H-900;y+=700+rnd()*500){const x=rnd()*W,c=cols[Math.floor(rnd()*cols.length)],w=90+rnd()*120;
-    out+=`<i style="left:${x}px;top:${y}px;width:${w}px;height:${w*.38}px;transform:rotate(${rnd()*180}deg);background:radial-gradient(ellipse at center,#fff9 0,${c}66 18%,${c}22 45%,transparent 70%);filter:blur(1px);opacity:.5"></i>`}
+  for(let y=700;y<H-900;y+=700+r()*500){const x=r()*W,c=cols[Math.floor(r()*cols.length)],w=90+r()*120;
+    out+=`<i style="left:${x}px;top:${y}px;width:${w}px;height:${w*.38}px;transform:rotate(${r()*180}deg);background:radial-gradient(ellipse at center,#fff9 0,${c}66 18%,${c}22 45%,transparent 70%);filter:blur(1px);opacity:.5"></i>`}
   el.innerHTML=out}
 // ---------- démarrage ----------
 const reduced=matchMedia('(prefers-reduced-motion:reduce)').matches;
