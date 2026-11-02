@@ -129,23 +129,44 @@ h1,h2,h3,h4{font-family:Sora,sans-serif}
 .body p{color:#bdbacd;font-size:.92rem;margin:8px auto 0;max-width:30ch}
 .more{display:inline-block;margin-top:34px;color:var(--mute);font-size:.95rem}
 
-/* projets : une illustration par projet, le texte à côté */
-.grp{display:flex;align-items:center;gap:12px;font-size:1.05rem;margin:0 0 30px;color:var(--mute);font-weight:600}
-.grp b{color:var(--ink)}
-.grp::after{content:"";flex:1;height:1px;background:var(--line)}
-.blk.r .grp{flex-direction:row-reverse}
-.items{display:grid;gap:56px}
-.item{display:grid;grid-template-columns:200px minmax(0,1fr);gap:30px;align-items:center}
-.item .art{position:relative;width:200px;height:170px;animation:drift 9s ease-in-out infinite}
-.item:nth-child(2) .art{animation-delay:-3s}.item:nth-child(3) .art{animation-delay:-6s}
-.item .art svg{width:100%;height:100%;overflow:visible}
-.sat-art{animation:tilt 12s ease-in-out infinite}
-.item small{color:var(--vio);font-weight:500;font-size:.82rem}
-.item h4{font-size:1.12rem;line-height:1.3;margin:4px 0 8px}
-.item p{margin:0;font-size:.93rem;line-height:1.55;color:#c4c1d4;max-width:58ch}
-.tags{margin-top:12px;display:flex;flex-wrap:wrap;gap:6px}
+/* projets : un système de planètes, une par projet, et un écran de détail */
+.tabs{display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end;margin:-24px 0 10px}
+.tab{border:1px solid var(--line);background:none;border-radius:999px;padding:.45rem 1rem;color:var(--mute);cursor:pointer;font-size:.9rem;display:inline-flex;align-items:center;gap:8px;transition:background .2s,color .2s}
+.tab i{width:10px;height:10px;border-radius:50%;background:var(--c);box-shadow:0 0 8px var(--c)}
+.tab small{opacity:.6}
+.tab[aria-selected=true]{background:var(--ink);color:var(--bg)}
+.orrery{position:relative;height:270px}
+.orrery > svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.orrery > svg path{fill:none;stroke:#ffffff2a;stroke-dasharray:3 7}
+.pp{position:absolute;left:var(--x);top:var(--y);width:140px;transform:translate(-50%,-32px);background:none;border:0;padding:0;cursor:pointer;text-align:center;color:var(--mute);font:inherit;transition:left .7s cubic-bezier(.3,1.2,.4,1),top .7s cubic-bezier(.3,1.2,.4,1),opacity .4s}
+.pp .pv{--s:64px;margin:0 auto 14px;transition:transform .5s cubic-bezier(.3,1.5,.5,1)}
+.pp:hover .pv{transform:scale(1.15)}
+.pp[aria-current=true] .pv{transform:scale(1.5)}
+.pp[aria-current=true] .pv::after{content:"";position:absolute;inset:-14px;border-radius:50%;border:1px dashed #ffffff88;animation:spin 14s linear infinite}
+.pp span{display:block;font-size:.8rem;line-height:1.3;margin-top:4px}
+.pp[aria-current=true] span{color:var(--ink);font-weight:600;margin-top:16px}
+.pp:focus-visible{outline:2px solid var(--vio);outline-offset:6px;border-radius:12px}
+.viewer{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:32px;align-items:start;margin-top:20px;transition:opacity .35s}
+.viewer.swap{opacity:0}
+.vis{position:relative;aspect-ratio:4/3;border-radius:16px;overflow:hidden;background:radial-gradient(1px 1px at 20% 30%,#fff9,transparent),radial-gradient(1.3px 1.3px at 70% 20%,#fff,transparent),radial-gradient(1px 1px at 85% 75%,#fff8,transparent),radial-gradient(1px 1px at 40% 80%,#fff7,transparent),radial-gradient(60% 60% at 60% 40%,var(--glow,#9b7bff33),transparent 70%),#0b0a14;box-shadow:0 0 0 1px #ffffff1c,0 20px 50px #0009}
+.vis img{width:100%;height:100%;object-fit:cover}
+.vis .pv{position:absolute;left:50%;top:50%;--s:46%;width:46%;height:auto;aspect-ratio:1;transform:translate(-50%,-50%);margin:0;animation:none}
+.vis::after{content:"";position:absolute;inset:12px;pointer-events:none;
+  background:linear-gradient(#fff9,#fff9) 0 0/18px 1.5px,linear-gradient(#fff9,#fff9) 0 0/1.5px 18px,linear-gradient(#fff9,#fff9) 100% 0/18px 1.5px,linear-gradient(#fff9,#fff9) 100% 0/1.5px 18px,
+   linear-gradient(#fff9,#fff9) 0 100%/18px 1.5px,linear-gradient(#fff9,#fff9) 0 100%/1.5px 18px,linear-gradient(#fff9,#fff9) 100% 100%/18px 1.5px,linear-gradient(#fff9,#fff9) 100% 100%/1.5px 18px;background-repeat:no-repeat}
+.vis .soon{position:absolute;left:16px;bottom:14px;font-size:.75rem;color:var(--mute)}
+.info small{color:var(--vio);font-weight:500;font-size:.85rem}
+.info h4{font-size:1.4rem;line-height:1.25;margin:6px 0 10px}
+.info p{margin:0;color:#c9c6d8;font-size:.95rem}
+.info dl{margin:16px 0 0;display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:.9rem}
+.info dt{color:var(--ink);font-weight:600}
+.info dd{margin:0;color:#b9b6ca}
+.tags{margin-top:16px;display:flex;flex-wrap:wrap;gap:6px}
 .tags span{font-size:.74rem;color:#bdb9cf;padding:.15rem .55rem;border-radius:4px;background:#ffffff0d;border:1px solid #ffffff12}
-.thumb{margin-top:14px;width:min(100%,280px);aspect-ratio:16/9;object-fit:cover;border-radius:12px;box-shadow:0 0 0 1px #ffffff1f,0 14px 30px #0008}
+.nav{display:flex;align-items:center;gap:10px;margin-top:20px;font-size:.85rem;color:var(--mute)}
+.nav button{width:38px;height:38px;border-radius:50%;border:1px solid #ffffff2e;background:none;color:var(--ink);cursor:pointer;font-size:1rem}
+.nav button:hover{background:#ffffff12}
+.nav a{margin-left:auto}
 
 /* compétences : la fusée assemblée étage par étage */
 .legend{display:flex;flex-wrap:wrap;gap:8px 22px;color:var(--mute);font-size:.85rem;margin:-26px 0 40px}
@@ -219,7 +240,7 @@ h1,h2,h3,h4{font-family:Sora,sans-serif}
 .close[hidden]{display:none}
 .foot{text-align:center;color:var(--dim);font-size:.85rem;padding:40px 0 50px}
 
-@media (max-width:1100px){.blk{width:66%}.item{grid-template-columns:150px minmax(0,1fr)}.item .art{width:150px;height:130px}}
+@media (max-width:1100px){.blk{width:66%}}
 @media (max-width:900px){
   .top nav{display:none}
   .page{overflow-x:clip}
@@ -229,7 +250,9 @@ h1,h2,h3,h4{font-family:Sora,sans-serif}
   .station{order:-1;width:min(86%,340px)}
   .trip{padding-left:70px;gap:60px}
   .sys{grid-template-columns:1fr;gap:46px}.sys > svg{display:none}
-  .item{grid-template-columns:1fr;gap:12px}.item .art{width:150px;height:120px}
+  .orrery{height:auto;display:flex;gap:4px;overflow-x:auto;padding:30px 0 10px}.orrery > svg{display:none}
+  #pls{display:flex;gap:4px}.pp{position:static;transform:none;flex:none;width:112px}
+  .viewer{grid-template-columns:1fr}.tabs{justify-content:flex-start;margin-top:0}
   .stage-r{padding:16px 18px}
   .fins{left:-30px;right:-30px}
   .orbitwrap > svg.ring{display:none}
@@ -239,7 +262,7 @@ h1,h2,h3,h4{font-family:Sora,sans-serif}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   .reveal{opacity:1;transform:none;transition:none}
-  .station,.pv,.item .art,.sat-art,.link,.star::before,#rocket .flame,.engines .fl{animation:none}
+  .station,.pv,.link,.star::before,#rocket .flame,.engines .fl{animation:none}
 }
 </style>
 </head>
@@ -344,19 +367,12 @@ h1,h2,h3,h4{font-family:Sora,sans-serif}
     <a class="more reveal" href="parcours-universitaire.html">Détail des semestres →</a>
   </section>
 
-  <!-- projets -->
+  <!-- projets : une planète par projet -->
   <section class="blk r" id="projets">
-    <div class="sec-h reveal"><span class="num">03</span><div><h2>Projets</h2><p>En entreprise, à l'école et en personnel</p></div></div>
-    <h3 class="grp reveal"><b>Entreprise</b> · <span id="n-pro"></span></h3>
-    <div class="items" id="g-pro"></div>
-  </section>
-  <section class="blk l">
-    <h3 class="grp reveal"><b>École</b> · <span id="n-school"></span></h3>
-    <div class="items" id="g-school"></div>
-  </section>
-  <section class="blk r">
-    <h3 class="grp reveal"><b>Personnel</b> · <span id="n-perso"></span></h3>
-    <div class="items" id="g-perso"></div>
+    <div class="sec-h reveal"><span class="num">03</span><div><h2>Projets</h2><p>Choisissez une planète pour voir le projet</p></div></div>
+    <div class="tabs reveal" role="tablist" id="tabs"></div>
+    <div class="orrery reveal" id="orrery"><svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M2,70 Q50,-10 98,70" vector-effect="non-scaling-stroke"/></svg><div id="pls"></div></div>
+    <div class="viewer" id="viewer" aria-live="polite"></div>
   </section>
 
   <!-- compétences : la fusée, un étage par domaine -->
@@ -442,55 +458,6 @@ h1,h2,h3,h4{font-family:Sora,sans-serif}
 let uid=0;
 const rng=s=>()=>(s=(s*16807)%2147483647)/2147483647;
 
-// ---------- illustrations des projets ----------
-function satSVG(){const i=uid++;
-  const panel=x=>`<g transform="translate(${x},-26)">${[0,26,52].map(o=>`<rect x="${o}" width="24" height="52" fill="url(#pn${i})"/><rect x="${o}" width="24" height="52" fill="url(#ce${i})" stroke="#c9d4ff" stroke-width=".8"/>`).join('')}<path d="M0,0 L30,0 L6,52 L0,52 Z" fill="#fff" opacity=".1"/></g>`;
-  return `<svg viewBox="-110 -90 220 180" class="sat-art" aria-hidden="true"><defs>
-   <linearGradient id="go${i}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff1b8"/><stop offset=".25" stop-color="#e7b443"/><stop offset=".5" stop-color="#9a6614"/><stop offset=".72" stop-color="#f2c65a"/><stop offset="1" stop-color="#7a4c0c"/></linearGradient>
-   <linearGradient id="pn${i}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4a7ff0"/><stop offset=".5" stop-color="#1a3a8c"/><stop offset="1" stop-color="#0b1a46"/></linearGradient>
-   <pattern id="ce${i}" width="8" height="10.4" patternUnits="userSpaceOnUse"><path d="M8 0H0V10.4" fill="none" stroke="#9fb6ff" stroke-opacity=".5" stroke-width=".6"/></pattern></defs>
-   ${panel(-104)}${panel(28)}
-   <rect x="-28" y="-2" width="4" height="4" fill="#c9c6d8"/><rect x="24" y="-2" width="4" height="4" fill="#c9c6d8"/>
-   <polygon points="24,-28 34,-38 34,20 24,30" fill="#7a4c0c"/><polygon points="-24,-28 -14,-38 34,-38 24,-28" fill="#ffe7a0"/>
-   <rect x="-24" y="-28" width="48" height="58" fill="url(#go${i})"/>
-   <path d="M-24,-10 L-8,-14 L4,-6 L24,-12 M-24,12 L-10,8 L6,16 L24,10 M-6,-28 L-2,-14 L-8,8 L-4,30" fill="none" stroke="#6b420a" stroke-opacity=".45"/>
-   <path d="M8,-38 V-52" stroke="#c9c6d8" stroke-width="2"/>
-   <ellipse cx="8" cy="-58" rx="24" ry="8" fill="#f1f0f6" stroke="#9a9cb0"/><ellipse cx="8" cy="-57" rx="17" ry="5" fill="#d2d1de"/><path d="M8,-57 L8,-70" stroke="#9a9cb0" stroke-width="1.5"/><circle cx="8" cy="-71" r="2.5" fill="#e9e6f2"/>
-   <path d="M-10,30 L10,30 L14,40 L-14,40 Z" fill="#4d5064"/>
-   <circle cx="-16" cy="-20" r="2.6" fill="#ff5d73"><animate attributeName="opacity" values="1;.15;1" dur="1.6s" repeatCount="indefinite"/></circle>
-  </svg>`}
-
-function rockSVG(seed){const i=uid++,r=rng(seed*977+13);r();
-  const n=14,pts=Array.from({length:n},(_,j)=>{const a=j/n*6.283,rr=84*(.76+.3*r());return[Math.cos(a)*rr,Math.sin(a)*rr*.86]});
-  let d='';pts.forEach((p,j)=>{const q=pts[(j+1)%n],m=[(p[0]+q[0])/2,(p[1]+q[1])/2];d+=j?` Q${p[0].toFixed(1)},${p[1].toFixed(1)} ${m[0].toFixed(1)},${m[1].toFixed(1)}`:`M${m[0].toFixed(1)},${m[1].toFixed(1)}`});
-  const m0=[(pts[0][0]+pts[1][0])/2,(pts[0][1]+pts[1][1])/2];d+=` Q${pts[0][0].toFixed(1)},${pts[0][1].toFixed(1)} ${m0[0].toFixed(1)},${m0[1].toFixed(1)}Z`;
-  const cr=Array.from({length:4},()=>({x:(r()-.5)*90,y:(r()-.5)*70,s:6+r()*13}));
-  return `<svg viewBox="-100 -100 200 200" aria-hidden="true"><defs>
-   <radialGradient id="rb${i}" cx="35%" cy="30%" r="85%"><stop offset="0" stop-color="#b3a698"/><stop offset=".5" stop-color="#6d6258"/><stop offset="1" stop-color="#2b2521"/></radialGradient>
-   <radialGradient id="rs${i}" cx="30%" cy="25%" r="90%"><stop offset=".5" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".7"/></radialGradient>
-   <filter id="rk${i}" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency=".045" numOctaves="5" seed="${seed+3}" result="t"/><feDiffuseLighting in="t" surfaceScale="6" lighting-color="#efe4d6" result="l"><feDistantLight azimuth="225" elevation="38"/></feDiffuseLighting><feComposite in="l" in2="SourceGraphic" operator="in" result="c"/><feBlend in="c" in2="SourceGraphic" mode="multiply"/></filter>
-   <clipPath id="rc${i}"><path d="${d}"/></clipPath></defs>
-   <path d="${d}" fill="url(#rb${i})" filter="url(#rk${i})"/>
-   <g clip-path="url(#rc${i})">${cr.map(c=>`<ellipse cx="${c.x.toFixed(1)}" cy="${c.y.toFixed(1)}" rx="${c.s.toFixed(1)}" ry="${(c.s*.8).toFixed(1)}" fill="#1e1915" opacity=".45"/><path d="M${(c.x-c.s*.9).toFixed(1)},${(c.y+c.s*.2).toFixed(1)} A${c.s},${(c.s*.8).toFixed(1)} 0 0 0 ${(c.x+c.s*.9).toFixed(1)},${(c.y+c.s*.2).toFixed(1)}" fill="none" stroke="#e6d9c8" stroke-opacity=".35" stroke-width="1.4"/>`).join('')}<rect x="-100" y="-100" width="200" height="200" fill="url(#rs${i})"/></g>
-   <path d="${d}" fill="none" stroke="#fff" stroke-opacity=".08"/>
-   <circle cx="${88+r()*8}" cy="${-50+r()*20}" r="5" fill="#6d6258"/><circle cx="${-94+r()*4}" cy="${46+r()*14}" r="3.5" fill="#5a5048"/>
-  </svg>`}
-
-function cometSVG(){const i=uid++;
-  return `<svg viewBox="-110 -85 220 170" aria-hidden="true"><defs>
-   <linearGradient id="dt${i}" x1="1" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#fff6dc" stop-opacity=".9"/><stop offset=".4" stop-color="#ffd9a0" stop-opacity=".35"/><stop offset="1" stop-color="#ffd9a0" stop-opacity="0"/></linearGradient>
-   <linearGradient id="it${i}" x1="1" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#cff4ff"/><stop offset="1" stop-color="#7fe0ff" stop-opacity="0"/></linearGradient>
-   <radialGradient id="cm${i}" r="50%"><stop offset="0" stop-color="#fff"/><stop offset=".25" stop-color="#e8fbff" stop-opacity=".9"/><stop offset=".6" stop-color="#7fe0ff" stop-opacity=".25"/><stop offset="1" stop-color="#7fe0ff" stop-opacity="0"/></radialGradient></defs>
-   <path d="M44,34 C10,30 -60,-10 -108,-70 C-60,-30 0,0 52,20 Z" fill="url(#dt${i})"/>
-   <path d="M46,26 L-104,-80 L-100,-84 L50,22 Z" fill="url(#it${i})" opacity=".8"/>
-   <circle cx="48" cy="28" r="34" fill="url(#cm${i})"/><circle cx="48" cy="28" r="6" fill="#fff"/>
-  </svg>`}
-
-// ---------- projets ----------
-const ART={pro:satSVG,school:i=>rockSVG(i+1),perso:cometSVG};
-for(const k in ART){const items=(window.PROJECTS||[]).filter(p=>p.kind===k);document.getElementById('n-'+k).textContent=items.length;
-  document.getElementById('g-'+k).innerHTML=items.map((p,j)=>`<article class="item reveal"><div class="art">${ART[k](j)}</div><div><small>${p.where||''}</small><h4>${p.title}</h4><p>${p.desc||''}</p><div class="tags">${(p.tags||[]).slice(0,4).map(t=>`<span>${t}</span>`).join('')}</div>${p.img?`<img class="thumb" src="${p.img}" alt="" loading="lazy">`:''}</div></article>`).join('')}
-
 // ---------- compétences : la fusée, un étage par domaine, des voyants pour le niveau ----------
 const lv=['bases','intermédiaire','autonome','avancé'];
 const SC=['#9b7bff','#36b6e0','#e5a72c','#2fc985','#f07ab4','#ff6b5e'];
@@ -530,7 +497,7 @@ const LOOK={
   moon:{c:['#f1efe9','#a9a59c','#3b3934'],glow:'#ffffff',noise:'.05',seed:3,craters:1},
   ensim:{c:['#d8fbff','#41b6d8','#0a2c46'],glow:'#7fe0ff',noise:'.006 .05',seed:12,tilt:12,ring:['#cdf4ff','#7fd3ff'],moon:1},
 };
-function planetSVG(k){const o=LOOK[k],i=uid++,t=o.tilt||0;
+function planetSVG(k){const o=typeof k==='string'?LOOK[k]:k,i=uid++,t=o.tilt||0;
   const ring=(half)=>o.ring?`<g transform="rotate(${t-16})" opacity=".9">${[[138,30,6,o.ring[0],.55],[124,26,3,o.ring[1],.8],[150,33,2,o.ring[1],.35]].map(([rx,ry,w,c,op])=>`<path d="M-${rx},0 A${rx},${ry} 0 0 ${half} ${rx},0" fill="none" stroke="${c}" stroke-width="${w}" stroke-opacity="${op}"/>`).join('')}</g>`:'';
   let craters='';if(o.craters){const r=s=>(s=Math.sin(i*99+s)*1e4,s-Math.floor(s));for(let j=0;j<7;j++){const a=r(j)*6.28,d=r(j+9)*58,x=Math.cos(a)*d,y=Math.sin(a)*d,rr=5+r(j+3)*11;craters+=`<circle cx="${x}" cy="${y}" r="${rr}" fill="#000" opacity=".2"/><circle cx="${x-rr*.25}" cy="${y-rr*.25}" r="${rr*.8}" fill="none" stroke="#fff" stroke-opacity=".14"/>`}}
   return `<svg viewBox="-150 -150 300 300" aria-hidden="true"><defs>
@@ -547,6 +514,31 @@ function planetSVG(k){const o=LOOK[k],i=uid++,t=o.tilt||0;
    ${o.moon?`<g transform="rotate(${t-10})"><circle r="6" fill="#e9e6f2"><animateMotion dur="16s" repeatCount="indefinite" path="M-118,0 A118,34 0 1 1 118,0 A118,34 0 1 1 -118,0"/></circle></g>`:''}
   </svg>`}
 document.querySelectorAll('[data-planet]').forEach(el=>el.innerHTML=planetSVG(el.dataset.planet));
+
+// ---------- projets : une planète par projet, un écran de détail ----------
+const KINDS=[['pro','Entreprise','#ff6b5e',[0,30]],['school','École','#5ef0a0',[150,210]],['perso','Personnel','#ffc94d',[40,290]]];
+const PJ=window.PROJECTS||[];
+// chaque projet reçoit sa propre planète, dans les teintes de sa catégorie
+PJ.forEach((p,i)=>{const [, , ,hues]=KINDS.find(k=>k[0]===p.kind),n=PJ.filter(q=>q.kind===p.kind).indexOf(p),h=hues[n%2]+n*14,r=rng(i*13+5);r();
+  p.look={c:[`hsl(${h} 90% 88%)`,`hsl(${h} 62% 52%)`,`hsl(${h} 70% 12%)`],glow:`hsl(${h} 90% 70%)`,noise:r()<.5?'.03':(.004+r()*.004).toFixed(3)+' .06',seed:Math.floor(r()*60),tilt:Math.round(r()*40-20),craters:r()<.4?1:0,ring:r()<.35?[`hsl(${h} 90% 90%)`,`hsl(${h} 80% 70%)`]:null,moon:r()<.3?1:0};p.svg=planetSVG(p.look)});
+let cat='pro',idx=0;
+const tabs=document.getElementById('tabs'),pls=document.getElementById('pls'),viewer=document.getElementById('viewer');
+tabs.innerHTML=KINDS.map(([k,l,c])=>`<button class="tab" role="tab" data-k="${k}" style="--c:${c}"><i></i>${l} <small>${PJ.filter(p=>p.kind===k).length}</small></button>`).join('');
+function showProjects(swap){const items=PJ.filter(p=>p.kind===cat),p=items[idx];
+  tabs.querySelectorAll('.tab').forEach(t=>t.setAttribute('aria-selected',t.dataset.k===cat));
+  // les planètes sont posées sur un arc
+  pls.innerHTML=items.map((q,j)=>{const t=items.length>1?j/(items.length-1):.5,x=8+t*84,y=70-80*t*(1-t)*1.0;return `<button class="pp" style="--x:${x}%;--y:${y}%" data-i="${j}" aria-current="${j===idx}" aria-label="${q.title}"><div class="pv">${q.svg}</div><span>${q.title}</span></button>`}).join('');
+  const fill=()=>{viewer.innerHTML=`<div class="vis" style="--glow:${p.look.glow.replace(')',' / .25)')}">${p.img?`<img src="${p.img}" alt="${p.title}">`:`<div class="pv">${p.svg}</div><span class="soon">Visuel à venir</span>`}</div>
+    <div class="info"><small>${[p.where,p.when].filter(Boolean).join(' · ')}</small><h4>${p.title}</h4><p>${p.desc||''}</p>
+    ${p.missions&&p.missions.length?`<dl>${p.missions.map(([a,b])=>`<dt>${a}</dt><dd>${b}</dd>`).join('')}</dl>`:''}
+    <div class="tags">${(p.tags||[]).map(t=>`<span>${t}</span>`).join('')}</div>
+    <div class="nav"><button type="button" data-step="-1" aria-label="Projet précédent">←</button><span>${idx+1} / ${items.length}</span><button type="button" data-step="1" aria-label="Projet suivant">→</button>${p.link?`<a href="${p.link}" target="_blank" rel="noopener">Voir le code</a>`:''}</div></div>`;
+    viewer.classList.remove('swap');window.plot&&requestAnimationFrame(plot)};
+  if(swap){viewer.classList.add('swap');setTimeout(fill,250)}else fill()}
+tabs.addEventListener('click',e=>{const t=e.target.closest('.tab');if(!t||t.dataset.k===cat)return;cat=t.dataset.k;idx=0;showProjects(true)});
+pls.addEventListener('click',e=>{const b=e.target.closest('.pp');if(!b||+b.dataset.i===idx)return;idx=+b.dataset.i;showProjects(true)});
+viewer.addEventListener('click',e=>{const b=e.target.closest('[data-step]');if(!b)return;const n=PJ.filter(p=>p.kind===cat).length;idx=(idx+ +b.dataset.step+n)%n;showProjects(true)});
+showProjects(false);
 
 // ---------- apparitions ----------
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.1});
