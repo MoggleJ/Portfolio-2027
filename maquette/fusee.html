@@ -48,7 +48,7 @@ h1,h2,h3,h4{font-family:Sora,sans-serif}
 /* page : les blocs alternent à gauche et à droite, la fusée passe dans l'espace libre */
 .page{position:relative;max-width:1320px;margin:0 auto;padding:0 clamp(16px,4vw,48px)}
 #route{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none;z-index:1}
-#route .trail{fill:none;stroke:#ffc98a;stroke-width:2.5;stroke-linecap:round;opacity:.5;filter:drop-shadow(0 0 6px #ffb26b)}
+#route .trail{fill:none;stroke:#c9b8ff;stroke-width:2;stroke-linecap:round;opacity:.5;filter:drop-shadow(0 0 6px #9b7bff)}
 #rocket .flame{transform-box:fill-box;transform-origin:100% 50%;animation:flick .1s infinite alternate}
 @keyframes flick{to{transform:scaleX(.82) scaleY(.92)}}
 #rocket.landed .flame{opacity:0;animation:none}
@@ -95,12 +95,14 @@ h1,h2,h3,h4{font-family:Sora,sans-serif}
 .btn{position:relative;display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:500;padding:.8rem 1.25rem;border-radius:999px;background:var(--ink);color:var(--bg);transition:transform .2s}
 .btn.o{background:none;color:var(--ink);box-shadow:inset 0 0 0 1px #ffffff2e}
 .btn:hover{transform:translateY(-2px)}
-.sat{position:relative;justify-self:center;width:min(100%,600px);aspect-ratio:500/460;animation:drift 11s ease-in-out infinite}
-.sat > svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;animation:tilt 16s ease-in-out infinite}
-.sat .lens{position:absolute;left:50%;top:50%;width:47.6%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;overflow:hidden;box-shadow:inset 0 0 20px #000,0 0 0 2px #0006}
-.sat .lens img{width:100%;height:100%;object-fit:cover}
-.sat .lens::after{content:"";position:absolute;inset:0;border-radius:50%;background:linear-gradient(140deg,#ffffff38 0 14%,transparent 30%),radial-gradient(circle,transparent 64%,#0007)}
-.sat small{position:absolute;left:6%;top:64%;font:500 .72rem 'IBM Plex Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
+.me{position:relative;justify-self:center;width:min(86%,420px);aspect-ratio:1;margin:40px 0}
+.me .ball{position:relative;width:100%;height:100%;border-radius:50%;overflow:hidden;box-shadow:0 0 0 1px #ffffff1f,0 0 90px #9b7bff40,0 30px 60px #000a}
+.me .ball img{width:100%;height:100%;object-fit:cover}
+.me .ball::after{content:"";position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 32% 28%,#ffffff2e,transparent 40%),radial-gradient(circle at 70% 75%,#0000 50%,#0008 85%);pointer-events:none}
+.me .ring{position:absolute;inset:-9%;border-radius:50%;border:1px dashed #ffffff33;pointer-events:none}
+.me .ring.r2{inset:-20%;border-color:#ffffff1a}
+.me .moonpath{position:absolute;inset:-9%;border-radius:50%;animation:spin 40s linear infinite;pointer-events:none}
+.me .moonpath i{position:absolute;left:50%;top:-11px;width:22px;height:22px;margin-left:-11px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#efeaff,#9b7bff 55%,#2a1f5a)}
 .photo{position:relative;justify-self:center;width:min(100%,330px);margin:0}
 /* le pas de tir sous la photo : la fusée part d'ici */
 .photo .pad{position:absolute;left:50%;top:100%;width:70px;height:8px;margin:6px 0 0 -35px;border-radius:50%;background:radial-gradient(closest-side,#ffb26b99,transparent);filter:blur(1px)}
@@ -123,7 +125,7 @@ h1,h2,h3,h4{font-family:Sora,sans-serif}
 .star.ghost::after{background:none;border:1.5px dashed #ffffffaa;box-shadow:none}.star.ghost::before{opacity:.3}
 @keyframes twinkle{50%{transform:scale(.8) rotate(10deg);opacity:.6}}
 .leg .when{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;font:500 .8rem 'IBM Plex Mono',monospace;color:var(--c);letter-spacing:.04em;text-transform:uppercase}
-.leg .when em{font-style:normal;font-size:.75rem;color:var(--ok);border:1px solid #5ef0a055;border-radius:999px;padding:.05rem .55rem;font-weight:500}
+.leg .when em{font-style:normal;font-size:.75rem;color:#c9b8ff;border:1px solid #c9b8ff55;border-radius:999px;padding:.05rem .55rem;font-weight:500}
 .leg h3{font-size:1.4rem;line-height:1.25;margin:8px 0 8px}
 .where{display:flex;align-items:center;gap:10px;color:var(--mute);font-size:.95rem;margin:0}
 .where img{width:28px;height:28px;border-radius:8px;background:#fff;object-fit:contain;padding:3px}
@@ -240,10 +242,10 @@ dialog.sheet::backdrop{background:#05050acc;backdrop-filter:blur(6px)}
 .link{position:absolute;z-index:5;display:inline-flex;align-items:center;gap:10px;text-decoration:none;padding:.65rem 1.1rem .65rem .7rem;border-radius:999px;background:#12111dcc;backdrop-filter:blur(8px);box-shadow:inset 0 0 0 1px #ffffff26,0 10px 30px #0008;font-weight:500;transition:transform .25s,box-shadow .25s;animation:drift 8s ease-in-out infinite}
 .link:hover{transform:scale(1.05);box-shadow:inset 0 0 0 1px #c9b8ff,0 0 30px #9b7bff55}
 .link i{width:8px;height:8px;border-radius:50%;flex:none;background:var(--c);margin-left:6px}
-.link.mail{left:2%;top:30%;--c:#f5a3c7;background:var(--ink);color:var(--bg)}
-.link.li{right:3%;top:24%;--c:#7aa8ff;animation-delay:-2s}
-.link.gh{left:6%;top:70%;--c:#5ef0a0;animation-delay:-4s}
-.link.cv{right:6%;top:66%;--c:#ffc94d;animation-delay:-6s}
+.link.mail{left:2%;top:30%;--c:#c9b8ff;background:var(--ink);color:var(--bg)}
+.link.li{right:3%;top:24%;--c:#c9b8ff;animation-delay:-2s}
+.link.gh{left:6%;top:70%;--c:#c9b8ff;animation-delay:-4s}
+.link.cv{right:6%;top:66%;--c:#c9b8ff;animation-delay:-6s}
 /* atterrissage */
 .stage{position:relative;width:min(100%,760px);margin:0 auto;aspect-ratio:600/560;touch-action:pan-y}
 .stage > svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
@@ -278,7 +280,7 @@ dialog.sheet::backdrop{background:#05050acc;backdrop-filter:blur(6px)}
   .blk,.blk.l,.blk.r{width:auto;margin:120px 0 0 24px}
   .blk.r .sec-h{justify-content:flex-start}.blk.r .const{left:-30px;right:auto}.blk.r .grp{flex-direction:row}
   .hero{grid-template-columns:1fr;min-height:0;padding-top:10px}
-  .sat{order:-1;width:min(100%,320px);justify-self:center;margin-bottom:30px}
+  .me{order:-1;width:min(70%,280px);margin:30px auto 40px}
   .trip{padding-left:70px;gap:60px}
   .sys{grid-template-columns:1fr;gap:46px}.sys > svg{display:none}
   .cluster,.cluster.two{grid-template-columns:repeat(2,minmax(0,1fr));width:auto;gap:30px 18px}.pj:nth-child(n){margin-top:0}.pj:nth-child(even){margin-top:50px}.blk.r .grp{flex-direction:row}
@@ -292,7 +294,7 @@ dialog.sheet::backdrop{background:#05050acc;backdrop-filter:blur(6px)}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   .reveal{opacity:1;transform:none;transition:none}
-.sat,.sat > svg,.pv,.link,.star::before,#rocket .flame,.ariane .fl{animation:none}
+.me .moonpath,.pv,.link,.star::before,#rocket .flame,.ariane .fl{animation:none}
 }
 </style>
 </head>
@@ -312,8 +314,8 @@ dialog.sheet::backdrop{background:#05050acc;backdrop-filter:blur(6px)}
   <svg id="route" aria-hidden="true">
     <defs>
       <linearGradient id="rb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".45" stop-color="#e4e3ee"/><stop offset="1" stop-color="#8d8fa3"/></linearGradient>
-      <linearGradient id="rn" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff8a9b"/><stop offset=".5" stop-color="#ff5d73"/><stop offset="1" stop-color="#a8243c"/></linearGradient>
-      <linearGradient id="rf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff7186"/><stop offset="1" stop-color="#9c1f37"/></linearGradient>
+      <linearGradient id="rn" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e3d9ff"/><stop offset=".5" stop-color="#9b7bff"/><stop offset="1" stop-color="#3a2a85"/></linearGradient>
+      <linearGradient id="rf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9b7bff"/><stop offset="1" stop-color="#3a2a85"/></linearGradient>
       <linearGradient id="fl1" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#ffe9b0"/><stop offset=".3" stop-color="#ffa63c"/><stop offset="1" stop-color="#ff4a1c" stop-opacity="0"/></linearGradient>
       <linearGradient id="fl2" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#fff3c8" stop-opacity="0"/></linearGradient>
     </defs>
@@ -338,44 +340,17 @@ dialog.sheet::backdrop{background:#05050acc;backdrop-filter:blur(6px)}
       <p class="role reveal" style="--d:.12s">Ingénieure systèmes embarqués, réseaux et cybersécurité</p>
       <p class="lead reveal" style="--d:.16s">Élève ingénieure à l'ENSIM, en alternance chez SNCF Voyageurs. Je cherche un premier poste à la frontière du logiciel et du matériel.</p>
       <ul class="facts reveal" style="--d:.2s" aria-label="En bref">
-        <li><b>3 ans</b> d'alternance chez SNCF Voyageurs</li>
-        <li><b>Diplômée</b> ENSIM en septembre 2027</li>
-        <li><b>10 projets</b> en entreprise, à l'école et en personnel</li>
-        <li><b>Le Mans</b>mobile partout en France</li>
+        <li><b>3 ans</b>d'alternance</li>
+        <li><b>Future diplômée</b>ENSIM en septembre 2027</li>
+        <li><b>Embarqué · Réseaux</b>Cybersécurité · IA · Mobile</li>
+        <li><b>Le Mans</b>Mobile en France</li>
       </ul>
       <div class="ctas reveal" style="--d:.24s"><a class="btn" href="#">Télécharger le CV</a><a class="btn o" href="#projets">Voir les projets</a><a class="ico" href="https://www.linkedin.com/in/jade-barbier-b261b8266" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9.75h4v11.25H3zM9.5 9.75h3.8v1.6h.06c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.77 2.6 4.77 6v5.7h-4v-5.05c0-1.2-.02-2.75-1.7-2.75-1.7 0-1.95 1.3-1.95 2.66V21H9.5z" fill="currentColor"/></svg></a><a class="ico" href="https://github.com/MoggleJ" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.1-1.47-1.1-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.6 9.6 0 0 1 5 0c1.91-1.3 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.75c0 .27.18.58.69.48A10 10 0 0 0 12 2Z" fill="currentColor"/></svg></a></div>
     </div>
-    <div class="sat" id="station">
-      <svg viewBox="-250 -230 500 460" aria-hidden="true"><defs>
-        <linearGradient id="sg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff0bd"/><stop offset=".22" stop-color="#e9b44a"/><stop offset=".48" stop-color="#9c6716"/><stop offset=".7" stop-color="#f0c45c"/><stop offset="1" stop-color="#6e4209"/></linearGradient>
-        <filter id="foil" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency=".05" numOctaves="3" seed="6" result="t"/><feDiffuseLighting in="t" surfaceScale="2.4" lighting-color="#fff6dc" result="l"><feDistantLight azimuth="225" elevation="48"/></feDiffuseLighting><feComposite in="l" in2="SourceGraphic" operator="in" result="c"/><feBlend in="c" in2="SourceGraphic" mode="multiply"/></filter>
-        <linearGradient id="cellg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3d6fe0"/><stop offset=".45" stop-color="#16327e"/><stop offset="1" stop-color="#0a1740"/></linearGradient>
-        <pattern id="cells" width="12" height="15" patternUnits="userSpaceOnUse"><rect width="12" height="15" fill="none" stroke="#a9c0ff" stroke-opacity=".35" stroke-width=".7"/></pattern>
-        <linearGradient id="gloss" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".22"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
-        <linearGradient id="steel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e9e8f0"/><stop offset="1" stop-color="#6c6e82"/></linearGradient>
-      </defs>
-      <g class="wing l"><g transform="skewY(-5)">
-        <rect x="-246" y="-48" width="62" height="96" fill="url(#cellg)"/><rect x="-246" y="-48" width="62" height="96" fill="url(#cells)" stroke="#c9d4ff" stroke-width="1"/>
-        <rect x="-180" y="-48" width="62" height="96" fill="url(#cellg)"/><rect x="-180" y="-48" width="62" height="96" fill="url(#cells)" stroke="#c9d4ff" stroke-width="1"/>
-        <polygon points="-230,-48 -200,-48 -244,48 -246,48 -246,10" fill="url(#gloss)"/></g></g>
-      <g class="wing r"><g transform="skewY(5)">
-        <rect x="118" y="-48" width="62" height="96" fill="url(#cellg)"/><rect x="118" y="-48" width="62" height="96" fill="url(#cells)" stroke="#c9d4ff" stroke-width="1"/>
-        <rect x="184" y="-48" width="62" height="96" fill="url(#cellg)"/><rect x="184" y="-48" width="62" height="96" fill="url(#cells)" stroke="#c9d4ff" stroke-width="1"/>
-        <polygon points="150,-48 180,-48 136,48 118,48 118,10" fill="url(#gloss)"/></g></g>
-      <g transform="scale(1.35)">
-      <path d="M-118,0 H-104 M104,0 H118" stroke="#b9b8c6" stroke-width="5"/><circle cx="-108" cy="0" r="5" fill="#c9c8d6"/><circle cx="108" cy="0" r="5" fill="#c9c8d6"/>
-      <path d="M0,-106 V-150" stroke="#b9b8c6" stroke-width="4"/>
-      <ellipse cx="0" cy="-160" rx="40" ry="12" fill="#f3f2f8" stroke="#9a9cb0" stroke-width="1.5"/><ellipse cx="0" cy="-158" rx="28" ry="7" fill="#d4d3df"/><path d="M0,-158 V-178" stroke="#9a9cb0" stroke-width="2"/><circle cx="0" cy="-180" r="3.5" fill="#e9e6f2"/>
-      <polygon points="-44,-106 44,-106 106,-44 106,44 44,106 -44,106 -106,44 -106,-44" fill="url(#sg)" filter="url(#foil)"/>
-      <polygon points="-44,-106 44,-106 106,-44 106,44 44,106 -44,106 -106,44 -106,-44" fill="none" stroke="#5a3606" stroke-opacity=".6" stroke-width="2"/>
-      <circle r="88" fill="#1a1c26" stroke="#c9c8d6" stroke-width="3"/>
-      <g fill="#c9c8d6"><circle cx="82.0" cy="0.0" r="2"/><circle cx="71.0" cy="41.0" r="2"/><circle cx="41.0" cy="71.0" r="2"/><circle cx="-0.0" cy="82.0" r="2"/><circle cx="-41.0" cy="71.0" r="2"/><circle cx="-71.0" cy="41.0" r="2"/><circle cx="-82.0" cy="-0.0" r="2"/><circle cx="-71.0" cy="-41.0" r="2"/><circle cx="-41.0" cy="-71.0" r="2"/><circle cx="0.0" cy="-82.0" r="2"/><circle cx="41.0" cy="-71.0" r="2"/><circle cx="71.0" cy="-41.0" r="2"/></g>
-      <path d="M-20,106 L20,106 L28,124 L-28,124 Z" fill="url(#steel)" stroke="#2a2838" stroke-width="1.5"/>
-      <circle cx="78" cy="-78" r="4" fill="#ff5d73"><animate attributeName="opacity" values="1;.15;1" dur="1.8s" repeatCount="indefinite"/></circle>
-      </g>
-      </svg>
-      <div class="lens"><img src="assets/jade.webp" alt="Portrait de Jade Barbier"></div>
-      <small>Le Mans</small>
+    <div class="me" id="station">
+      <span class="ring" aria-hidden="true"></span><span class="ring r2" aria-hidden="true"></span>
+      <span class="moonpath" aria-hidden="true"><i></i></span>
+      <div class="ball"><img src="assets/jade.webp" alt="Portrait de Jade Barbier"></div>
     </div>
   </section>
 
@@ -394,7 +369,7 @@ dialog.sheet::backdrop{background:#05050acc;backdrop-filter:blur(6px)}
         <h3>Alternance en informatique embarquée et réseaux</h3><p class="where"><img src="assets/sncf.webp" alt="">SNCF Voyageurs, CIM du Mans</p>
         <ul><li>Tests de conformité des équipements embarqués aux spécifications ITxPT : consommation électrique, services échangés.</li><li>Client EST pour une preuve de concept de sécurisation des communications à bord (mTLS).</li><li>Outil de test de connexion SFTP et étude d'impact du Cyber Resilience Act.</li></ul>
       </article>
-      <article class="leg reveal" style="--x:96px;--c:#ffb26b"><span class="star small"></span>
+      <article class="leg reveal" style="--x:96px;--c:#c9b8ff"><span class="star small"></span>
         <div class="when">Juin — août 2023</div>
         <h3>Opératrice de conditionnement</h3><p class="where"><img src="assets/colart.webp" alt="">Colart International, Le Mans</p>
         <ul><li>Assemblage, contrôle et conditionnement sur lignes de production, dans le respect des normes qualité et sécurité.</li></ul>
@@ -417,16 +392,16 @@ dialog.sheet::backdrop{background:#05050acc;backdrop-filter:blur(6px)}
   <!-- projets : un amas par catégorie -->
   <section class="blk r" id="projets">
     <div class="sec-h reveal"><span class="num">03</span><div><h2>Projets</h2><p>Cliquez sur un projet pour le détail</p></div></div>
-    <h3 class="grp reveal" style="--c:#ff6b5e"><i></i><b>Entreprise</b> · <span id="n-pro"></span></h3>
-    <div class="cluster" id="g-pro" style="--c:#ff6b5e"></div>
+    <h3 class="grp reveal" style="--c:#c9b8ff"><i></i><b>Entreprise</b> · <span id="n-pro"></span></h3>
+    <div class="cluster" id="g-pro" style="--c:#c9b8ff"></div>
   </section>
   <section class="blk l">
-    <h3 class="grp reveal" style="--c:#5ef0a0"><i></i><b>École</b> · <span id="n-school"></span></h3>
-    <div class="cluster" id="g-school" style="--c:#5ef0a0"></div>
+    <h3 class="grp reveal" style="--c:#c9b8ff"><i></i><b>École</b> · <span id="n-school"></span></h3>
+    <div class="cluster" id="g-school" style="--c:#c9b8ff"></div>
   </section>
   <section class="blk r">
-    <h3 class="grp reveal" style="--c:#ffc94d"><i></i><b>Personnel</b> · <span id="n-perso"></span></h3>
-    <div class="cluster two" id="g-perso" style="--c:#ffc94d"></div>
+    <h3 class="grp reveal" style="--c:#c9b8ff"><i></i><b>Personnel</b> · <span id="n-perso"></span></h3>
+    <div class="cluster two" id="g-perso" style="--c:#c9b8ff"></div>
   </section>
   <dialog class="sheet" id="sheet" aria-label="Détail du projet"></dialog>
 
@@ -515,9 +490,9 @@ const rng=s=>()=>(s=(s*16807)%2147483647)/2147483647;
 
 // ---------- compétences : la fusée, un étage par domaine, des voyants pour le niveau ----------
 const lv=['bases','intermédiaire','autonome','avancé'];
-const SC=['#9b7bff','#36b6e0','#e5a72c','#2fc985','#f07ab4','#ff6b5e'];
+const SC=['#c9b8ff'];
 const lights=(l,c)=>`<i class="n" style="--c:${c}" aria-hidden="true">${[1,2,3,4].map(j=>`<b class="${j<=l?'on':''}"></b>`).join('')}</i><span class="sr">, niveau ${lv[l-1]}</span>`;
-document.getElementById('legend').innerHTML=lv.map((n,i)=>`<span>${lights(i+1,'#f5a3c7')}${n}</span>`).join('');
+document.getElementById('legend').innerHTML=lv.map((n,i)=>`<span>${lights(i+1,'#c9b8ff')}${n}</span>`).join('');
 const MET=(id)=>`<linearGradient id="${id}" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7c7e92"/><stop offset=".08" stop-color="#cfced9"/><stop offset=".24" stop-color="#f6f5fa"/><stop offset=".34" stop-color="#fff"/><stop offset=".58" stop-color="#e3e2ea"/><stop offset=".84" stop-color="#a4a6b8"/><stop offset="1" stop-color="#6a6c7f"/></linearGradient>`;
 const FIRE='<linearGradient id="fire" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".2" stop-color="#ffe2a0"/><stop offset=".55" stop-color="#ff8a2a" stop-opacity=".75"/><stop offset="1" stop-color="#ff4a1c" stop-opacity="0"/></linearGradient><linearGradient id="cryo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".3" stop-color="#bfe3ff" stop-opacity=".8"/><stop offset="1" stop-color="#7fb6ff" stop-opacity="0"/></linearGradient>';
 // lanceur lourd : coiffe, un étage par domaine, deux propulseurs latéraux
@@ -553,7 +528,7 @@ document.querySelectorAll('.sec-h').forEach((h,hi)=>{const r=rng(hi*31+7);r();
 // ---------- planètes ----------
 const LOOK={
   moon:{c:['#f1efe9','#a9a59c','#3b3934'],glow:'#ffffff',noise:'.05',seed:3,craters:1},
-  ensim:{c:['#d8fbff','#41b6d8','#0a2c46'],glow:'#7fe0ff',noise:'.006 .05',seed:12,tilt:12,ring:['#cdf4ff','#7fd3ff'],moon:1},
+  ensim:{c:['#ece6ff','#7b5fe0','#160f3a'],glow:'#c9b8ff',noise:'.006 .05',seed:12,tilt:12,ring:['#efeaff','#b9a6ff'],moon:1},
 };
 function planetSVG(k){const o=typeof k==='string'?LOOK[k]:k,i=uid++,t=o.tilt||0;
   const ring=(half)=>o.ring?`<g transform="rotate(${t-16})" opacity=".9">${[[138,30,6,o.ring[0],.55],[124,26,3,o.ring[1],.8],[150,33,2,o.ring[1],.35]].map(([rx,ry,w,c,op])=>`<path d="M-${rx},0 A${rx},${ry} 0 0 ${half} ${rx},0" fill="none" stroke="${c}" stroke-width="${w}" stroke-opacity="${op}"/>`).join('')}</g>`:'';
@@ -574,7 +549,7 @@ function planetSVG(k){const o=typeof k==='string'?LOOK[k]:k,i=uid++,t=o.tilt||0;
 document.querySelectorAll('[data-planet]').forEach(el=>el.innerHTML=planetSVG(el.dataset.planet));
 
 // ---------- projets : une planète-photo par projet, la fiche s'ouvre au clic ----------
-const KINDS=[['pro','Entreprise','#ff6b5e',[0,30]],['school','École','#5ef0a0',[150,210]],['perso','Personnel','#ffc94d',[40,290]]];
+const KINDS=[['pro','Entreprise','#c9b8ff',[250,280]],['school','École','#c9b8ff',[230,300]],['perso','Personnel','#c9b8ff',[265,320]]];
 const PJ=window.PROJECTS||[];
 // chaque projet reçoit sa propre planète, dans les teintes de sa catégorie
 PJ.forEach((p,i)=>{const [, , ,hues]=KINDS.find(k=>k[0]===p.kind),n=PJ.filter(q=>q.kind===p.kind).indexOf(p),h=hues[n%2]+n*14,r=rng(i*13+5);r();
@@ -629,7 +604,7 @@ function plot(){trip();drawTrip();
   const blocks=[...document.querySelectorAll('.blk')].map(el=>{const b=rel(el);
     const x=mobile?10:el.dataset.free?st.x+st.w/2:el.classList.contains('l')?(b.x+b.w+W)/2:b.x/2;
     return{x,top:b.y,bot:b.y+b.h}});
-  let cx0=st.x+st.w/2,cy0=st.y+st.h*.88;
+  let cx0=st.x+st.w/2,cy0=st.y+st.h*1.02;
   let d=`M${cx0},${cy0}`;
   for(const bl of blocks){
     const top=Math.max(bl.top-10,cy0+10);
@@ -733,7 +708,7 @@ close.addEventListener('click',()=>{st.classList.remove('opened');setPull(0);clo
 
 // ---------- nébuleuses lointaines ----------
 function far(){const el=document.getElementById('far'),W=page.clientWidth,H=page.scrollHeight;const r=rng(7);let out='';
-  const cols=['#9b7bff','#f5a3c7','#7aa8ff','#5ef0a0'];
+  const cols=['#9b7bff'];
   for(let y=700;y<H-900;y+=700+r()*500){const x=r()*W,c=cols[Math.floor(r()*cols.length)],w=90+r()*120;
     out+=`<i style="left:${x}px;top:${y}px;width:${w}px;height:${w*.38}px;transform:rotate(${r()*180}deg);background:radial-gradient(ellipse at center,#fff9 0,${c}66 18%,${c}22 45%,transparent 70%);filter:blur(1px);opacity:.5"></i>`}
   el.innerHTML=out}
