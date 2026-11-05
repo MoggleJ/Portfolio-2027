@@ -282,6 +282,39 @@ em{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;letter
 .sec-h h2::after{content:" >";color:#b9a4ff;font-weight:400}
 .hero h1 span{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;letter-spacing:-.01em;font-size:1.12em}
 .leg .when em{font-family:inherit;font-style:normal}
+
+/* ---- casser le tout-espace : bandeaux typographiques, galerie, formation éditoriale ---- */
+.ribbon{position:relative;z-index:0;width:100vw;margin:150px 0 0 calc(50% - 50vw);overflow:hidden;transform:rotate(-2.5deg);background:#c9b8ff;color:#0b0a14;padding:18px 0}
+.ribbon.b{transform:rotate(2deg);background:#f1eff8}
+.ribbon .track{display:flex;width:max-content;align-items:center;gap:34px;animation:tick 38s linear infinite}
+.ribbon.b .track{animation-direction:reverse}
+.ribbon span{font:800 clamp(1.6rem,3.4vw,2.8rem)/1 Sora;letter-spacing:-.02em;text-transform:uppercase;white-space:nowrap}
+.ribbon i{font-style:normal;font-size:1.3rem;opacity:.6}
+@keyframes tick{to{transform:translateX(-50%)}}
+.ribbon + .blk{margin-top:120px}
+/* formation : sans planètes, trois colonnes séparées par un filet */
+.sys > svg,.sys .pv{display:none}
+.sys{grid-template-columns:repeat(3,minmax(0,1fr));align-items:start;gap:0}
+.sys .body{text-align:left;padding:22px 26px 0;border-left:1px solid #ffffff1f}
+.sys .body:first-of-type{border-left:0;padding-left:0}
+.sys .body .where{justify-content:flex-start}
+.sys .body p{margin-left:0}
+.sys .yr{display:block;white-space:nowrap;font:700 clamp(1.2rem,1.9vw,1.6rem)/1 Sora;color:#c9b8ff;letter-spacing:-.02em;margin-bottom:14px}
+.sys .body:last-child .yr{color:transparent;-webkit-text-stroke:0;color:var(--mute)}
+/* projets : une galerie rectangulaire */
+.pj .ring{display:none}
+.pj .orbit,.pj .ball{width:100%}
+.pj .ball{aspect-ratio:4/3;border-radius:6px;box-shadow:0 0 0 1px #ffffff1a,0 20px 40px #0008}
+.pj .ball::after{border-radius:0;background:linear-gradient(transparent 55%,#07070d99)}
+.pj:hover .ball,.pj:focus-visible .ball{transform:translateY(-6px);box-shadow:0 0 0 1px #c9b8ff,0 26px 50px #000a}
+.pj h4,.pj .kw{text-align:left;justify-content:flex-start}
+.pj{text-align:left}
+.ph{position:absolute;inset:0;display:grid;place-items:center;background:linear-gradient(135deg,#2a1f5a,#0f0d1d 70%);background-image:linear-gradient(#ffffff0a 1px,transparent 1px),linear-gradient(90deg,#ffffff0a 1px,transparent 1px),linear-gradient(135deg,#2a1f5a,#0f0d1d 70%);background-size:24px 24px,24px 24px,auto}
+.ph b{font:800 clamp(1.6rem,2.8vw,2.6rem) Sora;text-transform:uppercase;padding:0 12px;text-align:center;color:#c9b8ff;letter-spacing:-.04em}
+.ph span{position:absolute;left:12px;bottom:10px;font:500 .66rem 'IBM Plex Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:#a6a3b8}
+.sheet .vis{aspect-ratio:4/3;border-radius:8px}
+@media (max-width:900px){.sys{grid-template-columns:1fr;gap:30px}.sys .body{border-left:0;padding:0;border-top:1px solid #ffffff1f;padding-top:18px}.ribbon{margin-top:90px}.ribbon + .blk{margin-top:80px}}
+@media (prefers-reduced-motion:reduce){.ribbon .track{animation:none}}
 @media (max-width:900px){
   .top nav{display:none}
   .page{overflow-x:clip}
@@ -364,6 +397,7 @@ em{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;letter
 
   
   <!-- expérience : une constellation, une étoile par poste -->
+  <div class="ribbon a" aria-hidden="true"><div class="track"><span>Systèmes embarqués</span><i>✦</i><span>Réseaux</span><i>✦</i><span>Cybersécurité</span><i>✦</i><span>Linux</span><i>✦</i><span>C / C++</span><i>✦</i><span>Python</span><i>✦</i><span>mTLS</span><i>✦</i><span>IoT</span><i>✦</i><span>Systèmes embarqués</span><i>✦</i><span>Réseaux</span><i>✦</i><span>Cybersécurité</span><i>✦</i><span>Linux</span><i>✦</i><span>C / C++</span><i>✦</i><span>Python</span><i>✦</i><span>mTLS</span><i>✦</i><span>IoT</span><i>✦</i></div></div>
   <section class="blk r" id="experience">
     <div class="sec-h reveal"><span class="num">01</span><div><h2>Expérience</h2><p>Trois ans d'<em>alternance</em> et un premier emploi</p></div></div>
     <div class="trip" id="trip">
@@ -392,7 +426,7 @@ em{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;letter
       <svg viewBox="0 0 100 40" preserveAspectRatio="none" aria-hidden="true"><ellipse cx="50" cy="22" rx="49" ry="16" vector-effect="non-scaling-stroke"/></svg>
       <div class="body reveal"><div class="pv" data-planet="moon" style="--s:120px"></div><span class="yr">2019 — 2022</span><h3>Baccalauréat général</h3><p class="where"><img src="assets/malraux.webp" alt="">Lycée André Malraux, Allonnes</p></div>
       <div class="body reveal" style="--d:.15s"><div class="pv" data-planet="ensim" style="--s:200px"></div><span class="yr">2024 — 2027</span><h3>Cycle ingénieur en alternance</h3><p class="where"><img src="assets/ensim.webp" alt="">ENSIM, Le Mans</p><p>Systèmes embarqués, réseaux, cybersécurité. Projets d'équipe en mécatronique, IA et application mobile.</p></div>
-      <div class="body reveal" style="--d:.3s"><div class="pv goal" style="--s:96px"></div><span class="yr">Septembre 2027</span><h3>Diplôme d'ingénieure</h3><p>Prochaine étape</p></div>
+      <div class="body reveal" style="--d:.3s"><div class="pv goal" style="--s:96px"></div><span class="yr">Sept. 2027</span><h3>Diplôme d'ingénieure</h3><p>Prochaine étape</p></div>
     </div>
     <a class="more reveal" href="parcours-universitaire.html">Détail des semestres →</a>
   </section>
@@ -414,6 +448,7 @@ em{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;letter
   <dialog class="sheet" id="sheet" aria-label="Détail du projet"></dialog>
 
   <!-- compétences : la fusée, un étage par domaine -->
+  <div class="ribbon b" aria-hidden="true"><div class="track"><span>Disponible en septembre 2027</span><i>✦</i><span>Le Mans</span><i>✦</i><span>Mobile en France</span><i>✦</i><span>Ingénieure ENSIM</span><i>✦</i><span>Alternance SNCF Voyageurs</span><i>✦</i><span>Disponible en septembre 2027</span><i>✦</i><span>Le Mans</span><i>✦</i><span>Mobile en France</span><i>✦</i><span>Ingénieure ENSIM</span><i>✦</i><span>Alternance SNCF Voyageurs</span><i>✦</i></div></div>
   <section class="blk l" id="competences">
     <div class="sec-h reveal"><span class="num">04</span><div><h2>Compétences</h2><p>Un étage par domaine, les voyants donnent le <em>niveau</em></p></div></div>
     <div class="legend reveal" id="legend"></div>
@@ -563,7 +598,7 @@ const PJ=window.PROJECTS||[];
 PJ.forEach((p,i)=>{const [, , ,hues]=KINDS.find(k=>k[0]===p.kind),n=PJ.filter(q=>q.kind===p.kind).indexOf(p),h=hues[n%2]+n*14,r=rng(i*13+5);r();
   p.look={c:[`hsl(${h} 90% 88%)`,`hsl(${h} 62% 52%)`,`hsl(${h} 70% 12%)`],glow:`hsl(${h} 90% 70%)`,noise:r()<.5?'.03':(.004+r()*.004).toFixed(3)+' .06',seed:Math.floor(r()*60),tilt:Math.round(r()*40-20),craters:r()<.4?1:0,ring:r()<.35?[`hsl(${h} 90% 90%)`,`hsl(${h} 80% 70%)`]:null,moon:r()<.3?1:0};p.svg=planetSVG(p.look)});
 const sheet=document.getElementById('sheet');
-const ball=p=>p.img?`<img src="${p.img}" alt="" loading="lazy">`:`<div class="pv">${p.svg}</div>`;
+const ball=p=>p.img?`<img src="${p.img}" alt="" loading="lazy">`:`<div class="ph"><b>${[...(p.tags||[p.title])].slice(0,3).sort((a,b)=>a.length-b.length)[0]}</b><span>Visuel à venir</span></div>`;
 for(const [k,,c] of KINDS){const items=PJ.filter(p=>p.kind===k);document.getElementById('n-'+k).textContent=items.length;
   document.getElementById('g-'+k).innerHTML=items.map(p=>`<button class="pj reveal" type="button" data-i="${PJ.indexOf(p)}"><div class="orbit"><span class="ring"></span><div class="ball">${ball(p)}</div></div><h4>${p.title}</h4><div class="kw">${(p.tags||[]).slice(0,3).map(t=>`<span>${t}</span>`).join('')}</div><span class="more-i">Voir le détail</span></button>`).join('')}
 document.querySelectorAll('.cluster').forEach(cl=>cl.addEventListener('click',e=>{const b=e.target.closest('.pj');if(!b)return;const p=PJ[+b.dataset.i],c=KINDS.find(k=>k[0]===p.kind)[2];
