@@ -6,10 +6,10 @@
 <title>Jade Barbier · Portfolio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#07070d; --line:#ffffff14; --ink:#f1eff8; --mute:#a6a3b8; --dim:#8f8ca6;
+  --bg:#f3f2ef; --line:#14121f1f; --ink:#14121f; --mute:#55526a; --dim:#66637a;
   --vio:#9b7bff; --rose:#f5a3c7; --blue:#7aa8ff; --ok:#5ef0a0;
   /* couleurs reprises par la planète des habitants */
   --planet-a:#3a2d8f; --planet-b:#6b4fd8; --planet-c:#1d2a6b; --accent:#9b7bff; --accent-2:#f5a3c7; --text:#f1eff8; --muted:#a6a3b8; --bg-0:#07070d;
@@ -274,6 +274,44 @@ dialog.sheet::backdrop{background:#05050acc;backdrop-filter:blur(6px)}
 .foot{text-align:center;color:var(--dim);font-size:.85rem;padding:40px 0 50px}
 
 @media (max-width:1100px){.blk{width:66%}}
+
+/* ---- direction claire : l'espace seulement en haut et en bas ---- */
+body{background:var(--bg)}
+.sky{background:var(--bg)}
+.band{position:absolute;left:0;width:100%;z-index:-2;background:#07070d;pointer-events:none}
+.band::after{content:"";position:absolute;inset:0;background:radial-gradient(50% 40% at 80% 10%,#2a1f5a55,transparent 70%)}
+#band1{top:0}
+#band2::before{content:"";position:absolute;left:0;right:0;top:-1px;height:160px;background:linear-gradient(var(--bg),#07070d);z-index:1}
+#band1::before{content:"";position:absolute;left:0;right:0;bottom:-1px;height:160px;background:linear-gradient(#07070d,var(--bg));z-index:1}
+.dk{--bg:#07070d;--line:#ffffff14;--ink:#f1eff8;--mute:#a6a3b8;--dim:#8f8ca6;color:var(--ink)}
+.top.dk{background:#07070de6}
+em{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;letter-spacing:0}
+.sec-h p em{font-size:1.2em;color:var(--ink)}
+.sec-h h2 em{color:#6b4fd8;font-size:1.08em}
+.sec-h h2::after{content:" >";color:#6b4fd8;font-weight:400}
+.sec-h .num{color:#6b4fd8}.sec-h .num::after{background:#6b4fd866}
+.sec-h p{text-transform:none}
+.hero h1 span{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;letter-spacing:-.01em;font-size:1.12em;color:#c9b8ff}
+.sec-h .const{display:none}
+.link.cv{background:#12111dcc;color:var(--ink);padding:.65rem 1.1rem .65rem .7rem;font-size:inherit;font-weight:inherit}
+.trip .tl{stroke:#6b4fd8}.trip .dust{fill:#6b4fd8}
+.leg{--c:#6b4fd8 !important}
+.star::after{background:radial-gradient(circle,#fff 0 30%,var(--c) 55%,transparent 72%)}
+.star.ghost::after{border-color:#14121f88}
+.leg .when em{font-family:inherit;font-style:normal;color:#6b4fd8;border-color:#6b4fd855}
+.leg ul{color:#2e2b40}
+.where img{box-shadow:0 0 0 1px var(--line)}
+.sys > svg ellipse{stroke:#14121f33}
+.body .yr{color:#6b4fd8}.body p{color:var(--mute)}
+.pv.goal{border-color:#14121f88}
+.pj .ring{border-color:#14121f33}
+.pj .ball{box-shadow:0 18px 40px #14121f33}
+.pj .kw span{color:#3d3a52;background:#ffffff;border-color:var(--line)}
+.cluster::before{display:none}
+.legend .n b{background:#14121f22}
+.n b.on{background:#6b4fd8;box-shadow:none}
+.stage-r{box-shadow:0 0 0 1px #14121f22}
+#route .trail{stroke:#6b4fd8;opacity:.55;filter:none}
 @media (max-width:900px){
   .top nav{display:none}
   .page{overflow-x:clip}
@@ -300,10 +338,11 @@ dialog.sheet::backdrop{background:#05050acc;backdrop-filter:blur(6px)}
 </head>
 <body>
 <div class="sky"></div>
+<div class="band" id="band1" aria-hidden="true"></div><div class="band" id="band2" aria-hidden="true"></div>
 <canvas id="stars" aria-hidden="true"></canvas>
 
 <a class="skip" href="#experience">Aller au contenu</a>
-<header class="top">
+<header class="top dk">
   <a class="mark" href="#profil">Jade<span>.</span>B</a>
   <nav><a href="#experience">Expérience</a><a href="#formation">Formation</a><a href="#projets">Projets</a><a href="#competences">Compétences</a><a href="#contact">Contact</a></nav>
   <div class="tools"><a class="cv" href="#">CV</a><button class="lang" type="button" aria-label="Changer de langue : français ou anglais">FR / EN</button></div>
@@ -333,7 +372,7 @@ dialog.sheet::backdrop{background:#05050acc;backdrop-filter:blur(6px)}
   </svg>
 
 <!-- profil : la photo est dans le hublot du satellite, la fusée en part -->
-  <section class="blk l hero" id="profil" data-free="#station">
+  <section class="blk l hero dk" id="profil" data-free="#station">
     <div>
       <span class="pill reveal">Disponible à partir de septembre 2027</span>
       <h1 class="reveal" style="--d:.08s">Jade<br><span>Barbier</span></h1>
@@ -357,7 +396,7 @@ dialog.sheet::backdrop{background:#05050acc;backdrop-filter:blur(6px)}
   
   <!-- expérience : une constellation, une étoile par poste -->
   <section class="blk r" id="experience">
-    <div class="sec-h reveal"><span class="num">01</span><div><h2>Expérience</h2><p>Alternance et emplois</p></div></div>
+    <div class="sec-h reveal"><span class="num">01</span><div><h2>Expérience</h2><p>Trois ans d'<em>alternance</em> et un premier emploi</p></div></div>
     <div class="trip" id="trip">
       <svg aria-hidden="true"><path class="tl" id="tripL" pathLength="1"/><g id="tripDust"></g></svg>
       <article class="leg next reveal" style="--x:60px;--c:#ffffff"><span class="star ghost"></span>
@@ -379,7 +418,7 @@ dialog.sheet::backdrop{background:#05050acc;backdrop-filter:blur(6px)}
 
   <!-- formation : les planètes -->
   <section class="blk l" id="formation">
-    <div class="sec-h reveal"><span class="num">02</span><div><h2>Formation</h2><p>Diplômes et écoles</p></div></div>
+    <div class="sec-h reveal"><span class="num">02</span><div><h2>Formation</h2><p>Une école d'<em>ingénieurs</em> au Mans</p></div></div>
     <div class="sys">
       <svg viewBox="0 0 100 40" preserveAspectRatio="none" aria-hidden="true"><ellipse cx="50" cy="22" rx="49" ry="16" vector-effect="non-scaling-stroke"/></svg>
       <div class="body reveal"><div class="pv" data-planet="moon" style="--s:120px"></div><span class="yr">2019 — 2022</span><h3>Baccalauréat général</h3><p class="where"><img src="assets/malraux.webp" alt="">Lycée André Malraux, Allonnes</p></div>
@@ -391,7 +430,7 @@ dialog.sheet::backdrop{background:#05050acc;backdrop-filter:blur(6px)}
 
   <!-- projets : un amas par catégorie -->
   <section class="blk r" id="projets">
-    <div class="sec-h reveal"><span class="num">03</span><div><h2>Projets</h2><p>Cliquez sur un projet pour le détail</p></div></div>
+    <div class="sec-h reveal"><span class="num">03</span><div><h2>Projets</h2><p>Cliquez sur un projet pour le <em>détail</em></p></div></div>
     <h3 class="grp reveal" style="--c:#c9b8ff"><i></i><b>Entreprise</b> · <span id="n-pro"></span></h3>
     <div class="cluster" id="g-pro" style="--c:#c9b8ff"></div>
   </section>
@@ -403,22 +442,22 @@ dialog.sheet::backdrop{background:#05050acc;backdrop-filter:blur(6px)}
     <h3 class="grp reveal" style="--c:#c9b8ff"><i></i><b>Personnel</b> · <span id="n-perso"></span></h3>
     <div class="cluster two" id="g-perso" style="--c:#c9b8ff"></div>
   </section>
-  <dialog class="sheet" id="sheet" aria-label="Détail du projet"></dialog>
+  <dialog class="sheet dk" id="sheet" aria-label="Détail du projet"></dialog>
 
   <!-- compétences : la fusée, un étage par domaine -->
   <section class="blk l" id="competences">
-    <div class="sec-h reveal"><span class="num">04</span><div><h2>Compétences</h2><p>Un étage par domaine, les voyants donnent le niveau</p></div></div>
+    <div class="sec-h reveal"><span class="num">04</span><div><h2>Compétences</h2><p>Un étage par domaine, les voyants donnent le <em>niveau</em></p></div></div>
     <div class="legend reveal" id="legend"></div>
     <div class="build reveal" id="build"></div>
   </section>
 
   <!-- contact -->
   <section class="blk r contact-txt" id="contact">
-    <div class="sec-h reveal"><span class="num">05</span><div><h2>Travaillons ensemble</h2></div></div>
+    <div class="sec-h reveal"><span class="num">05</span><div><h2>Travaillons <em>ensemble</em></h2></div></div>
     <p class="reveal">Disponible en septembre 2027 pour un poste d'ingénieure en systèmes embarqués, réseaux ou cybersécurité. Les liens gravitent autour de la planète juste en dessous.</p>
   </section>
 
-  <section class="landing" id="atterrissage">
+  <section class="landing dk" id="atterrissage">
     <div class="orbitwrap">
       <svg class="ring" viewBox="0 0 100 40" preserveAspectRatio="none" aria-hidden="true"><ellipse cx="50" cy="20" rx="44" ry="17" vector-effect="non-scaling-stroke"/></svg>
       <div class="links">
@@ -479,7 +518,7 @@ dialog.sheet::backdrop{background:#05050acc;backdrop-filter:blur(6px)}
     <p class="hint">Les habitants sont joueurs : attrapez-les et lancez-les.</p>
     <button class="close" id="closeLid" type="button" hidden>Refermer</button>
   </section>
-  <p class="foot">Conçu et développé par Jade Barbier · 2027</p>
+  <p class="foot dk">Conçu et développé par Jade Barbier · 2027</p>
 </main>
 
 <script src="data.js"></script>
@@ -575,8 +614,13 @@ const cv=document.getElementById('stars'),cx=cv.getContext('2d');let stars=[];
 // fond calme : peu d'étoiles, et seulement un tiers d'entre elles s'étirent quand on défile vite
 function seedSky(){cv.width=innerWidth*devicePixelRatio;cv.height=innerHeight*devicePixelRatio;stars=Array.from({length:Math.round(innerWidth*innerHeight/5200)},()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,z:Math.random(),p:Math.random()*6,k:Math.random()<.3}))}
 let vel=0,lastY=scrollY,shoot=null;
+const BANDS=[document.getElementById('band1'),document.getElementById('band2')];
+// l'espace n'occupe que le haut (profil) et le bas (planète d'arrivée)
+function bands(){const pg=page.getBoundingClientRect().top+scrollY,h=rel(document.getElementById('profil')),l=rel(document.getElementById('atterrissage'));
+  BANDS[0].style.height=(pg+h.y+h.h+120)+'px';const t=pg+l.y-200;BANDS[1].style.top=t+'px';BANDS[1].style.height=(document.documentElement.scrollHeight-t)+'px'}
 function sky(t){const dy=scrollY-lastY;lastY=scrollY;vel+=(dy-vel)*.12;
   cx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);cx.clearRect(0,0,innerWidth,innerHeight);const H=innerHeight;cx.lineCap='round';
+  cx.save();cx.beginPath();for(const b of BANDS){const r=b.getBoundingClientRect();if(r.bottom>0&&r.top<H)cx.rect(0,r.top,innerWidth,r.height)}cx.clip();
   for(const s of stars){s.y-=(vel*.5+.06)*(s.z*.9+.1);
     if(s.y<-30){s.y=H+30;s.x=Math.random()*innerWidth}if(s.y>H+30){s.y=-30;s.x=Math.random()*innerWidth}
     const len=s.k?Math.min(70,Math.abs(vel)*s.z*1.1):0;
@@ -585,7 +629,7 @@ function sky(t){const dy=scrollY-lastY;lastY=scrollY;vel+=(dy-vel)*.12;
   if(!shoot&&Math.random()<.0008)shoot={x:Math.random()*innerWidth*.8,y:Math.random()*H*.5,l:0};
   if(shoot){shoot.l+=14;const a=shoot.l,x=shoot.x+a,y=shoot.y+a*.45;cx.globalAlpha=Math.max(0,1-a/420);cx.strokeStyle='#fff';cx.lineWidth=1.6;
     cx.beginPath();cx.moveTo(x,y);cx.lineTo(x-90,y-40);cx.stroke();if(a>420)shoot=null}
-  requestAnimationFrame(sky)}
+  cx.restore();requestAnimationFrame(sky)}
 
 // ---------- route de la fusée ----------
 // Elle part du satellite où est la photo, descend dans l'espace libre à côté de chaque bloc,
@@ -715,8 +759,8 @@ function far(){const el=document.getElementById('far'),W=page.clientWidth,H=page
 // ---------- démarrage ----------
 const reduced=matchMedia('(prefers-reduced-motion:reduce)').matches;
 seedSky();if(!reduced)requestAnimationFrame(sky);
-addEventListener('load',plot);document.fonts&&document.fonts.ready.then(plot);
-let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{seedSky();plot()},150)});
+addEventListener('load',()=>{bands();plot()});document.fonts&&document.fonts.ready.then(()=>{bands();plot()});
+let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{seedSky();bands();plot()},150)});
 document.querySelectorAll('img').forEach(i=>i.complete||i.addEventListener('load',()=>{clearTimeout(rt);rt=setTimeout(plot,100)}));
 </script>
 </body>
