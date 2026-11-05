@@ -313,6 +313,29 @@ em{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;letter
 .ph b{font:800 clamp(1.6rem,2.8vw,2.6rem) Sora;text-transform:uppercase;padding:0 12px;text-align:center;color:#c9b8ff;letter-spacing:-.04em}
 .ph span{position:absolute;left:12px;bottom:10px;font:500 .66rem 'IBM Plex Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:#a6a3b8}
 .sheet .vis{aspect-ratio:4/3;border-radius:8px}
+
+/* phrases fixes entre les sections */
+.statement{position:relative;z-index:2;margin:190px 0 0 40px;font:700 clamp(2rem,4.6vw,3.8rem)/1.08 Sora;letter-spacing:-.03em;color:var(--ink);max-width:16ch}
+.statement em{color:#c9b8ff;font-size:1.1em}
+.statement.r{margin-left:auto;margin-right:40px;text-align:right}
+.statement + .blk{margin-top:140px}
+/* projets : un index éditorial, une ligne par projet */
+.cluster,.cluster.two{display:block;width:auto;margin:0}
+.pj.row{width:100%;display:grid;grid-template-columns:34px 64px minmax(0,1fr) 30px;align-items:center;gap:22px;padding:22px 6px;border-top:1px solid #ffffff1a;margin:0 !important;transition:background .3s,padding .3s}
+.pj.row:last-child{border-bottom:1px solid #ffffff1a}
+.pj.row .no{font:500 .78rem 'IBM Plex Mono',monospace;color:var(--dim)}
+.pj.row .th{position:relative;width:64px;height:64px;border-radius:50%;overflow:hidden;box-shadow:0 0 0 1px #ffffff26;transition:transform .4s cubic-bezier(.3,1.5,.5,1)}
+.pj.row .th .ini{display:grid;place-items:center;width:100%;height:100%;font:700 1.5rem Sora;color:#c9b8ff;background:radial-gradient(circle at 30% 25%,#3a2d8f,#120f24)}
+.pj.row .th img{width:100%;height:100%;object-fit:cover}
+.pj.row .th .ph{background-size:10px 10px,10px 10px,auto}
+.pj.row .th .ph b{font-size:.62rem;padding:0 4px;letter-spacing:0}.pj.row .th .ph span{display:none}
+.pj.row h4{margin:0 0 8px;font-size:clamp(1.05rem,1.6vw,1.3rem);text-align:left}
+.pj.row .kw{justify-content:flex-start}
+.pj.row .go{font:400 1.4rem Sora;color:var(--dim);transition:transform .3s,color .3s}
+.pj.row:hover,.pj.row:focus-visible{background:linear-gradient(90deg,#9b7bff14,transparent);padding-left:14px}
+.pj.row:hover .th,.pj.row:focus-visible .th{transform:scale(1.25)}
+.pj.row:hover .go,.pj.row:focus-visible .go{color:#c9b8ff;transform:translateX(6px)}
+@media (max-width:900px){.statement,.statement.r{margin:110px 24px 0;text-align:left;font-size:1.9rem}.pj.row{grid-template-columns:52px minmax(0,1fr) 20px;gap:14px}.pj.row .no{display:none}.pj.row .th{width:52px;height:52px}}
 @media (max-width:900px){.sys{grid-template-columns:1fr;gap:30px}.sys .body{border-left:0;padding:0;border-top:1px solid #ffffff1f;padding-top:18px}.ribbon{margin-top:90px}.ribbon + .blk{margin-top:80px}}
 @media (prefers-reduced-motion:reduce){.ribbon .track{animation:none}}
 @media (max-width:900px){
@@ -397,7 +420,7 @@ em{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;letter
 
   
   <!-- expérience : une constellation, une étoile par poste -->
-  <div class="ribbon a" aria-hidden="true"><div class="track"><span>Systèmes embarqués</span><i>✦</i><span>Réseaux</span><i>✦</i><span>Cybersécurité</span><i>✦</i><span>Linux</span><i>✦</i><span>C / C++</span><i>✦</i><span>Python</span><i>✦</i><span>mTLS</span><i>✦</i><span>IoT</span><i>✦</i><span>Systèmes embarqués</span><i>✦</i><span>Réseaux</span><i>✦</i><span>Cybersécurité</span><i>✦</i><span>Linux</span><i>✦</i><span>C / C++</span><i>✦</i><span>Python</span><i>✦</i><span>mTLS</span><i>✦</i><span>IoT</span><i>✦</i></div></div>
+  <p class="statement reveal">Du <em>matériel</em> au logiciel,<br>en passant par le réseau.</p>
   <section class="blk r" id="experience">
     <div class="sec-h reveal"><span class="num">01</span><div><h2>Expérience</h2><p>Trois ans d'<em>alternance</em> et un premier emploi</p></div></div>
     <div class="trip" id="trip">
@@ -448,7 +471,7 @@ em{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;letter
   <dialog class="sheet" id="sheet" aria-label="Détail du projet"></dialog>
 
   <!-- compétences : la fusée, un étage par domaine -->
-  <div class="ribbon b" aria-hidden="true"><div class="track"><span>Disponible en septembre 2027</span><i>✦</i><span>Le Mans</span><i>✦</i><span>Mobile en France</span><i>✦</i><span>Ingénieure ENSIM</span><i>✦</i><span>Alternance SNCF Voyageurs</span><i>✦</i><span>Disponible en septembre 2027</span><i>✦</i><span>Le Mans</span><i>✦</i><span>Mobile en France</span><i>✦</i><span>Ingénieure ENSIM</span><i>✦</i><span>Alternance SNCF Voyageurs</span><i>✦</i></div></div>
+  <p class="statement r reveal">Tester, sécuriser,<br>faire <em>fonctionner</em>.</p>
   <section class="blk l" id="competences">
     <div class="sec-h reveal"><span class="num">04</span><div><h2>Compétences</h2><p>Un étage par domaine, les voyants donnent le <em>niveau</em></p></div></div>
     <div class="legend reveal" id="legend"></div>
@@ -600,7 +623,7 @@ PJ.forEach((p,i)=>{const [, , ,hues]=KINDS.find(k=>k[0]===p.kind),n=PJ.filter(q=
 const sheet=document.getElementById('sheet');
 const ball=p=>p.img?`<img src="${p.img}" alt="" loading="lazy">`:`<div class="ph"><b>${[...(p.tags||[p.title])].slice(0,3).sort((a,b)=>a.length-b.length)[0]}</b><span>Visuel à venir</span></div>`;
 for(const [k,,c] of KINDS){const items=PJ.filter(p=>p.kind===k);document.getElementById('n-'+k).textContent=items.length;
-  document.getElementById('g-'+k).innerHTML=items.map(p=>`<button class="pj reveal" type="button" data-i="${PJ.indexOf(p)}"><div class="orbit"><span class="ring"></span><div class="ball">${ball(p)}</div></div><h4>${p.title}</h4><div class="kw">${(p.tags||[]).slice(0,3).map(t=>`<span>${t}</span>`).join('')}</div><span class="more-i">Voir le détail</span></button>`).join('')}
+  document.getElementById('g-'+k).innerHTML=items.map((p,j)=>`<button class="pj row reveal" type="button" data-i="${PJ.indexOf(p)}"><span class="no">${String(j+1).padStart(2,'0')}</span><span class="th">${p.img?ball(p):`<b class="ini">${p.title[0]}</b>`}</span><span class="tx"><h4>${p.title}</h4><span class="kw">${(p.tags||[]).slice(0,3).map(t=>`<span>${t}</span>`).join('')}</span></span><span class="go" aria-hidden="true">&gt;</span><span class="sr">Voir le détail</span></button>`).join('')}
 document.querySelectorAll('.cluster').forEach(cl=>cl.addEventListener('click',e=>{const b=e.target.closest('.pj');if(!b)return;const p=PJ[+b.dataset.i],c=KINDS.find(k=>k[0]===p.kind)[2];
   sheet.style.setProperty('--c',c);
   sheet.innerHTML=`<button class="x" type="button" aria-label="Fermer">×</button><div class="in"><div class="vis">${ball(p)}</div><div><small>${[p.where,p.when].filter(Boolean).join(' · ')}</small><h3>${p.title}</h3><p>${p.desc||''}</p>
