@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jade Barbier · Dossier d'enquête</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Permanent+Marker&family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cork:#a97b4a; --paper:#f4efe3; --ink:#26221c; --mute:#6d6456; --red:#c0262d; --yel:#f6e27a; --blue:#2c4a7a;
+  --type:"Special Elite",monospace; --hand:"Permanent Marker",cursive;
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0}
+html{scroll-behavior:smooth}
+body{color:var(--ink);font:400 1rem/1.6 Inter,system-ui,sans-serif;overflow-x:clip;background-color:var(--cork);
+  background-image:
+    radial-gradient(circle at 20% 30%,#0000001f 1px,transparent 1.6px),
+    radial-gradient(circle at 70% 60%,#ffffff1a 1px,transparent 1.6px),
+    radial-gradient(circle at 40% 80%,#00000026 1.2px,transparent 1.8px),
+    radial-gradient(circle at 85% 15%,#ffffff14 1.4px,transparent 2px),
+    radial-gradient(120% 80% at 50% 0%,#c08f5a 0%,transparent 60%),
+    radial-gradient(140% 100% at 50% 100%,#6e4a26 0%,transparent 55%);
+  background-size:7px 7px,9px 9px,11px 11px,13px 13px,100% 100%,100% 100%}
+img{display:block;max-width:100%}
+a{color:inherit}
+.wrap{max-width:1200px;margin:0 auto;padding:0 clamp(14px,3vw,40px)}
+
+/* éléments épinglés */
+.pinned{position:relative;transform:translateY(-24px) rotate(var(--rot,0deg)) scale(1.04);opacity:0;transition:transform .6s cubic-bezier(.3,1.5,.5,1),opacity .4s;transition-delay:var(--d,0s);box-shadow:0 10px 18px #0006,0 2px 3px #0004}
+.pinned.in{transform:rotate(var(--rot,0deg));opacity:1}
+.pin{position:absolute;top:-8px;left:50%;width:18px;height:18px;margin-left:-9px;border-radius:50%;z-index:5;background:radial-gradient(circle at 35% 30%,#ff8a8a,var(--red) 45%,#6d0f13);box-shadow:2px 4px 4px #0006}
+.pin.b{background:radial-gradient(circle at 35% 30%,#9fc0ff,var(--blue) 45%,#14244a)}
+.pin.y{background:radial-gradient(circle at 35% 30%,#fff4b0,#e0b52a 45%,#7a5d0a)}
+.tape{position:absolute;top:-12px;left:50%;width:90px;height:24px;margin-left:-45px;background:#f3ecd6b3;transform:rotate(-3deg);box-shadow:0 1px 2px #0003;z-index:5}
+
+/* fils rouges */
+.board{position:relative}
+.strings{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none;z-index:1}
+.pinned{z-index:2}
+.strings.dim{z-index:3}
+.strings path{fill:none;stroke:var(--red);stroke-width:2.2;stroke-linecap:round;filter:drop-shadow(1px 3px 2px #0005);stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1.1s ease,opacity .3s,stroke-width .3s;transition-delay:var(--d,0s)}
+.board.in .strings path{stroke-dashoffset:0}
+.strings.dim path{opacity:.18}
+.strings.dim path.hot{opacity:1;stroke-width:3}
+
+/* ---------- en-tête du dossier ---------- */
+.folder{padding:40px 0 20px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.folder .tab{background:#e8d6a6;padding:10px 18px;font:400 .85rem var(--type);box-shadow:0 4px 10px #0005;transform:rotate(-1deg)}
+.folder nav{display:flex;gap:10px;flex-wrap:wrap}
+.folder nav a{text-decoration:none;background:var(--paper);padding:6px 12px;font:400 .82rem var(--type);box-shadow:0 3px 6px #0004;transform:rotate(var(--r,1deg));transition:transform .2s}
+.folder nav a:hover{transform:rotate(0) translateY(-2px)}
+
+.case{display:grid;grid-template-columns:1fr 1.15fr .9fr;gap:clamp(24px,4vw,60px);align-items:start;padding:40px 0 90px}
+.polaroid{background:#fbfaf6;padding:14px 14px 0}
+.polaroid img{width:100%;aspect-ratio:4/5;object-fit:cover;filter:contrast(1.05) saturate(.9)}
+.polaroid figcaption{font:400 1.2rem/1 var(--hand);text-align:center;padding:16px 0 18px;color:#2a2a2a}
+.polaroid .stamp{position:absolute;right:-18px;bottom:64px;font:900 1rem/1 "Playfair Display";letter-spacing:.12em;color:var(--red);border:3px solid var(--red);padding:6px 10px;transform:rotate(-14deg);opacity:.85;mix-blend-mode:multiply;background:#fff0}
+.idcard{background:var(--paper);padding:26px 26px 24px;background-image:repeating-linear-gradient(#0000 0 27px,#9bb3cf55 27px 28px);background-position:0 54px}
+.idcard h1{font:400 clamp(1.6rem,3vw,2.2rem)/1.15 var(--type);margin:0 0 4px;letter-spacing:.02em}
+.idcard .k{font:600 .68rem/1 Inter;letter-spacing:.2em;text-transform:uppercase;color:var(--red)}
+.idcard dl{display:grid;grid-template-columns:auto 1fr;gap:4px 16px;margin:16px 0 0;font:400 .95rem/1.75 var(--type)}
+.idcard dt{color:var(--mute)}
+.idcard dd{margin:0}
+.clip{margin-top:34px;background:#ece6d6;padding:18px 20px;filter:sepia(.25);background-image:linear-gradient(#0000 0 0)}
+.clip .paper{font:600 .62rem/1 Inter;letter-spacing:.2em;text-transform:uppercase;color:var(--mute);border-bottom:1px solid #0003;padding-bottom:8px;display:flex;justify-content:space-between}
+.clip h2{font:900 clamp(1.15rem,2vw,1.5rem)/1.15 "Playfair Display";margin:10px 0 8px}
+.clip p{margin:0;font-size:.86rem;line-height:1.55;columns:2;column-gap:16px;color:#3c372e}
+.notes{display:grid;gap:30px;padding-top:10px}
+.sticky{background:var(--yel);padding:20px 18px 22px;font:400 1.15rem/1.35 var(--hand);color:#2a2618}
+.sticky.p{background:#f7b7c5}.sticky.g{background:#bfe3b4}
+.sticky small{display:block;font:400 .8rem var(--type);color:#5a5238;margin-top:8px}
+.ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}
+.btn{display:inline-block;text-decoration:none;font:400 .9rem var(--type);padding:10px 16px;background:var(--ink);color:var(--paper);box-shadow:0 4px 0 #000;transition:transform .1s}
+.btn.o{background:var(--paper);color:var(--ink)}
+.btn:hover{transform:translateY(2px)}
+
+/* titres de partie : étiquette à la machine */
+.label{display:inline-block;background:#111;color:#f2f2f2;font:400 clamp(1rem,2.2vw,1.35rem)/1 var(--type);letter-spacing:.12em;text-transform:uppercase;padding:10px 16px;transform:rotate(-1.5deg);box-shadow:0 6px 12px #0006}
+.part{padding:40px 0 100px}
+.part > .wrap > p{background:var(--paper);display:inline-block;max-width:58ch;padding:10px 14px;margin:18px 0 50px;font:400 .95rem var(--type);box-shadow:0 4px 8px #0004;transform:rotate(.6deg)}
+
+/* chronologie */
+.timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(18px,3vw,40px);align-items:start}
+.fact{background:var(--paper);padding:22px 18px 18px}
+.fact:nth-child(even){margin-top:90px}
+.fact .date{font:400 1.4rem/1 var(--hand);color:var(--red)}
+.fact h3{font:400 1.05rem/1.35 var(--type);margin:10px 0 4px}
+.fact .where{font-size:.82rem;color:var(--mute)}
+.fact ul{margin:10px 0 0;padding-left:16px;font-size:.88rem;color:#3c372e}
+.fact img{width:44px;height:44px;object-fit:contain;background:#fff;padding:3px;margin-bottom:10px;box-shadow:0 1px 3px #0003}
+
+/* pièces à conviction */
+.leads{display:flex;flex-wrap:wrap;justify-content:center;gap:16px 22px;margin-bottom:110px}
+.lead{all:unset;cursor:pointer;position:relative;z-index:2;background:#fff;padding:12px 16px 10px;font:400 .95rem var(--type);box-shadow:0 6px 12px #0005;border-top:6px solid var(--c,#c0262d);transition:transform .2s}
+.lead .pin{top:auto;bottom:-9px}
+.lead:hover,.lead.on{transform:translateY(-4px) rotate(0)!important}
+.lead.on{outline:3px solid var(--ink);outline-offset:2px}
+.lead small{display:block;font:500 .66rem Inter;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+.evid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:56px 34px}
+.ev{background:#fbfaf6;padding:12px 12px 0;transition:opacity .3s,transform .3s}
+.ev .ph{aspect-ratio:1;background:#2a2622;overflow:hidden;display:grid;place-items:center}
+.ev .ph img{width:100%;height:100%;object-fit:cover;filter:contrast(1.05) sepia(.1)}
+.ev .ph span{font:400 .85rem var(--type);color:#9c9284;text-align:center;padding:10px}
+.ev .cap{padding:12px 4px 14px}
+.ev .no{font:600 .62rem/1 Inter;letter-spacing:.18em;text-transform:uppercase;color:var(--red)}
+.ev h3{font:400 1.05rem/1.3 var(--hand);margin:6px 0 6px;color:#222}
+.ev p{margin:0;font-size:.82rem;line-height:1.5;color:#4a4439}
+.ev .tagline{margin-top:8px;font:400 .72rem var(--type);color:var(--mute)}
+.evid.filter .ev{opacity:.35}
+.evid.filter .ev.hot{opacity:1;transform:rotate(0) scale(1.03)}
+
+/* rapport technique */
+.report{background:var(--paper);max-width:980px;margin:0 auto;padding:clamp(22px,4vw,48px);font-family:var(--type)}
+.report .head{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;border-bottom:2px solid var(--ink);padding-bottom:12px;margin-bottom:20px;font-size:.9rem}
+.report .conf{color:var(--red);border:2px solid var(--red);padding:2px 8px;transform:rotate(-3deg)}
+.cols{columns:3 260px;column-gap:36px}
+.cat{break-inside:avoid;margin-bottom:22px}
+.cat h3{font:400 .95rem var(--type);text-transform:uppercase;letter-spacing:.08em;margin:0 0 8px;border-bottom:1px dashed #0005;padding-bottom:4px}
+.cat ul{list-style:none;margin:0;padding:0;font-size:.88rem;line-height:1.8}
+.cat li{display:flex;justify-content:space-between;gap:10px}
+.cat li i{font-style:normal;color:var(--mute)}
+.cat li i b{color:var(--red);font-weight:400}
+
+/* avis de recherche avec languettes */
+.flyer{background:#fffdf6;max-width:640px;margin:0 auto;padding:36px 30px 0;text-align:center}
+.flyer h2{font:900 clamp(2rem,6vw,3.4rem)/1 "Playfair Display";margin:0;letter-spacing:.02em}
+.flyer p{font:400 1rem/1.6 var(--type);margin:14px auto 24px;max-width:44ch}
+.tabs{display:grid;grid-template-columns:repeat(4,1fr);border-top:2px dashed #0006;margin:0 -30px}
+.tabs a{display:flex;align-items:center;justify-content:center;writing-mode:vertical-rl;transform:rotate(180deg);text-decoration:none;font:400 .9rem var(--type);padding:16px 6px;min-height:170px;border-left:2px dashed #0004;background:#fffdf6;transition:transform .25s,box-shadow .25s}
+.tabs a:first-child{border-left:0}
+.tabs a:hover{transform:rotate(180deg) translateY(-14px) rotate(-4deg);box-shadow:0 -10px 16px #0004}
+.closing{text-align:center;padding:60px 0 50px;font:400 1.6rem var(--hand);color:#2a1a0a}
+.closing small{display:block;font:400 .85rem var(--type);margin-top:6px;color:#3a2a14}
+
+@media (max-width:900px){
+  .case{grid-template-columns:1fr;padding-bottom:60px}
+  .case .polaroid{max-width:320px}
+  .notes{grid-template-columns:1fr 1fr}
+  .timeline{grid-template-columns:1fr 1fr}
+  .fact:nth-child(even){margin-top:50px}
+  .strings{display:none}
+  .polaroid .stamp{right:6px}
+  .leads{margin-bottom:50px}
+}
+@media (max-width:520px){
+  .timeline{grid-template-columns:1fr}
+  .fact:nth-child(even){margin-top:0}
+  .notes{grid-template-columns:1fr}
+  .clip p{columns:1}
+  .tabs a{min-height:140px;font-size:.78rem}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .pinned{transform:rotate(var(--rot,0deg));opacity:1;transition:none}
+  .strings path{stroke-dashoffset:0;transition:none}
+}
+</style>
+</head>
+<body>
+<header class="wrap folder">
+  <span class="tab">Dossier n° 2027-JB · Affaire : recrutement</span>
+  <nav><a href="#faits" style="--r:-2deg">Chronologie</a><a href="#pieces" style="--r:1.5deg">Pièces</a><a href="#rapport" style="--r:-1deg">Rapport</a><a href="#temoin" style="--r:2deg">Témoigner</a></nav>
+</header>
+
+<!-- fiche suspecte -->
+<section class="wrap board" id="case">
+  <svg class="strings" aria-hidden="true"></svg>
+  <div class="case">
+    <figure class="polaroid pinned" data-id="photo" style="--rot:-3deg;margin:0"><span class="pin"></span><img src="assets/jade.webp" alt="Portrait de Jade Barbier"><figcaption>J. Barbier, Le Mans</figcaption><span class="stamp">Recherchée</span></figure>
+    <div>
+      <div class="idcard pinned" data-id="id" style="--rot:1deg;--d:.15s"><span class="pin b"></span>
+        <span class="k">Fiche signalétique</span>
+        <h1>Jade Barbier</h1>
+        <dl><dt>Statut</dt><dd>Élève ingénieure, ENSIM, promo 2027</dd><dt>Couverture</dt><dd>Alternante chez SNCF Voyageurs</dd><dt>Spécialités</dt><dd>Embarqué, réseaux, cybersécurité</dd><dt>Langues</dt><dd>FR, EN (C1), ES (B2)</dd><dt>Vue à</dt><dd>Le Mans</dd></dl>
+        <div class="ctas"><a class="btn" href="#pieces">Voir les pièces</a><a class="btn o" href="#temoin">Témoigner</a></div>
+      </div>
+      <article class="clip pinned" data-id="clip" style="--rot:-1.5deg;--d:.3s"><span class="tape"></span>
+        <div class="paper"><span>Le Courrier du Mans</span><span>Édition du matin</span></div>
+        <h2>Entre logiciel et matériel, elle sécurise les échanges à bord des trains</h2>
+        <p>Au centre d'ingénierie du Mans, une alternante teste la conformité des équipements embarqués et développe un client de chiffrement mutuel (mTLS). Sur son temps libre, elle a conçu une console de jeu de A à Z.</p>
+      </article>
+    </div>
+    <div class="notes">
+      <div class="sticky pinned" data-id="n1" style="--rot:3deg;--d:.4s"><span class="pin y"></span>Disponible à partir de sept. 2027 !<small>poste d'ingénieure</small></div>
+      <div class="sticky p pinned" data-id="n2" style="--rot:-2deg;--d:.5s"><span class="pin"></span>Arduino, STM32, réseaux, sécurité<small>mode opératoire</small></div>
+      <div class="sticky g pinned" data-id="n3" style="--rot:2deg;--d:.6s"><span class="pin b"></span>Toujours un projet perso en cours<small>console, robots…</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- chronologie -->
+<section class="part" id="faits">
+  <div class="wrap">
+    <span class="label">I. Chronologie des faits</span>
+    <p>Les déplacements de la suspecte, reconstitués dans l'ordre.</p>
+    <div class="board" id="tl">
+      <svg class="strings" aria-hidden="true"></svg>
+      <div class="timeline">
+        <article class="fact pinned" data-id="f1" style="--rot:-2deg"><span class="pin"></span><img src="assets/malraux.webp" alt=""><span class="date">2019 — 2022</span><h3>Baccalauréat général</h3><span class="where">Lycée André Malraux, Allonnes</span></article>
+        <article class="fact pinned" data-id="f2" style="--rot:1.5deg;--d:.15s"><span class="pin"></span><img src="assets/colart.webp" alt=""><span class="date">Été 2023</span><h3>Opératrice de conditionnement</h3><span class="where">Colart International, Le Mans</span><ul><li>Assemblage et contrôle qualité sur lignes de production.</li></ul></article>
+        <article class="fact pinned" data-id="f3" style="--rot:-1deg;--d:.3s"><span class="pin"></span><img src="assets/ensim.webp" alt=""><span class="date">2024 — 2027</span><h3>Cycle ingénieur en alternance</h3><span class="where">ENSIM, Le Mans</span><ul><li>Systèmes embarqués, réseaux, cybersécurité.</li></ul></article>
+        <article class="fact pinned" data-id="f4" style="--rot:2deg;--d:.45s"><span class="pin"></span><img src="assets/sncf.webp" alt=""><span class="date">2024 — 2027</span><h3>Alternance embarqué et réseaux</h3><span class="where">SNCF Voyageurs, CIM du Mans</span><ul><li>Conformité ITxPT des équipements embarqués.</li><li>Client EST, communications mTLS.</li><li>Outil de test SFTP, étude CRA.</li></ul></article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- pièces à conviction -->
+<section class="part" id="pieces">
+  <div class="wrap">
+    <span class="label">II. Pièces à conviction</span>
+    <p>Chaque projet est une pièce. Survolez une piste pour suivre ses fils.</p>
+    <div class="board" id="ev">
+      <svg class="strings" aria-hidden="true"></svg>
+      <div class="leads" id="leads"></div>
+      <div class="evid" id="evid"></div>
+    </div>
+  </div>
+</section>
+
+<!-- rapport -->
+<section class="part" id="rapport">
+  <div class="wrap">
+    <span class="label">III. Rapport technique</span>
+    <p>Compétences relevées, sur quatre paliers : bases, intermédiaire, autonome, avancé.</p>
+    <div class="report pinned" style="--rot:-.4deg"><span class="tape"></span>
+      <div class="head"><span>Objet : profil technique de J. Barbier</span><span class="conf">Confidentiel</span></div>
+      <div class="cols" id="cols"></div>
+    </div>
+  </div>
+</section>
+
+<!-- témoigner -->
+<section class="part" id="temoin">
+  <div class="wrap">
+    <div class="flyer pinned" style="--rot:1deg"><span class="pin"></span>
+      <h2>Avis de recherche</h2>
+      <p>Vous cherchez une ingénieure en embarqué, réseaux ou cybersécurité ? Prenez une languette.</p>
+      <div class="tabs">
+        <a href="mailto:jade72210@gmail.com">jade72210@gmail.com</a>
+        <a href="https://www.linkedin.com/in/jade-barbier-b261b8266" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://github.com/MoggleJ" target="_blank" rel="noopener">GitHub · MoggleJ</a>
+        <a href="#">CV (PDF)</a>
+      </div>
+    </div>
+    <p class="closing">Affaire à suivre.<small>Dossier constitué par Jade Barbier</small></p>
+  </div>
+</section>
+
+<script src="data.js"></script>
+<script src="skills.js"></script>
+<script>
+// ---------- pistes et pièces ----------
+const LEADS=[
+  ['secu','Sécurité & réseaux','#c0262d',['Sécurité','mTLS','API EST','SFTP','SSH','CRA','Conformité']],
+  ['emb','Embarqué & matériel','#2c4a7a',['Arduino','ARM','Embarqué','Matériel','NFC','Bluetooth','Mécatronique','Temps réel','Robotique']],
+  ['ia','IA & données','#7a3fa0',['IA','Deep learning',"Traitement d'images"]],
+  ['dev','Développement','#2f7a4a',['Python','Kotlin','Mobile','C/C++','Docker','Android Studio','Tests']],
+  ['cao','Conception 3D','#c77a17',['SolidWorks','Impression 3D','Modélisation 3D']],
+];
+const P=window.PROJECTS||[],kinds={pro:'Entreprise',school:'École',perso:'Perso'};
+const rot=i=>[-2.5,1.5,-1,2.5,-1.8,1][i%6];
+document.getElementById('leads').innerHTML=LEADS.map(([id,l,c],i)=>`<button class="lead pinned" type="button" data-id="L-${id}" data-lead="${id}" style="--c:${c};--rot:${rot(i+2)}deg;--d:${i*.08}s"><span class="pin y"></span><small>Piste ${i+1}</small>${l}</button>`).join('');
+const links=[];
+document.getElementById('evid').innerHTML=P.map((p,i)=>{
+  const hit=LEADS.filter(L=>L[3].some(t=>(p.tags||[]).includes(t))).map(L=>L[0]);
+  hit.forEach(h=>links.push([`L-${h}`,`P-${i}`,h]));
+  return `<article class="ev pinned" data-id="P-${i}" data-leads="${hit.join(' ')}" style="--rot:${rot(i)}deg;--d:${(i%4)*.08}s"><span class="pin"></span>
+    <div class="ph">${p.img?`<img src="${p.img}" alt="" loading="lazy">`:'<span>Photo manquante<br>visuel à venir</span>'}</div>
+    <div class="cap"><span class="no">Pièce n° ${String(i+1).padStart(2,'0')} · ${kinds[p.kind]}</span><h3>${p.title}</h3><p>${p.desc||''}</p><div class="tagline">${(p.tags||[]).slice(0,4).join(' · ')}</div></div></article>`}).join('');
+
+// ---------- rapport ----------
+const lv=['bases','intermédiaire','autonome','avancé'];
+document.getElementById('cols').innerHTML=(window.SKILLS||[]).map(c=>`<div class="cat"><h3>${c.title}</h3><ul>${c.skills.map(([n,l])=>`<li><span>${n}</span><i>${l===4?`<b>${lv[3]}</b>`:lv[l-1]}</i></li>`).join('')}</ul></div>`).join('');
+
+// ---------- fils ----------
+const BOARDS=[
+  ['case',[['photo','id'],['photo','clip'],['id','n1'],['id','n2'],['clip','n3']]],
+  ['tl',[['f1','f2'],['f2','f3'],['f3','f4']]],
+  ['ev',links],
+];
+function pinOf(board,id){const el=board.querySelector(`[data-id="${id}"] .pin, [data-id="${id}"] > .pin`)||board.querySelector(`[data-id="${id}"]`);const b=board.getBoundingClientRect(),r=el.getBoundingClientRect();return[r.left+r.width/2-b.left,r.top+r.height/2-b.top]}
+function draw(){
+  for(const [bid,pairs] of BOARDS){
+    const board=document.getElementById(bid),svg=board.querySelector('.strings');if(getComputedStyle(svg).display==='none')continue;
+    if(svg.children.length!==pairs.length)svg.innerHTML=pairs.map(([a,z,lead],i)=>`<path pathLength="1" data-lead="${lead||''}" style="--d:${.3+i*.06}s"/>`).join('');
+    // on met seulement à jour le tracé, pour ne pas relancer l'animation des fils
+    pairs.forEach(([a,z],i)=>{const [x1,y1]=pinOf(board,a),[x2,y2]=pinOf(board,z);const sag=Math.min(60,Math.hypot(x2-x1,y2-y1)*.12);
+      svg.children[i].setAttribute('d',`M${x1},${y1} Q${(x1+x2)/2},${(y1+y2)/2+sag} ${x2},${y2}`)});
+  }
+}
+// survol ou clic d'une piste : on suit ses fils
+const evSvg=document.querySelector('#ev .strings'),evid=document.getElementById('evid');let locked=null;
+function focus(id){evSvg.classList.toggle('dim',!!id);evid.classList.toggle('filter',!!id);
+  evSvg.querySelectorAll('path').forEach(p=>p.classList.toggle('hot',p.dataset.lead===id));
+  evid.querySelectorAll('.ev').forEach(e=>e.classList.toggle('hot',!!id&&e.dataset.leads.split(' ').includes(id)));
+  document.querySelectorAll('.lead').forEach(l=>l.classList.toggle('on',l.dataset.lead===id))}
+document.getElementById('leads').addEventListener('mouseover',e=>{const l=e.target.closest('.lead');if(l&&!locked)focus(l.dataset.lead)});
+document.getElementById('leads').addEventListener('mouseleave',()=>{if(!locked)focus(null)});
+document.getElementById('leads').addEventListener('click',e=>{const l=e.target.closest('.lead');if(!l)return;locked=locked===l.dataset.lead?null:l.dataset.lead;focus(locked)});
+
+// ---------- apparitions ----------
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.15});
+document.querySelectorAll('.pinned,.board').forEach(el=>io.observe(el));
+addEventListener('load',draw);document.fonts&&document.fonts.ready.then(draw);
+let t;addEventListener('resize',()=>{clearTimeout(t);t=setTimeout(draw,150)});
+// les éléments bougent en s'épinglant : on recalcule une fois la chute terminée
+document.addEventListener('transitionend',e=>{if(e.target.classList.contains('pinned')&&e.propertyName==='transform'){clearTimeout(t);t=setTimeout(draw,60)}});
+</script>
+</body>
+</html>

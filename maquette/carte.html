@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jade Barbier · L'archipel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --parch:#ead9b2; --parch2:#e2cc9c; --ink:#3a2817; --ink2:#6b5137; --red:#a3271d; --sea:#4f6b78; --sand:#dcc28a; --green:#8d9a5c; --gold:#c79a3a;
+  --fell:"IM Fell English",Georgia,serif; --sc:"IM Fell English SC",Georgia,serif;
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0}
+html{scroll-behavior:smooth}
+body{color:var(--ink);font:400 1.08rem/1.6 "EB Garamond",Georgia,serif;overflow-x:clip;background-color:var(--parch);
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='90'%3E%3Cpath d='M10 30q5-5 10 0t10 0M70 70q5-5 10 0t10 0M80 20q4-4 8 0t8 0' fill='none' stroke='%234f6b78' stroke-opacity='.28' stroke-width='1.2'/%3E%3C/svg%3E"),
+    radial-gradient(40% 30% at 15% 20%,#c9a86a40,transparent 70%),
+    radial-gradient(35% 25% at 85% 55%,#b8935540,transparent 70%),
+    radial-gradient(30% 25% at 30% 85%,#c9a86a33,transparent 70%),
+    radial-gradient(120% 100% at 50% 50%,transparent 60%,#a07a4466);
+  background-attachment:scroll,scroll,scroll,scroll,fixed}
+img{display:block;max-width:100%}
+a{color:inherit}
+.sea{position:relative;max-width:1180px;margin:0 auto;padding:0 clamp(16px,4vw,48px)}
+
+/* route et bateau */
+#route{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none;z-index:1}
+#route .ahead{fill:none;stroke:var(--ink2);stroke-width:2;stroke-dasharray:3 9;stroke-linecap:round;opacity:.55}
+#route .done{fill:none;stroke:var(--red);stroke-width:3;stroke-dasharray:12 8;stroke-linecap:round}
+#ship{transition:opacity .3s}
+#ship .hull{fill:#5a3b22;stroke:var(--ink);stroke-width:1.5}
+#ship .sail{fill:#f3e7c9;stroke:var(--ink);stroke-width:1.5}
+#ship .flag{fill:var(--red)}
+#ship .bob{animation:bob 2.4s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 100%}
+@keyframes bob{50%{transform:rotate(4deg) translateY(-2px)}}
+
+section,header,footer{position:relative}
+.stop{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,80px);align-items:center;padding:90px 0}
+.stop.flip .island{order:2}
+
+/* îles dessinées */
+.island{position:relative;z-index:0;justify-self:center;width:min(100%,420px);aspect-ratio:1.2}
+.island svg{width:100%;height:100%;overflow:visible}
+.island .shallow{fill:#7d9aa522;stroke:var(--sea);stroke-width:1.2;stroke-dasharray:2 5}
+.island .land{fill:var(--sand);stroke:var(--ink);stroke-width:2}
+.island .veg{fill:var(--green);opacity:.75}
+.island .hatch{stroke:var(--ink2);stroke-width:1;opacity:.5}
+.island .mnt{fill:none;stroke:var(--ink);stroke-width:1.6}
+.island .name{position:absolute;left:0;right:0;bottom:-6px;text-align:center;font:italic 400 clamp(1.05rem,2vw,1.35rem)/1.2 var(--fell)}
+.island .name small{display:block;font:400 .82rem var(--sc);letter-spacing:.12em;color:var(--ink2)}
+.wp{position:absolute;left:50%;top:44%;width:1px;height:1px}
+.x{position:absolute;left:50%;top:44%;width:26px;height:26px;margin:-13px 0 0 -13px;z-index:2}
+.x::before,.x::after{content:"";position:absolute;left:11px;top:-2px;width:4px;height:30px;background:var(--red);border-radius:2px;transform:rotate(45deg)}
+.x::after{transform:rotate(-45deg)}
+.flagpin{position:absolute;left:50%;top:44%;z-index:2;width:2px;height:40px;margin:-40px 0 0 -1px;background:var(--ink);transform-origin:50% 100%;transform:scaleY(0);transition:transform .5s cubic-bezier(.3,1.6,.5,1)}
+.flagpin::after{content:"";position:absolute;left:2px;top:0;width:24px;height:15px;background:var(--red);clip-path:polygon(0 0,100% 30%,70% 55%,100% 100%,0 85%)}
+.stop.on .flagpin{transform:scaleY(1)}
+
+/* cartouches (cartes de contenu) */
+.cart{position:relative;z-index:2;background:#f3e6c6;padding:clamp(20px,3vw,32px);box-shadow:0 0 0 1px var(--ink2),0 0 0 6px #f3e6c6,0 0 0 7px var(--ink2),0 18px 30px #5a3b2240;opacity:0;transform:translateY(20px);transition:opacity .8s,transform .8s}
+.cart.in{opacity:1;transform:none}
+.cart .k{font:400 .9rem/1 var(--sc);letter-spacing:.16em;color:var(--red)}
+.cart h2{font:400 clamp(1.7rem,3.2vw,2.4rem)/1.1 var(--fell);margin:8px 0 6px}
+.cart h3{font:400 1.45rem/1.2 var(--fell);margin:6px 0 4px}
+.cart .where{font-style:italic;color:var(--ink2)}
+.cart ul{margin:12px 0 0;padding-left:20px}
+.cart li{margin-bottom:4px}
+.cart li::marker{content:"⚓︎ ";color:var(--ink2)}
+
+/* départ */
+.title{padding:60px 0 0;text-align:center}
+.title .k{font:400 1rem var(--sc);letter-spacing:.3em;color:var(--ink2)}
+.title h1{font:400 clamp(3rem,9vw,6.4rem)/1 var(--fell);margin:.15em 0 .1em}
+.title h1 i{color:var(--red)}
+.title p{font:italic 400 1.2rem var(--fell);margin:0;color:var(--ink2)}
+.port{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,80px);align-items:center;padding:60px 0 40px}
+.medal{position:relative;width:min(100%,380px);aspect-ratio:1;justify-self:center}
+.medal img{position:absolute;inset:11%;width:78%;height:78%;border-radius:50%;object-fit:cover;filter:sepia(.35) contrast(1.05);box-shadow:0 0 0 3px var(--ink),0 0 0 9px #f3e6c6,0 0 0 11px var(--ink)}
+.medal svg{position:absolute;inset:0;width:100%;height:100%;animation:spin 120s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.medal .wp{top:50%}
+.btns{display:flex;flex-wrap:wrap;gap:14px;margin-top:22px}
+.btn{display:inline-block;text-decoration:none;font:400 1.05rem var(--sc);letter-spacing:.08em;padding:10px 18px;background:var(--ink);color:var(--parch);box-shadow:0 0 0 2px var(--parch),0 0 0 3px var(--ink);transition:background .2s}
+.btn.o{background:none;color:var(--ink)}
+.btn:hover{background:var(--red);color:var(--parch)}
+.cap{display:inline-flex;align-items:center;gap:10px;margin-top:14px;font:italic 400 1.1rem var(--fell)}
+.cap::before{content:"";width:22px;height:22px;border-radius:50%;border:2px solid var(--red);background:radial-gradient(circle,var(--red) 0 3px,transparent 4px)}
+
+/* chapitres */
+.chapter{text-align:center;padding:90px 0 10px;position:relative;z-index:2}
+.chapter span{font:400 .95rem var(--sc);letter-spacing:.3em;color:var(--ink2)}
+.chapter h2{font:400 clamp(2rem,5vw,3.4rem)/1.1 var(--fell);margin:.15em 0}
+.chapter p{max-width:52ch;margin:0 auto;font-style:italic;color:var(--ink2)}
+
+/* projets : îlots */
+.isles{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:30px;position:relative;z-index:2}
+.isle{background:#f3e6c6;box-shadow:0 0 0 1px var(--ink2),0 10px 22px #5a3b2233;opacity:0;transform:translateY(20px);transition:opacity .7s,transform .7s;transition-delay:var(--d,0s)}
+.isle.in{opacity:1;transform:none}
+.isle .pic{aspect-ratio:16/10;overflow:hidden;border-bottom:1px solid var(--ink2);background:#e4d2a6;display:grid;place-items:center}
+.isle .pic img{width:100%;height:100%;object-fit:cover;filter:sepia(.3) contrast(1.05)}
+.isle .pic span{font:italic 400 1rem var(--fell);color:var(--ink2)}
+.isle .txt{padding:14px 16px 18px}
+.isle .txt small{font:400 .8rem var(--sc);letter-spacing:.12em;color:var(--red)}
+.isle h3{font:400 1.3rem/1.2 var(--fell);margin:4px 0 6px}
+.isle p{margin:0;font-size:.98rem;line-height:1.5}
+.isle .tags{margin-top:8px;font-style:italic;color:var(--ink2);font-size:.92rem}
+.group{padding:40px 0 30px}
+.group .stop{padding:20px 0 30px}
+.group .island{width:min(100%,300px)}
+
+/* légende */
+.legend{position:relative;z-index:2;background:#f3e6c6;padding:clamp(20px,3vw,34px);box-shadow:0 0 0 1px var(--ink2),0 0 0 6px #f3e6c6,0 0 0 7px var(--ink2);max-width:1000px;margin:30px auto 0}
+.legend h3{font:400 1.6rem var(--fell);text-align:center;margin:0 0 4px}
+.legend .key{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;font-style:italic;color:var(--ink2);margin-bottom:20px}
+.legend .cols{columns:3 250px;column-gap:34px}
+.legend .cat{break-inside:avoid;margin-bottom:18px}
+.legend .cat h4{font:400 1rem var(--sc);letter-spacing:.1em;margin:0 0 6px;border-bottom:1px solid var(--ink2);padding-bottom:3px}
+.legend ul{list-style:none;margin:0;padding:0;font-size:.98rem}
+.legend li{display:flex;justify-content:space-between;gap:10px;line-height:1.75}
+.knots{letter-spacing:2px;color:var(--ink2);white-space:nowrap}
+.knots b{color:var(--red);font-weight:400}
+
+/* trésor */
+.treasure{padding:110px 0 70px;text-align:center}
+.chest{position:relative;width:180px;height:130px;margin:0 auto 34px;perspective:600px;z-index:2}
+.chest .box{position:absolute;left:0;right:0;bottom:0;height:78px;background:linear-gradient(90deg,#6b4423,#8a5a2e 50%,#6b4423);border:3px solid var(--ink);border-radius:4px;box-shadow:inset 0 0 0 8px #0000,0 14px 20px #5a3b2255}
+.chest .box::before{content:"";position:absolute;left:50%;top:-6px;width:22px;height:26px;margin-left:-11px;background:var(--gold);border:2px solid var(--ink);border-radius:3px}
+.chest .box::after{content:"";position:absolute;inset:0 22px;border-left:6px solid #3a2817aa;border-right:6px solid #3a2817aa}
+.chest .lid{position:absolute;left:0;right:0;bottom:72px;height:52px;background:linear-gradient(90deg,#6b4423,#8f5f32 50%,#6b4423);border:3px solid var(--ink);border-radius:60px 60px 4px 4px/40px 40px 4px 4px;transform-origin:50% 100%;transition:transform .9s cubic-bezier(.3,1.4,.5,1)}
+.chest .glow{position:absolute;left:12px;right:12px;bottom:72px;height:10px;background:var(--gold);box-shadow:0 0 30px 16px #f5cf6f;opacity:0;transition:opacity .6s .3s}
+.treasure.on .lid{transform:rotateX(-115deg)}
+.treasure.on .glow{opacity:1}
+.treasure h2{font:400 clamp(2rem,5vw,3.4rem)/1.1 var(--fell);margin:0}
+.treasure p{font-style:italic;color:var(--ink2);max-width:46ch;margin:12px auto 28px}
+.loot{display:flex;flex-wrap:wrap;justify-content:center;gap:16px;position:relative;z-index:2}
+.coin{display:inline-flex;align-items:center;gap:10px;text-decoration:none;padding:10px 18px 10px 10px;border-radius:999px;background:#f3e6c6;box-shadow:0 0 0 1px var(--ink2);font:400 1.05rem var(--fell);transition:transform .2s}
+.coin::before{content:"";width:28px;height:28px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffe9a8,var(--gold) 55%,#7a5a1e);box-shadow:inset 0 0 0 2px #7a5a1e}
+.coin:hover{transform:translateY(-3px)}
+.sig{margin-top:60px;font:italic 400 1.1rem var(--fell);color:var(--ink2)}
+
+@media (max-width:860px){
+  .port,.stop{grid-template-columns:1fr}
+  .stop.flip .island{order:0}
+  .island{width:min(80%,320px)}
+  .group .island{width:min(70%,240px)}
+  .medal{width:min(80%,300px)}
+  .stop{padding:50px 0}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .cart,.isle{opacity:1;transform:none;transition:none}
+  .medal svg,#ship .bob{animation:none}
+}
+</style>
+</head>
+<body>
+<div class="sea" id="sea">
+  <svg id="route" aria-hidden="true">
+    <defs><clipPath id="sailed"><rect id="sailedRect" x="-50" y="-50" width="5000" height="0"/></clipPath></defs>
+    <path class="ahead" id="ahead"/><path class="done" id="done" clip-path="url(#sailed)"/>
+    <g id="ship"><g class="bob">
+      <path class="hull" d="M-22,4 L22,4 L15,15 L-15,15 Z"/>
+      <path class="sail" d="M-2,2 L-2,-28 L-18,0 Z"/>
+      <path class="sail" d="M2,2 L2,-34 L20,0 Z"/>
+      <path class="flag" d="M2,-34 L12,-31 L2,-28 Z"/>
+    </g></g>
+  </svg>
+
+  <header class="title">
+    <span class="k">Carte marine · levée en 2026</span>
+    <h1>L'archipel de <i>Jade</i></h1>
+    <p>Route d'une ingénieure, du port d'attache jusqu'au trésor</p>
+  </header>
+
+  <section class="port">
+    <div class="medal">
+      <svg viewBox="0 0 200 200" aria-hidden="true"><g fill="none" stroke="#3a2817" stroke-width="1"><circle cx="100" cy="100" r="98"/><circle cx="100" cy="100" r="92" stroke-dasharray="1 4"/></g>
+        <g fill="#3a2817" font-family="IM Fell English SC,serif" font-size="11" text-anchor="middle"><text x="100" y="12">N</text><text x="100" y="196">S</text><text x="194" y="104">E</text><text x="6" y="104">O</text></g></svg>
+      <img src="assets/jade.webp" alt="Portrait de Jade Barbier">
+      <span class="wp" data-wp></span>
+    </div>
+    <div class="cart">
+      <span class="k">Port d'attache · Le Mans</span>
+      <h2>Jade Barbier</h2>
+      <p class="where">Élève ingénieure à l'ENSIM, en alternance chez SNCF Voyageurs</p>
+      <p>À la frontière du logiciel et du matériel : cartes Arduino et STM32, réseaux et cybersécurité, avec des incursions en IA et en développement web. De la console de jeu conçue de A à Z au client mTLS industriel.</p>
+      <span class="cap">Cap sur un poste d'ingénieure, septembre 2027</span>
+      <div class="btns"><a class="btn" href="#escales">Lever l'ancre</a><a class="btn o" href="#tresor">Aller au trésor</a></div>
+    </div>
+  </section>
+
+  <div class="chapter" id="escales"><span>Première partie</span><h2>Les escales</h2><p>Chaque île visitée, dans l'ordre du voyage.</p></div>
+
+  <section class="stop">
+    <div class="island" data-seed="3"><span class="flagpin"></span><span class="wp" data-wp></span><div class="name">Île Malraux<small>2019 — 2022</small></div></div>
+    <div class="cart"><span class="k">Lycée André Malraux · Allonnes</span><h3>Baccalauréat général</h3><p>Premier mouillage : les bases scientifiques avant le grand large.</p></div>
+  </section>
+  <section class="stop flip">
+    <div class="island" data-seed="11"><span class="flagpin"></span><span class="wp" data-wp></span><div class="name">Îlot Colart<small>été 2023</small></div></div>
+    <div class="cart"><span class="k">Colart International · Le Mans</span><h3>Opératrice de conditionnement</h3><ul><li>Assemblage, contrôle et conditionnement sur lignes de production.</li><li>Normes qualité et sécurité.</li></ul></div>
+  </section>
+  <section class="stop">
+    <div class="island" data-seed="27"><span class="flagpin"></span><span class="wp" data-wp></span><div class="name">Île ENSIM<small>2024 — 2027</small></div></div>
+    <div class="cart"><span class="k">ENSIM · Le Mans</span><h3>Cycle ingénieur en alternance</h3><ul><li>Systèmes embarqués, réseaux, cybersécurité.</li><li>Projets d'équipe : mécatronique, IA, mobile.</li></ul></div>
+  </section>
+  <section class="stop flip">
+    <div class="island" data-seed="42" data-big><span class="flagpin"></span><span class="wp" data-wp></span><div class="name">Grande île SNCF Voyageurs<small>2024 — 2027 · en cours</small></div></div>
+    <div class="cart"><span class="k">SNCF Voyageurs · CIM du Mans</span><h3>Alternance en informatique embarquée et réseaux</h3><ul><li>Tests de conformité des équipements embarqués aux spécifications ITxPT : consommation électrique, services échangés.</li><li>Client EST pour sécuriser les communications à bord (mTLS).</li><li>Outil de test de connexion SFTP et étude d'impact du Cyber Resilience Act.</li></ul></div>
+  </section>
+
+  <div class="chapter"><span>Deuxième partie</span><h2>Les archipels</h2><p>Les projets, regroupés en trois archipels. Chaque croix marque une découverte.</p></div>
+  <div id="groups"></div>
+
+  <div class="chapter"><span>Troisième partie</span><h2>Instruments de bord</h2><p>Les compétences, mesurées en nœuds.</p></div>
+  <div class="legend cart" id="legend">
+    <h3>Légende</h3>
+    <div class="key"><span>⚓︎ bases</span><span>⚓︎⚓︎ intermédiaire</span><span>⚓︎⚓︎⚓︎ autonome</span><span>⚓︎⚓︎⚓︎⚓︎ avancé</span></div>
+    <div class="cols" id="cols"></div>
+  </div>
+
+  <section class="treasure" id="tresor">
+    <div class="chest"><span class="glow"></span><span class="lid"></span><span class="box"></span><span class="wp" data-wp style="top:60%"></span></div>
+    <h2>Le trésor</h2>
+    <p>Une ingénieure en embarqué, réseaux et cybersécurité, disponible en septembre 2027. Il ne reste qu'à prendre contact.</p>
+    <div class="loot">
+      <a class="coin" href="mailto:jade72210@gmail.com">jade72210@gmail.com</a>
+      <a class="coin" href="https://www.linkedin.com/in/jade-barbier-b261b8266" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="coin" href="https://github.com/MoggleJ" target="_blank" rel="noopener">GitHub</a>
+      <a class="coin" href="#">CV (PDF)</a>
+    </div>
+    <p class="sig">Carte dressée par Jade Barbier</p>
+  </section>
+</div>
+
+<script src="data.js"></script>
+<script src="skills.js"></script>
+<script>
+// ---------- archipels de projets ----------
+const G=[['pro','Archipel Entreprise',61],['school','Archipel École',77],['perso','Archipel Perso',93]];
+document.getElementById('groups').innerHTML=G.map(([k,label,seed],gi)=>{const items=(window.PROJECTS||[]).filter(p=>p.kind===k);
+  return `<div class="group"><section class="stop ${gi%2?'flip':''}"><div class="island" data-seed="${seed}"><span class="x"></span><span class="wp" data-wp></span><div class="name">${label}<small>${items.length} découvertes</small></div></div><div></div></section>
+  <div class="isles">${items.map((p,i)=>`<article class="isle" style="--d:${(i%3)*.1}s"><div class="pic">${p.img?`<img src="${p.img}" alt="" loading="lazy">`:'<span>Croquis à venir</span>'}</div><div class="txt"><small>${p.where||''}</small><h3>${p.title}</h3><p>${p.desc||''}</p><div class="tags">${(p.tags||[]).slice(0,4).join(', ')}</div></div></article>`).join('')}</div></div>`}).join('');
+// la colonne vide à côté de l'île porte le nom de l'archipel en grand
+document.querySelectorAll('.group .stop > div:last-child').forEach((d,i)=>{d.innerHTML=`<p style="font:italic 400 clamp(1.4rem,3vw,2rem)/1.3 var(--fell);color:var(--ink2);margin:0">${['Trois missions en entreprise, au cœur du ferroviaire.','Cinq projets d\'école, du bras robotique à l\'IA.','Deux projets personnels, par curiosité.'][i]||''}</p>`});
+
+// ---------- légende ----------
+const lv=['bases','intermédiaire','autonome','avancé'];
+document.getElementById('cols').innerHTML=(window.SKILLS||[]).map(c=>`<div class="cat"><h4>${c.title}</h4><ul>${c.skills.map(([n,l])=>`<li><span>${n}</span><span class="knots" title="${lv[l-1]}" aria-label="${lv[l-1]}">${'⚓︎'.repeat(l)}<span style="opacity:.25">${'⚓︎'.repeat(4-l)}</span></span></li>`).join('')}</ul></div>`).join('');
+
+// ---------- îles dessinées ----------
+function rng(s){return()=>(s=(s*16807)%2147483647)/2147483647}
+function blob(r,cx,cy,R,n,amp){const pts=[];for(let i=0;i<n;i++){const a=i/n*Math.PI*2,rr=R*(1-amp/2+amp*r());pts.push([cx+Math.cos(a)*rr*1.2,cy+Math.sin(a)*rr*.85])}
+  let d='';for(let i=0;i<n;i++){const p=pts[i],q=pts[(i+1)%n],m=[(p[0]+q[0])/2,(p[1]+q[1])/2];d+=(i?'':`M${m[0]},${m[1]}`)+` Q${q[0]},${q[1]} ${((q[0]+pts[(i+2)%n][0])/2)},${((q[1]+pts[(i+2)%n][1])/2)}`}return d+'Z'}
+document.querySelectorAll('.island').forEach(el=>{const r=rng(+el.dataset.seed||7),big=el.hasAttribute('data-big');const R=big?78:62;
+  let hatch='';for(let i=0;i<9;i++){const a=r()*Math.PI*2,x=120+Math.cos(a)*R*1.45,y=100+Math.sin(a)*R*1.05;hatch+=`<path class="hatch" d="M${x-8},${y} q4,-4 8,0 t8,0"/>`}
+  let mnt='';for(let i=0;i<(big?4:2);i++){const x=95+r()*50,y=80+r()*30;mnt+=`<path class="mnt" d="M${x-12},${y+8} L${x},${y-8} L${x+12},${y+8} M${x-4},${y-2} l4,3 l4,-3"/>`}
+  el.insertAdjacentHTML('afterbegin',`<svg viewBox="0 0 240 200" aria-hidden="true"><path class="shallow" d="${blob(rng(+el.dataset.seed+1),120,100,R*1.28,11,.25)}"/><path class="land" d="${blob(r,120,100,R,13,.45)}"/><path class="veg" d="${blob(r,118,96,R*.55,9,.5)}"/>${mnt}${hatch}</svg>`)});
+
+// ---------- apparitions ----------
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.15});
+document.querySelectorAll('.cart,.isle').forEach(el=>io.observe(el));
+
+// ---------- route et bateau ----------
+const sea=document.getElementById('sea'),route=document.getElementById('route'),ahead=document.getElementById('ahead'),done=document.getElementById('done'),ship=document.getElementById('ship');
+let S=[],L=0,W=[];
+function plot(){
+  const b=sea.getBoundingClientRect();route.setAttribute('viewBox',`0 0 ${b.width} ${sea.scrollHeight}`);
+  W=[...document.querySelectorAll('[data-wp]')].map(n=>{const r=n.getBoundingClientRect();return{x:r.left-b.left,y:r.top-b.top,el:n.closest('.stop,.treasure,.port')}});
+  let d=`M${W[0].x},${W[0].y}`;
+  for(let i=1;i<W.length;i++){const a=W[i-1],z=W[i],dy=(z.y-a.y)*.5,sw=(i%2?1:-1)*Math.min(140,b.width*.12);d+=` C${a.x+sw},${a.y+dy} ${z.x-sw},${z.y-dy} ${z.x},${z.y}`}
+  ahead.setAttribute('d',d);done.setAttribute('d',d);L=done.getTotalLength();
+  S=[];for(let l=0;l<=L;l+=5){const p=done.getPointAtLength(l);S.push([l,p.x,p.y])}
+  sail();
+}
+function sail(){if(!S.length)return;
+  const b=sea.getBoundingClientRect(),lim=-b.top+innerHeight*.55;
+  let k=0;while(k<S.length-1&&S[k+1][2]<=lim)k++;
+  if(innerHeight+scrollY>=document.documentElement.scrollHeight-4)k=S.length-1; // en bas de page, le bateau accoste au trésor
+  const [,x,y]=S[k],n=S[Math.min(k+3,S.length-1)],p=S[Math.max(k-3,0)],left=n[1]<p[1];
+  // le tracé parcouru (au-dessus du bateau) passe en pointillés rouges
+  document.getElementById('sailedRect').setAttribute('height',y+50);
+  ship.setAttribute('transform',`translate(${x},${y}) scale(${left?-1:1},1)`);
+  W.forEach(w=>w.el&&w.el.classList.toggle('on',w.y<=y+2));
+}
+addEventListener('scroll',()=>requestAnimationFrame(sail),{passive:true});
+addEventListener('load',plot);document.fonts&&document.fonts.ready.then(plot);
+let t;addEventListener('resize',()=>{clearTimeout(t);t=setTimeout(plot,150)});
+</script>
+</body>
+</html>

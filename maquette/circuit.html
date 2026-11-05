@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jade Barbier · Circuit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --pcb:#0b120f; --pcb2:#0f1814; --mask:#13201a;
+  --silk:#e9efe9; --silk2:#9fb0a6; --dim:#4f6158;
+  --cu:#6b4a22; --gold:#e3b04b; --glow:#ffd27a;
+  --led:#3dff8a; --ic:#17191b; --ic2:#222528;
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--pcb);color:var(--silk);font-family:Inter,system-ui,sans-serif;overflow-x:clip;
+  background-image:
+    radial-gradient(circle at 1px 1px,#ffffff0d 1px,transparent 1.5px),
+    radial-gradient(120% 60% at 70% 0%,#1a2d24 0%,transparent 60%);
+  background-size:22px 22px,100% 100%}
+img{display:block;max-width:100%}
+a{color:inherit}
+.mono{font-family:"IBM Plex Mono",monospace}
+.silk{font:500 .72rem/1.3 "IBM Plex Mono",monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--silk2)}
+
+/* ---------- carte ---------- */
+.board{position:relative;max-width:1240px;margin:0 auto;padding:0 clamp(16px,4vw,48px)}
+#bus{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;z-index:0}
+#bus .base{fill:none;stroke:var(--cu);stroke-width:6;stroke-linejoin:round;stroke-linecap:round;opacity:.9}
+#bus .edge{fill:none;stroke:#00000066;stroke-width:10;stroke-linejoin:round}
+#bus .live{fill:none;stroke:var(--gold);stroke-width:4;stroke-linejoin:round;stroke-linecap:round;filter:drop-shadow(0 0 6px var(--glow)) drop-shadow(0 0 14px #ffb84a88)}
+#bus .head{fill:#fff;filter:drop-shadow(0 0 6px #fff) drop-shadow(0 0 16px var(--glow))}
+#bus .via{fill:var(--pcb);stroke:var(--gold);stroke-width:3}
+.deco{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
+.deco path{fill:none;stroke:#1d2e25;stroke-width:3;stroke-linejoin:round}
+.deco circle{fill:var(--pcb);stroke:#2a4034;stroke-width:2}
+section,header,footer{position:relative;z-index:1}
+
+/* ---------- barre ---------- */
+.top{display:flex;align-items:center;justify-content:space-between;padding:22px 0}
+.top .ref{display:flex;align-items:center;gap:12px}
+.hole{width:22px;height:22px;border-radius:50%;background:radial-gradient(circle,#050806 0 5px,#b98f3e 6px 9px,#5d4720 10px);box-shadow:0 0 0 1px #0006}
+.top nav{display:flex;gap:4px}
+.top nav a{text-decoration:none;font:500 .74rem "IBM Plex Mono";letter-spacing:.1em;text-transform:uppercase;color:var(--silk2);padding:.5rem .8rem;border:1px solid transparent;border-radius:3px}
+.top nav a:hover{border-color:var(--dim);color:var(--silk)}
+.lang{font:600 .74rem "IBM Plex Mono";letter-spacing:.1em;background:none;color:var(--silk);border:1px solid var(--dim);border-radius:3px;padding:.45rem .7rem;cursor:pointer}
+
+/* ---------- accueil ---------- */
+.hero{display:grid;grid-template-columns:1.15fr 1fr;gap:clamp(24px,5vw,72px);align-items:center;min-height:calc(100vh - 80px);padding:20px 0 60px}
+.rev{display:flex;gap:18px;flex-wrap:wrap;margin-bottom:22px}
+.rev span{border:1px solid var(--dim);padding:.3rem .55rem;border-radius:2px}
+h1{font:700 clamp(3.2rem,8.4vw,7.4rem)/.88 "Chakra Petch",sans-serif;letter-spacing:-.01em;text-transform:uppercase;margin:0}
+h1 .l2{display:block;color:transparent;-webkit-text-stroke:1.5px var(--silk)}
+.role{font:500 clamp(1.05rem,1.6vw,1.25rem)/1.5 Inter;color:var(--silk2);max-width:40ch;margin:26px 0 0}
+.role b{color:var(--silk);font-weight:500}
+.led{display:inline-flex;align-items:center;gap:10px;margin-top:26px}
+.led i{width:10px;height:6px;border-radius:1px;background:var(--led);box-shadow:0 0 6px var(--led),0 0 18px var(--led);animation:blink 2.4s infinite}
+@keyframes blink{0%,70%,100%{opacity:1}80%{opacity:.25}}
+.sw{display:flex;gap:16px;margin-top:34px;flex-wrap:wrap}
+.btn{position:relative;display:inline-flex;align-items:center;gap:12px;text-decoration:none;padding:.85rem 1.2rem .85rem .9rem;border-radius:4px;background:#1a1d1f;border:1px solid #2d3236;font:600 .82rem "IBM Plex Mono";letter-spacing:.08em;text-transform:uppercase;box-shadow:inset 0 1px #ffffff12,0 3px 0 #050606;transition:transform .12s,box-shadow .12s}
+.btn::before{content:"";width:18px;height:18px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#3a3f44,#141618);box-shadow:inset 0 0 0 2px #0a0b0c}
+.btn.p::before{background:radial-gradient(circle at 40% 35%,#ffe2a0,var(--gold) 55%,#7a5a1e)}
+.btn:hover{transform:translateY(2px);box-shadow:inset 0 1px #ffffff12,0 1px 0 #050606}
+.btn small{position:absolute;top:-1.4em;left:0;font:500 .62rem "IBM Plex Mono";color:var(--dim);letter-spacing:.12em}
+
+/* puce principale : boîtier céramique à fenêtre (EPROM) */
+.u1{position:relative;justify-self:center;width:min(100%,440px);aspect-ratio:1;padding:34px}
+.u1 .pins{position:absolute;inset:0}
+.u1 .pins i{position:absolute;background:repeating-linear-gradient(var(--dir,90deg),#c9cfd2 0 7px,transparent 7px 17px);opacity:.9}
+.u1 .pins .t,.u1 .pins .b{left:64px;right:64px;height:34px;--dir:90deg}
+.u1 .pins .t{top:0}.u1 .pins .b{bottom:0}
+.u1 .pins .l,.u1 .pins .r{top:64px;bottom:64px;width:34px;--dir:180deg}
+.u1 .pins .l{left:0}.u1 .pins .r{right:0}
+.u1 .pkg{position:relative;height:100%;border-radius:10px;background:linear-gradient(145deg,#3a3d40,#26292c 40%,#1c1e20);box-shadow:inset 0 1px #ffffff1c,inset 0 -2px #0008,0 24px 50px #000a;display:grid;place-items:center}
+.u1 .pkg::after{content:"";position:absolute;left:18px;top:18px;width:12px;height:12px;border-radius:50%;background:#16181a;box-shadow:inset 0 1px 2px #000}
+.u1 .win{position:relative;width:64%;aspect-ratio:1;border-radius:14px;padding:10px;background:linear-gradient(145deg,#c4a25a,#7a5a22);box-shadow:inset 0 0 0 1px #0006}
+.u1 .win img{width:100%;height:100%;object-fit:cover;border-radius:6px;filter:saturate(.9) contrast(1.05)}
+.u1 .win::after{content:"";position:absolute;inset:10px;border-radius:6px;background:linear-gradient(130deg,#ffffff38,transparent 38%,transparent 70%,#ffffff14);mix-blend-mode:screen}
+.u1 .mark{position:absolute;left:0;right:0;bottom:16px;text-align:center;font:600 .7rem/1.5 "IBM Plex Mono";letter-spacing:.16em;color:#c8cdd0}
+.u1 .mark b{display:block;font-size:.95rem;color:#e8ecee}
+.u1 .ref{position:absolute;top:-6px;right:-4px}
+.node{position:absolute;width:1px;height:1px}
+
+/* ---------- sections ---------- */
+.sec{padding:110px 0 40px}
+.sec-h{padding-left:120px;display:flex;align-items:baseline;gap:18px;margin-bottom:46px}
+.sec-h h2{font:700 clamp(2rem,4vw,3.2rem)/1 "Chakra Petch";text-transform:uppercase;margin:0}
+.sec-h .silk{white-space:nowrap}
+
+/* composants expérience */
+.parts{display:grid;gap:56px}
+.part{position:relative;display:grid;grid-template-columns:300px 1fr;gap:clamp(24px,4vw,64px);align-items:start;padding-left:120px}
+.chip{position:relative;padding:18px 22px}
+.chip::before,.chip::after{content:"";position:absolute;top:30px;bottom:30px;width:18px;background:repeating-linear-gradient(180deg,#b5bcc0 0 6px,transparent 6px 15px)}
+.chip::before{left:4px}.chip::after{right:4px}
+.chip .body{position:relative;background:linear-gradient(160deg,var(--ic2),var(--ic) 60%);border-radius:5px;padding:22px 20px;box-shadow:inset 0 1px #ffffff14,0 14px 30px #0008;min-height:160px;display:flex;flex-direction:column;justify-content:space-between}
+.chip .body::before{content:"";position:absolute;left:12px;top:12px;width:8px;height:8px;border-radius:50%;background:#0d0e0f;box-shadow:inset 0 1px 2px #000}
+.chip .logo{display:flex;align-items:center;gap:12px}
+.chip .logo img{width:40px;height:40px;object-fit:contain;border-radius:4px;background:#fff;padding:3px;filter:grayscale(1) contrast(1.1);opacity:.55;transition:.6s}
+.chip h3{font:600 1.25rem/1.15 "Chakra Petch";margin:0;color:#c9cfd2;text-transform:uppercase;letter-spacing:.02em;transition:.6s}
+.chip .code{font:500 .7rem "IBM Plex Mono";color:#7d858a;letter-spacing:.12em}
+.chip .pin1{position:absolute;right:16px;top:14px;width:9px;height:5px;background:#1b211d;border-radius:1px;transition:.4s}
+.chip .refd{position:absolute;left:22px;top:-6px}
+.part.on .chip .logo img{filter:none;opacity:1}
+.part.on .chip h3{color:#fff}
+.part.on .chip .pin1{background:var(--led);box-shadow:0 0 6px var(--led),0 0 16px var(--led)}
+.notes{opacity:.35;transform:translateX(-10px);transition:opacity .7s,transform .7s}
+.part.on .notes{opacity:1;transform:none}
+.notes .when{color:var(--gold)}
+.notes h4{font:500 1.35rem/1.3 Inter;margin:10px 0 14px}
+.notes ul{margin:0;padding:0;list-style:none;display:grid;gap:10px;color:var(--silk2);line-height:1.55;max-width:60ch}
+.notes li{position:relative;padding-left:22px}
+.notes li::before{content:"";position:absolute;left:0;top:.62em;width:10px;height:2px;background:var(--gold)}
+.part .node{left:30px;top:96px}
+
+/* modules projets */
+.banks{display:grid;gap:44px;padding-left:120px}
+.bank{position:relative}
+.bank > .silk{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.bank > .silk::after{content:"";flex:1;height:1px;background:repeating-linear-gradient(90deg,var(--dim) 0 6px,transparent 6px 12px)}
+.bank .node{left:-90px;top:8px}
+.mods{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:20px}
+.mod{position:relative;background:var(--mask);border:1px solid #24382d;border-radius:8px;overflow:hidden;cursor:pointer;transition:transform .3s,border-color .3s,box-shadow .3s}
+.mod::before{content:"";position:absolute;left:14px;right:14px;bottom:0;height:8px;background:repeating-linear-gradient(90deg,var(--gold) 0 8px,transparent 8px 14px);opacity:.7}
+.mod:hover{transform:translateY(-4px);border-color:var(--gold);box-shadow:0 10px 30px #0008,0 0 0 1px #e3b04b33}
+.mod .scr{aspect-ratio:16/10;background:#060908;display:grid;place-items:center;border-bottom:1px solid #24382d;position:relative;overflow:hidden}
+.mod .scr img{width:100%;height:100%;object-fit:cover;opacity:.85;transition:opacity .3s}
+.mod:hover .scr img{opacity:1}
+.mod .scr .none{font:500 .7rem "IBM Plex Mono";letter-spacing:.12em;color:var(--dim);text-transform:uppercase}
+.mod .txt{padding:16px 16px 26px}
+.mod .txt .silk{font-size:.66rem}
+.mod h3{font:500 1.05rem/1.3 Inter;margin:6px 0 10px}
+.mod .tags{display:flex;flex-wrap:wrap;gap:6px}
+.mod .tags span{font:500 .66rem "IBM Plex Mono";color:var(--silk2);border:1px solid #2c4236;padding:.2rem .45rem;border-radius:2px}
+
+/* contact : port USB-C */
+.foot{padding:120px 0 70px;display:grid;justify-items:center;text-align:center;gap:22px}
+.port{position:relative;width:150px;height:56px;border-radius:28px;background:linear-gradient(#c9cfd2,#8b9296);padding:7px;box-shadow:0 10px 30px #000a}
+.port::after{content:"";position:absolute;inset:7px;border-radius:22px;background:#050606;box-shadow:inset 0 0 0 2px #000}
+.port i{position:absolute;z-index:1;left:30px;right:30px;top:24px;height:8px;border-radius:2px;background:#1c1f21}
+.port.on{box-shadow:0 10px 30px #000a,0 0 30px #e3b04b55}
+.port .node{left:50%;top:0;z-index:2}
+.foot h2{font:700 clamp(2rem,5vw,3.6rem)/1 "Chakra Petch";text-transform:uppercase;margin:0}
+.foot .mail{font:500 clamp(1rem,2.2vw,1.4rem) "IBM Plex Mono";color:var(--gold);text-decoration:none;border-bottom:1px dashed var(--gold)}
+.foot .links{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.sig{margin-top:50px;color:var(--dim)}
+
+.fade{opacity:0;transform:translateY(16px);transition:opacity .8s,transform .8s;transition-delay:var(--d,0s)}
+.fade.in{opacity:1;transform:none}
+
+@media (max-width:900px){
+  .top nav{display:none}
+  .hero{grid-template-columns:1fr;min-height:0;padding-top:10px}
+  .u1{width:min(84%,340px);order:-1;padding:26px}
+  .u1 .pins .t,.u1 .pins .b{left:48px;right:48px;height:26px}
+  .u1 .pins .l,.u1 .pins .r{top:48px;bottom:48px;width:26px}
+  .part{grid-template-columns:1fr;padding-left:44px;gap:18px}
+  .part .node{left:-30px;top:60px}
+  .chip{max-width:320px}
+  .banks{padding-left:44px}
+  .bank .node{left:-30px}
+  .sec-h{padding-left:44px}
+  .u1 .node{display:none}
+  .deco{opacity:.45}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .fade{opacity:1;transform:none;transition:none}
+  .led i{animation:none}
+}
+</style>
+</head>
+<body>
+<div class="board" id="board">
+  <svg class="deco" id="deco" aria-hidden="true"></svg>
+  <svg id="bus" aria-hidden="true">
+    <path class="edge" id="edge"/>
+    <path class="base" id="base"/>
+    <path class="live" id="live"/>
+    <g id="vias"></g>
+    <circle class="head" id="head" r="5"/>
+  </svg>
+
+  <header class="top">
+    <div class="ref"><span class="hole"></span><span class="silk">JB-2027 · REV.A</span></div>
+    <nav><a href="#xp">Expérience</a><a href="#projets">Projets</a><a href="#contact">Contact</a></nav>
+    <button class="lang" type="button">FR / EN</button>
+  </header>
+
+  <section class="hero">
+    <div>
+      <div class="rev silk fade"><span>Élève ingénieure</span><span>ENSIM · promo 2027</span><span>Le Mans</span></div>
+      <h1 class="fade" style="--d:.1s">Jade<span class="l2">Barbier</span></h1>
+      <p class="role fade" style="--d:.2s">Alternante chez <b>SNCF Voyageurs</b>. À la frontière du logiciel et du matériel : <b>systèmes embarqués, réseaux, cybersécurité</b>.</p>
+      <div class="led silk fade" style="--d:.3s"><i></i>D1 · disponible sept. 2027</div>
+      <div class="sw fade" style="--d:.4s">
+        <a class="btn p" href="#projets"><small>SW1</small>Voir les projets</a>
+        <a class="btn" href="#contact"><small>SW2</small>Me contacter</a>
+      </div>
+    </div>
+    <div class="u1 fade" style="--d:.15s">
+      <div class="pins"><i class="t"></i><i class="b"></i><i class="l"></i><i class="r"></i></div>
+      <div class="pkg">
+        <div class="win"><img src="assets/jade.webp" alt="Portrait de Jade Barbier"></div>
+        <div class="mark"><b>MJ27C2027</b>JADE BARBIER · FR</div>
+      </div>
+      <span class="ref silk">U1</span>
+      <span class="node" data-node data-mid style="left:50%;bottom:0"></span>
+    </div>
+  </section>
+
+  <section class="sec" id="xp">
+    <div class="sec-h"><span class="silk">Bloc 02</span><h2>Expérience</h2></div>
+    <div class="parts">
+      <article class="part">
+        <span class="node" data-node></span>
+        <div class="chip"><span class="refd silk">U2</span><div class="body"><span class="pin1"></span>
+          <div class="logo"><img src="assets/sncf.webp" alt=""><span class="code">2024 — 2027</span></div>
+          <h3>SNCF Voyageurs</h3><span class="code">CIM · LE MANS</span></div></div>
+        <div class="notes">
+          <span class="silk when">Sept. 2024 — sept. 2027 · en cours</span>
+          <h4>Alternance en informatique embarquée et réseaux</h4>
+          <ul><li>Tests de conformité des équipements embarqués aux spécifications ITxPT : consommation électrique, services échangés.</li><li>Client EST pour une preuve de concept de sécurisation des communications à bord (mTLS).</li><li>Outil de test de connexion SFTP et étude d'impact du Cyber Resilience Act.</li></ul>
+        </div>
+      </article>
+      <article class="part">
+        <span class="node" data-node></span>
+        <div class="chip"><span class="refd silk">U3</span><div class="body"><span class="pin1"></span>
+          <div class="logo"><img src="assets/colart.webp" alt=""><span class="code">2023</span></div>
+          <h3>Colart International</h3><span class="code">LE MANS</span></div></div>
+        <div class="notes">
+          <span class="silk when">Juin — août 2023</span>
+          <h4>Opératrice de conditionnement</h4>
+          <ul><li>Assemblage, contrôle et conditionnement sur lignes de production, dans le respect des normes qualité et sécurité.</li></ul>
+        </div>
+      </article>
+      <article class="part">
+        <span class="node" data-node></span>
+        <div class="chip"><span class="refd silk">U4</span><div class="body"><span class="pin1"></span>
+          <div class="logo"><img src="assets/ensim.webp" alt=""><span class="code">2024 — 2027</span></div>
+          <h3>ENSIM</h3><span class="code">ÉCOLE D'INGÉNIEURS</span></div></div>
+        <div class="notes">
+          <span class="silk when">Depuis 2024</span>
+          <h4>Cycle ingénieur en alternance</h4>
+          <ul><li>Systèmes embarqués, réseaux, cybersécurité.</li><li>Projets en équipe : mécatronique, IA, mobile.</li></ul>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="sec" id="projets">
+    <div class="sec-h"><span class="silk">Bloc 03</span><h2>Projets</h2></div>
+    <div class="banks" id="banks"></div>
+  </section>
+
+  <footer class="foot" id="contact">
+    <div class="port" id="port"><i></i><span class="node" data-node></span></div>
+    <span class="silk">J1 · USB-C · contact</span>
+    <h2>Un projet, un poste ?</h2>
+    <a class="mail" href="mailto:jade72210@gmail.com">jade72210@gmail.com</a>
+    <div class="links">
+      <a class="btn" href="https://www.linkedin.com/in/jade-barbier-b261b8266" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn" href="https://github.com/MoggleJ" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn" href="#">CV (PDF)</a>
+    </div>
+    <span class="silk sig">Conçue et routée par Jade Barbier · 2027</span>
+  </footer>
+</div>
+
+<script src="data.js"></script>
+<script>
+// ---------- projets en modules ----------
+(()=>{const banks=[['pro','Entreprise','P1'],['school','École','P2'],['perso','Perso','P3']];
+ const host=document.getElementById('banks');
+ host.innerHTML=banks.map(([k,label,ref])=>{
+  const items=(window.PROJECTS||[]).filter(p=>p.kind===k);
+  return `<div class="bank"><span class="node" data-node></span><div class="silk">${ref} · ${label} · ${items.length} modules</div><div class="mods">${
+   items.map((p,i)=>`<article class="mod fade" style="--d:${i*.06}s"><div class="scr">${p.img?`<img src="${p.img}" alt="" loading="lazy">`:'<span class="none">visuel à venir</span>'}</div><div class="txt"><span class="silk">${ref}.${i+1}</span><h3>${p.title}</h3><div class="tags">${(p.tags||[]).slice(0,3).map(t=>`<span>${t}</span>`).join('')}</div></div></article>`).join('')
+  }</div></div>`}).join('');
+})();
+
+// ---------- apparitions ----------
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.fade').forEach(el=>io.observe(el));
+
+// ---------- piste principale ----------
+const board=document.getElementById('board'),bus=document.getElementById('bus');
+const base=document.getElementById('base'),edge=document.getElementById('edge'),live=document.getElementById('live'),head=document.getElementById('head'),vias=document.getElementById('vias');
+let samples=[],total=0,nodes=[];
+const C=26; // chanfrein 45°
+function route(){
+  const b=board.getBoundingClientRect();
+  bus.setAttribute('viewBox',`0 0 ${b.width} ${board.scrollHeight}`);
+  nodes=[...document.querySelectorAll('[data-node]')].filter(n=>n.offsetParent).map(n=>{const r=n.getBoundingClientRect();return{mid:n.hasAttribute('data-mid'),x:r.left-b.left,y:r.top-b.top,el:n.closest('.part,.bank,.foot,.u1')}});
+  let d=`M${nodes[0].x},${nodes[0].y}`;
+  for(let i=1;i<nodes.length;i++){
+    const a=nodes[i-1],z=nodes[i],dx=z.x-a.x,s=Math.sign(dx);
+    if(Math.abs(dx)<2*C){d+=` L${a.x},${z.y-Math.abs(dx)} L${z.x},${z.y}`;continue}
+    const ym=Math.max(a.y+C+10,a.mid?(a.y+z.y)/2:z.y-70);
+    d+=` L${a.x},${ym-C} L${a.x+s*C},${ym} L${z.x-s*C},${ym} L${z.x},${ym+C} L${z.x},${z.y}`;
+  }
+  for(const p of [base,edge,live])p.setAttribute('d',d);
+  total=live.getTotalLength();
+  live.style.strokeDasharray=total;
+  samples=[];for(let l=0;l<=total;l+=6){const p=live.getPointAtLength(l);samples.push([l,p.x,p.y])}
+  vias.innerHTML=nodes.map(n=>`<circle class="via" cx="${n.x}" cy="${n.y}" r="7"/>`).join('');
+  tick();
+}
+function tick(){
+  if(!samples.length)return;
+  const b=board.getBoundingClientRect(),lim=-b.top+innerHeight*.62;
+  // le courant suit la piste : il s'arrête au premier point qui dépasse la ligne de lecture
+  let k=0;while(k<samples.length-1&&samples[k+1][2]<=lim)k++;
+  const [l,x,y]=samples[k];
+  live.style.strokeDashoffset=total-l;
+  head.setAttribute('cx',x);head.setAttribute('cy',y);
+  head.style.opacity=k>0&&k<samples.length-1?1:0;
+  nodes.forEach(n=>n.el&&n.el.classList.toggle('on',n.y<=y+1));
+  document.getElementById('port').classList.toggle('on',k>=samples.length-1);
+}
+addEventListener('scroll',()=>requestAnimationFrame(tick),{passive:true});
+addEventListener('resize',()=>requestAnimationFrame(route));
+addEventListener('load',route);
+document.fonts&&document.fonts.ready.then(route);
+
+// ---------- pistes décoratives ----------
+(()=>{const svg=document.getElementById('deco');let seed=7;const rnd=()=>(seed=(seed*16807)%2147483647)/2147483647;
+function draw(){const w=board.clientWidth,h=board.scrollHeight;svg.setAttribute('viewBox',`0 0 ${w} ${h}`);let out='';
+ for(let i=0;i<Math.round(h/90);i++){const left=rnd()<.5,x0=left?-10:w+10,y0=rnd()*h,len=60+rnd()*160,dir=left?1:-1,dy=(rnd()<.5?-1:1)*(20+rnd()*40);
+  const x1=x0+dir*len,x2=x1+dir*Math.abs(dy),y2=y0+dy,x3=x2+dir*(30+rnd()*80);
+  out+=`<path d="M${x0},${y0} L${x1},${y0} L${x2},${y2} L${x3},${y2}"/><circle cx="${x3}" cy="${y2}" r="5"/>`}
+ svg.innerHTML=out}
+addEventListener('load',draw);addEventListener('resize',draw)})();
+</script>
+</body>
+</html>

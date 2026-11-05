@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Parcours universitaire · Jade Barbier</title>
+  <meta name="description" content="Annexe du portfolio : semestres et unités de formation de l'ENSIM en alternance">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Page annexe autonome : elle se retire en supprimant ce fichier, parcours-data.js et le lien dans index.html */
+    .annex { display: grid; grid-template-columns: 220px 1fr; gap: 3rem; align-items: start; }
+    @media (max-width: 860px) { .annex { grid-template-columns: 1fr; gap: 1.5rem; } }
+    .sem-nav { position: sticky; top: 90px; display: grid; gap: .2rem; border-left: 1px solid var(--border); }
+    .sem-nav a { color: var(--muted); text-decoration: none; padding: .45rem 0 .45rem 1rem; font: 500 .8rem var(--font-mono); letter-spacing: .06em; text-transform: uppercase; border-left: 2px solid transparent; margin-left: -1px; }
+    .sem-nav a:hover { color: var(--text); border-color: var(--accent); }
+    @media (max-width: 860px) { .sem-nav { position: static; display: flex; flex-wrap: wrap; border-left: 0; gap: .4rem; } .sem-nav a { border: 1px solid var(--border); border-radius: 999px; padding: .35rem .8rem; margin: 0; } }
+    .semester { padding: 2.2rem 0 2.6rem; border-top: 1px solid var(--border); scroll-margin-top: 80px; }
+    .semester:first-child { border-top: 0; padding-top: 0; }
+    .sem-head { display: flex; align-items: baseline; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem; }
+    .sem-head .s-no { font: 700 clamp(2.4rem, 6vw, 3.6rem)/1 var(--font-title); letter-spacing: -.03em; }
+    .sem-head .s-no.future { color: transparent; -webkit-text-stroke: 1px var(--muted); }
+    .sem-head h2 { font-size: 1.3rem; }
+    .sem-head .mono { color: var(--muted); }
+    .semester > p { color: var(--muted); max-width: 62ch; }
+    .unit { padding: 1.4rem 0; border-top: 1px dashed var(--border); }
+    .unit-head { display: grid; grid-template-columns: 110px 1fr; gap: 1rem; align-items: baseline; }
+    @media (max-width: 560px) { .unit-head { grid-template-columns: 1fr; gap: .2rem; } }
+    .unit-head .mono { color: var(--accent); }
+    .unit h3 { font-size: 1.15rem; }
+    .unit-body { margin-left: calc(110px + 1rem); }
+    @media (max-width: 560px) { .unit-body { margin-left: 0; } }
+    .unit h4 { font: 500 .72rem var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin: 1.1rem 0 .5rem; }
+    .unit ul { margin: 0; padding-left: 1.1rem; color: var(--muted); font-size: .92rem; }
+    .unit li { margin: .2rem 0; }
+    details { border-bottom: 1px solid var(--border); }
+    details summary { cursor: pointer; padding: .7rem 0; font-weight: 500; font-size: .95rem; list-style: none; display: flex; justify-content: space-between; gap: 1rem; }
+    details summary::-webkit-details-marker { display: none; }
+    details summary::after { content: "+"; color: var(--accent); font-family: var(--font-mono); }
+    details[open] summary::after { content: "–"; }
+    details p { margin: 0 0 1rem; color: var(--muted); font-size: .92rem; }
+  </style>
+</head>
+<body>
+  <div class="nebulae" aria-hidden="true"><div class="nebula n1"></div><div class="nebula n2"></div><div class="nebula n3"></div></div>
+  <canvas id="stars" aria-hidden="true"></canvas>
+
+  <nav class="nav">
+    <a class="logo" href="index.html#formation">← Retour au portfolio</a>
+    <div class="tools" style="margin-left:auto">
+    </div>
+  </nav>
+
+  <main>
+    <section class="section" style="padding-top:7rem">
+      <div class="dossier"><span>Dossier MJ-2027</span><span>Annexe A</span><span>Parcours universitaire</span></div>
+      <h1 class="h2" style="font-size:clamp(2.4rem,6vw,4rem)">Parcours universitaire</h1>
+      <p class="lead">ENSIM, école nationale supérieure d'ingénieurs du Mans, 2022 – 2027. Le cycle ingénieur se fait en alternance au CIM de SNCF Voyageurs : chaque semestre combine des unités de formation à l'école et leur mise en pratique en entreprise.</p>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="annex">
+        <nav class="sem-nav" aria-label="Semestres" id="sem-nav"></nav>
+        <div id="semesters"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="foot"><span class="mono">Fin de l'annexe A · Dossier MJ-2027</span><a href="index.html">Retour au portfolio</a></div>
+  </footer>
+
+  <script src="parcours-data.js"></script>
+  <script>
+    // Semestres : S7 et S8 viennent de Portfolio_2026, les autres restent à compléter par Jade
+    const SEMESTERS = [
+      { id: "s1-s4", no: "S1–S4", title: "Cycle préparatoire intégré", meta: "2022 – 2024", text: "Bases scientifiques et premières années d'informatique.", todo: true },
+      { id: "s5-s6", no: "S5–S6", title: "Entrée en cycle ingénieur, début de l'alternance", meta: "2024 – 2025", text: "Premiers semestres en alternance au CIM de SNCF Voyageurs.", todo: true },
+      { id: "s7", no: "S7", title: "Semestre 7", meta: "Unités de formation 7.x", prefix: "UF 7" },
+      { id: "s8", no: "S8", title: "Semestre 8", meta: "Unités de formation 8.x", prefix: "UF 8" },
+      { id: "s9-s10", no: "S9–S10", title: "Dernière année et diplôme", meta: "2026 – 2027", text: "Semestres à venir, jusqu'au diplôme d'ingénieure en septembre 2027.", future: true },
+    ];
+    const esc = (t) => t.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+    document.getElementById("sem-nav").innerHTML = SEMESTERS.map((s) => `<a href="#${s.id}">${s.no} · ${s.title.split(",")[0]}</a>`).join("");
+    document.getElementById("semesters").innerHTML = SEMESTERS.map((s) => {
+      const units = s.prefix ? window.UNITS.filter((u) => u.code.startsWith(s.prefix)) : [];
+      return `
+      <article class="semester" id="${s.id}">
+        <div class="sem-head"><span class="s-no${s.future ? " future" : ""}">${s.no}</span><h2>${s.title}</h2><span class="mono">${s.meta}</span>${s.todo ? '<span class="todo">détails à fournir</span>' : ""}</div>
+        ${s.text ? `<p>${s.text}</p>` : ""}
+        ${units.map((u) => `
+          <div class="unit">
+            <div class="unit-head"><span class="mono">${u.code}</span><h3>${esc(u.title)}</h3></div>
+            <div class="unit-body">
+              <h4>Objectifs</h4>
+              <ul>${u.objectives.map((o) => `<li>${esc(o)}</li>`).join("")}</ul>
+              <h4>Mise en pratique en entreprise</h4>
+              ${u.achievements.map((a) => `<details><summary>${esc(a.title)}</summary><p>${esc(a.text)}</p></details>`).join("")}
+            </div>
+          </div>`).join("")}
+      </article>`;
+    }).join("");
+  </script>
+  <script src="maquette.js"></script>
+</body>
+</html>
